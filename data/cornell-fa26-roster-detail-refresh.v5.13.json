@@ -1,0 +1,23 @@
+{
+  "generatedAt": "2026-07-17T20:01:35.037Z",
+  "sourceHtml": "C:\\Users\\yuanj\\Downloads\\Class Roster - Fall 2026 - Subject - Law.html",
+  "sourceUrl": "https://classes.cornell.edu/browse/roster/FA26/subject/LAW",
+  "apiUrl": "https://classes.cornell.edu/api/2.0/search/classes.json?roster=FA26&subject=LAW",
+  "apiCourseCount": 137,
+  "htmlLocationRecords": 135,
+  "zh": {
+    "matchedCourses": 134,
+    "matchedSections": 204,
+    "locatedSections": 132,
+    "consentCourses": 58,
+    "unmatchedDatasetCourses": []
+  },
+  "en": {
+    "matchedCourses": 134,
+    "matchedSections": 204,
+    "locatedSections": 132,
+    "consentCourses": 58,
+    "unmatchedDatasetCourses": []
+  },
+  "note": "Only current Cornell API fields and concrete room names present in the saved official FA26 LAW roster HTML were written. No course was deleted; an API-unmatched record remains unchanged and is listed above."
+}

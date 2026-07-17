@@ -1,0 +1,44 @@
+{
+  "school": {
+    "id": "example-law",
+    "nameZh": "示例法学院",
+    "nameEn": "Example Law School",
+    "shortZh": "示例",
+    "termLabel": "Fall 2026",
+    "catalogUrl": "https://example.edu/law/courses",
+    "term": {
+      "instructionStart": "2026-08-24",
+      "instructionEnd": "2026-12-03",
+      "examEnd": "2026-12-18"
+    }
+  },
+  "courses": [
+    {
+      "code": "LAW 6001",
+      "titleZh": "示例课程",
+      "titleEn": "Example Course",
+      "descriptionZh": "这里填写完整中文课程介绍。",
+      "descriptionEn": "Official English description.",
+      "credits": 3,
+      "gradingZh": "仅字母等级评分",
+      "instructors": ["Professor Name"],
+      "barStatus": "review",
+      "barPrimary": null,
+      "eligibility": "open",
+      "sourceUrl": "https://example.edu/course/6001",
+      "sections": [
+        {
+          "id": "LAW-6001-001",
+          "label": "讲授课 001",
+          "classNumber": "12345",
+          "days": "MW",
+          "start": "10:00",
+          "end": "11:15",
+          "startDate": "2026-08-24",
+          "endDate": "2026-12-03",
+          "location": "Law Building 101"
+        }
+      ]
+    }
+  ]
+}

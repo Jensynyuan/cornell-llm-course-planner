@@ -1,0 +1,18 @@
+{
+  "generatedAt": "2026-07-17T16:56:59.046Z",
+  "sourceApi": "https://classes.cornell.edu/api/2.0/search/classes.json?roster=FA26&subject=LAW",
+  "sourceHtml": "C:\\Users\\yuanj\\Downloads\\Class Roster - Fall 2026 - Subject - Law.html",
+  "sourceUrl": "https://classes.cornell.edu/browse/roster/FA26/subject/LAW",
+  "htmlResultCount": 137,
+  "apiResultCount": 137,
+  "htmlApiCodeDifference": 0,
+  "htmlApiCrseIdMismatch": 0,
+  "currentOfferingCourses": 137,
+  "officialCoursesAddedBeyondLegacyCatalog": [],
+  "excludedNonCurrentCatalogEntries": 0,
+  "titlePresentationDifferences": [
+    "LAW 6304",
+    "LAW 6881"
+  ],
+  "note": "The default planner database contains only FA26 Law offerings. The two title differences reflect the roster HTML short title versus the API long title; course code and Cornell course ID match."
+}

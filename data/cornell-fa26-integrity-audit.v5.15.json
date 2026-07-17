@@ -1,0 +1,65 @@
+{
+  "generatedAt": "2026-07-17T20:12:47.258Z",
+  "officialApiCourseCount": 137,
+  "plannerCourseCount": 134,
+  "plannerSectionCount": 204,
+  "htmlLocationRecords": 135,
+  "excludedFromPlanner": [
+    {
+      "code": "LAW 2650",
+      "academicCareer": "UG",
+      "enrollmentPriority": "Enrollment limited to: undergraduates."
+    },
+    {
+      "code": "LAW 3281",
+      "academicCareer": "UG",
+      "enrollmentPriority": "Enrollment limited to: undergraduates."
+    },
+    {
+      "code": "LAW 4021",
+      "academicCareer": "UG",
+      "enrollmentPriority": "Enrollment limited to: undergraduates."
+    }
+  ],
+  "expectedExclusionsAreUndergraduateOnly": true,
+  "chineseEnglishCodeSetMatches": true,
+  "chineseCatalogMatchesDataset": true,
+  "englishCatalogMatchesDataset": true,
+  "nyBarCoreCodes": [
+    "LAW 5001",
+    "LAW 5021",
+    "LAW 5041",
+    "LAW 5151",
+    "LAW 6007",
+    "LAW 6011",
+    "LAW 6131",
+    "LAW 6263",
+    "LAW 6401",
+    "LAW 6641",
+    "LAW 6801",
+    "LAW 6941",
+    "LAW 7169"
+  ],
+  "nyBarCoreMatchesOfficialFallList": true,
+  "officialDescriptionsUnavailable": [
+    "LAW 6105",
+    "LAW 6861",
+    "LAW 6871",
+    "LAW 7587"
+  ],
+  "mismatch": {
+    "code": [],
+    "title": [],
+    "description": [],
+    "credits": [],
+    "sections": [],
+    "meetings": [],
+    "grading": [],
+    "instructors": [],
+    "consent": [],
+    "instructionMode": [],
+    "location": [],
+    "sourceUrl": []
+  },
+  "passed": true
+}

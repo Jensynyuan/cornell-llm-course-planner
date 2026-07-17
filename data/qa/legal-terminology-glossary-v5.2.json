@@ -1,0 +1,776 @@
+{
+  "meta": {
+    "version": "v5.2",
+    "purpose": "构建阶段法律术语锁定；不在用户浏览器中调用翻译服务",
+    "translationEngine": "GPT机器翻译",
+    "termPolicy": "美国法核心术语采用锁定译法；数据库生成后再供前端使用"
+  },
+  "legalTerms": [
+    {
+      "english": "Actus Reus",
+      "chinese": "犯罪行为"
+    },
+    {
+      "english": "Administrative Law",
+      "chinese": "行政法"
+    },
+    {
+      "english": "Administrative Procedure Act",
+      "chinese": "《行政程序法》"
+    },
+    {
+      "english": "Adverse Possession",
+      "chinese": "逆权占有"
+    },
+    {
+      "english": "Affirmative Action",
+      "chinese": "平权措施（平权行动）"
+    },
+    {
+      "english": "Amici Curiae",
+      "chinese": "法庭之友"
+    },
+    {
+      "english": "Amicus Brief",
+      "chinese": "法庭之友书状"
+    },
+    {
+      "english": "Antitrust",
+      "chinese": "反垄断法"
+    },
+    {
+      "english": "Artificial Intelligence",
+      "chinese": "人工智能"
+    },
+    {
+      "english": "Attorney-Client Privilege",
+      "chinese": "律师—客户保密特权"
+    },
+    {
+      "english": "Automatic Stay",
+      "chinese": "自动停止"
+    },
+    {
+      "english": "Avoidance Transactions",
+      "chinese": "可撤销交易"
+    },
+    {
+      "english": "Bankruptcy",
+      "chinese": "破产法"
+    },
+    {
+      "english": "Business Judgment Rule",
+      "chinese": "商业判断规则"
+    },
+    {
+      "english": "Capital Gains",
+      "chinese": "资本利得"
+    },
+    {
+      "english": "Capital Markets",
+      "chinese": "资本市场"
+    },
+    {
+      "english": "Case Law",
+      "chinese": "判例法"
+    },
+    {
+      "english": "Casework",
+      "chinese": "案件工作"
+    },
+    {
+      "english": "Choice of Law",
+      "chinese": "法律选择"
+    },
+    {
+      "english": "Civil Procedure",
+      "chinese": "民事诉讼法"
+    },
+    {
+      "english": "Claim Preclusion",
+      "chinese": "请求排除"
+    },
+    {
+      "english": "Class Action",
+      "chinese": "集团诉讼"
+    },
+    {
+      "english": "Client Counseling",
+      "chinese": "客户咨询"
+    },
+    {
+      "english": "Collateral Estoppel",
+      "chinese": "争点排除"
+    },
+    {
+      "english": "Commerce Clause",
+      "chinese": "商业条款"
+    },
+    {
+      "english": "Competition Law",
+      "chinese": "反垄断法"
+    },
+    {
+      "english": "Conflict of Laws",
+      "chinese": "冲突法"
+    },
+    {
+      "english": "Constitutional Law",
+      "chinese": "宪法"
+    },
+    {
+      "english": "Contract",
+      "chinese": "合同"
+    },
+    {
+      "english": "Contract Law",
+      "chinese": "合同法"
+    },
+    {
+      "english": "Contracts",
+      "chinese": "合同"
+    },
+    {
+      "english": "Convention Against Torture",
+      "chinese": "《禁止酷刑公约》"
+    },
+    {
+      "english": "Convention on Contracts for the International Sale of Goods",
+      "chinese": "《联合国国际货物销售合同公约》（CISG）"
+    },
+    {
+      "english": "Copyright",
+      "chinese": "著作权法"
+    },
+    {
+      "english": "Corporate Governance",
+      "chinese": "公司治理"
+    },
+    {
+      "english": "Corporate Taxation",
+      "chinese": "公司税法"
+    },
+    {
+      "english": "Covenant Not to Compete",
+      "chinese": "竞业禁止约定"
+    },
+    {
+      "english": "Credit",
+      "chinese": "学分"
+    },
+    {
+      "english": "Credits",
+      "chinese": "学分"
+    },
+    {
+      "english": "Crimes Against Humanity",
+      "chinese": "危害人类罪"
+    },
+    {
+      "english": "Criminal Law",
+      "chinese": "刑法"
+    },
+    {
+      "english": "Criminal Procedure",
+      "chinese": "刑事诉讼法"
+    },
+    {
+      "english": "Cybersecurity",
+      "chinese": "网络安全"
+    },
+    {
+      "english": "Data Protection",
+      "chinese": "数据保护"
+    },
+    {
+      "english": "Debtor-in-Possession Financing",
+      "chinese": "债务人自行管理融资"
+    },
+    {
+      "english": "Deposition",
+      "chinese": "证言录取"
+    },
+    {
+      "english": "Depositions",
+      "chinese": "证言录取"
+    },
+    {
+      "english": "Derivative Action",
+      "chinese": "股东派生诉讼"
+    },
+    {
+      "english": "Derivative Suit",
+      "chinese": "股东派生诉讼"
+    },
+    {
+      "english": "Discovery",
+      "chinese": "证据开示"
+    },
+    {
+      "english": "Disparate Impact",
+      "chinese": "差别影响"
+    },
+    {
+      "english": "Dormant Commerce Clause",
+      "chinese": "消极商业条款"
+    },
+    {
+      "english": "Double Jeopardy",
+      "chinese": "禁止双重危险"
+    },
+    {
+      "english": "Due Process",
+      "chinese": "正当程序"
+    },
+    {
+      "english": "Duty of Care",
+      "chinese": "注意义务"
+    },
+    {
+      "english": "Duty of Loyalty",
+      "chinese": "忠实义务"
+    },
+    {
+      "english": "Employee Retirement Income Security Act",
+      "chinese": "《雇员退休收入保障法》（ERISA）"
+    },
+    {
+      "english": "Employment at Will",
+      "chinese": "任意雇佣制度"
+    },
+    {
+      "english": "Employment Law",
+      "chinese": "雇佣法"
+    },
+    {
+      "english": "Environmental Law",
+      "chinese": "环境法"
+    },
+    {
+      "english": "Equal Protection",
+      "chinese": "平等保护"
+    },
+    {
+      "english": "Estate and Gift Taxation",
+      "chinese": "遗产与赠与税法"
+    },
+    {
+      "english": "Eviction Defense",
+      "chinese": "驱逐诉讼辩护"
+    },
+    {
+      "english": "Evidence",
+      "chinese": "证据"
+    },
+    {
+      "english": "Evidence Law",
+      "chinese": "证据法"
+    },
+    {
+      "english": "Exclusionary Rule",
+      "chinese": "非法证据排除规则"
+    },
+    {
+      "english": "Faculty",
+      "chinese": "教师"
+    },
+    {
+      "english": "Family Law",
+      "chinese": "家庭法"
+    },
+    {
+      "english": "Federal Income Tax",
+      "chinese": "联邦所得税法"
+    },
+    {
+      "english": "Federal Income Taxation",
+      "chinese": "联邦所得税法"
+    },
+    {
+      "english": "Federal Preemption",
+      "chinese": "联邦法优先适用"
+    },
+    {
+      "english": "Federal Rules of Civil Procedure",
+      "chinese": "《联邦民事诉讼规则》"
+    },
+    {
+      "english": "Federal Rules of Evidence",
+      "chinese": "《联邦证据规则》"
+    },
+    {
+      "english": "Fiduciary Duties",
+      "chinese": "信义义务"
+    },
+    {
+      "english": "Fiduciary Duty",
+      "chinese": "信义义务"
+    },
+    {
+      "english": "First Amendment",
+      "chinese": "美国宪法第一修正案"
+    },
+    {
+      "english": "Former Adjudication",
+      "chinese": "既判力"
+    },
+    {
+      "english": "Forum Non Conveniens",
+      "chinese": "不方便法院原则"
+    },
+    {
+      "english": "Gender-Affirming Care",
+      "chinese": "性别肯定医疗"
+    },
+    {
+      "english": "General Data Protection Regulation",
+      "chinese": "《通用数据保护条例》（GDPR）"
+    },
+    {
+      "english": "Genocide",
+      "chinese": "种族灭绝罪"
+    },
+    {
+      "english": "Gross Income",
+      "chinese": "总所得"
+    },
+    {
+      "english": "Habitability",
+      "chinese": "适居性"
+    },
+    {
+      "english": "Health Law",
+      "chinese": "卫生健康法"
+    },
+    {
+      "english": "Hearsay",
+      "chinese": "传闻证据"
+    },
+    {
+      "english": "Homelessness Prevention",
+      "chinese": "预防无家可归"
+    },
+    {
+      "english": "Immigration Law",
+      "chinese": "移民法"
+    },
+    {
+      "english": "Ineffective Assistance of Counsel",
+      "chinese": "无效律师协助"
+    },
+    {
+      "english": "Instructor",
+      "chinese": "任课教师"
+    },
+    {
+      "english": "Intellectual Property",
+      "chinese": "知识产权法"
+    },
+    {
+      "english": "Internal Revenue Code",
+      "chinese": "《美国国内税收法典》"
+    },
+    {
+      "english": "International Arbitration",
+      "chinese": "国际商事仲裁"
+    },
+    {
+      "english": "International Business Transactions",
+      "chinese": "国际商事交易"
+    },
+    {
+      "english": "International Criminal Law",
+      "chinese": "国际刑法"
+    },
+    {
+      "english": "International Human Rights",
+      "chinese": "国际人权法"
+    },
+    {
+      "english": "International Humanitarian Law",
+      "chinese": "国际人道法"
+    },
+    {
+      "english": "International Taxation",
+      "chinese": "国际税法"
+    },
+    {
+      "english": "International Trade Law",
+      "chinese": "国际贸易法"
+    },
+    {
+      "english": "Investment Arbitration",
+      "chinese": "投资仲裁"
+    },
+    {
+      "english": "Issue Preclusion",
+      "chinese": "争点排除"
+    },
+    {
+      "english": "Judicial Review",
+      "chinese": "司法审查"
+    },
+    {
+      "english": "Jus ad Bellum",
+      "chinese": "诉诸战争权法"
+    },
+    {
+      "english": "Jus in Bello",
+      "chinese": "战时国际人道法"
+    },
+    {
+      "english": "Labor Law",
+      "chinese": "劳动法"
+    },
+    {
+      "english": "Law of Evidence",
+      "chinese": "证据法"
+    },
+    {
+      "english": "Law School",
+      "chinese": "法学院"
+    },
+    {
+      "english": "Law Students",
+      "chinese": "法学院学生"
+    },
+    {
+      "english": "Legal Ethics",
+      "chinese": "法律职业伦理"
+    },
+    {
+      "english": "Legal Memoranda",
+      "chinese": "法律备忘录"
+    },
+    {
+      "english": "Legal Memorandum",
+      "chinese": "法律备忘录"
+    },
+    {
+      "english": "Legal Research",
+      "chinese": "法律研究"
+    },
+    {
+      "english": "Legal Writing",
+      "chinese": "法律写作"
+    },
+    {
+      "english": "Mandatory Disclosure",
+      "chinese": "强制信息披露"
+    },
+    {
+      "english": "Mens Rea",
+      "chinese": "主观罪过"
+    },
+    {
+      "english": "Mergers and Acquisitions",
+      "chinese": "企业并购"
+    },
+    {
+      "english": "Monopolization",
+      "chinese": "垄断化"
+    },
+    {
+      "english": "Mortgage-Backed Securities",
+      "chinese": "住房抵押贷款支持证券"
+    },
+    {
+      "english": "Motion to Dismiss",
+      "chinese": "驳回诉讼动议"
+    },
+    {
+      "english": "Negotiable Instruments",
+      "chinese": "可转让票据"
+    },
+    {
+      "english": "Nondisclosure Agreement",
+      "chinese": "保密协议"
+    },
+    {
+      "english": "Oral Argument",
+      "chinese": "口头辩论"
+    },
+    {
+      "english": "Partnership Taxation",
+      "chinese": "合伙企业税法"
+    },
+    {
+      "english": "Patent",
+      "chinese": "专利法"
+    },
+    {
+      "english": "Personal Jurisdiction",
+      "chinese": "对人管辖权"
+    },
+    {
+      "english": "Piercing the Corporate Veil",
+      "chinese": "揭开公司面纱"
+    },
+    {
+      "english": "Plea Bargaining",
+      "chinese": "辩诉交易"
+    },
+    {
+      "english": "Pleading",
+      "chinese": "诉状"
+    },
+    {
+      "english": "Pleadings",
+      "chinese": "诉状"
+    },
+    {
+      "english": "Privacy",
+      "chinese": "隐私保护"
+    },
+    {
+      "english": "Private Equity",
+      "chinese": "私募股权"
+    },
+    {
+      "english": "Private International Law",
+      "chinese": "国际私法"
+    },
+    {
+      "english": "Pro Bono",
+      "chinese": "公益法律服务"
+    },
+    {
+      "english": "Pro Se Litigant",
+      "chinese": "自行诉讼人"
+    },
+    {
+      "english": "Probable Cause",
+      "chinese": "相当理由"
+    },
+    {
+      "english": "Professional Responsibility",
+      "chinese": "律师职业责任"
+    },
+    {
+      "english": "Property",
+      "chinese": "财产"
+    },
+    {
+      "english": "Property Law",
+      "chinese": "财产法"
+    },
+    {
+      "english": "Public Companies",
+      "chinese": "公众公司"
+    },
+    {
+      "english": "Public International Law",
+      "chinese": "国际公法"
+    },
+    {
+      "english": "Public Offering",
+      "chinese": "公开发行"
+    },
+    {
+      "english": "Qualified Immunity",
+      "chinese": "合格豁免"
+    },
+    {
+      "english": "Reasonable Accommodation",
+      "chinese": "合理便利"
+    },
+    {
+      "english": "Reasonable Suspicion",
+      "chinese": "合理怀疑"
+    },
+    {
+      "english": "Refugee Law",
+      "chinese": "难民法"
+    },
+    {
+      "english": "Registration Exemption",
+      "chinese": "注册豁免"
+    },
+    {
+      "english": "Regulations",
+      "chinese": "规章"
+    },
+    {
+      "english": "Remedies",
+      "chinese": "法律救济"
+    },
+    {
+      "english": "Representation",
+      "chinese": "代理"
+    },
+    {
+      "english": "Res Judicata",
+      "chinese": "既判力"
+    },
+    {
+      "english": "Restraint of Trade",
+      "chinese": "限制竞争行为"
+    },
+    {
+      "english": "Restrictive Covenant",
+      "chinese": "限制性约定"
+    },
+    {
+      "english": "Restructuring",
+      "chinese": "重组"
+    },
+    {
+      "english": "Right of Publicity",
+      "chinese": "形象商业化权"
+    },
+    {
+      "english": "Right to Counsel",
+      "chinese": "获得律师帮助权"
+    },
+    {
+      "english": "Search and Seizure",
+      "chinese": "搜查与扣押"
+    },
+    {
+      "english": "Secured Transactions",
+      "chinese": "担保交易"
+    },
+    {
+      "english": "Securities",
+      "chinese": "证券"
+    },
+    {
+      "english": "Securities Act of 1933",
+      "chinese": "《1933年证券法》"
+    },
+    {
+      "english": "Securities Exchange Act of 1934",
+      "chinese": "《1934年证券交易法》"
+    },
+    {
+      "english": "Securities Regulation",
+      "chinese": "证券监管"
+    },
+    {
+      "english": "Separation of Powers",
+      "chinese": "权力分立"
+    },
+    {
+      "english": "Small Claims Actions",
+      "chinese": "小额诉讼"
+    },
+    {
+      "english": "Sovereign Immunity",
+      "chinese": "主权豁免"
+    },
+    {
+      "english": "Strict Liability",
+      "chinese": "严格责任"
+    },
+    {
+      "english": "Subject Matter Jurisdiction",
+      "chinese": "事项管辖权"
+    },
+    {
+      "english": "Summary Judgment",
+      "chinese": "简易判决"
+    },
+    {
+      "english": "Takings Clause",
+      "chinese": "征收条款"
+    },
+    {
+      "english": "Tax Basis",
+      "chinese": "计税基础"
+    },
+    {
+      "english": "Tax Return Preparation",
+      "chinese": "纳税申报表编制"
+    },
+    {
+      "english": "Tort",
+      "chinese": "侵权"
+    },
+    {
+      "english": "Torts",
+      "chinese": "侵权法"
+    },
+    {
+      "english": "Trade Secrets",
+      "chinese": "商业秘密法"
+    },
+    {
+      "english": "Trademark",
+      "chinese": "商标法"
+    },
+    {
+      "english": "Treasury Regulations",
+      "chinese": "美国财政部税收规章"
+    },
+    {
+      "english": "Trial Advocacy",
+      "chinese": "庭审辩护"
+    },
+    {
+      "english": "Unlawful Lockouts",
+      "chinese": "非法拒绝承租人进入房屋"
+    },
+    {
+      "english": "Venture Capital",
+      "chinese": "风险投资"
+    },
+    {
+      "english": "Venue",
+      "chinese": "审判地"
+    },
+    {
+      "english": "War Crimes",
+      "chinese": "战争罪"
+    },
+    {
+      "english": "What Constitutes a Security",
+      "chinese": "证券的认定"
+    },
+    {
+      "english": "White Collar Crime",
+      "chinese": "白领犯罪"
+    },
+    {
+      "english": "Work Product Doctrine",
+      "chinese": "律师工作成果原则"
+    },
+    {
+      "english": "Works Councils",
+      "chinese": "职工委员会"
+    }
+  ],
+  "taxContextTerms": [
+    {
+      "english": "realization",
+      "chinese": "实现"
+    },
+    {
+      "english": "recognition",
+      "chinese": "确认"
+    },
+    {
+      "english": "deductions",
+      "chinese": "扣除"
+    },
+    {
+      "english": "deduction",
+      "chinese": "扣除"
+    },
+    {
+      "english": "basis",
+      "chinese": "计税基础"
+    },
+    {
+      "english": "depreciation",
+      "chinese": "折旧"
+    },
+    {
+      "english": "capital gain",
+      "chinese": "资本利得"
+    },
+    {
+      "english": "income",
+      "chinese": "所得"
+    }
+  ]
+}

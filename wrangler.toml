@@ -1,0 +1,7 @@
+name = "llm-course-planner"
+pages_build_output_dir = "."
+compatibility_date = "2026-07-18"
+
+# This is a Cloudflare Pages project.  It intentionally has no KV, D1, R2,
+# Durable Object, or Analytics Engine binding: an individual user's plan must
+# remain in that user's browser rather than becoming shared server-side state.

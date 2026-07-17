@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="data:,">
+  <meta name="description" content="面向中国 LL.M. 学生的美国法学院课程、NY Bar 学分与课表规划工具" />
+  <title>LL.M. Course Planner v5.20</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <aside class="sidebar">
+      <div class="brand-row">
+        <div class="brand-mark">L</div>
+        <div>
+          <div class="brand-title">LL.M. Planner</div>
+          <div id="brandSubtitle" class="brand-subtitle">Cornell Law · Fall 2026 · v5.20</div>
+        </div>
+      </div>
+
+      <nav class="nav-list" aria-label="主导航">
+        <button class="nav-item is-active" data-view="courses">
+          <span>⌕</span><span>课程检索</span>
+        </button>
+        <button class="nav-item" data-view="recommendations">
+          <span>✦</span><span>课程推荐</span>
+        </button>
+        <button id="scheduleNavDropTarget" class="nav-item schedule-nav-drop-target" data-view="schedule" title="点击打开课表；也可将课程拖到这里">
+          <span>▦</span><span>我的课表</span>
+        </button>
+        <button class="nav-item" data-view="schools">
+          <span>⇄</span><span>学校与数据</span>
+        </button>
+        <button class="nav-item" data-view="faq">
+          <span>?</span><span>新生 FAQ</span>
+        </button>
+      </nav>
+
+      <section class="progress-panel">
+        <div class="panel-heading">
+          <span>学分进度</span>
+          <button id="resetPlanBtn" class="text-button" title="清空课表">重置</button>
+        </div>
+        <div id="creditProgress"></div>
+      </section>
+
+      <section class="sidebar-note">
+        <strong>标签说明</strong>
+        <p>NY Bar 筛选分为四个互斥状态；具体的法定类别学分在进度面板单列显示。</p>
+        <button id="tagHelpBtn" class="text-button tag-help-button">查看全部标签含义</button>
+      </section>
+
+      <div class="creator-credit" data-i18n-exempt><span id="creatorCreditPrefix">本页面由袁敬轩使用</span> <strong>Codex</strong> <span id="creatorCreditSuffix">设计</span><br><a id="creatorContactAuthor" href="mailto:jy2279@cornell.edu">联系作者</a> · <button id="supportAuthorBtn" class="inline-link-button" type="button">支持作者</button></div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div>
+          <h1 id="pageTitle">课程检索</h1>
+          <p id="pageSubtitle">官方课程说明、NY Bar 标识与拖拽排课</p>
+        </div>
+        <div class="topbar-actions">
+          <button id="schoolSwitcherBtn" class="school-switcher-button" title="切换学校或导入课程数据"><span id="currentSchoolShort">康奈尔</span><small id="currentTermShort">Fall 2026</small></button>
+          <button id="languageToggleBtn" class="secondary-button language-toggle-button" title="切换中文或英文界面">中文 / EN</button>
+          <button id="loadRecommendedBtn" class="secondary-button">设置偏好并生成推荐</button>
+          <button id="syncBtn" class="primary-button">更新课程数据</button>
+        </div>
+      </header>
+
+      <section id="view-courses" class="view is-active">
+        <div class="search-toolbar refined-filter-toolbar">
+          <div class="search-box filter-search-box">
+            <span>⌕</span>
+            <input id="searchInput" type="search" placeholder="搜索中文课程名、课程代号、教师或关键词" autocomplete="off" />
+          </div>
+          <div class="filter-strip" aria-label="课程筛选与排序">
+            <label class="filter-field"><span>NY Bar</span><select id="barFilter" class="select-control" aria-label="NY Bar 筛选">
+              <option value="all">全部状态</option><option value="eligible">NY Bar 选修</option><option value="review">NY Bar 外选修</option><option value="ineligible">不计入 NY Bar</option><option value="core">NYLE / Bar 考试科目</option>
+            </select></label>
+            <label class="filter-field"><span>评分方式</span><select id="gradingFilter" class="select-control" aria-label="评分方式筛选">
+              <option value="all">全部方式</option><option value="su">仅 S/U</option><option value="graded">仅字母等级</option>
+            </select></label>
+            <label class="filter-field"><span>学分</span><select id="creditsFilter" class="select-control" aria-label="学分筛选">
+              <option value="all">全部学分</option><option value="2">2 学分</option><option value="3">3 学分</option><option value="4">4 学分</option><option value="5+">5 学分及以上</option>
+            </select></label>
+            <label class="filter-field"><span>上课日</span><select id="meetingDayFilter" class="select-control" aria-label="上课日筛选">
+              <option value="all">全部上课日</option><option value="M">周一</option><option value="T">周二</option><option value="W">周三</option><option value="R">周四</option><option value="F">周五</option>
+            </select></label>
+            <label class="filter-field"><span>课程方向</span><select id="topicFilter" class="select-control" aria-label="课程方向筛选">
+              <option value="all">全部课程方向</option><option value="corporate">公司／交易／金融</option><option value="litigation">诉讼／争议解决</option><option value="tech">科技／数据／知识产权</option><option value="international">国际／跨境</option><option value="public">公法／公共利益</option><option value="research">研究／理论</option><option value="criminal">刑事法</option><option value="practice">实务技能</option>
+            </select></label>
+            <label class="filter-field"><span>上课形式</span><select id="courseFormatFilter" class="select-control" aria-label="上课形式筛选">
+              <option value="all">全部上课形式</option><option value="lecture">讲授课</option><option value="seminar">研讨课</option><option value="clinic">诊所</option><option value="practicum">实践课</option><option value="discussion">讨论课</option><option value="independent">独立研究</option>
+            </select></label>
+            <select id="llmFilter" hidden aria-hidden="true" tabindex="-1"><option value="all">全部 LLM 标签</option><option value="specific">LLM 专设</option><option value="direct">LLM 直选课</option></select>
+            <label class="filter-field"><span>排序</span><select id="sortSelect" class="select-control" aria-label="排序">
+              <option value="recommended">推荐度优先</option><option value="creditsAsc">学分从低到高</option><option value="creditsDesc">学分从高到低</option><option value="code">课程代号</option>
+            </select></label>
+            <button id="resetFiltersBtn" class="filter-reset-button" type="button" title="清除搜索和全部筛选">重置</button>
+          </div>
+        </div>
+        <div id="courseContentGrid" class="content-grid">
+          <section>
+            <div class="section-title-row">
+              <div class="library-heading-block">
+                <div>
+                  <h2>课程库</h2>
+                  <p id="courseCountText"></p>
+                </div>
+                <div class="library-primary-actions">
+                  <button id="newCourseBtn" type="button" class="new-course-button"><span aria-hidden="true">✦</span><span>新建课程</span></button>
+                  <button id="contactAuthorBtnInline" type="button" class="contact-author-button"><span aria-hidden="true">✉</span><span>联系作者</span></button>
+                </div>
+              </div>
+              <div class="library-tag-row" aria-label="快捷标签筛选">
+                <div class="library-tag-heading"><span class="legend-kicker">快捷标签</span><button id="tagHelpBtnInline" type="button" class="legend-help-button" onclick="document.getElementById('tagHelpBtn').click()">标签说明</button></div>
+                <div class="library-tag-chips">
+                  <button type="button" class="badge badge-clickable badge-bar-eligible" data-badge-filter="eligible">NY Bar 选修</button>
+                  <button type="button" class="badge badge-clickable badge-bar-review" data-badge-filter="review">NY Bar 外选修</button>
+                  <button type="button" class="badge badge-clickable badge-bar-ineligible" data-badge-filter="ineligible">不计入 NY Bar</button>
+                  <button type="button" class="badge badge-clickable badge-core" data-badge-filter="core">NYLE / Bar 考试科目</button>
+                  <span class="legend-divider" aria-hidden="true"></span>
+                  <button type="button" class="badge badge-clickable badge-enrollment badge-enrollment-open" data-badge-filter="llm-direct">LLM 直选课</button>
+                  <button type="button" class="badge badge-clickable badge-muted" data-badge-filter="llm-specific">LLM 专设</button>
+                </div>
+              </div>
+            </div>
+            <div id="courseList" class="course-list"></div>
+          </section>
+          <aside id="miniSchedulePanel" class="mini-schedule-card">
+            <div class="section-title-row compact">
+              <div>
+                <h2>已选课程</h2>
+                <p>拖动课程卡到这里，展开后按周查看</p>
+              </div>
+              <div class="mini-schedule-actions"><button id="miniScheduleCollapseBtn" class="text-button" type="button">收起</button><button class="text-button" data-view-target="schedule">展开</button></div>
+            </div>
+            <div class="mini-schedule-body">
+              <div id="miniSchedule" class="mini-schedule-dropzone">
+                <div class="drop-hint">将课程拖到此处加入课表</div>
+              </div>
+              <div id="selectedSummary" class="selected-summary"></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="view-recommendations" class="view">
+        <div class="recommendation-intro recommendation-intro-flex">
+          <div>
+            <span class="eyebrow">通用 LL.M. 职业方向推荐</span>
+            <h2>先选择方向，再生成组合</h2>
+            <p>选择一个或多个职业方向，再叠加“低负担、NY Bar、写作或实务”等偏好，系统会即时重排更适合你的课程组合。</p>
+          </div>
+          <button id="randomCareerBtn" class="secondary-button">随机组合两个方向</button>
+        </div>
+        <section class="career-profile-panel">
+          <div class="profile-control-group"><strong>职业方向（可多选）</strong><div id="careerDirectionChips" class="career-chip-grid"></div></div>
+          <div class="profile-control-group"><strong>课程偏好</strong><div id="coursePreferenceChips" class="career-chip-grid compact"></div></div>
+          <div class="profile-summary"><span>当前组合</span><strong id="careerProfileSummary">尚未选择</strong><button id="generateRecommendedPlanBtn" class="primary-button">生成推荐方案</button><button id="clearCareerProfileBtn" class="text-button">清空</button></div>
+        </section>
+        <div id="recommendationGroups" class="recommendation-groups"></div>
+      </section>
+
+      <section id="view-schedule" class="view">
+        <div class="schedule-toolbar">
+          <div>
+            <h2>按周查看课表</h2>
+            <p id="scheduleWeekCaption">每次只显示该周实际发生的课程；集中课程不会占满整个学期。</p>
+          </div>
+          <div class="schedule-toolbar-actions">
+            <span id="conflictStatus" class="status-pill">无时间冲突</span>
+            <button id="printScheduleBtn" class="secondary-button">打印课表</button>
+            <button id="clearScheduleBtn" class="secondary-button">清空课表</button>
+          </div>
+        </div>
+        <section class="schedule-storage-notice" aria-labelledby="scheduleStorageTitle">
+          <div class="schedule-storage-icon" aria-hidden="true">✓</div>
+          <div class="schedule-storage-copy">
+            <strong id="scheduleStorageTitle">自动保存在当前浏览器</strong>
+            <p>刷新页面不会清空课表；换设备、换浏览器、使用无痕窗口或清除网站数据后无法自动恢复。不同访问者不会共用课表；共用同一浏览器用户资料时则会看到同一份本地数据。</p>
+            <small id="scheduleStorageStatus">正在确认本地保存状态…</small>
+          </div>
+          <div class="schedule-storage-actions">
+            <button id="exportPlanBackupBtn" class="secondary-button" type="button">备份我的课表</button>
+            <button id="restorePlanBackupBtn" class="secondary-button" type="button">恢复备份</button>
+            <input id="planBackupFileInput" type="file" accept=".json,application/json" hidden>
+          </div>
+        </section>
+        <section class="schedule-drag-panel selected-course-panel">
+          <div class="schedule-drag-heading"><div><h3>已选课程</h3><p>下方周课表与此处课程一一对应。请从“课程检索”页直接拖入或加入课程；此处用于核对和移除。</p></div><span id="selectedCourseTrayCount" class="selected-course-count">0 门</span></div>
+          <div id="scheduleCourseTray" class="schedule-course-tray"></div>
+        </section>
+        <div class="week-navigator" aria-label="周课表日期导航">
+          <button id="previousWeekBtn" class="secondary-button" aria-label="上一周">← 上一周</button>
+          <div class="week-current">
+            <strong id="scheduleWeekLabel">2026年8月24日—8月28日</strong>
+            <span id="scheduleWeekNumber">正式课程第1周</span>
+          </div>
+          <label class="date-jump">跳转到日期 <input id="scheduleDateInput" type="date" min="2026-01-01" max="2030-12-31" value="2026-08-24"></label>
+          <button id="nextWeekBtn" class="secondary-button" aria-label="下一周">下一周 →</button>
+          <button id="regularWeekBtn" class="text-button">回到正式课程第1周</button>
+        </div>
+        <div id="scheduleDropShell" class="schedule-drop-shell"><div id="scheduleDropMessage" class="schedule-drop-message">松开鼠标，将课程按官方时间加入课表</div><div id="fullSchedule" class="weekly-schedule"></div></div>
+        <div id="unscheduledCourses" class="unscheduled-list"></div>
+      </section>
+
+      <section id="view-schools" class="view">
+        <div class="school-page-intro">
+          <div><span class="eyebrow">多校课程数据中心</span><h2>康奈尔默认，其他法学院按官方数据源导入</h2><p>康奈尔课程已经离线内置。使用其他法学院时，可按照导入向导连接学校提供的数据接口，或上传整理好的 JSON／CSV 课程文件。</p></div>
+          <a id="currentSchoolCatalogLink" class="secondary-button link-button" href="#" target="_blank" rel="noreferrer">打开当前学校官方课程页面 ↗</a>
+        </div>
+        <section class="current-school-card"><div><span>当前学校</span><h3 id="currentSchoolFullName">Cornell Law School</h3><p id="currentSchoolDataStatus">2026–27 全量目录已离线预装</p></div><div class="current-school-stats"><strong id="currentSchoolCourseCount">0</strong><span>门课程</span></div></section>
+        <section><div class="section-title-row"><div><h2>常见 T14 法学院预设</h2><p>“T14”是习惯称呼，不同年份排名可能变化；这里作为常见顶尖法学院入口集合。</p></div></div><div id="schoolPresetGrid" class="school-preset-grid"></div></section>
+        <section id="importWorkbench" class="import-workbench">
+          <div class="import-workbench-heading"><div><h2>课程数据导入</h2><p>按“官方页面 → 采集材料 → AI 整理 → 上传压缩包 → 自动切换学校”的固定流程完成，无需配置 API。</p></div><div class="import-heading-actions"><button id="downloadImportChecklistBtn" class="secondary-button">下载本校操作清单</button><button id="downloadImportTemplateBtn" class="secondary-button">下载 JSON/CSV 模板</button></div></div>
+          <div class="import-grid">
+            <div class="import-settings">
+              <label>学校中文名<input id="importSchoolNameZh" type="text" placeholder="例如：哈佛法学院"></label>
+              <label>学校英文名<input id="importSchoolNameEn" type="text" placeholder="例如：Harvard Law School"></label>
+              <label>学期名称<input id="importTermLabel" type="text" placeholder="例如：Fall 2026"></label>
+              <div class="date-grid"><label>开课日期<input id="importInstructionStart" type="date"></label><label>结课日期<input id="importInstructionEnd" type="date"></label></div>
+              <label>官方课程页面<input id="importCatalogUrl" type="url" placeholder="https://..."></label>
+              <label>数据源类型<select id="importSourceType"><option value="file-package">上传智能助手返回的压缩包（推荐）</option><option value="file-json">上传智能助手生成的 JSON</option><option value="paste-json">粘贴智能助手生成的 JSON</option><option value="file-csv">上传标准 CSV</option><option value="api-json">学校官方 JSON API</option></select></label>
+              <div id="remoteApiFields" class="conditional-fields"><label>API 地址<input id="importApiUrl" type="url" placeholder="https://.../courses.json"></label><label>请求头（JSON，可选）<textarea id="importApiHeaders" rows="3" placeholder='{"Authorization":"Bearer ..."}'></textarea></label><label>字段映射（JSON，可选）<textarea id="importFieldMapping" rows="6" placeholder='{"courses":"data.classes","code":"courseCode","title":"title","description":"description","credits":"credits","sections":"sections"}'></textarea></label></div>
+              <div id="fileImportFields" class="conditional-fields" hidden><label>选择文件<input id="importFileInput" type="file" accept=".zip,.json,.csv,application/zip,application/json,text/csv"></label><small class="import-field-help">推荐上传 AI 返回的 .zip；程序会读取其中全部 JSON/CSV 课程文件，尽可能导入有效课程，并报告未导入项目。</small></div>
+              <div id="pasteImportFields" class="conditional-fields" hidden><label>粘贴标准 JSON<textarea id="importPasteText" rows="12" placeholder='{"school": {...}, "courses": [...]}'></textarea></label></div>
+              <div class="import-user-note">请先下载本校操作清单，再复制下方提示词并连同官方页面材料交给任意 AI。回传压缩包只需包含 JSON／CSV；英文原文可直接导入，中文字段缺失只会作为提示，不会阻止有效课程保存。</div>
+              <div class="import-actions"><button id="fetchImportBtn" class="secondary-button">读取并预览</button><button id="commitImportBtn" class="primary-button" disabled>保存到本地并切换</button></div>
+            </div>
+            <div class="import-preview-panel"><div class="preview-heading"><strong>智能助手导入提示词</strong><button id="copyImportPromptBtn" class="text-button" type="button">复制提示词</button></div><textarea id="assistantImportPrompt" class="assistant-import-prompt" readonly></textarea><div class="preview-heading import-preview-heading"><strong>导入结果与预览</strong><span id="importPreviewStatus">尚未读取数据</span></div><div id="importPreview" class="import-preview empty-state">选择数据源并点击“读取并预览”。</div></div>
+          </div>
+          <details class="import-guide"><summary>第一次使用：笨拙但可靠的五步导入法</summary><ol><li>在上方选择法学院，点击“官方课程源”，确认正确学期；下载“本校操作清单”。</li><li>按清单保存公开页面、打印为 PDF 或复制页面源代码；只收集官方课程、班次、时间、地点与限制信息。</li><li>复制本页“智能助手导入提示词”，连同材料交给你可访问的 AI；要求它返回 JSON/CSV，并将文件打包成 ZIP。</li><li>回到本页选择“上传智能助手返回的压缩包”，先读取预览。软件会保留可识别课程，逐项报告缺少代号、标题、时间或双语字段的情况。</li><li>点击保存后自动切换到对应法学院课程库。若有失败项，将报告复制给 AI 修正后再次导入；不会覆盖其他学校的数据。</li></ol></details>
+        </section>
+      </section>
+
+      <section id="view-faq" class="view">
+        <div class="faq-intro">
+          <span id="faqIntroEyebrow" class="eyebrow">LLM 选课指南</span>
+          <h2 id="faqIntroTitle">先理解规则，再选择课程</h2>
+          <p id="faqIntroCopy">这里用中文解释评分方式、选课流程、课程负担与常见标签。</p>
+        </div>
+        <div class="faq-toolbar">
+          <div class="search-box"><span>⌕</span><input id="faqSearchInput" type="search" placeholder="搜索 S/U、NY Bar、IALS、学分、选课……" autocomplete="off"></div>
+        </div>
+        <div id="faqList" class="faq-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="detailOverlay" class="overlay" hidden>
+    <aside id="detailDrawer" class="detail-drawer" aria-modal="true" role="dialog">
+      <button id="closeDrawerBtn" class="drawer-close" aria-label="关闭">×</button>
+      <div id="detailContent"></div>
+    </aside>
+  </div>
+
+
+  <div id="tagHelpOverlay" class="overlay" hidden>
+    <section class="tag-help-dialog" role="dialog" aria-modal="true" aria-labelledby="tagHelpTitle">
+      <button id="closeTagHelpBtn" class="drawer-close" aria-label="关闭">×</button>
+      <h2 id="tagHelpTitle">课程标签说明</h2>
+      <p class="tag-help-intro">NY Bar 筛选采用四个互斥状态。职业责任、法律研究与写作、美国法体系及 NYLE／Bar 考试科目会在学分进度中单列显示。</p>
+      <div class="tag-help-grid">
+        <div class="tag-help-card"><span class="badge badge-bar-eligible">NY Bar 选修</span><p>该课程可计入纽约州法院规则第520.6条要求的 24 个课堂学分；如符合职业责任、法律研究与写作或美国法体系要求，进度面板会另行计入该类别。</p></div>
+        <div class="tag-help-card"><span class="badge badge-bar-review">NY Bar 外选修</span><p>课程不自动计入 24 个 NY Bar 课堂学分，可作为 LLM 选修课另行规划。</p></div>
+        <div class="tag-help-card"><span class="badge badge-bar-ineligible">不计入 NY Bar</span><p>该课程不计入 24 个课堂学分。</p></div>
+        <div class="tag-help-card"><span class="badge badge-core">NYLE / Bar 考试科目</span><p>该课程属于 Cornell 2026–27 memo 列示的 NY Bar 或 NYLE 考试科目，可用于满足该类别至少 6 学分的要求，并计入 24 个课堂学分；课程之间是可选组合，不是每门都必修。</p></div>
+        <div class="tag-help-card"><span class="badge badge-enrollment badge-enrollment-open">LLM 直选课</span><p>LLM 学生可通过学生中心直接选课。</p></div>
+        <div class="tag-help-card"><span class="badge badge-enrollment badge-enrollment-application">需申请</span><p>课程通过诊所、实践课或其他申请程序录取。</p></div>
+        <div class="tag-help-card"><span class="badge badge-enrollment badge-enrollment-permission">需教师许可</span><p>需要教授或学院批准后才能注册。</p></div>
+        <div class="tag-help-card"><span class="badge badge-enrollment badge-enrollment-restricted">限特定项目</span><p>课程仅面向指定项目或学生群体，LLM 学生通常不能直接选择。</p></div>
+        <div class="tag-help-card"><span class="badge badge-enrollment badge-enrollment-automatic">自动注册</span><p>学校会自动加入课程，无需抢课。</p></div>
+      </div>
+    </section>
+  </div>
+
+  <div id="sectionPickerOverlay" class="overlay" hidden><section class="choice-dialog" role="dialog" aria-modal="true"><button id="closeSectionPickerBtn" class="drawer-close" aria-label="关闭">×</button><h2>选择班次</h2><p id="sectionPickerCourseTitle"></p><div id="sectionPickerOptions" class="section-picker-options"></div></section></div>
+
+  <div id="conflictOverlay" class="overlay" hidden><section class="choice-dialog conflict-dialog" role="dialog" aria-modal="true"><button id="closeConflictBtn" class="drawer-close" aria-label="关闭">×</button><span class="conflict-icon">!</span><h2>检测到时间冲突</h2><p id="conflictMessage"></p><div id="conflictDetails" class="conflict-details"></div><div class="dialog-actions"><button id="cancelConflictBtn" class="secondary-button">取消加入</button><button id="forceAddConflictBtn" class="danger-button">仍然加入</button></div></section></div>
+
+  <div id="courseEditorOverlay" class="overlay" hidden><section class="choice-dialog course-editor-dialog" role="dialog" aria-modal="true" aria-labelledby="courseEditorTitle"><button id="closeCourseEditorBtn" class="drawer-close" aria-label="关闭">×</button><h2 id="courseEditorTitle">新建课程／安排</h2><p class="editor-note">可新增个人安排，或修正本机课程信息。对官方课程的改动只保存在本机，并会标记为“本机编辑”。</p><form id="courseEditorForm" class="course-editor-form"><input id="editorCourseId" type="hidden"><div class="editor-grid"><label>课程代号<input id="editorCourseCode" required placeholder="例如：PERSONAL 001"></label><label>学分<input id="editorCourseCredits" type="number" min="0" max="20" step="0.5" value="0"></label><label>中文名称<input id="editorTitleZh" required></label><label>英文名称<input id="editorTitleEn"></label><label>授课日<select id="editorMeetingDay"><option value="">不进入周课表</option><option value="M">周一</option><option value="T">周二</option><option value="W">周三</option><option value="R">周四</option><option value="F">周五</option></select></label><label>开始时间<input id="editorStartTime" type="time" value="09:00"></label><label>结束时间<input id="editorEndTime" type="time" value="10:00"></label><label>授课地点<input id="editorLocation" placeholder="例如：Myron Taylor Hall 184"></label></div><label>课程说明<textarea id="editorDescriptionZh" rows="4" placeholder="课程说明或个人安排备注"></textarea></label><div class="dialog-actions"><button id="deleteCourseBtn" type="button" class="danger-button" hidden>删除本机课程</button><button type="button" id="cancelCourseEditorBtn" class="secondary-button">取消</button><button type="submit" class="primary-button">保存课程</button></div></form></section></div>
+
+  <div id="supportAuthorOverlay" class="overlay" hidden><section class="choice-dialog support-author-dialog" role="dialog" aria-modal="true" aria-labelledby="supportAuthorTitle"><button id="closeSupportAuthorBtn" class="drawer-close" aria-label="关闭">×</button><h2 id="supportAuthorTitle">联系作者与支持项目</h2><p class="support-email-line"><span id="supportEmailLabel">邮箱：</span><a class="support-contact-link" href="mailto:jy2279@cornell.edu">jy2279@cornell.edu</a></p><p id="supportAuthorText" class="support-project-copy">LL.M. Planner 是面向中国 LL.M. 学生的本地课程规划工具，整合官方课程数据、双语课程说明、NY Bar 学分提示、课程筛选与周课表安排。</p><p id="supportAuthorInvite" class="support-project-copy">欢迎就课程数据、功能建议或使用体验与作者联系；如本项目对你有帮助，也欢迎使用支付宝扫码支持后续维护。</p><img src="./assets/support-author-qr.png" alt="支付宝支持项目二维码" class="support-author-qr"></section></div>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="./data/cornell.catalog.zh-CN.js"></script>
+  <script src="./data/cornell.catalog.en.js"></script>
+  <script src="./data/cureviews/cureviews-law-current.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

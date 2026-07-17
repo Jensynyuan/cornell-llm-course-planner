@@ -1,0 +1,12 @@
+{
+  "courseCount": 425,
+  "failureCount": 0,
+  "failures": [],
+  "requiredLegalCourseChecks": [
+    "LAW 6441",
+    "LAW 6401",
+    "LAW 6131",
+    "LAW 6561",
+    "LAW 6821"
+  ]
+}

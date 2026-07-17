@@ -1,0 +1,8 @@
+{
+  "checkedAt": "2026-07-17T17:18:52.384Z",
+  "apiUrl": "https://classes.cornell.edu/api/2.0/search/classes.json?roster=FA26&subject=LAW",
+  "courseCount": 137,
+  "explicitAssignments": 57,
+  "explicitFinalAssessment": 3,
+  "noAssessmentStatement": 79
+}
