@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="data:,">
   <meta name="description" content="面向中国 LL.M. 学生的美国法学院课程、NY Bar 学分与课表规划工具" />
-  <title>LL.M. Course Planner v5.20</title>
+  <title>LL.M. Course Planner v5.21</title>
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
@@ -15,7 +15,7 @@
         <div class="brand-mark">L</div>
         <div>
           <div class="brand-title">LL.M. Planner</div>
-          <div id="brandSubtitle" class="brand-subtitle">Cornell Law · Fall 2026 · v5.20</div>
+          <div id="brandSubtitle" class="brand-subtitle">Cornell Law · Fall 2026 · v5.21</div>
         </div>
       </div>
 
@@ -76,7 +76,7 @@
           </div>
           <div class="filter-strip" aria-label="课程筛选与排序">
             <label class="filter-field"><span>NY Bar</span><select id="barFilter" class="select-control" aria-label="NY Bar 筛选">
-              <option value="all">全部状态</option><option value="eligible">NY Bar 选修</option><option value="review">NY Bar 外选修</option><option value="ineligible">不计入 NY Bar</option><option value="core">NYLE / Bar 考试科目</option>
+              <option value="all">全部状态</option><option value="eligible">NY Bar 课堂学分</option><option value="review">需院系确认</option><option value="ineligible">不计入 NY Bar</option><option value="core">NYLE / Bar 考试科目</option>
             </select></label>
             <label class="filter-field"><span>评分方式</span><select id="gradingFilter" class="select-control" aria-label="评分方式筛选">
               <option value="all">全部方式</option><option value="su">仅 S/U</option><option value="graded">仅字母等级</option>
@@ -116,8 +116,8 @@
               <div class="library-tag-row" aria-label="快捷标签筛选">
                 <div class="library-tag-heading"><span class="legend-kicker">快捷标签</span><button id="tagHelpBtnInline" type="button" class="legend-help-button" onclick="document.getElementById('tagHelpBtn').click()">标签说明</button></div>
                 <div class="library-tag-chips">
-                  <button type="button" class="badge badge-clickable badge-bar-eligible" data-badge-filter="eligible">NY Bar 选修</button>
-                  <button type="button" class="badge badge-clickable badge-bar-review" data-badge-filter="review">NY Bar 外选修</button>
+                  <button type="button" class="badge badge-clickable badge-bar-eligible" data-badge-filter="eligible">NY Bar 课堂学分</button>
+                  <button type="button" class="badge badge-clickable badge-bar-review" data-badge-filter="review">需院系确认</button>
                   <button type="button" class="badge badge-clickable badge-bar-ineligible" data-badge-filter="ineligible">不计入 NY Bar</button>
                   <button type="button" class="badge badge-clickable badge-core" data-badge-filter="core">NYLE / Bar 考试科目</button>
                   <span class="legend-divider" aria-hidden="true"></span>
@@ -263,8 +263,8 @@
       <h2 id="tagHelpTitle">课程标签说明</h2>
       <p class="tag-help-intro">NY Bar 筛选采用四个互斥状态。职业责任、法律研究与写作、美国法体系及 NYLE／Bar 考试科目会在学分进度中单列显示。</p>
       <div class="tag-help-grid">
-        <div class="tag-help-card"><span class="badge badge-bar-eligible">NY Bar 选修</span><p>该课程可计入纽约州法院规则第520.6条要求的 24 个课堂学分；如符合职业责任、法律研究与写作或美国法体系要求，进度面板会另行计入该类别。</p></div>
-        <div class="tag-help-card"><span class="badge badge-bar-review">NY Bar 外选修</span><p>课程不自动计入 24 个 NY Bar 课堂学分，可作为 LLM 选修课另行规划。</p></div>
+        <div class="tag-help-card"><span class="badge badge-bar-eligible">NY Bar 课堂学分</span><p>按所选班次计算：康奈尔法学院线下讲授、研讨或讨论班次会计入 Rule 520.6 的 24 个课堂学分，除非官方明确排除；符合职业责任、法律研究与写作或美国法体系要求的课程会另行计入相应类别。</p></div>
+        <div class="tag-help-card"><span class="badge badge-bar-review">需院系确认</span><p>诊所、实践课、项目限制班次或形式无法从官方班次直接判断的课程，不自动计入 24 个课堂学分；请向 Cornell Law 确认。</p></div>
         <div class="tag-help-card"><span class="badge badge-bar-ineligible">不计入 NY Bar</span><p>该课程不计入 24 个课堂学分。</p></div>
         <div class="tag-help-card"><span class="badge badge-core">NYLE / Bar 考试科目</span><p>该课程属于 Cornell 2026–27 memo 列示的 NY Bar 或 NYLE 考试科目，可用于满足该类别至少 6 学分的要求，并计入 24 个课堂学分；课程之间是可选组合，不是每门都必修。</p></div>
         <div class="tag-help-card"><span class="badge badge-enrollment badge-enrollment-open">LLM 直选课</span><p>LLM 学生可通过学生中心直接选课。</p></div>
