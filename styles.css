@@ -216,12 +216,14 @@ button { cursor: pointer; }
 .detail-section p { font-size: 13px; line-height: 1.75; color: #4d5259; }
 .official-description { background: #fafafa; border: 1px solid var(--line); border-radius: 11px; padding: 12px; color: #656a71; font-size: 11px; line-height: 1.65; }
 .section-choice { display: grid; gap: 8px; }
+.section-switch-hint { margin: 0 0 10px; padding: 9px 11px; border: 1px solid #cbdcf8; border-radius: 9px; background: #f3f7ff; color: #315b9b; font-size: 11px; line-height: 1.55; }
 .section-option { display: flex; gap: 10px; align-items: flex-start; border: 1px solid var(--line); border-radius: 10px; padding: 10px; }
 .section-option input { margin-top: 2px; }
 .section-option strong { font-size: 12px; }
 .section-option small { display: block; margin-top: 4px; color: var(--muted); }
 .detail-footer { position: sticky; bottom: -28px; background: rgba(255,255,255,.96); border-top: 1px solid var(--line); margin: 24px -28px -28px; padding: 14px 28px 18px; }
 .detail-footer .primary-button { width: 100%; }
+.detail-footer .section-switch-button { background: #2457a6; box-shadow: 0 6px 16px rgba(36,87,166,.2); }
 .course-editor-dialog { width: min(760px, calc(100vw - 28px)); max-height: min(820px, calc(100vh - 28px)); overflow-y: auto; }
 .course-editor-form { display: grid; gap: 13px; margin-top: 16px; }
 .course-editor-form label { display: grid; gap: 6px; color: var(--ink); font-size: 11px; font-weight: 650; }
