@@ -501,6 +501,7 @@
       if (gf === "graded" && /s\/u|satisfactory/i.test(String(c.grading || c.gradingZh))) return false;
       const creditsFilter = els.creditsFilter?.value || "all";
       const credits = Number(c.credits || 0);
+      if (creditsFilter === "0-1" && (credits < 0 || credits > 1)) return false;
       if (["2", "3", "4"].includes(creditsFilter) && credits !== Number(creditsFilter)) return false;
       if (creditsFilter === "5+" && credits < 5) return false;
       const meetingDay = els.meetingDayFilter?.value || "all";
@@ -539,7 +540,7 @@
     const availability = {
       barFilter: value => value === "all" || courses.some(course => nyBarFilterBucket(course) === value),
       gradingFilter: value => value === "all" || courses.some(course => value === "su" ? /s\/u|satisfactory/i.test(String(course.gradingZh || course.grading)) : !/s\/u|satisfactory/i.test(String(course.gradingZh || course.grading))),
-      creditsFilter: value => value === "all" || courses.some(course => value === "5+" ? Number(course.credits || 0) >= 5 : Number(course.credits || 0) === Number(value)),
+      creditsFilter: value => value === "all" || courses.some(course => value === "0-1" ? Number(course.credits || 0) >= 0 && Number(course.credits || 0) <= 1 : value === "5+" ? Number(course.credits || 0) >= 5 : Number(course.credits || 0) === Number(value)),
       meetingDayFilter: value => value === "all" || courses.some(course => (course.sections || []).some(section => (section.meetings || []).some(meeting => parsePattern(meeting.pattern).includes(value)))),
       topicFilter: value => value === "all" || courses.some(course => courseTopics(course).includes(value)),
       llmFilter: value => value === "all" || courses.some(course => value === "specific" ? course.llmSpecific : course.eligibility === "open"),
@@ -1642,10 +1643,10 @@
 
   function renderSchoolIdentity() {
     currentSchoolProfile = getSchoolProfile(currentSchoolId);
-    if (els.brandSubtitle) els.brandSubtitle.textContent = `${isEnglish() ? (currentSchoolProfile.nameEn || currentSchoolProfile.nameZh) : (currentSchoolProfile.nameZh || currentSchoolProfile.nameEn)} · ${currentSchoolProfile.termLabel || (isEnglish() ? "Custom term" : "自定义学期")} · v5.22`;
+    if (els.brandSubtitle) els.brandSubtitle.textContent = `${isEnglish() ? (currentSchoolProfile.nameEn || currentSchoolProfile.nameZh) : (currentSchoolProfile.nameZh || currentSchoolProfile.nameEn)} · ${currentSchoolProfile.termLabel || (isEnglish() ? "Custom term" : "自定义学期")} · v5.23`;
     if (els.currentSchoolShort) els.currentSchoolShort.textContent = isEnglish() ? (currentSchoolProfile.nameEn || currentSchoolProfile.nameZh) : (currentSchoolProfile.shortZh || currentSchoolProfile.nameZh);
     if (els.currentTermShort) els.currentTermShort.textContent = currentSchoolProfile.termLabel || (isEnglish() ? "Custom term" : "自定义学期");
-    document.title = `${isEnglish() ? (currentSchoolProfile.nameEn || currentSchoolProfile.nameZh) : (currentSchoolProfile.shortZh || currentSchoolProfile.nameEn)} LL.M. Course Planner v5.22`;
+    document.title = `${isEnglish() ? (currentSchoolProfile.nameEn || currentSchoolProfile.nameZh) : (currentSchoolProfile.shortZh || currentSchoolProfile.nameEn)} LL.M. Course Planner v5.23`;
   }
 
   function renderSchoolManager() {
