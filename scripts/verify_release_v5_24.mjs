@@ -65,7 +65,7 @@ if (totals.core !== 3 || totals.professional !== 0) fail("reassignment must move
 
 const index = fs.readFileSync(path.join(root, "index.html"), "utf8");
 const app = fs.readFileSync(path.join(root, "app.js"), "utf8");
-if (!index.includes("LL.M. Course Planner v5.24")) fail("page version marker is missing");
+if (!/LL\.M\. Course Planner v5\.(?:24|25)/.test(index)) fail("page version marker is missing");
 if (index.indexOf("./nybar-allocation.js") < 0 || index.indexOf("./nybar-allocation.js") > index.indexOf("./app.js")) fail("allocation helper must load before app.js");
 if (index.includes("cornell.catalog.spring-2027")) fail("Spring database must remain separate until the planner gains an explicit term selector");
 for (const marker of ["barCategoryAllocations", "bindBarAllocationControls", "creditsByCategory"]) if (!app.includes(marker)) fail(`allocation interface marker absent: ${marker}`);

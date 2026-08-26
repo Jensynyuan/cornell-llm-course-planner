@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="data:,">
-  <meta name="description" content="面向中国 LL.M. 学生的美国法学院课程、NY Bar 学分与课表规划工具" />
-  <title>LL.M. Course Planner v5.24</title>
+  <meta name="description" content="A bilingual Cornell LL.M. course, NY Bar credit, schedule and calendar planner." />
+  <title>LL.M. Course Planner v5.25</title>
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
@@ -15,7 +15,7 @@
         <div class="brand-mark">L</div>
         <div>
           <div class="brand-title">LL.M. Planner</div>
-          <div id="brandSubtitle" class="brand-subtitle">Cornell Law · Fall 2026 · v5.24</div>
+          <div id="brandSubtitle" class="brand-subtitle">Cornell Law · Fall 2026 · v5.25</div>
         </div>
       </div>
 
@@ -64,7 +64,7 @@
           <button id="schoolSwitcherBtn" class="school-switcher-button" title="切换学校或导入课程数据"><span id="currentSchoolShort">康奈尔</span><small id="currentTermShort">Fall 2026</small></button>
           <button id="languageToggleBtn" class="secondary-button language-toggle-button" title="切换中文或英文界面">中文 / EN</button>
           <button id="loadRecommendedBtn" class="secondary-button">设置偏好并生成推荐</button>
-          <button id="syncBtn" class="primary-button">更新课程数据</button>
+          <button id="authorAnnouncementBtn" class="primary-button">作者公告</button>
         </div>
       </header>
 
@@ -179,13 +179,14 @@
           <div class="schedule-storage-icon" aria-hidden="true">✓</div>
           <div class="schedule-storage-copy">
             <strong id="scheduleStorageTitle">自动保存在当前浏览器</strong>
-            <p>刷新页面不会清空课表；换设备、换浏览器、使用无痕窗口或清除网站数据后无法自动恢复。不同访问者不会共用课表；共用同一浏览器用户资料时则会看到同一份本地数据。</p>
+            <p id="scheduleStorageCopy">刷新页面不会清空课表；课表及从日历导入的个人日程只保存在当前浏览器，日历文件不会上传。</p>
             <small id="scheduleStorageStatus">正在确认本地保存状态…</small>
+            <button id="clearImportedCalendarBtn" class="inline-link-button calendar-clear-button" type="button" hidden>清除已导入日程</button>
           </div>
           <div class="schedule-storage-actions">
-            <button id="exportPlanBackupBtn" class="secondary-button" type="button">备份我的课表</button>
-            <button id="restorePlanBackupBtn" class="secondary-button" type="button">恢复备份</button>
-            <input id="planBackupFileInput" type="file" accept=".json,application/json" hidden>
+            <label id="calendarImportBtn" class="secondary-button calendar-file-label" role="button" tabindex="0" for="calendarFileInput">从日历导入</label>
+            <button id="calendarExportBtn" class="secondary-button" type="button">导入日历</button>
+            <input id="calendarFileInput" type="file" accept=".ics,text/calendar" multiple hidden>
           </div>
         </section>
         <section class="schedule-drag-panel selected-course-panel">
@@ -284,12 +285,17 @@
 
   <div id="supportAuthorOverlay" class="overlay" hidden><section class="choice-dialog support-author-dialog" role="dialog" aria-modal="true" aria-labelledby="supportAuthorTitle"><button id="closeSupportAuthorBtn" class="drawer-close" aria-label="关闭">×</button><h2 id="supportAuthorTitle">联系作者与支持项目</h2><p class="support-email-line"><span id="supportEmailLabel">邮箱：</span><a class="support-contact-link" href="mailto:jy2279@cornell.edu">jy2279@cornell.edu</a></p><p id="supportAuthorText" class="support-project-copy">LL.M. Planner 是面向中国 LL.M. 学生的本地课程规划工具，整合官方课程数据、双语课程说明、NY Bar 学分提示、课程筛选与周课表安排。</p><p id="supportAuthorInvite" class="support-project-copy">欢迎就课程数据、功能建议或使用体验与作者联系；如本项目对你有帮助，也欢迎使用支付宝扫码支持后续维护。</p><img src="./assets/support-author-qr.png" alt="支付宝支持项目二维码" class="support-author-qr"></section></div>
 
+  <div id="calendarExportOverlay" class="overlay" hidden data-i18n-exempt><section class="choice-dialog calendar-export-dialog" role="dialog" aria-modal="true" aria-labelledby="calendarExportTitle"><button id="closeCalendarExportBtn" class="drawer-close" aria-label="Close">×</button><span class="calendar-dialog-icon" aria-hidden="true">▦</span><h2 id="calendarExportTitle"></h2><p id="calendarExportIntro"></p><div id="calendarExportSummary" class="calendar-export-summary"></div><div class="calendar-export-options"><button id="googleCalendarExportBtn" class="calendar-provider-button calendar-provider-google" type="button"><strong id="googleCalendarExportTitle"></strong><span id="googleCalendarExportCopy"></span></button><button id="icsCalendarExportBtn" class="calendar-provider-button" type="button"><strong id="icsCalendarExportTitle"></strong><span id="icsCalendarExportCopy"></span></button></div><p id="calendarExportPrivacy" class="calendar-privacy-note"></p></section></div>
+
+  <div id="authorAnnouncementOverlay" class="overlay" hidden data-i18n-exempt><section class="choice-dialog author-announcement-dialog" role="dialog" aria-modal="true" aria-labelledby="authorAnnouncementTitle"><button id="closeAuthorAnnouncementBtn" class="drawer-close" aria-label="Close">×</button><header class="author-announcement-hero"><span id="authorAnnouncementEyebrow" class="announcement-eyebrow"></span><h2 id="authorAnnouncementTitle"></h2><a class="support-contact-link" href="mailto:jy2279@cornell.edu">jy2279@cornell.edu</a><p id="authorAnnouncementInvite"></p><a id="authorAnnouncementMailBtn" class="primary-button announcement-mail-button" href="mailto:jy2279@cornell.edu"></a></header><div class="announcement-heading-row"><h3 id="authorAnnouncementHistoryTitle"></h3><span>v5.25</span></div><div id="authorAnnouncementList" class="author-announcement-list"></div></section></div>
+
   <div id="toast" class="toast" hidden></div>
 
   <script src="./data/cornell.catalog.zh-CN.js"></script>
   <script src="./data/cornell.catalog.en.js"></script>
   <script src="./data/cureviews/cureviews-law-current.js"></script>
   <script src="./nybar-allocation.js"></script>
+  <script src="./calendar-integration.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>

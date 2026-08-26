@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import { inflateRawSync } from "node:zlib";
 
 const ROOT = fileURLToPath(new URL(".", import.meta.url));
-const PORT = Number(process.env.PORT || 4173);
+const PORT = Number(process.env.LLM_PLANNER_PORT || process.env.PORT || 4173);
 const MAX_BODY = 2_000_000;
 const MAX_REMOTE = 15_000_000;
 const MAX_ZIP = 15_000_000;
@@ -13,7 +13,7 @@ const MAX_UNZIPPED = 30_000_000;
 const mime = {
   ".html":"text/html; charset=utf-8", ".js":"text/javascript; charset=utf-8",
   ".css":"text/css; charset=utf-8", ".json":"application/json; charset=utf-8",
-  ".md":"text/markdown; charset=utf-8", ".svg":"image/svg+xml", ".png":"image/png"
+  ".md":"text/markdown; charset=utf-8", ".ics":"text/calendar; charset=utf-8", ".svg":"image/svg+xml", ".png":"image/png"
 };
 
 function readJsonBody(req) {
@@ -186,4 +186,4 @@ const server = http.createServer(async (req,res) => {
     res.end(isApi ? JSON.stringify({error:error.message}) : "Not found");
   }
 });
-server.listen(PORT,"127.0.0.1",()=>console.log(`Cornell LL.M. Course Planner v5.24: http://127.0.0.1:${PORT}`));
+server.listen(PORT,"127.0.0.1",()=>console.log(`Cornell LL.M. Course Planner v5.25: http://127.0.0.1:${PORT}`));
