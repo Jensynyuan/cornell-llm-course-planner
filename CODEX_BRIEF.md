@@ -1,4 +1,4 @@
-# Codex Brief — Cornell LL.M. Planner v5.32
+# Codex Brief — Cornell LL.M. Planner v5.33
 
 ## 产品目标
 
@@ -17,7 +17,7 @@
 9. 课程推荐不得写死某个用户的履历；使用职业方向和课程偏好的组合式评分。
 10. 外校导入的 NY Bar 状态默认 `review`，除非有该校官方依据。
 11. Cornell 用户可见中文内容必须以官方英文原文的忠实翻译为先；正式发布库的每门课程都必须有中文课程名与中文课程说明。官方当前及历史来源均未发布简介时，中文字段应明确说明“官方未发布”，不得编造课程内容，也不得保留“待翻译”占位符。
-12. 每次发布必须运行当前版本的发布校验；v5.32 至少使用 `node scripts/verify_spring_2027_data_v5_31.mjs`、`node scripts/verify_release_v5_32.mjs`、`node scripts/simulate_three_students_v5_31.mjs` 与本地浏览器硬门。课程数、双语 offering ID、四个浏览器目录全局变量、Spring NY Bar 映射、同号跨学期隔离、默认英文、双语公告、法学院校历及日历集成均须通过。
+12. 每次发布必须运行当前版本的发布校验；v5.33 至少使用 `node scripts/verify_release_v5_33.mjs`、`node scripts/simulate_three_students_v5_31.mjs` 与本地浏览器硬门。课程数、双语 offering ID、四个浏览器目录全局变量、Spring NY Bar 映射、同号跨学期隔离、默认英文、双语公告、法学院校历、日历集成及真实生产 NY Bar 判定器均须通过。
 13. Cornell 同时列入多个 NY Bar 类别的课程必须只分配一次。默认归类可依据整个秋春学年其他已选课程选择增益最大的官方类别，但用户必须能手动调整；任何情况下不得重复计入两个分类进度。
 14. 从日历导入的个人事件必须只保存在当前浏览器，不得上传；个人事件必须参与课程冲突检查，导出课程日历必须按真实上课日期生成。
 15. 作者公告、版本记录及日历操作必须同时维护英文和中文文案；新访问者默认英文，已保存的语言偏好继续生效。
@@ -29,6 +29,7 @@
 21. 发布前必须跑“学期 × 上课形式”组合矩阵，并把运行数据与页面结果逐项比较；至少对 Spring 的讲授课、研讨课、诊所、实践课与独立研究设非零断言。只检查筛选控件存在，不构成通过。
 22. Spring 中英文 JSON 与浏览器 JS 必须分别深度一致：中文全局为 `CORNELL_SPRING_2027_COURSE_CATALOG`，英文全局为 `CORNELL_SPRING_2027_COURSE_CATALOG_EN`；任一缺失、覆盖或串库都必须阻断发布。
 23. 多分类 NY Bar 课程的用户明确归类必须写入本地状态，即使所选值等于数据中的默认分类；切换后进度条、课程列表、推荐、课表与详情必须在不刷新页面的情况下同步更新，并在刷新后保留。
+24. Cornell 的标准 Lecture、Seminar 或 Discussion 班次不得仅因 instruction mode 留空或显示 `Not published` 而被扣除 NY Bar 课堂学分；只有明确标为 Online／Remote 的班次才因授课方式排除。原始课程或 meeting 地点写明 Online／Remote 时同样必须排除。独立研究仍不计入，Clinic、Practicum、混合授课或项目限制班次仍须确认。用户手工填写或本地同步地点不能改变 NY Bar 资格。判定规则必须由 `nybar-eligibility.js` 的纯函数统一提供，测试须直接执行该生产函数。进度面板必须提供逐门计算明细，任何待确认或排除学分都须自动展开并说明原因。
 
 ## Cornell 更新工作流
 

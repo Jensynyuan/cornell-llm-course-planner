@@ -1,4 +1,57 @@
-# v5.32 发布测试报告
+# v5.33 发布测试报告
+
+测试日期：2026-08-26
+
+## 本次发布结论
+
+- 21／24 是计算错误，不是用户课程不算。旧判定把 Spring 2027 标准课堂班次的 `instructionMode: Not published` 当成非线下：LAW 6051（1 学分）、LAW 6734（3 学分）和 LAW 7713（3 学分）合计少算 7 学分。当前实际组合 Fall 13 + Spring 15 = 28，发布候选已按 28／24 计算。
+- 修复不是三门课特例。全库统一执行：Lecture、Seminar、Discussion 等标准课堂班次不会仅因授课方式留空或尚未发布而扣分；只有明确标为 Online／Remote 的班次才因授课方式排除。独立研究仍排除；Clinic、Practicum、混合授课和项目限制课程仍提示确认。
+- 生产页面与自动化现在共用 `nybar-eligibility.js` 的同一个纯判定函数，测试不再复制一套近似逻辑。原始课程／meeting 地点写为 Online、CLN／PRA 结构化组件、混合班次及本地手工／同步地点均设反向门禁。
+- NY Bar 年度总进度下新增逐门计算明细，显示注册学分、当前计入、待确认、不计入及每门原因；存在差额时自动展开。
+
+## 用户 28 学分回归
+
+| 学期 | 课程 | 注册学分 | NY Bar 课堂学分 |
+| --- | --- | ---: | ---: |
+| Fall 2026 | LAW 6091、6131、6641、6745、7991 | 13 | 13 |
+| Spring 2027 | LAW 5061、6051、6734、6761、7028、7713 | 15 | 15 |
+| 全学年 | 11 门 | 28 | 28 |
+
+缺口精确恢复为 `21 + LAW 6051（1）+ LAW 6734（3）+ LAW 7713（3）= 28`。三门课在页面课程卡上均显示 `NY Bar classroom credit／NY Bar 课堂学分`。
+
+## 全库与反向门禁
+
+- 84 个授课方式为空或未发布的标准课堂班次逐一调用生产判定器，全部计入。
+- 当前目录中 8 个明确 Online／Remote／Distance 的班次逐一调用同一生产判定器，全部排除。
+- `Not published + location Online`：排除；不会被实体教室兜底逻辑误放行。
+- `CLN + Clinic Seminar`、`PRA + Practicum Seminar`：待确认；结构化组件优先于名称中的 Seminar。
+- `IND`：排除；`Pending hybrid classification`：待确认。
+- `LEC/In Person + DIS/Not published` 组合班次逐班次判断，整体正确计入。
+- `In Person + 未知组件` 保持待确认；不能仅凭 In Person 把未知课程形式当作标准课堂课。
+- 手工或本地同步地点字段不会改变资格。
+- 逐门明细按“是否存在非计入状态”自动展开，0 学分的待确认／排除课程也不会被隐藏。
+
+## 本地浏览器门禁
+
+- 在既有 Fall 5 + Spring 5 的本地课表中，依次真实搜索并加入 LAW 6051、6734、7713；页面从 10／24 立即更新为 17／24，Spring 注册学分从 5 更新为 12，逐门明细显示 `17 of 17`。
+- 中英文切换后显示 `17 个注册学分中，当前计入 17 学分`；课程卡、进度条、逐门明细及政策说明均无裁切或横向溢出。
+- 页面功能日志无应用脚本异常。浏览器环境出现一条 `Could not establish connection. Receiving end does not exist.`，仓库全文确认不存在 extension messaging 代码，属于浏览器扩展注入信息，不是网站错误。
+
+## 自动化门禁
+
+- `node --check app.js`、`node --check nybar-eligibility.js`、`node --check server.mjs`：通过。
+- `node scripts/verify_release_v5_33.mjs`：通过；覆盖 28 学分实际组合、全库授课方式矩阵、线上地点、诊所／实践、独立研究、混合组合班次、本地地点隔离、Spring 数据、日历及 LAW 6641 唯一归类。
+- `node scripts/simulate_three_students_v5_31.mjs`：通过；三位随机学生、学期 × 上课形式、多选日期及双语数据完整性均通过。
+- `git diff --check`：通过；仅有 Git 换行格式提示，无空白错误。
+
+## 数据边界
+
+- Spring 2027 当前 Course Offerings 仍可能调整；当前规划结果按已发布班次数据暂算，最终资格以 Cornell Law／BOLE 认证为准。
+- 6051、6734、7713 当前 Course Offerings 均给出实体教室，但授课方式字段尚未发布；其 Lecture／Seminar 组件另有 Cornell 历史官方 Class Roster 佐证。
+
+---
+
+# v5.32 历史发布测试报告
 
 测试日期：2026-08-26
 

@@ -21,9 +21,11 @@
   const CORNELL_NO_CLASS_DATES = Object.values(CORNELL_TERM_PROFILES).flatMap(term => term.noClassDates);
   const CORNELL_ACADEMIC_YEAR_TERM = { ...CORNELL_TERM_PROFILES.FA26, instructionEnd:CORNELL_TERM_PROFILES.SP27.instructionEnd, examEnd:CORNELL_TERM_PROFILES.SP27.examEnd };
   const NY_BAR_ALLOCATION = window.NY_BAR_ALLOCATION;
+  const NY_BAR_ELIGIBILITY = window.NY_BAR_ELIGIBILITY;
   const CALENDAR = window.LLM_CALENDAR;
-  const APP_VERSION = "v5.32";
+  const APP_VERSION = "v5.33";
   if (!NY_BAR_ALLOCATION) throw new Error("NY Bar allocation helper failed to load.");
+  if (!NY_BAR_ELIGIBILITY) throw new Error("NY Bar eligibility helper failed to load.");
   if (!CALENDAR) throw new Error("Calendar integration helper failed to load.");
 
   const SCHOOL_PRESETS = [
@@ -76,6 +78,7 @@
     { id:"independent", zh:"独立研究", en:"Independent study", patterns:[/\bind\b/i,/independent/i,/directed (?:study|work)/i,/独立研究/u] }
   ];
   const RELEASE_NOTES = [
+    { version:"v5.33", zh:["统一修复全库 NY Bar 授课方式判定：标准讲授课、研讨课和讨论课不会仅因 instruction mode 留空或尚未发布而被扣除；只有明确标为 Online／Remote 的课程才会因授课方式不计入。","LAW 6051、LAW 6734 与 LAW 7713 现在分别正确计入 1、3、3 学分；用户当前秋春合计 28 学分会显示为 28 个 NY Bar 合资格课堂学分。","NY Bar 总进度下新增逐门计算明细；只要存在待确认或不计入课程就会自动展开，并明确显示每门课程的学分、状态与理由。独立研究仍不计入，诊所、实践课、混合授课及项目限制课程仍提示确认。"], en:["Applied one NY Bar delivery-mode rule across the full catalog: standard lectures, seminars, and discussions no longer lose credit merely because instruction mode is blank or not yet published; only an explicit Online or Remote designation excludes a course on delivery-mode grounds.","LAW 6051, LAW 6734, and LAW 7713 now correctly contribute 1, 3, and 3 credits. The user's current Fall + Spring plan therefore shows 28 qualifying NY Bar classroom credits.","Added a course-by-course calculation directly below the NY Bar total. It automatically opens whenever a selected course is pending confirmation or excluded, showing each course's credits, status, and reason. Independent study remains excluded; clinics, practica, hybrid delivery, and program restrictions still require confirmation."] },
     { version:"v5.32", zh:["修复切换课程学期后另一学期记录看似丢失的问题：Fall 与 Spring 继续保存在同一份个人课表中，NY Bar 24 学分及四项分类按 2026–27 学年统一累计。","LL.M. 每学期 10–15 学分要求现分别显示 Fall 与 Spring 两条进度，课程库学期筛选不会再改变个人年度进度。","按 Cornell Law 的 JD／Ithaca LL.M. 2026–27 官方校历校正 Spring 日期，并在周课表中标出马丁·路德·金纪念日、二月假期与春假；4 月 28 日按周一课表运行。","修复已选课程卡片的“学分当前计入”标签溢出，中文和英文长标签均会完整包在课程卡内。"], en:["Fixed the apparent loss of another term's record after switching the catalog term. Fall and Spring remain in one personal schedule, while the 24 NY Bar credits and four required categories now aggregate across the 2026–27 academic year.","The 10–15 LL.M. registration-credit rule is now shown separately for Fall and Spring. Filtering the catalog by term no longer changes the student's academic-year progress.","Aligned Spring dates with Cornell Law's official 2026–27 JD/Ithaca LL.M. calendar and labeled the Martin Luther King, Jr. Holiday, February Break, and Spring Break in the weekly schedule; April 28 follows a Monday class schedule.","Fixed the selected-course allocation badge so long English and Chinese labels stay fully inside their course cards."] },
     { version:"v5.31", zh:["按 Cornell Law 当前 Course Offerings 重建 Spring 2027 数据库：127 门符合 LL.M. 规划范围的课程、146 个班次及结构化上课形式已接入，修复选择 Spring 讲授课却返回 0 的严重问题。","补齐 127 门 Spring 课程的中文课程名与课程说明；官方当前及已查历史来源均未发布简介的课程会明确显示官方未发布，不再保留“暂无中文译文”。","修复多选筛选器重复箭头；顶部学期入口新增“点击切换学期”提示；没有官方课程班号时不再显示破折号。","修复 LAW 6641 等多分类课程的学分归类：切换后立即更新左侧进度、课程徽标和课表，并在刷新后保留用户的明确选择。"], en:["Rebuilt Spring 2027 from the current Cornell Law Course Offerings source: 127 LL.M.-eligible planning courses, 146 sections, and structured course formats are now loaded, fixing the severe zero-result Spring Lecture filter bug.","Completed Chinese titles and descriptions for all 127 Spring courses. When neither the current nor checked historical official source publishes a description, the detail page states that status instead of showing a missing-translation placeholder.","Removed duplicate arrows from multi-select filters, added a clear term-switch hint, and stopped displaying a dash as a nonexistent official class number.","Fixed one-time NY Bar allocation for multi-category courses such as LAW 6641: changes immediately refresh progress, badges, and the schedule, and the explicit choice persists after reload."] },
     { version:"v5.30", zh:["修复 Spring 2027 课程未接入页面的严重问题：课程库现同时提供 136 门 Fall 与 126 门 Spring 课程，并在卡片、搜索和课表中明确标注学期。","新增学期多选及所有筛选器的多选逻辑；顶部学期入口可切换 Fall、Spring 或同时查看，NY Bar 官方春季分类也已接入。","课表每次打开会定位到用户当前日期所在周，并提供一键跳转 Fall 2026 与 Spring 2027 第一周；公告和操作提示统一在屏幕中央打开。"], en:["Fixed the Spring 2027 catalog integration: Course Search now includes 136 Fall and 126 Spring offerings, with term labels across cards, search, and schedule views.","Added multi-select term and facet filters. The top term control switches between Fall, Spring, or both, and official Spring NY Bar categories are now searchable.","My Schedule now opens on the user's current local week and includes one-click jumps to the first Fall 2026 and Spring 2027 instructional weeks. Notices and action dialogs now open in the center of the screen."] },
@@ -362,7 +365,7 @@
   function barStatusLabel(status) { return (isEnglish() ? BAR_STATUS_LABELS_EN : BAR_STATUS_LABELS)[status] || status; }
   function barPrimaryLabel(primary) { return (isEnglish() ? BAR_LABELS_EN : BAR_LABELS)[primary] || primary; }
   function barCategoryShortLabel(category) { return (isEnglish() ? BAR_SHORT_LABELS_EN : BAR_SHORT_LABELS)[category] || category; }
-  function enrollmentLabel(value) { return (isEnglish() ? ENROLLMENT_LABELS_EN : ENROLLMENT_LABELS)[value] || (isEnglish() ? "To confirm" : "资格待核实"); }
+  function enrollmentLabel(value) { return (isEnglish() ? ENROLLMENT_LABELS_EN : ENROLLMENT_LABELS)[value] || (isEnglish() ? "Enrollment to confirm" : "选课资格待确认"); }
   function courseTitle(c) { return isEnglish() ? (c.officialTitleEn || c.titleEn || c.titleZh || "Course title pending") : (c.titleZh || c.officialTitleEn || "课程中文名待补充"); }
   function normalizedCourseTitle(c) { return String(c.officialTitleEn || c.titleEn || c.titleZh || "").normalize("NFKC").toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ").trim(); }
   function officialCourseDescription(c) { return c.officialDescriptionEn || c.descriptionEn || ""; }
@@ -1322,6 +1325,22 @@
     };
   }
 
+  function nyBarCreditBreakdownHtml(selected) {
+    const rows = selected.map(course => ({ course, eligibility:barEligibility(course, state.selected[course.id]) }));
+    const totalCredits = rows.reduce((sum, row) => sum + Number(row.course.credits || 0), 0);
+    const countedCredits = rows.filter(row => row.eligibility.status === "eligible").reduce((sum, row) => sum + Number(row.course.credits || 0), 0);
+    const pendingCredits = rows.filter(row => row.eligibility.status === "review").reduce((sum, row) => sum + Number(row.course.credits || 0), 0);
+    const excludedCredits = rows.filter(row => row.eligibility.status === "ineligible").reduce((sum, row) => sum + Number(row.course.credits || 0), 0);
+    const hasDifference = rows.some(row => row.eligibility.status !== "eligible");
+    const statusLabel = status => status === "eligible" ? (isEnglish() ? "Counts" : "计入") : status === "review" ? (isEnglish() ? "Confirm" : "待确认") : (isEnglish() ? "Excluded" : "不计入");
+    const reason = row => {
+      if (row.eligibility.status !== "eligible") return isEnglish() ? row.eligibility.reasonEn : row.eligibility.reasonZh;
+      const assigned = assignedBarCategory(row.course);
+      return assigned ? (isEnglish() ? `Counts once in ${barPrimaryLabel(assigned)}` : `计入一次：${barPrimaryLabel(assigned)}`) : (isEnglish() ? row.eligibility.reasonEn : row.eligibility.reasonZh);
+    };
+    return `<details class="bar-credit-breakdown" ${hasDifference ? "open" : ""}><summary><strong>${isEnglish() ? "Course-by-course NY Bar calculation" : "NY Bar 逐门学分计算"}</strong><span>${isEnglish() ? `${countedCredits} of ${totalCredits} registered credits currently count` : `${totalCredits} 个注册学分中，当前计入 ${countedCredits} 学分`}</span></summary><div class="bar-credit-breakdown-totals"><span>${isEnglish() ? `Counted ${countedCredits}` : `计入 ${countedCredits}`}</span><span>${isEnglish() ? `Pending ${pendingCredits}` : `待确认 ${pendingCredits}`}</span><span>${isEnglish() ? `Excluded ${excludedCredits}` : `不计入 ${excludedCredits}`}</span></div><div class="bar-credit-breakdown-list">${rows.map(row => `<div class="bar-credit-breakdown-row is-${esc(row.eligibility.status)}"><span><b>${esc(row.course.code)}</b><small>${esc(courseTitle(row.course))}</small></span><strong>${creditCount(row.course.credits)}</strong><em>${esc(statusLabel(row.eligibility.status))}</em><small>${esc(reason(row))}</small></div>`).join("")}</div></details>`;
+  }
+
   function renderProgress() {
     const selected = selectedCourses();
     const selectedCredits = selected.reduce((sum, course) => sum + Number(course.credits || 0), 0);
@@ -1334,7 +1353,7 @@
         [isEnglish() ? "American legal system" : "美国法体系", categoryCredits("american"), 2],
         [isEnglish() ? "NYLE / Bar tested subjects" : "NYLE / Bar 考试科目", categoryCredits("core"), 6]
       ];
-      els.creditProgress.innerHTML = `<p class="progress-term-context"><strong>${isEnglish() ? "2026–27 academic-year record" : "2026–27 秋春学年个人记录"}</strong><span>${isEnglish() ? "The catalog term filter never removes another term's selections or progress." : "课程库学期筛选不会移除另一学期的选课或进度。"}</span></p>${rangeProgressHtml(isEnglish() ? "Fall 2026 LL.M. registration (10–15)" : "2026 秋季 LL.M. 注册学分（10–15）", annual.registrationCredits.FA26, 10, 15)}${rangeProgressHtml(isEnglish() ? "Spring 2027 LL.M. registration (10–15)" : "2027 春季 LL.M. 注册学分（10–15）", annual.registrationCredits.SP27, 10, 15)}${progressHtml(isEnglish() ? "2026–27 NY Bar qualifying classroom credits" : "2026–27 学年 NY Bar 课堂课程学分", annual.eligibleCredits, 24)}<p class="progress-policy-note">${isEnglish() ? "NY Bar credits and categories aggregate all selected Fall and Spring offerings. Section eligibility is still checked from the section you selected: in-person Cornell Law lecture, seminar, or discussion sections count unless an official restriction excludes them. Online and independent-study sections do not count; clinics, practica, and restricted sections require confirmation." : "NY Bar 课堂学分及分类统一累计全部秋季与春季已选课程。班次资格仍按你所选班次判断：康奈尔法学院线下讲授、研讨或讨论班次会计入，除非官方明确排除；线上和独立研究不计入，诊所、实践课及项目限制班次须确认。"}</p><div class="progress-subheading">${isEnglish() ? "NY Bar required categories · full academic year" : "NY Bar 分类要求 · 秋春学年累计"}</div>${barItems.map(([label, value, target]) => progressHtml(label, value, target)).join("")}${barAllocationControlsHtml(selected)}<p class="progress-policy-note">${isEnglish() ? "Where Cornell lists a course in more than one category, the planner counts it once in the category selected above. Confirm your final allocation with Cornell Law and BOLE." : "若 Cornell 将同一课程列入多个类别，工具仅按上方所选归类计入一次；最终学分分配请向 Cornell Law 和 BOLE 确认。"}</p><p class="progress-policy-note">${isEnglish() ? "Cornell states that LL.M. students register for 10–15 credits in each semester unless the Dean of Students approves otherwise. The two semester bars are separate; they are not added against one 10–15 threshold. This planner does not determine immigration status." : "Cornell 公布的 LL.M. 每学期注册范围为 10–15 学分；秋季与春季分别判断，不会把两学期相加后套用一次 10–15 学分门槛。超出范围需向 Dean of Students 申请。本工具不判断个人移民／签证身份。"}</p>`;
+      els.creditProgress.innerHTML = `<p class="progress-term-context"><strong>${isEnglish() ? "2026–27 academic-year record" : "2026–27 秋春学年个人记录"}</strong><span>${isEnglish() ? "The catalog term filter never removes another term's selections or progress." : "课程库学期筛选不会移除另一学期的选课或进度。"}</span></p>${rangeProgressHtml(isEnglish() ? "Fall 2026 LL.M. registration (10–15)" : "2026 秋季 LL.M. 注册学分（10–15）", annual.registrationCredits.FA26, 10, 15)}${rangeProgressHtml(isEnglish() ? "Spring 2027 LL.M. registration (10–15)" : "2027 春季 LL.M. 注册学分（10–15）", annual.registrationCredits.SP27, 10, 15)}${progressHtml(isEnglish() ? "2026–27 NY Bar qualifying classroom credits" : "2026–27 学年 NY Bar 课堂课程学分", annual.eligibleCredits, 24)}${nyBarCreditBreakdownHtml(selected)}<p class="progress-policy-note">${isEnglish() ? "NY Bar credits and categories aggregate all selected Fall and Spring offerings. For Cornell Law lectures, seminars, and discussions, a blank or not-yet-published instruction mode does not remove classroom credit; an explicit Online or Remote designation does. Independent study does not count, while clinics, practica, hybrid delivery, and restricted sections require confirmation." : "NY Bar 课堂学分及分类统一累计全部秋季与春季已选课程。Cornell Law 的讲授课、研讨课和讨论课不会仅因授课方式留空或尚未发布而被扣除；明确标为 Online／Remote 才会因授课方式不计入。独立研究不计入，诊所、实践课、混合授课及项目限制班次须确认。"}</p><div class="progress-subheading">${isEnglish() ? "NY Bar required categories · full academic year" : "NY Bar 分类要求 · 秋春学年累计"}</div>${barItems.map(([label, value, target]) => progressHtml(label, value, target)).join("")}${barAllocationControlsHtml(selected)}<p class="progress-policy-note">${isEnglish() ? "Where Cornell lists a course in more than one category, the planner counts it once in the category selected above. Confirm your final allocation with Cornell Law and BOLE." : "若 Cornell 将同一课程列入多个类别，工具仅按上方所选归类计入一次；最终学分分配请向 Cornell Law 和 BOLE 确认。"}</p><p class="progress-policy-note">${isEnglish() ? "Cornell states that LL.M. students register for 10–15 credits in each semester unless the Dean of Students approves otherwise. The two semester bars are separate; they are not added against one 10–15 threshold. This planner does not determine immigration status." : "Cornell 公布的 LL.M. 每学期注册范围为 10–15 学分；秋季与春季分别判断，不会把两学期相加后套用一次 10–15 学分门槛。超出范围需向 Dean of Students 申请。本工具不判断个人移民／签证身份。"}</p>`;
       bindBarAllocationControls();
       return;
     }
@@ -2759,6 +2778,7 @@
     if (assigned === "writing") return isEnglish() ? "Counts toward the NY Bar 24-credit total and Legal Research, Writing and Analysis." : "计入 NY Bar 24 学分，并用于法律研究、写作与分析类别。";
     if (assigned === "american") return isEnglish() ? "Counts toward the NY Bar 24-credit total and American legal system category." : "计入 NY Bar 24 学分，并用于美国法律体系类别。";
     if (assigned === "core") return isEnglish() ? "Counts toward the NY Bar 24-credit total and may be used toward the 6-credit NYLE / Bar tested-subject requirement." : "计入 NY Bar 24 学分，并可用于 NYLE / Bar 考试科目至少 6 学分的要求。";
+    if (eligibility.code === "classroom-no-online-designation") return isEnglish() ? "The selected standard Cornell Law classroom section has no Online or Remote designation and currently counts toward the NY Bar 24-credit classroom total." : "所选班次为 Cornell Law 标准课堂班次，且未标为 Online 或 Remote；当前计入 NY Bar 24 个课堂学分总数。";
     if (eligibility.status === "eligible") return isEnglish() ? "The selected section is an in-person Cornell Law classroom section and counts toward the NY Bar 24-credit classroom total." : "所选班次为康奈尔法学院线下课堂班次，计入 NY Bar 24 个课堂学分总数。";
     return isEnglish() ? "The selected section is an in-person Cornell Law classroom section and counts toward the NY Bar 24-credit classroom total." : "所选班次为康奈尔法学院线下课堂班次，计入 NY Bar 24 个课堂学分总数。";
   }
@@ -2767,27 +2787,7 @@
     const sectionId = selectedSectionId === undefined ? (state.selected[c.id] || sectionSelectionId(defaultSectionSelection(c))) : selectedSectionId;
     const combinedSection = getSection(c, sectionId);
     const sections = combinedSection?.sourceSections || (combinedSection ? [combinedSection] : []);
-    const modes = sections.map(section => String(section.instructionMode || "").toLowerCase());
-    const labels = sections.map(section => String(section.label || "").toLowerCase());
-    const classroomKinds = sections.map(section => `${section.component || ""} ${section.componentLabel || ""} ${section.label || ""}`.toLowerCase());
-    const notes = sections.flatMap(section => section.notes || []).map(note => typeof note === "string" ? note : (note.descrlong || note.text || "")).join(" ").toLowerCase();
-    const isRemote = modes.some(mode => /distance|online|remote|zoom/.test(mode));
-    const isIndependent = modes.some(mode => /independent/.test(mode)) || labels.some(label => /independent|directed reading|supervised writing/.test(label));
-    const undergraduateOnly = /enrollment\s+limited\s+to:\s*undergraduates?|undergraduate-only/.test(notes);
-    const cornellTechRestricted = /cornell tech/.test(notes) || /cornell tech/.test(String(c.registrationConsentEn || c.registrationConsentZh || "").toLowerCase());
-    // Cornell's localized roster stores labels such as “讲授课001”; rely on the
-    // stable component/componentLabel fields as well as the visible label.
-    const classroomSection = sections.length > 0 && modes.every(mode => /in person/.test(mode)) && classroomKinds.every(kind => /lecture|seminar|discussion|讲授|研讨|讨论|\blec\b|\bsem\b|\bdis\b/.test(kind));
-
-    if (c.barClassroomEligible === false || c.barStatus === "ineligible") return { status:"ineligible", reasonEn:"official record excludes this course or section", reasonZh:"官方记录已明确排除该课程或班次" };
-    if (isRemote) return { status:"ineligible", reasonEn:"the selected section is online or distance learning", reasonZh:"所选班次为线上或远程授课" };
-    if (isIndependent) return { status:"ineligible", reasonEn:"the selected section is independent study or directed work", reasonZh:"所选班次为独立研究或指导性学习" };
-    if (undergraduateOnly) return { status:"ineligible", reasonEn:"the selected section is limited to undergraduates", reasonZh:"所选班次仅限本科生" };
-    if (cornellTechRestricted || c.eligibility === "restricted") return { status:"review", reasonEn:"the selected section has a program or enrollment restriction", reasonZh:"所选班次存在项目或选课身份限制" };
-    if (c.barClassroomEligible === true || c.barStatus === "eligible") return { status:"eligible", reasonEn:"officially classified as eligible", reasonZh:"已由官方分类为可计入" };
-    if (currentSchoolId !== "cornell") return { status:"review", reasonEn:"imported schools require an explicit official NY Bar classification", reasonZh:"外校导入课程须有明确的官方 NY Bar 分类" };
-    if (classroomSection) return { status:"eligible", reasonEn:"selected in-person Cornell Law classroom section", reasonZh:"所选康奈尔法学院线下课堂班次" };
-    return { status:"review", reasonEn:"the selected section is not a standard in-person lecture, seminar, or discussion section", reasonZh:"所选班次不是标准的线下讲授、研讨或讨论班次" };
+    return NY_BAR_ELIGIBILITY.classifyCourse({ course:c, sections, schoolId:currentSchoolId });
   }
 
   function barStatus(c, selectedSectionId = undefined) {

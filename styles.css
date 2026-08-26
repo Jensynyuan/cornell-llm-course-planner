@@ -1168,3 +1168,22 @@ body.is-course-dragging .schedule-drop-shell { transition: outline .15s ease, ba
 .no-class-label span { color:#9298a0; font-size:8px; font-weight:650; text-transform:uppercase; letter-spacing:.04em; }
 .schedule-header.has-special-schedule { background:#fff9ea; }
 .schedule-header small { display:block; max-width:100%; color:#82631f; font-size:7.5px; font-weight:700; line-height:1.15; text-align:center; overflow-wrap:anywhere; }
+
+/* v5.33 — transparent course-by-course NY Bar calculation */
+.bar-credit-breakdown { margin:9px 0 12px; border:1px solid #d9e2ed; border-radius:10px; background:#f8fbff; overflow:hidden; }
+.bar-credit-breakdown summary { display:grid; gap:2px; padding:9px 10px; cursor:pointer; list-style-position:inside; color:#244d78; }
+.bar-credit-breakdown summary strong { font-size:9.5px; }
+.bar-credit-breakdown summary span { padding-left:15px; color:#60758c; font-size:8.5px; font-weight:600; line-height:1.4; }
+.bar-credit-breakdown-totals { display:flex; flex-wrap:wrap; gap:5px; padding:0 10px 8px; }
+.bar-credit-breakdown-totals span { padding:3px 6px; border-radius:999px; background:#fff; color:#566b81; font-size:8px; font-weight:700; }
+.bar-credit-breakdown-list { display:grid; border-top:1px solid #e3e9f0; }
+.bar-credit-breakdown-row { display:grid; grid-template-columns:minmax(0,1fr) auto auto; gap:3px 7px; align-items:center; padding:8px 10px; border-bottom:1px solid #e8edf3; }
+.bar-credit-breakdown-row:last-child { border-bottom:0; }
+.bar-credit-breakdown-row > span { min-width:0; display:grid; gap:1px; }
+.bar-credit-breakdown-row b { font-size:9px; }
+.bar-credit-breakdown-row span small { color:#6e7b88; font-size:7.5px; overflow-wrap:anywhere; }
+.bar-credit-breakdown-row > strong { color:#303c48; font-size:8px; white-space:nowrap; }
+.bar-credit-breakdown-row em { padding:2px 5px; border-radius:999px; background:#eaf7ef; color:#176a45; font-size:7.5px; font-style:normal; font-weight:750; white-space:nowrap; }
+.bar-credit-breakdown-row.is-review em { background:#fff7da; color:#7a5700; }
+.bar-credit-breakdown-row.is-ineligible em { background:#fff1ef; color:#9c3b34; }
+.bar-credit-breakdown-row > small { grid-column:1 / -1; color:#6f7a86; font-size:7.5px; line-height:1.4; }
