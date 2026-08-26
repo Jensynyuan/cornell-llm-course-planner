@@ -7,9 +7,18 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dataDir = path.join(root, "data");
 const courseOfferingsUrl = "https://support.law.cornell.edu/CourseOfferings/";
+const academicCalendarUrl = "https://community.lawschool.cornell.edu/academics/2026-27-academic-calendar/";
 const historyTerms = ["FA26", "SP26", "FA25", "SP25", "FA24", "SP24", "FA23", "SP23", "FA22", "SP22", "FA21", "SP21", "FA20", "SP20"];
-const instructionStart = "2027-01-25";
-const instructionEnd = "2027-05-11";
+const instructionStart = "2027-01-19";
+const instructionEnd = "2027-04-28";
+const examEnd = "2027-05-14";
+const noClassDates = ["2027-01-18", "2027-02-15", "2027-02-16", "2027-03-29", "2027-03-30", "2027-03-31", "2027-04-01", "2027-04-02"];
+const calendarPeriods = [
+  { start:"2027-01-18", end:"2027-01-18", type:"holiday", noClass:true, labelEn:"Martin Luther King, Jr. Holiday", labelZh:"马丁·路德·金纪念日" },
+  { start:"2027-02-15", end:"2027-02-16", type:"break", noClass:true, labelEn:"February Break", labelZh:"二月假期" },
+  { start:"2027-03-29", end:"2027-04-02", type:"break", noClass:true, labelEn:"Spring Break", labelZh:"春假" }
+];
+const specialScheduleDays = { "2027-04-28":"M" };
 const explicitlyExcluded = new Map([
   ["4013", "undergraduate-only"],
   ["4051", "undergraduate-only"],
@@ -208,7 +217,11 @@ function parseMeetings(raw, dates, location) {
 
 function sectionDates(record, existingSection) {
   if (existingSection?.daysTimesRaw === clean(record.section.DaysTimes) && existingSection.startDate && existingSection.endDate) {
-    return { startDate:existingSection.startDate, endDate:existingSection.endDate, status:existingSection.meetings?.[0]?.scheduleDateStatus || "current-course-offerings-date" };
+    const existingStatus = existingSection.meetings?.[0]?.scheduleDateStatus || existingSection.scheduleDateStatus || "current-course-offerings-date";
+    if (existingSection.startDate === "2027-01-25" && existingSection.endDate === "2027-05-11" && existingStatus !== "current-course-offerings-specific-date") {
+      return { startDate:instructionStart, endDate:instructionEnd, status:"regular-spring-term" };
+    }
+    return { startDate:existingSection.startDate, endDate:existingSection.endDate, status:existingStatus };
   }
   const evidence = clean(`${record.Description} ${record.AddInfo}`);
   const numeric = evidence.match(/(?:meets?|format[, ]+)\s*(\d{1,2})\/(\d{1,2})(?:\/2027)?\s*(?:-|through|to)\s*(\d{1,2})\/(\d{1,2})\/2027/i);
@@ -473,12 +486,12 @@ function structuralProjection(course) {
 }
 
 async function fetchJson(url) {
-  const response = await fetch(url, { headers:{ "user-agent":"Cornell-LLM-Course-Planner-data-refresh/5.31" } });
+  const response = await fetch(url, { headers:{ "user-agent":"Cornell-LLM-Course-Planner-data-refresh/5.32" } });
   if (!response.ok) throw new Error(`${url} returned HTTP ${response.status}`);
   return response.json();
 }
 
-const sourceResponse = await fetch(courseOfferingsUrl, { headers:{ "user-agent":"Cornell-LLM-Course-Planner-data-refresh/5.31" } });
+const sourceResponse = await fetch(courseOfferingsUrl, { headers:{ "user-agent":"Cornell-LLM-Course-Planner-data-refresh/5.32" } });
 if (!sourceResponse.ok) throw new Error(`Course Offerings returned HTTP ${sourceResponse.status}`);
 const sourceHtml = await sourceResponse.text();
 const sourceRecords = extractEmbeddedCourses(sourceHtml);
@@ -532,6 +545,15 @@ for (const dataset of datasets) {
       courseCount:courses.length,
       sectionCount:courses.reduce((sum, course) => sum + course.sections.length, 0),
       mergedDuplicateCourseCodes:[...grouped.entries()].filter(([, records]) => records.length > 1).map(([number]) => codeOf(number)),
+      instructionStart,
+      instructionEnd,
+      examEnd,
+      noClassDates,
+      calendarPeriods,
+      specialScheduleDays,
+      academicCalendarUrl,
+      academicCalendarScope:"Cornell Law JD and Ithaca LL.M. 2026-27 academic calendar",
+      academicCalendarCheckedAt:checkedAt,
       sourceDrift:{ previousCourseCount:126, currentCourseCount:127, addedCourses:[{ code:"LAW 7028", titleEn:"Bar Exam Fundamentals", evidence:"LAW 7028 is for 3Ls & LLMs only.", sourceUrl:courseOfferingsUrl }], removedCourses:[], checkedAt },
       componentCoverage:{ historicalOfficialRoster:courses.filter(course => course.sections.every(section => section.componentStatus === "historical-official-roster")).length, currentOfficialInference:courses.filter(course => course.sections.some(section => section.componentStatus !== "historical-official-roster")).length, sectionCount:courses.reduce((sum, course) => sum + course.sections.length, 0), sectionsWithComponent:courses.reduce((sum, course) => sum + course.sections.filter(section => section.component && section.componentLabel).length, 0) },
       descriptionCoverage:{ currentOfficial:courses.filter(course => course.officialDescriptionStatus === "current-official-description").length, historicalOfficial:courses.filter(course => course.officialDescriptionStatus === "historical-official-description").length, explicitOfficialNoDescription:courses.filter(course => course.officialDescriptionStatus === "official-no-description").length, total:courses.length },
