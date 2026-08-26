@@ -391,6 +391,14 @@ button { cursor: pointer; }
 .cureviews-metrics span { display: block; color: var(--muted); font-size: 10px; }
 .cureviews-metrics strong { display: block; margin-top: 3px; font-size: 13px; }
 .translation-heading { margin: 16px 0 4px; color: #454a51; font-size: 12px; }
+.official-english-heading { padding-top:12px; border-top:1px solid var(--line); }
+.translation-pending-notice { display:grid; gap:3px; margin:0 0 12px; padding:10px 12px; border:1px solid #eed69b; border-radius:10px; background:#fff9e8; color:#70551b; }
+.translation-pending-notice strong { font-size:11px; }
+.translation-pending-notice span { font-size:10px; line-height:1.5; }
+.official-additional-information ul { display:grid; gap:7px; margin:0; padding-left:18px; }
+.official-additional-information li { color:#424850; line-height:1.65; }
+.official-course-attributes p { margin:7px 0; }
+.official-source-links p { margin:7px 0; }
 .location-link { color: #315d9b; text-decoration: none; font-weight: 600; }
 .location-link:hover { text-decoration: underline; text-underline-offset: 3px; }
 .location-pending { color: #777d84; font-weight: 550; }
@@ -451,6 +459,7 @@ html[lang="en"] .school-preset-actions .secondary-button,html[lang="en"] .school
 .schedule-token-remove.is-conflict-remove { border-color:#e59a94; background:#fff2f0; color:#a33a33; }
 .schedule-token-conflict { display:block; grid-column:1 / -1; color:#ae3d36; font-size:9px; font-style:normal; font-weight:700; line-height:1.35; }
 .schedule-course-token.has-schedule-conflict { border-color:#e59a94; background:#fff8f7; box-shadow:0 0 0 1px rgba(207,65,55,.08); }
+.schedule-course-token span.schedule-allocation-badge { justify-self:start; width:fit-content; max-width:100%; padding:3px 6px; color:#5a3c91; font-size:8.5px; line-height:1.25; }
 .selected-course-empty { padding:14px; border:1px dashed #d4d9df; border-radius:10px; color:#858b93; font-size:11px; line-height:1.6; }
 
 .schedule-block { gap:1px; }
@@ -590,8 +599,10 @@ span.badge {
   border: 1px solid var(--line); border-radius: 11px; background: #fff; color: var(--text);
   font-family: inherit; cursor: pointer;
 }
-.school-switcher-button span { font-size: 12px; font-weight: 750; }
-.school-switcher-button small { color: var(--muted); font-size: 10px; }
+.school-switcher-name { flex:0 0 auto; font-size:12px; font-weight:750; }
+.school-switcher-copy { display:grid; min-width:0; gap:1px; text-align:left; }
+.school-switcher-button small { display:block; color:var(--muted); font-size:10px; line-height:1.2; }
+.school-switcher-hint { color:#2f67ad; font-size:8px; font-style:normal; font-weight:700; line-height:1.25; white-space:normal; }
 .link-button { text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
 .recommendation-intro-flex { display: flex; align-items: center; justify-content: space-between; gap: 22px; }
 .career-profile-panel {
@@ -780,7 +791,7 @@ span.badge {
   .recommendation-intro-flex,.school-page-intro,.schedule-drag-heading { align-items: stretch; flex-direction: column; }
   .school-preset-grid { grid-template-columns: 1fr; }
   .schedule-course-search { width: 100%; }
-  .school-switcher-button small { display: none; }
+  .school-switcher-button small { display: block; }
   .date-grid { grid-template-columns: 1fr; }
   .import-heading-actions { justify-content:stretch; }
   .import-heading-actions button { flex:1; }
@@ -1095,7 +1106,7 @@ body.is-course-dragging .schedule-drop-shell { transition: outline .15s ease, ba
   .topbar { align-items:stretch; flex-direction:column; }
   .topbar-actions { display:flex; width:100%; flex-wrap:wrap; justify-content:flex-start; }
   .topbar-actions > button { flex:1 1 135px; min-width:0; }
-  .topbar-actions .school-switcher-button { flex-basis:190px; }
+  .topbar-actions .school-switcher-button { flex-basis:100%; justify-content:center; }
   .school-switcher-button small { display:block; }
   .faq-author-card { align-items:flex-start; flex-direction:column; }
 }

@@ -17,7 +17,7 @@
   const CORNELL_ACADEMIC_YEAR_TERM = { ...CORNELL_TERM_PROFILES.FA26, instructionEnd:CORNELL_TERM_PROFILES.SP27.instructionEnd, examEnd:CORNELL_TERM_PROFILES.SP27.examEnd };
   const NY_BAR_ALLOCATION = window.NY_BAR_ALLOCATION;
   const CALENDAR = window.LLM_CALENDAR;
-  const APP_VERSION = "v5.30";
+  const APP_VERSION = "v5.31";
   if (!NY_BAR_ALLOCATION) throw new Error("NY Bar allocation helper failed to load.");
   if (!CALENDAR) throw new Error("Calendar integration helper failed to load.");
 
@@ -65,12 +65,13 @@
   const COURSE_FORMATS = [
     { id:"lecture", zh:"讲授课", en:"Lecture", patterns:[/\blec\b/i,/lecture/i,/讲授课/u] },
     { id:"seminar", zh:"研讨课", en:"Seminar", patterns:[/\bsem\b/i,/seminar/i,/研讨课/u] },
-    { id:"clinic", zh:"诊所", en:"Clinic", patterns:[/\bcln\b/i,/clinic/i,/诊所/u] },
-    { id:"practicum", zh:"实践课", en:"Practicum", patterns:[/\bprc\b/i,/practicum/i,/实践课/u] },
+    { id:"clinic", zh:"诊所", en:"Clinic", patterns:[/\bcln\b/i,/clinic/i,/clinical/i,/诊所/u] },
+    { id:"practicum", zh:"实践课", en:"Practicum", patterns:[/\bpra\b/i,/\bprc\b/i,/\bfld\b/i,/practicum/i,/field studies/i,/实践课/u] },
     { id:"discussion", zh:"讨论课", en:"Discussion", patterns:[/\bdis\b/i,/discussion/i,/讨论课/u] },
-    { id:"independent", zh:"独立研究", en:"Independent study", patterns:[/\bind\b/i,/independent study/i,/独立研究/u] }
+    { id:"independent", zh:"独立研究", en:"Independent study", patterns:[/\bind\b/i,/independent/i,/directed (?:study|work)/i,/独立研究/u] }
   ];
   const RELEASE_NOTES = [
+    { version:"v5.31", zh:["按 Cornell Law 当前 Course Offerings 重建 Spring 2027 数据库：127 门符合 LL.M. 规划范围的课程、146 个班次及结构化上课形式已接入，修复选择 Spring 讲授课却返回 0 的严重问题。","补齐 127 门 Spring 课程的中文课程名与课程说明；官方当前及已查历史来源均未发布简介的课程会明确显示官方未发布，不再保留“暂无中文译文”。","修复多选筛选器重复箭头；顶部学期入口新增“点击切换学期”提示；没有官方课程班号时不再显示破折号。","修复 LAW 6641 等多分类课程的学分归类：切换后立即更新左侧进度、课程徽标和课表，并在刷新后保留用户的明确选择。"], en:["Rebuilt Spring 2027 from the current Cornell Law Course Offerings source: 127 LL.M.-eligible planning courses, 146 sections, and structured course formats are now loaded, fixing the severe zero-result Spring Lecture filter bug.","Completed Chinese titles and descriptions for all 127 Spring courses. When neither the current nor checked historical official source publishes a description, the detail page states that status instead of showing a missing-translation placeholder.","Removed duplicate arrows from multi-select filters, added a clear term-switch hint, and stopped displaying a dash as a nonexistent official class number.","Fixed one-time NY Bar allocation for multi-category courses such as LAW 6641: changes immediately refresh progress, badges, and the schedule, and the explicit choice persists after reload."] },
     { version:"v5.30", zh:["修复 Spring 2027 课程未接入页面的严重问题：课程库现同时提供 136 门 Fall 与 126 门 Spring 课程，并在卡片、搜索和课表中明确标注学期。","新增学期多选及所有筛选器的多选逻辑；顶部学期入口可切换 Fall、Spring 或同时查看，NY Bar 官方春季分类也已接入。","课表每次打开会定位到用户当前日期所在周，并提供一键跳转 Fall 2026 与 Spring 2027 第一周；公告和操作提示统一在屏幕中央打开。"], en:["Fixed the Spring 2027 catalog integration: Course Search now includes 136 Fall and 126 Spring offerings, with term labels across cards, search, and schedule views.","Added multi-select term and facet filters. The top term control switches between Fall, Spring, or both, and official Spring NY Bar categories are now searchable.","My Schedule now opens on the user's current local week and includes one-click jumps to the first Fall 2026 and Spring 2027 instructional weeks. Notices and action dialogs now open in the center of the screen."] },
     { version:"v5.25", zh:["新增双向日历功能：可从 Google／Apple 导出的 .ics 文件读取个人日程并纳入冲突检测，也可把已选课程导出到 Google Calendar、Apple Calendar 或 Outlook。","新增中英文作者公告与版本记录；首次访问默认使用英文界面，仍可随时切换中文。"], en:["Added two-way calendar support: import personal events from Google or Apple .ics files for conflict checking, and export selected classes to Google Calendar, Apple Calendar, or Outlook.","Added bilingual author updates and release history. New visitors now start in English and can still switch to Chinese at any time."] },
     { version:"v5.24", zh:["修复 LAW 6641 多分类学分归类与推荐方案冲突兜底；新增 LAW 7202、LAW 7259，并建立中英文 Spring 2027 独立课程库。"], en:["Fixed LAW 6641 multi-category credit allocation and recommendation conflict handling; added LAW 7202 and LAW 7259 plus separate bilingual Spring 2027 catalogs."] },
@@ -92,7 +93,7 @@
   const customSchoolStore = loadCustomSchoolStore();
   // Imports are tied to a data build so a prior browser snapshot cannot silently
   // replace the current verified Cornell dataset.
-  const CURRENT_CORNELL_DATASET_VERSION = "v5.30";
+  const CURRENT_CORNELL_DATASET_VERSION = "v5.31";
   const BUNDLED_CORNELL_DATABASE_VERSION = CURRENT_CORNELL_DATASET_VERSION;
   let cornellImportedDataset = loadCornellImportedDataset();
   let currentSchoolId = safeLocalStorageGet("llm-course-planner-current-school") || "cornell";
@@ -195,13 +196,13 @@
       category: "数据",
       question: "打开软件需要配置 OpenAI API 或联网吗？",
       answer: "不需要。软件已经预装经核对的 Cornell 2026–27 Fall 与 Spring LAW 课程快照，打开后即可离线搜索、查看和排课。只有主动导入其他学校或更新后的课程数据时才需要联网。",
-      sourceLabel: "v5.30 离线双语课程数据说明",
+      sourceLabel: "v5.31 离线双语课程数据说明",
       sourceUrl: "./README.md"
     },
     {
       category: "数据",
       question: "当前 Cornell 数据库包含什么？",
-      answer: "当前数据库按学期保留 262 条开课记录，包括 Fall 2026 的 136 门与 Spring 2027 的 126 门。春季数据已按要求剔除仅限本科生、仅限 JD 及仅限 Cornell Tech LL.M. 的课程；每条记录均标明学期，同一课程号在春秋两季开设时会分别显示。",
+      answer: "当前数据库按学期保留 263 条开课记录，包括 Fall 2026 的 136 门与 Spring 2027 的 127 门。春季数据已按要求剔除仅限本科生、仅限 JD 及仅限 Cornell Tech LL.M. 的课程；每条记录均标明学期，同一课程号在春秋两季开设时会分别显示。",
       sourceLabel: "Cornell Law Course Offerings 与 Cornell Class Roster",
       sourceUrl: "https://support.law.cornell.edu/CourseOfferings/"
     },
@@ -224,7 +225,7 @@
     { category:"Calendar", question:"Why does the same course not appear in every week?", answer:"The weekly calendar follows each meeting pattern's actual start and end dates and excludes law-school no-class dates. Seven-week, Orientation, and early-ending courses appear only in the weeks when they actually meet." },
     { category:"Location", question:"Why do some courses show only a campus rather than a room?", answer:"Locations follow Cornell's official roster. When a specific room is not published, the planner says so rather than treating Ithaca campus or Cornell Law School as a room. Published building and room information is included in the bundled official roster data where available." },
     { category:"Data", question:"Do I need an OpenAI API key or internet access to open the planner?", answer:"No. The Cornell 2026-27 law-course dataset is bundled for offline search, review, and scheduling. Internet access is only needed when you choose to import or update an external school dataset." },
-    { category:"Data", question:"What does the current Cornell dataset include?", answer:"The bundled database contains 262 term-specific offerings: 136 for Fall 2026 and 126 for Spring 2027. Spring offerings explicitly limited to undergraduates, JD students, or Cornell Tech LL.M. students are excluded. Each offering carries a term label, so a course taught in both terms appears separately." },
+    { category:"Data", question:"What does the current Cornell dataset include?", answer:"The bundled database contains 263 term-specific offerings: 136 for Fall 2026 and 127 for Spring 2027. Spring offerings explicitly limited to undergraduates, JD students, or Cornell Tech LL.M. students are excluded. Each offering carries a term label, so a course taught in both terms appears separately." },
     { category:"Data", question:"Will refreshing erase my schedule, or can another user see it?", answer:"No. The planner automatically saves the schedule in this browser under the current site domain, so a normal refresh or reopening the page keeps it. Visitors on another device or browser cannot read it, but people sharing the same browser profile will see the same local data. Use Export to calendar in My Schedule to download an .ics file for Google, Apple, or Outlook; use Import from calendar to add personal busy times. Calendar files are processed only on this device." }
   ];
   const palette = [
@@ -344,9 +345,52 @@
   function courseTitle(c) { return isEnglish() ? (c.officialTitleEn || c.titleEn || c.titleZh || "Course title pending") : (c.titleZh || c.officialTitleEn || "课程中文名待补充"); }
   function normalizedCourseTitle(c) { return String(c.officialTitleEn || c.titleEn || c.titleZh || "").normalize("NFKC").toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ").trim(); }
   function officialCourseDescription(c) { return c.officialDescriptionEn || c.descriptionEn || ""; }
+  function hasChineseText(value) { return /[\u3400-\u9fff]/u.test(String(value || "")); }
+  function chineseCourseDescription(c) {
+    const description = String(c.descriptionZh || "").trim();
+    if (!description || !hasChineseText(description) || /(?:暂无|尚无).{0,12}中文|中文.{0,8}待翻译/u.test(description)) return "";
+    return description;
+  }
+  function englishCourseDescription(c) {
+    const official = String(officialCourseDescription(c) || "").trim();
+    if (official) return official;
+    const mislabeledEnglish = String(c.descriptionZh || "").trim();
+    return mislabeledEnglish && !hasChineseText(mislabeledEnglish) ? mislabeledEnglish : "";
+  }
   function courseDescription(c) {
-    if (isEnglish()) return officialCourseDescription(c) || "No official course description is available.";
-    return c.descriptionZh || "当前尚无基于官方原文的中文译文；请在详情查看官方英文原文。";
+    if (isEnglish()) return englishCourseDescription(c) || "No official course description is available.";
+    return chineseCourseDescription(c) || "中文课程说明待翻译；请在详情查看单独列示的官方英文原文。";
+  }
+  function detailDescriptionHtml(c, en = isEnglish()) {
+    const english = englishCourseDescription(c);
+    if (en) return `<section class="detail-section"><h3>Official course description</h3><p lang="en">${esc(english || "No official course description is available.")}</p></section>`;
+    const chinese = chineseCourseDescription(c);
+    if (chinese) return `<section class="detail-section"><h3>课程说明</h3><h4 class="translation-heading">中文课程说明</h4><p lang="zh-CN">${esc(chinese)}</p>${english ? `<h4 class="translation-heading official-english-heading">官方英文原文</h4><p lang="en">${esc(english)}</p>` : ""}</section>`;
+    return `<section class="detail-section description-translation-pending"><h3>课程说明</h3><div class="translation-pending-notice" role="status"><strong>中文待翻译</strong><span>当前数据尚无中文课程说明；补齐后将自动优先显示中文。</span></div>${english ? `<h4 class="translation-heading official-english-heading">官方英文原文</h4><p lang="en">${esc(english)}</p>` : `<p>暂无官方英文课程说明。</p>`}</section>`;
+  }
+  function detailAdditionalInformationHtml(c, en = isEnglish()) {
+    const english = Array.isArray(c.additionalInformationEn) ? c.additionalInformationEn.filter(Boolean) : [];
+    const chinese = Array.isArray(c.additionalInformationZh) ? c.additionalInformationZh.filter(value => hasChineseText(value)) : [];
+    const values = en ? english : chinese;
+    if (!values.length) return "";
+    return `<section class="detail-section official-additional-information"><h3>${en ? "Additional official information" : "官方补充信息"}</h3><ul>${values.map(value => `<li>${esc(value)}</li>`).join("")}</ul></section>`;
+  }
+  function detailOfficialAttributesHtml(c, en = isEnglish()) {
+    const asList = value => Array.isArray(value) ? value.filter(Boolean) : (String(value || "").trim() ? [String(value).trim()] : []);
+    const concentrations = asList(en ? c.concentrationsEn : c.concentrationsZh);
+    const requirements = asList(en ? c.degreeRequirementsEn : c.degreeRequirementsZh);
+    if (!concentrations.length && !requirements.length) return "";
+    return `<section class="detail-section official-course-attributes"><h3>${en ? "Official course attributes" : "官方课程属性"}</h3>${concentrations.length ? `<p><strong>${en ? "Concentrations:" : "课程方向："}</strong> ${esc(concentrations.join(en ? ", " : "、"))}</p>` : ""}${requirements.length ? `<p><strong>${en ? "Degree requirements:" : "学位要求标签："}</strong> ${esc(requirements.join(en ? ", " : "、"))}</p>` : ""}</section>`;
+  }
+  function detailOfficialLinksHtml(c, en = isEnglish()) {
+    const currentUrl = c.currentOfferingUrl || c.sourceUrl || currentSchoolProfile.catalogUrl || "";
+    const catalogUrl = c.catalogUrl && c.catalogUrl !== currentUrl ? c.catalogUrl : "";
+    const links = [
+      currentUrl ? `<a href="${esc(currentUrl)}" target="_blank" rel="noreferrer">${en ? "Open the current official offering" : "打开当前官方开课页面"} ↗</a>` : "",
+      catalogUrl ? `<a href="${esc(catalogUrl)}" target="_blank" rel="noreferrer">${en ? "Open the course-specific official catalog or prior roster record" : "打开本课程官方目录／历史开课记录"} ↗</a>` : ""
+    ].filter(Boolean);
+    if (!links.length) return "";
+    return `<section class="detail-section official-source-links"><h3>${en ? "Official sources" : "官方来源"}</h3>${links.map(link => `<p>${link}</p>`).join("")}</section>`;
   }
   function courseOfficialText(c) { return `${c.officialTitleEn || c.titleEn || ""} ${officialCourseDescription(c)} ${(c.categories || []).join(" ")}`.toLowerCase(); }
   function barCategories(c) { return NY_BAR_ALLOCATION.categories(c); }
@@ -399,7 +443,7 @@
     faqSearchInput: document.getElementById("faqSearchInput"), locationAgenda: document.getElementById("locationAgenda"), faqIntroEyebrow:document.getElementById("faqIntroEyebrow"), faqIntroTitle:document.getElementById("faqIntroTitle"), faqIntroCopy:document.getElementById("faqIntroCopy"),
     travelStatus: document.getElementById("travelStatus"), localDataStatus: document.getElementById("localDataStatus"), scheduleStorageStatus:document.getElementById("scheduleStorageStatus"),
     brandSubtitle: document.getElementById("brandSubtitle"), schoolSwitcherBtn: document.getElementById("schoolSwitcherBtn"),
-    currentSchoolShort: document.getElementById("currentSchoolShort"), currentTermShort: document.getElementById("currentTermShort"),
+    currentSchoolShort: document.getElementById("currentSchoolShort"), currentTermShort: document.getElementById("currentTermShort"), termSwitchHint: document.getElementById("termSwitchHint"),
     careerDirectionChips: document.getElementById("careerDirectionChips"), coursePreferenceChips: document.getElementById("coursePreferenceChips"),
     careerProfileSummary: document.getElementById("careerProfileSummary"), randomCareerBtn: document.getElementById("randomCareerBtn"), clearCareerProfileBtn: document.getElementById("clearCareerProfileBtn"),
     scheduleCourseTray: document.getElementById("scheduleCourseTray"),
@@ -495,7 +539,7 @@
       details.className = "filter-multiselect";
       details.dataset.filterFor = select.id;
       const options = [...select.options].filter(option => option.value !== "all");
-      details.innerHTML = `<summary><span class="multi-filter-summary"></span><span aria-hidden="true">⌄</span></summary><div class="multi-filter-menu">${options.map(option => `<label class="multi-filter-option"><input type="checkbox" value="${esc(option.value)}"><span>${esc(option.textContent)}</span></label>`).join("")}</div>`;
+      details.innerHTML = `<summary><span class="multi-filter-summary"></span></summary><div class="multi-filter-menu">${options.map(option => `<label class="multi-filter-option"><input type="checkbox" value="${esc(option.value)}"><span>${esc(option.textContent)}</span></label>`).join("")}</div>`;
       select.insertAdjacentElement("afterend", details);
       details.querySelectorAll("input[type=checkbox]").forEach(checkbox => checkbox.addEventListener("change", () => {
         const option = [...select.options].find(item => item.value === checkbox.value);
@@ -747,8 +791,18 @@
   }
 
   function courseFormats(course) {
-    const sectionText = (course.sections || []).map(section => `${section.component || ""} ${section.label || ""} ${section.componentLabel || ""}`).join(" ");
-    return COURSE_FORMATS.filter(format => format.patterns.some(pattern => pattern.test(sectionText))).map(format => format.id);
+    const sections = course.sections || [];
+    const structuredText = [
+      ...(Array.isArray(course.courseFormats) ? course.courseFormats : []),
+      course.courseFormat,
+      course.component,
+      course.componentLabel,
+      ...sections.flatMap(section => [section.courseFormat, section.component, section.componentLabel])
+    ].filter(Boolean).join(" ");
+    const structuredMatches = COURSE_FORMATS.filter(format => format.patterns.some(pattern => pattern.test(structuredText))).map(format => format.id);
+    if (structuredMatches.length) return [...new Set(structuredMatches)];
+    const fallbackText = [course.officialTitleEn, course.titleEn, course.titleZh, ...sections.map(section => section.label)].filter(Boolean).join(" ");
+    return [...new Set(COURSE_FORMATS.filter(format => format.patterns.some(pattern => pattern.test(fallbackText))).map(format => format.id))];
   }
 
   function pruneEmptyFilterOptions() {
@@ -828,7 +882,7 @@
     return `<article class="course-card ${selected ? "is-selected" : ""}" draggable="true" data-course-id="${esc(c.id)}">
       <div class="course-card-top">
         <div class="course-card-content">
-          <div class="course-code">${esc(c.code)}${classNumber ? ` · ${isEnglish() ? "Class" : "班号"} ${esc(classNumber)}` : ""}</div>
+          <div class="course-code">${esc(c.code)}${classNumber ? ` · ${isEnglish() ? "Class number" : "课程班号"} ${esc(classNumber)}` : ""}</div>
           <div class="course-title-row"><h3 class="course-title">${esc(title)}</h3>${badgesHtml(c)}</div>
           <div class="course-meta">
             <span>◷ ${esc(meetings)}</span><span>◫ ${creditCount(c.credits)}</span>
@@ -1096,7 +1150,7 @@
     pendingAddRequest = { courseId:course.id, sectionId:null, origin, conflicts:[], placement };
     els.sectionPickerCourseTitle.textContent = `${course.code} · ${courseTitle(course)}`;
     const groups = sectionSelectionGroups(course);
-    els.sectionPickerOptions.innerHTML = `${groups.map(group => `<fieldset class="section-selection-group"><legend>${esc(formatSectionGroupLabel(group.label))}</legend>${group.sections.map((section, index) => `<label class="section-picker-option"><input type="radio" name="picker-${esc(group.id)}" data-section-group="${esc(group.id)}" value="${esc(section.id)}" ${index === 0 ? "checked" : ""}><span><strong>${esc(formatSectionLabel(section.label || section.id))} · ${isEnglish() ? "Class" : "班号"} ${esc(section.classNumber || "—")}</strong><small>${esc(formatSectionMeetings(section))} · ⌖ ${esc(sectionLocationSummary(section, course))}</small></span></label>`).join("")}</fieldset>`).join("")}<button type="button" class="primary-button section-picker-confirm">${isEnglish() ? "Confirm section combination" : "确认班次组合"}</button>`;
+    els.sectionPickerOptions.innerHTML = `${groups.map(group => `<fieldset class="section-selection-group"><legend>${esc(formatSectionGroupLabel(group.label))}</legend>${group.sections.map((section, index) => `<label class="section-picker-option"><input type="radio" name="picker-${esc(group.id)}" data-section-group="${esc(group.id)}" value="${esc(section.id)}" ${index === 0 ? "checked" : ""}><span><strong>${sectionIdentityHtml(section)}</strong><small>${esc(formatSectionMeetings(section))} · ⌖ ${esc(sectionLocationSummary(section, course))}</small></span></label>`).join("")}</fieldset>`).join("")}<button type="button" class="primary-button section-picker-confirm">${isEnglish() ? "Confirm section combination" : "确认班次组合"}</button>`;
     els.sectionPickerOptions.querySelector(".section-picker-confirm")?.addEventListener("click", () => {
       const chosen = [...els.sectionPickerOptions.querySelectorAll("input[data-section-group]:checked")].map(input => input.value);
       if (chosen.length !== groups.filter(group => group.required).length) return showToast(isEnglish() ? "Choose one option for every required group." : "请为每个必选班次组选择一项。", true);
@@ -1274,12 +1328,24 @@
       const category = event.currentTarget.value;
       if (!course || !barCategories(course).includes(category)) return;
       state.barCategoryAllocations ||= {};
-      if (category === course.barPrimary) delete state.barCategoryAllocations[course.id];
-      else state.barCategoryAllocations[course.id] = category;
+      // A value chosen by the student is explicit even when it equals the
+      // catalog's primary category. Deleting it would re-run the smart default
+      // and could immediately move LAW 6641 back to another unmet category.
+      state.barCategoryAllocations[course.id] = category;
       saveState();
-      renderAll();
+      refreshBarAllocationSurfaces(course);
       showToast(isEnglish() ? `${course.code}: credits allocated once to ${barCategoryShortLabel(category)}.` : `${course.code} 的学分已改为仅计入“${barCategoryShortLabel(category)}”。`);
     }));
+  }
+
+  function refreshBarAllocationSurfaces(course) {
+    renderProgress();
+    renderCourseList();
+    renderMiniSchedule();
+    renderRecommendations();
+    renderSchedule();
+    renderScheduleCourseTray();
+    if (currentDetailCourseId === course.id && !els.detailOverlay.hidden) renderDetail(course);
   }
 
   function rangeProgressHtml(label, value, minimum, maximum) {
@@ -1541,8 +1607,9 @@
       const calendarTitles = [...new Set(importedCalendarConflicts(course, section).map(event => event.title))];
       const conflictLabels = [...conflictCodes, ...calendarTitles.map(title => isEnglish() ? `Calendar: ${title}` : `日程：${title}`)];
       const conflictNote = conflictLabels.length ? `<em class="schedule-token-conflict">⚠ ${isEnglish() ? `Conflicts with ${conflictLabels.join(", ")}` : `与 ${conflictLabels.join("、")} 时间冲突`}</em>` : "";
+      const allocationBadge = barCategories(course).length > 1 ? `<span class="badge badge-allocation schedule-allocation-badge">${isEnglish() ? "Credits allocated to: " : "学分当前计入："}${esc(barCategoryShortLabel(assignedBarCategory(course)))}</span>` : "";
       return `<article class="schedule-course-token is-selected ${conflictLabels.length ? "has-schedule-conflict" : ""}" data-course-id="${esc(course.id)}" style="--token-bg:${bg};--token-border:${border}">
-        <div><strong>${esc(course.code)} · ${esc(courseTitle(course))}</strong><span>${currentSchoolId === "cornell" ? `${esc(courseTermLabel(course))} · ` : ""}◷ ${esc(formatSectionMeetings(section))}</span><small>◎ ${esc(instructors)} · ⌖ ${esc(room)}</small></div>
+        <div><strong>${esc(course.code)} · ${esc(courseTitle(course))}</strong><span>${currentSchoolId === "cornell" ? `${esc(courseTermLabel(course))} · ` : ""}◷ ${esc(formatSectionMeetings(section))}</span><small>◎ ${esc(instructors)} · ⌖ ${esc(room)}</small>${allocationBadge}</div>
         ${conflictNote}<button type="button" class="schedule-token-remove ${conflictLabels.length ? "is-conflict-remove" : ""}" data-tray-remove="${esc(course.id)}">${conflictLabels.length ? (isEnglish() ? "Remove conflict" : "移除冲突课程") : (isEnglish() ? "Remove" : "移除")}</button>
       </article>`;
     }).join("");
@@ -1857,7 +1924,9 @@
         <div class="detail-stat detail-stat-location"><label>${en ? "Teaching location" : "授课地点"}</label><strong>${courseLocationSourceHtml(c, getSection(c, selectedDetailSectionId))}</strong><button type="button" class="manual-location-button" id="manualLocationBtn">${en ? "Paste or edit location" : "粘贴／修改具体地点"}</button></div>
         <div class="detail-stat"><label>${en ? "Recommendation" : "推荐度"}</label><strong>${recommendationScore(c)} / 100</strong></div>
       </div>
-      <section class="detail-section"><h3>${en ? "Official course description" : "官方课程说明"}</h3><p>${esc(officialCourseDescription(c) || (en ? "No official course description is available." : "暂无官方英文课程说明。"))}</p>${en ? "" : `<h4 class="translation-heading">中文译文</h4><p>${esc(c.descriptionZh || "暂无中文译文。")}</p>`}</section>
+      ${detailDescriptionHtml(c, en)}
+      ${detailAdditionalInformationHtml(c, en)}
+      ${detailOfficialAttributesHtml(c, en)}
       <section class="detail-section"><h3>${en ? "Assessment and scheduled load" : "课程负担与考核"}</h3>
         <div class="workload-grid">
           <div class="workload-item"><label>${en ? "Weekly class time" : "每周课堂时间"}</label><strong>${esc(profile.classTime)}</strong></div>
@@ -1871,7 +1940,7 @@
       <section class="detail-section"><h3>${isEnglish() ? "Sections, times and locations" : "班次、时间与地点"}</h3>${selected ? `<p class="section-switch-hint">${sectionChanged ? (en ? "Ready to switch: confirm below and your schedule will immediately use this section's official time and location." : "已选新班次：点击下方按钮后，课表会立即改为该班次的官方时间和地点。") : (en ? "Choose another section to update this course in your schedule without removing it first." : "可直接选择其他班次；无需先移除课程。")}</p>` : ""}<div class="section-choice">${sectionGroupsHtml(c) || (isEnglish() ? "No standard meeting time is available." : "暂无普通上课时间")}</div></section>
       <section class="detail-section location-import-guide"><h3>${isEnglish() ? "How to add a location" : "如何补充上课地点"}</h3><p>${isEnglish() ? "Open the official course page from the location field above. After signing in to the selected school's course system, copy the building and room, return here, and choose Paste or edit location. The location is saved only on this device and appears in your schedule immediately." : "点击上方“授课地点”可打开本课程官方页面；登录本校课程系统后，复制教学楼和教室号，回到这里点击“粘贴／修改具体地点”。地点只保存在本机，并会立即显示在课表中。"}</p></section>
       <section class="detail-section"><h3>${en ? "Enrollment and prerequisites" : "限制与先修"}</h3><p><strong>${en ? "Enrollment:" : "选课限制："}</strong>${esc(localizedRestriction(c))}<br><strong>${en ? "Prerequisites:" : "先修要求："}</strong>${esc(localizedPrerequisites(c))}</p></section>
-      <section class="detail-section"><h3>${isEnglish() ? "Official page" : "官方页面"}</h3><p><a href="${esc(c.sourceUrl || currentSchoolProfile.catalogUrl || "#")}" target="_blank" rel="noreferrer">${isEnglish() ? "Open the official course page" : `查看 ${esc(currentSchoolProfile.shortZh || currentSchoolProfile.nameZh)}官方课程页面`} ↗</a></p></section>
+      ${detailOfficialLinksHtml(c, en)}
       <div class="detail-footer"><button id="detailAddBtn" class="primary-button ${sectionChanged ? "section-switch-button" : ""}">${selected ? (sectionChanged ? (en ? "Switch to selected section" : "切换至所选班次") : (en ? "Remove from schedule" : "从课表移除")) : (en ? "Add selected section" : "按所选班次加入课表")}</button></div>`;
     applyLanguageChrome();
     els.detailContent.querySelectorAll("input[data-detail-section-group]").forEach(r => r.addEventListener("change", () => { selectedDetailSectionId = sectionSelectionId([...els.detailContent.querySelectorAll("input[data-detail-section-group]:checked")].map(input => input.value)); renderDetail(c); }));
@@ -1912,7 +1981,7 @@
   function sectionOptionHtml(c,s,group,selectedIds = new Set()) {
     const checked = selectedIds.has(s.id);
     const meetingRows = (s.meetings || []).length ? (s.meetings || []).map(m => `<div class="meeting-detail-row"><span>◷ ${esc(formatMeetingTime(m))}</span><span>⌖ ${locationLinkHtml(meetingLocation(m, s, c))}</span></div>`).join("") : `<div class="meeting-detail-row"><span>${isEnglish() ? "Time pending" : "时间待公布"}</span><span>⌖ ${locationLinkHtml(sectionLocationSummary(s, c))}</span></div>`;
-    return `<label class="section-option"><input type="radio" name="detail-${esc(group.id)}" data-detail-section-group="${esc(group.id)}" value="${esc(s.id)}" ${checked ? "checked" : ""}><span class="section-option-content"><strong>${esc(formatSectionLabel(s.label || s.id))} · ${isEnglish() ? "Class" : "班号"} ${esc(s.classNumber || "—")}</strong>${meetingRows}<small class="location-source-note">${sectionHasPublishedLocation(s) ? `${isEnglish() ? "Location from official school data" : `教室来自${esc(currentSchoolProfile.shortZh || currentSchoolProfile.nameZh)}官方课程数据`}` : `${isEnglish() ? "Specific room not published in official school data" : `${esc(currentSchoolProfile.shortZh || currentSchoolProfile.nameZh)}官方课程数据尚未发布具体教室`}`}</small>${s.grading || s.gradingZh ? `<small class="section-enrollment-note">▱ ${esc(formatGrading(s.grading || s.gradingZh))}</small>` : ""}${s.consentZh || s.consentEn ? `<small class="section-enrollment-note">▣ ${esc(isEnglish() ? (s.consentEn || s.consentZh) : s.consentZh)}</small>` : ""}</span></label>`;
+    return `<label class="section-option"><input type="radio" name="detail-${esc(group.id)}" data-detail-section-group="${esc(group.id)}" value="${esc(s.id)}" ${checked ? "checked" : ""}><span class="section-option-content"><strong>${sectionIdentityHtml(s)}</strong>${meetingRows}<small class="location-source-note">${sectionHasPublishedLocation(s) ? `${isEnglish() ? "Location from official school data" : `教室来自${esc(currentSchoolProfile.shortZh || currentSchoolProfile.nameZh)}官方课程数据`}` : `${isEnglish() ? "Specific room not published in official school data" : `${esc(currentSchoolProfile.shortZh || currentSchoolProfile.nameZh)}官方课程数据尚未发布具体教室`}`}</small>${s.grading || s.gradingZh ? `<small class="section-enrollment-note">▱ ${esc(formatGrading(s.grading || s.gradingZh))}</small>` : ""}${s.consentZh || s.consentEn ? `<small class="section-enrollment-note">▣ ${esc(isEnglish() ? (s.consentEn || s.consentZh) : s.consentZh)}</small>` : ""}</span></label>`;
   }
 
   function workloadProfile(c, section) {
@@ -1978,6 +2047,7 @@
     if (els.brandSubtitle) els.brandSubtitle.textContent = `${isEnglish() ? (currentSchoolProfile.nameEn || currentSchoolProfile.nameZh) : (currentSchoolProfile.nameZh || currentSchoolProfile.nameEn)} · ${identityTerm} · ${APP_VERSION}`;
     if (els.currentSchoolShort) els.currentSchoolShort.textContent = isEnglish() ? (currentSchoolProfile.nameEn || currentSchoolProfile.nameZh) : (currentSchoolProfile.shortZh || currentSchoolProfile.nameZh);
     if (els.currentTermShort) els.currentTermShort.textContent = identityTerm;
+    if (els.termSwitchHint) els.termSwitchHint.textContent = currentSchoolId === "cornell" ? "点击切换学期 / Click to switch term" : "切换学校 / Switch school";
     if (els.schoolSwitcherBtn) els.schoolSwitcherBtn.title = currentSchoolId === "cornell" ? (isEnglish() ? "Switch Fall/Spring term; schools and data are available inside" : "切换秋季／春季；弹窗内可进入学校与数据") : (isEnglish() ? "Switch schools or import course data" : "切换学校或导入课程数据");
     document.title = `${isEnglish() ? (currentSchoolProfile.nameEn || currentSchoolProfile.nameZh) : (currentSchoolProfile.shortZh || currentSchoolProfile.nameEn)} LL.M. Course Planner ${APP_VERSION}`;
   }
@@ -2421,11 +2491,11 @@
           const localizedTitle = courseTitle(course);
           const bilingualTitle = titleEn && titleZh && titleEn !== titleZh ? `${localizedTitle} / ${isEnglish() ? titleZh : titleEn}` : localizedTitle;
           const locationText = meetingLocation(meeting, section, course);
-          const validLocation = /not published|尚未公布|待公布/i.test(locationText) ? "" : locationText;
+          const validLocation = isPendingLocation(locationText) ? "" : locationText;
           const instructors = (section?.instructors?.length ? section.instructors : course.instructors || []).join(", ");
           const detailLines = [
             `${isEnglish() ? "Course" : "课程"}: ${course.code}`,
-            section?.classNumber ? `${isEnglish() ? "Class number" : "班号"}: ${section.classNumber}` : "",
+            section?.classNumber ? `${isEnglish() ? "Class number" : "课程班号"}: ${section.classNumber}` : "",
             instructors ? `${isEnglish() ? "Instructor" : "教师"}: ${instructors}` : "",
             `${isEnglish() ? "Credits" : "学分"}: ${course.credits || 0}`,
             course.sourceUrl || ""
@@ -2727,13 +2797,27 @@
       .replace(/^实验课\s*/u, "Lab ")
       .replace(/^诊所课\s*/u, "Clinic ")
       .replace(/^实践课\s*/u, "Practicum ")
+      .replace(/^独立研究\s*/u, "Independent Study ")
       .replace(/^班次\s*/u, "Section ") || "Section";
     return String(label || "")
       .replace(/^Lecture\s*/i, "讲授课 ")
+      .replace(/^Discussion\s*/i, "讨论课 ")
       .replace(/^Seminar\s*/i, "研讨课 ")
+      .replace(/^Lab(?:oratory)?\s*/i, "实验课 ")
+      .replace(/^Clinical?\s*/i, "诊所课 ")
+      .replace(/^Field Studies\s*/i, "实践课 ")
+      .replace(/^Independent Study\s*/i, "独立研究 ")
       .replace(/^Section\s*/i, "班次 ")
+      .replace(/^班次\s*/u, "班次 ")
       .replace(/^Clinic\s*/i, "诊所课 ")
       .replace(/^Practicum\s*/i, "实践课 ");
+  }
+
+  function sectionIdentityHtml(section) {
+    const officialSection = String(section?.section || "").trim();
+    const sectionLabel = esc(formatSectionLabel(section?.label || (officialSection ? `Section ${officialSection}` : section?.id)));
+    const classNumber = String(section?.classNumber || "").trim();
+    return `${sectionLabel}${classNumber ? ` · ${isEnglish() ? "Class number" : "课程班号"} ${esc(classNumber)}` : ""}`;
   }
 
   function formatSectionGroupLabel(label) {
@@ -2995,7 +3079,10 @@
     uiLanguage = isEnglish() ? "zh" : "en";
     try { localStorage.setItem("llm-course-planner-ui-language", uiLanguage); }
     catch { showToast(isEnglish() ? "Language changed for this session, but browser storage is blocked." : "本次已切换语言，但浏览器阻止了保存设置。", true); }
-    if (currentSchoolId === "cornell") courses = bundledCornellCourses().map(course => ({ ...course, schoolId:"cornell" }));
+    if (currentSchoolId === "cornell") {
+      courses = bundledCornellCourses().map(course => ({ ...course, schoolId:"cornell" }));
+      applyLocalCourseEdits();
+    }
     renderSchoolIdentity(); renderAll(); switchView(currentView);
     showToast(isEnglish() ? "English interface and English course dataset enabled." : "已切换为中文界面和中文课程数据库。", false);
   }
@@ -3077,6 +3164,10 @@
     if (/^(ithaca|ithaca, ny|ithaca, ny \(main campus\)|cornell law school|cornell tech)$/i.test(text)) return "";
     return text;
   }
+  function isPendingLocation(value) {
+    const text = cleanLocation(value);
+    return !text || /未公布|待公布|待定|not published|unpublished|location varies by section|班次地点不同/i.test(text);
+  }
   function locationOverrideKey(section) { return section?.id || ""; }
   function manualLocation(section) {
     return cleanLocation(state.locationOverrides?.[locationOverrideKey(section)] || "");
@@ -3084,16 +3175,26 @@
   function syncedLocation(section) {
     return cleanLocation(state.roomSyncLocations?.[locationOverrideKey(section)] || "");
   }
+  function languagePreferredLocation(englishValue, chineseValue, ...fallbackValues) {
+    const candidates = isEnglish()
+      ? [englishValue, ...fallbackValues, chineseValue]
+      : [chineseValue, englishValue, ...fallbackValues];
+    for (const candidate of candidates) {
+      const cleaned = cleanLocation(candidate);
+      if (cleaned) return cleaned;
+    }
+    return "";
+  }
   function meetingLocation(meeting, section, course) {
     const override = manualLocation(section);
     if (override) return localizedLocation(override);
     const synced = syncedLocation(section);
     if (synced) return localizedLocation(synced);
-    const direct = cleanLocation(meeting?.locationZh || meeting?.location || meeting?.facilityDescrLong || meeting?.facilityDescr || meeting?.buildingDescr || meeting?.facilityName || meeting?.room);
+    const direct = languagePreferredLocation(meeting?.location, meeting?.locationZh, meeting?.facilityDescrLong, meeting?.facilityDescr, meeting?.buildingDescr, meeting?.facilityName, meeting?.room);
     if (direct) return localizedLocation(direct);
-    const sectionDirect = cleanLocation(section?.locationZh || section?.location);
+    const sectionDirect = languagePreferredLocation(section?.location, section?.locationZh);
     if (sectionDirect && !/主校区|具体教室待公布|校园/.test(sectionDirect)) return localizedLocation(sectionDirect);
-    const courseDirect = cleanLocation(course?.locationZh || course?.location);
+    const courseDirect = languagePreferredLocation(course?.location, course?.locationZh);
     if (courseDirect && !/主校区|具体教室待公布|校园/.test(courseDirect)) return localizedLocation(courseDirect);
     if (/在线|remote|zoom/i.test(`${section?.instructionMode || ""} ${courseDirect} ${sectionDirect}`)) return isEnglish() ? "Online" : "在线授课";
     if (/协商/.test(`${courseDirect} ${sectionDirect}`)) return localizedLocation(courseDirect || sectionDirect);
@@ -3104,6 +3205,7 @@
     if (!isEnglish() || !text) return text;
     const exact = new Map([
       ["教室尚未公布", "Teaching location not published"], ["具体教室待公布", "Teaching location not published"],
+      ["官方未公布具体地点", "Teaching location not published"], ["班次地点不同，请查看具体班次", "Location varies by section; see section details"],
       ["在线授课", "Online instruction"], ["在线同步授课", "Online synchronous instruction"],
       ["与教师协商", "Arranged with instructor"], ["与指导教师协商", "Arranged with supervising instructor"], ["与项目教师协商", "Arranged with project instructor"]
     ]);
@@ -3116,18 +3218,19 @@
     if (override) return override;
     const synced = syncedLocation(section);
     if (synced) return synced;
-    const locations = [...new Set((section?.meetings || []).map(m => meetingLocation(m, section, course)).filter(v => v && v !== "教室尚未公布"))];
+    const locations = [...new Set((section?.meetings || []).map(m => meetingLocation(m, section, course)).filter(v => !isPendingLocation(v)))];
     if (locations.length) return locations.join(isEnglish() ? "; " : "；");
     return meetingLocation(null, section, course);
   }
   function courseLocationSummary(course) {
-    const locations = [...new Set((course.sections || []).map(section => sectionLocationSummary(section, course)).filter(v => v && v !== "教室尚未公布"))];
+    const locations = [...new Set((course.sections || []).map(section => sectionLocationSummary(section, course)).filter(v => !isPendingLocation(v)))];
     if (!locations.length) return isEnglish() ? "Teaching location not published" : "教室尚未公布";
     return locations.length > 2 ? `${locations.slice(0,2).join(isEnglish() ? "; " : "；")}${isEnglish() ? " and more" : " 等"}` : locations.join(isEnglish() ? "; " : "；");
   }
   function sectionHasPublishedLocation(section) {
     if (manualLocation(section) || syncedLocation(section)) return true;
-    return (section?.meetings || []).some(m => Boolean(cleanLocation(m?.locationZh || m?.location || m?.facilityDescrLong || m?.facilityDescr || m?.buildingDescr || m?.facilityName || m?.room))) || Boolean(cleanLocation(section?.locationZh || section?.location));
+    const meetingPublished = (section?.meetings || []).some(m => [m?.location, m?.locationZh, m?.facilityDescrLong, m?.facilityDescr, m?.buildingDescr, m?.facilityName, m?.room].some(value => !isPendingLocation(value)));
+    return meetingPublished || [section?.location, section?.locationZh].some(value => !isPendingLocation(value));
   }
   function courseHasSpecificLocation(course) {
     return (course.sections || []).some(section => sectionHasPublishedLocation(section));
@@ -3147,12 +3250,12 @@
   function courseLocationSourceHtml(course, section) {
     const location = sectionLocationSummary(section, course);
     const sourceUrl = course.sourceUrl || currentSchoolProfile.catalogUrl || "#";
-    const label = location === "教室尚未公布" ? (isEnglish() ? "Open official course page to add the teaching location" : "打开官方课程页面后补充具体地点") : location;
+    const label = isPendingLocation(location) ? (isEnglish() ? "Open official course page to add the teaching location" : "打开官方课程页面后补充具体地点") : location;
     return `<a class="location-link" href="${esc(sourceUrl)}" target="_blank" rel="noreferrer" title="${isEnglish() ? "Open the official course page" : "打开本课程官方页面"}">${esc(label)} ↗</a>`;
   }
   function locationLinkHtml(location) {
     const text = String(location || (isEnglish() ? "Teaching location not published" : "教室尚未公布"));
-    if (/尚未公布|待公布|待定|not published/i.test(text)) return `<span class="location-pending">${esc(text)}</span>`;
+    if (isPendingLocation(text)) return `<span class="location-pending">${esc(text)}</span>`;
     if (/在线授课|在线同步授课|online/i.test(text)) return `<span class="location-online">${esc(text)}</span>`;
     if (/协商/.test(text)) return `<span class="location-arranged">${esc(text)}</span>`;
     return `<a class="location-link" href="${locationMapUrl(text)}" target="_blank" rel="noreferrer" title="${isEnglish() ? "Open in map: " : "在地图中查看 "}${esc(text)}">${esc(text)} ↗</a>`;
@@ -3208,7 +3311,7 @@
       const gap = current.start - timeToMinutes(prev.meeting.end);
       if (gap < 0 || gap > 15) continue;
       const a = cleanLocation(prev.location), b = cleanLocation(current.location);
-      if (!a || !b || a === b || /待公布|待定/.test(`${a}${b}`)) continue;
+      if (!a || !b || a === b || isPendingLocation(a) || isPendingLocation(b)) continue;
       out.push({ fromIndex:i-1, toIndex:i, gap });
     }
     return out;

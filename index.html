@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="data:,">
   <meta name="description" content="A bilingual Cornell LL.M. course, NY Bar credit, schedule and calendar planner." />
-  <title>LL.M. Course Planner v5.30</title>
+  <title>LL.M. Course Planner v5.31</title>
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
@@ -15,7 +15,7 @@
         <div class="brand-mark">L</div>
         <div>
           <div class="brand-title">LL.M. Planner</div>
-          <div id="brandSubtitle" class="brand-subtitle">Cornell Law · Fall 2026 + Spring 2027 · v5.30</div>
+          <div id="brandSubtitle" class="brand-subtitle">Cornell Law · Fall 2026 + Spring 2027 · v5.31</div>
         </div>
       </div>
 
@@ -61,7 +61,7 @@
           <p id="pageSubtitle">官方课程说明、NY Bar 标识与拖拽排课</p>
         </div>
         <div class="topbar-actions">
-          <button id="schoolSwitcherBtn" class="school-switcher-button" title="切换学校或导入课程数据"><span id="currentSchoolShort">康奈尔</span><small id="currentTermShort">Fall 2026</small></button>
+          <button id="schoolSwitcherBtn" class="school-switcher-button" title="切换秋季／春季"><span id="currentSchoolShort" class="school-switcher-name">康奈尔</span><span class="school-switcher-copy"><small id="currentTermShort">Fall 2026</small><em id="termSwitchHint" class="school-switcher-hint term-switch-hint">点击切换学期 / Click to switch term</em></span></button>
           <button id="languageToggleBtn" class="secondary-button language-toggle-button" title="切换中文或英文界面">中文 / EN</button>
           <button id="loadRecommendedBtn" class="secondary-button">设置偏好并生成推荐</button>
           <button id="authorAnnouncementBtn" class="primary-button">作者公告</button>
@@ -289,7 +289,7 @@
       <div class="term-switch-options" role="group" aria-label="Planning term">
         <button type="button" class="term-choice-button" data-term-choice="all"><strong>All terms</strong><span>Fall 2026 + Spring 2027</span></button>
         <button type="button" class="term-choice-button" data-term-choice="FA26"><strong>Fall 2026</strong><span>136 planning courses</span></button>
-        <button type="button" class="term-choice-button" data-term-choice="SP27"><strong>Spring 2027</strong><span>126 planning courses</span></button>
+        <button type="button" class="term-choice-button" data-term-choice="SP27"><strong>Spring 2027</strong><span>127 planning courses</span></button>
       </div>
       <button id="manageSchoolDataBtn" class="secondary-button term-manage-data-button" type="button">Manage schools and data</button>
     </section>
@@ -305,7 +305,7 @@
 
   <div id="calendarExportOverlay" class="overlay" hidden data-i18n-exempt><section class="choice-dialog calendar-export-dialog" role="dialog" aria-modal="true" aria-labelledby="calendarExportTitle"><button id="closeCalendarExportBtn" class="drawer-close" aria-label="Close">×</button><span class="calendar-dialog-icon" aria-hidden="true">▦</span><h2 id="calendarExportTitle"></h2><p id="calendarExportIntro"></p><div id="calendarExportSummary" class="calendar-export-summary"></div><div class="calendar-export-options"><button id="googleCalendarExportBtn" class="calendar-provider-button calendar-provider-google" type="button"><strong id="googleCalendarExportTitle"></strong><span id="googleCalendarExportCopy"></span></button><button id="icsCalendarExportBtn" class="calendar-provider-button" type="button"><strong id="icsCalendarExportTitle"></strong><span id="icsCalendarExportCopy"></span></button></div><p id="calendarExportPrivacy" class="calendar-privacy-note"></p></section></div>
 
-  <div id="authorAnnouncementOverlay" class="overlay" hidden data-i18n-exempt><section class="choice-dialog author-announcement-dialog" role="dialog" aria-modal="true" aria-labelledby="authorAnnouncementTitle"><button id="closeAuthorAnnouncementBtn" class="drawer-close" aria-label="Close">×</button><header class="author-announcement-hero"><span id="authorAnnouncementEyebrow" class="announcement-eyebrow"></span><h2 id="authorAnnouncementTitle"></h2><a class="support-contact-link" href="mailto:jy2279@cornell.edu">jy2279@cornell.edu</a><p id="authorAnnouncementInvite"></p><a id="authorAnnouncementMailBtn" class="primary-button announcement-mail-button" href="mailto:jy2279@cornell.edu"></a></header><div class="announcement-heading-row"><h3 id="authorAnnouncementHistoryTitle"></h3><span>v5.30</span></div><div id="authorAnnouncementList" class="author-announcement-list"></div></section></div>
+  <div id="authorAnnouncementOverlay" class="overlay" hidden data-i18n-exempt><section class="choice-dialog author-announcement-dialog" role="dialog" aria-modal="true" aria-labelledby="authorAnnouncementTitle"><button id="closeAuthorAnnouncementBtn" class="drawer-close" aria-label="Close">×</button><header class="author-announcement-hero"><span id="authorAnnouncementEyebrow" class="announcement-eyebrow"></span><h2 id="authorAnnouncementTitle"></h2><a class="support-contact-link" href="mailto:jy2279@cornell.edu">jy2279@cornell.edu</a><p id="authorAnnouncementInvite"></p><a id="authorAnnouncementMailBtn" class="primary-button announcement-mail-button" href="mailto:jy2279@cornell.edu"></a></header><div class="announcement-heading-row"><h3 id="authorAnnouncementHistoryTitle"></h3><span>v5.31</span></div><div id="authorAnnouncementList" class="author-announcement-list"></div></section></div>
 
   <div id="toast" class="toast" hidden></div>
 

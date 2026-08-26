@@ -8,6 +8,7 @@ const dataDir = path.join(root, "data");
 const sourceUrl = "https://community.lawschool.cornell.edu/wp-content/uploads/2026/05/NYS-Bar-Requirements-for-LLMs_Fall-2026.pdf";
 const sourceDescription = "Cornell Law 2026-27 NYS Bar Examination Memorandum, page 3, Spring column";
 const generatedAt = new Date().toISOString();
+const expectedCourseCount = 127;
 
 // LAW 5001 appears in the Spring column as an academic-year course with fall
 // enrollment. It therefore remains in the official map, but it must not be
@@ -51,7 +52,7 @@ const sectionIds = dataset => dataset.courses.flatMap(course => (course.sections
 
 function validateBaseDataset(dataset, spec) {
   if (!dataset || !Array.isArray(dataset.courses)) fail(`${spec.jsonFile} has no courses array`);
-  if (dataset.courses.length !== 126) fail(`${spec.jsonFile} must contain exactly 126 courses`);
+  if (dataset.courses.length !== expectedCourseCount) fail(`${spec.jsonFile} must contain exactly ${expectedCourseCount} courses`);
   if (dataset.meta?.termCode !== "SP27") fail(`${spec.jsonFile} must identify term SP27`);
   if (dataset.meta?.language !== spec.language) fail(`${spec.jsonFile} language metadata must be ${spec.language}`);
   if (new Set(ids(dataset)).size !== dataset.courses.length) fail(`${spec.jsonFile} contains duplicate course IDs`);
@@ -141,7 +142,7 @@ function enrichDataset(dataset) {
 }
 
 function validateEnrichedPair(zh, en) {
-  if (zh.courses.length !== 126 || en.courses.length !== 126) fail("both enriched datasets must retain 126 courses");
+  if (zh.courses.length !== expectedCourseCount || en.courses.length !== expectedCourseCount) fail(`both enriched datasets must retain ${expectedCourseCount} courses`);
   if (JSON.stringify(ids(zh)) !== JSON.stringify(ids(en))) fail("Chinese and English course IDs or order differ");
   if (JSON.stringify(codes(zh)) !== JSON.stringify(codes(en))) fail("Chinese and English course codes or order differ");
   if (JSON.stringify(sectionIds(zh)) !== JSON.stringify(sectionIds(en))) fail("Chinese and English section IDs or order differ");
@@ -201,4 +202,4 @@ if (!process.argv.includes("--check")) {
 
 const appliedCodes = outputs[0].dataset.courses.filter(course => CATEGORY_MAP.has(course.code)).map(course => course.code);
 const coreCount = outputs[0].dataset.courses.filter(course => course.barCategories?.includes("core")).length;
-console.log(`${process.argv.includes("--check") ? "CHECK" : "UPDATED"}: Spring 2027 NY Bar data · 126/126 courses · ${appliedCodes.length} mapped offerings · ${coreCount} core offerings · LAW 6264 remains 2 credits with a 3-credit memo conflict note.`);
+console.log(`${process.argv.includes("--check") ? "CHECK" : "UPDATED"}: Spring 2027 NY Bar data · ${expectedCourseCount}/${expectedCourseCount} courses · ${appliedCodes.length} mapped offerings · ${coreCount} core offerings · LAW 6264 remains 2 credits with a 3-credit memo conflict note.`);

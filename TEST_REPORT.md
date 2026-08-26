@@ -1,4 +1,69 @@
-# v5.30 发布测试报告
+# v5.31 发布测试报告
+
+测试日期：2026-08-26
+
+## 本次发布结论
+
+- 按 Cornell Law 当前 Course Offerings 重建 Spring 2027：官方源 136 条课程记录、152 个班次；排除 5 门仅限本科生与 1 门仅限 Cornell Tech LL.M. 的课程并合并同课多班次后，发布库为 127 门、146 个班次。Fall 仍为 136 门，合计 263 条分学期开课记录。
+- Spring 课程形式已按页面真实分类器与官方 component 字段核对：Lecture 54、Seminar 18、Clinic 32、Practicum 22、Discussion 8、Independent study 1。浏览器实际选择 `Spring 2027 + Lecture` 返回 54 门，不再出现 0 门。
+- 127 门 Spring 课程的中英文标题、课程说明或明确的官方无说明状态、限制、先修、评分和班次字段全部对齐。针对 LAW 5002、6051、6158、6209、6465、7028、7591、7760、7839、7876 逐一打开中文详情，未发现“暂无中文译文”或待翻译占位；LAW 7591 明确说明当前及已查历史官方来源均未提供简介。
+- LAW 6641 加入 Spring 课表后，切换唯一计入栏会立即把职业责任从 `0 / 2` 更新为 `3 / 2`，同时把 NYLE／Bar 从 `3 / 6` 更新为 `0 / 6`；课程卡和课表徽标同步更新，刷新页面后仍保留职业责任归类，24 学分总数不重复计算。
+- 英文界面优先使用英文地点；LAW 5002 显示 `Myron Taylor Hall 182` 等官方地点。LAW 6209 等未公布地点统一显示 `Teaching location not published`，不生成地图链接，也不会把占位文本写入日历导出。
+- 旧 v5.30 Cornell 用户导入快照实测会在启动时被丢弃；页面恢复为 263 条 bundled v5.31 记录，伪造的旧快照课程不会出现在页面。
+- 中英文切换后，用户本机修改的官方课程与自建课程均持续显示；再次切回中文仍保留本机修改，不再发生“切语言后消失、刷新后恢复”。
+- 当前日期 2026-08-26 打开课表时定位到 2026-08-24—08-28；Spring 快捷按钮跳到 2027-01-25—01-29。学期、作者公告与日历弹窗均在 1280×720 视口正中央。
+
+## 学期 × 筛选器浏览器门禁
+
+| 实际页面操作 | DOM 结果 |
+| --- | ---: |
+| Spring 2027 | 127 |
+| Spring 2027 × Lecture | 54 |
+| Spring 2027 ×（Lecture 或 Practicum） | 76 |
+| Spring 2027 × Thursday | 33 |
+| Spring 2027 × Friday | 13 |
+| Spring 2027 ×（Thursday 或 Friday） | 37 |
+| Spring 2027 ×（Lecture 或 Practicum）×（Thursday 或 Friday） | 32 |
+
+同一筛选器内为 OR、不同筛选器之间为 AND。六种 Spring 课程形式的浏览器 DOM 数量与数据门禁完全一致。
+
+## 三位随机学生模拟
+
+| 学生 | 学期／偏好 | 学分 | 课程数 | 时间冲突／重复 ID／排除课程 |
+| --- | --- | ---: | ---: | --- |
+| A | Fall 2026 通用随机组合 | 12 | 4 | 0／0／0 |
+| B | Spring 2027 NY Bar 优先 | 13 | 5 | 0／0／0 |
+| C | Spring 2027 周四或周五优先 | 12 | 4 | 0／0／0 |
+
+三组均处于 Cornell 公布的 10–15 学分范围。Spring NY Bar 组包含官方分类课程；周四／周五组只使用满足任一上课日的课程。
+
+## 视觉与响应式检查
+
+- 1280×720：Spring Lecture 的 54 门结果、顶部学期提示、筛选器、作者公告及已选课程区显示正常；每个多选筛选器只显示一个下箭头。
+- 390×844：学期入口、语言切换、作者公告和全部筛选器可见；页面 `scrollWidth` 小于视口宽度，无横向溢出。
+- 作者公告中英文版本均显示 Yuan Jingxuan／袁敬轩、`jy2279@cornell.edu` 和 v5.31 更新内容；日历导出界面同时提供 Google Calendar 与 Apple Calendar／Outlook `.ics` 选项。
+- 新环境默认英文；切换中文后课程卡、详情、地点、课表、公告及进度同步切换。
+
+## 自动化门禁
+
+- `node --check app.js`：通过。
+- `node scripts/verify_release_v5_31.mjs`：通过；继承 Spring 数据、日历与 NY Bar 分配门禁。
+- `node scripts/verify_ui_v5_31.mjs`：通过；Spring Lecture 实际分类结果为 54。
+- `node scripts/simulate_three_students_v5_31.mjs`：三组学生、学期 × 课程形式矩阵与多选 OR 逻辑全部通过。
+- `node scripts/enrich_spring_2027_nybar.mjs --check`：127／127 课程、10 门映射课程、9 门 core 课程通过；LAW 6264 保留 2 学分与 memo 3 学分冲突说明。
+- `git diff --check`：通过；仅有 Git 换行格式提示，无空白错误。
+- 本地干净浏览器标签页：无页面控制台 error／warning。
+
+## 数据边界
+
+- Spring 数据来自 Cornell Law Course Offerings；Spring NY Bar 分类来自 Cornell Law 2026–27 NYS Bar Examination Memorandum。
+- 仅限本科生、仅限 JD 与仅限 Cornell Tech LL.M. 的 Spring 课程不进入发布库。
+- LAW 7591 的当前及已查历史官方来源均未提供简介；38 个班次尚未公布地点，36 个班次尚未公布固定会议时间，页面明确标注而不推测。
+- LAW 7655 只在 Fall 2026 开设；当前 Cornell FA26 Class Roster 仍载明 `Prerequisites: 1L Property`，因此未删除先修要求。
+
+---
+
+# v5.30 历史发布测试报告
 
 测试日期：2026-08-26
 
