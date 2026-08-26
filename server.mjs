@@ -78,7 +78,7 @@ async function fetchExternalText(url, { headers = {}, accept = "application/json
   const timer = setTimeout(() => controller.abort(), timeout);
   try {
     const response = await fetch(parsed, {
-      headers:{ Accept:accept, "User-Agent":"Cornell-LLM-Course-Planner-v5.20", ...safeHeaders },
+      headers:{ Accept:accept, "User-Agent":"Cornell-LLM-Course-Planner-v5.24", ...safeHeaders },
       signal:controller.signal,
       redirect:"follow"
     });
@@ -186,4 +186,4 @@ const server = http.createServer(async (req,res) => {
     res.end(isApi ? JSON.stringify({error:error.message}) : "Not found");
   }
 });
-server.listen(PORT,"127.0.0.1",()=>console.log(`Cornell LL.M. Course Planner v5.20: http://127.0.0.1:${PORT}`));
+server.listen(PORT,"127.0.0.1",()=>console.log(`Cornell LL.M. Course Planner v5.24: http://127.0.0.1:${PORT}`));

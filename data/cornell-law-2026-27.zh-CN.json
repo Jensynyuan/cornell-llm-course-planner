@@ -73,10 +73,10 @@
       "note": "Only current Cornell API fields and concrete room names present in the saved official FA26 LAW roster HTML were written. No course was deleted; an API-unmatched record remains unchanged and is listed above."
     },
     "nyBarCategoryAudit": {
-      "generatedAt": "2026-07-17T20:10:14.259Z",
+      "generatedAt": "2026-08-26T17:30:16.589Z",
       "sourceUrl": "https://community.lawschool.cornell.edu/wp-content/uploads/2026/05/NYS-Bar-Requirements-for-LLMs_Fall-2026.pdf",
       "sourceDescription": "Cornell Law 2026-27 NYS Bar Examination Memorandum, page 3, Fall column",
-      "plannerCourses": 134,
+      "plannerCourses": 136,
       "officialCategoryCourses": 15,
       "categoryCounts": {
         "professional": 1,
@@ -477,7 +477,7 @@
           "american",
           "core"
         ],
-        "note": "Multiple official categories; primary category is used for progress to avoid automatic double counting."
+        "note": "Multiple official categories; primary category is the default, and the user may select one category for progress without double counting."
       }
     },
     {
@@ -685,7 +685,7 @@
           "american",
           "core"
         ],
-        "note": "Multiple official categories; primary category is used for progress to avoid automatic double counting."
+        "note": "Multiple official categories; primary category is the default, and the user may select one category for progress without double counting."
       }
     },
     {
@@ -2380,7 +2380,7 @@
       "barEvidence": null
     },
     {
-      "id": "LAW-6091-001",
+      "id": "LAW-6091",
       "code": "LAW 6091",
       "catalogNbr": "6091",
       "classNumber": "11936",
@@ -2393,7 +2393,7 @@
       "session": "Orientation",
       "sections": [
         {
-          "id": "LAW-6091-001-11936",
+          "id": "LAW-6091-11936",
           "label": "讲授课001",
           "classNumber": "11936",
           "component": "LEC",
@@ -6128,7 +6128,7 @@
           "professional",
           "core"
         ],
-        "note": "Multiple official categories; primary category is used for progress to avoid automatic double counting."
+        "note": "Multiple official categories; primary category is the default, and the user may select one category for progress without double counting."
       }
     },
     {
@@ -10279,6 +10279,193 @@
       "barEvidence": null
     },
     {
+      "id": "LAW-7202",
+      "code": "LAW 7202",
+      "catalogNbr": "7202",
+      "classNumber": "19470",
+      "titleZh": "教师专题研讨会：新闻中的气候与环境法",
+      "credits": 1,
+      "creditText": "1 Credit",
+      "instructors": [
+        "Leehi Yona"
+      ],
+      "session": "Catalog",
+      "sections": [
+        {
+          "id": "LAW-7202-19470",
+          "label": "研讨课101",
+          "classNumber": "19470",
+          "component": "SEM",
+          "componentLabel": "Seminar",
+          "startDate": "2026-08-24",
+          "endDate": "2026-12-19",
+          "meetings": [
+            {
+              "pattern": "T",
+              "start": "16:00",
+              "end": "18:00",
+              "startDate": "2026-09-08",
+              "endDate": "2026-09-08",
+              "location": "Myron Taylor Hall 389",
+              "locationZh": "Myron Taylor Hall 389",
+              "locationStatus": "published",
+              "locationSource": "Cornell Law Course Offerings",
+              "campusZh": "Ithaca主校区或课程指定校区"
+            },
+            {
+              "pattern": "T",
+              "start": "16:00",
+              "end": "18:00",
+              "startDate": "2026-09-22",
+              "endDate": "2026-09-22",
+              "location": "Myron Taylor Hall 389",
+              "locationZh": "Myron Taylor Hall 389",
+              "locationStatus": "published",
+              "locationSource": "Cornell Law Course Offerings",
+              "campusZh": "Ithaca主校区或课程指定校区"
+            },
+            {
+              "pattern": "T",
+              "start": "16:00",
+              "end": "18:00",
+              "startDate": "2026-10-06",
+              "endDate": "2026-10-06",
+              "location": "Myron Taylor Hall 389",
+              "locationZh": "Myron Taylor Hall 389",
+              "locationStatus": "published",
+              "locationSource": "Cornell Law Course Offerings",
+              "campusZh": "Ithaca主校区或课程指定校区"
+            },
+            {
+              "pattern": "T",
+              "start": "16:00",
+              "end": "18:00",
+              "startDate": "2026-10-20",
+              "endDate": "2026-10-20",
+              "location": "Myron Taylor Hall 389",
+              "locationZh": "Myron Taylor Hall 389",
+              "locationStatus": "published",
+              "locationSource": "Cornell Law Course Offerings",
+              "campusZh": "Ithaca主校区或课程指定校区"
+            },
+            {
+              "pattern": "T",
+              "start": "16:00",
+              "end": "18:00",
+              "startDate": "2026-11-03",
+              "endDate": "2026-11-03",
+              "location": "Myron Taylor Hall 389",
+              "locationZh": "Myron Taylor Hall 389",
+              "locationStatus": "published",
+              "locationSource": "Cornell Law Course Offerings",
+              "campusZh": "Ithaca主校区或课程指定校区"
+            },
+            {
+              "pattern": "T",
+              "start": "16:00",
+              "end": "18:00",
+              "startDate": "2026-11-17",
+              "endDate": "2026-11-17",
+              "location": "Myron Taylor Hall 389",
+              "locationZh": "Myron Taylor Hall 389",
+              "locationStatus": "published",
+              "locationSource": "Cornell Law Course Offerings",
+              "campusZh": "Ithaca主校区或课程指定校区"
+            }
+          ],
+          "instructors": [
+            "Leehi Yona"
+          ],
+          "instructionMode": "In Person",
+          "campusZh": "Ithaca主校区或课程指定校区",
+          "location": "Myron Taylor Hall 389",
+          "locationZh": "Myron Taylor Hall 389",
+          "locationStatus": "published",
+          "locationSource": "Cornell Law Course Offerings",
+          "notes": [
+            "实际上课日期：9月8日、22日，10月6日、20日，11月3日、17日。"
+          ],
+          "grading": "Satisfactory/Unsatisfactory",
+          "gradingZh": "合格／不合格（S/U）",
+          "addConsent": "N",
+          "addConsentDescr": "No Special Consent Required",
+          "consentZh": "",
+          "consentEn": "",
+          "selectionGroup": "",
+          "selectionGroupLabel": "",
+          "selectionRequired": true,
+          "selectionMax": 1
+        }
+      ],
+      "barPrimary": null,
+      "barClassroomEligible": null,
+      "degreeRequired": false,
+      "llmSpecific": false,
+      "eligibility": "open",
+      "categories": [
+        "环境与资源法"
+      ],
+      "sourceUrl": "https://classes.cornell.edu/browse/roster/FA26/class/LAW/7202",
+      "catalogUrl": "https://support.law.cornell.edu/CourseOfferings/",
+      "campusZh": "康奈尔大学",
+      "location": "Myron Taylor Hall 389",
+      "gradingZh": "合格／不合格（S/U）",
+      "translationStatus": "source-grounded-chinese-translation",
+      "locationStatus": "published",
+      "lastTermsOffered": "Fall 2026",
+      "catalogOnly": false,
+      "dataScope": "Fall 2026 official Class Roster/API and Cornell Law Course Offerings; Registrar schedule details received 2026-08-26",
+      "restrictionZh": "未列明特殊选课限制",
+      "prerequisitesZh": "无明确先修或共修要求",
+      "translationCompleteness": "complete",
+      "translationMethod": "Chinese translation shown alongside the current official English source.",
+      "restrictionTranslationComplete": true,
+      "prerequisiteTranslationComplete": true,
+      "gradingTranslationComplete": true,
+      "officialSourceTerm": "FA26",
+      "officialTitleEn": "Faculty Specialty Seminar: Climate and Environmental Law in the News",
+      "officialDescriptionEn": "This course will explore developments in energy, climate, and environmental law in the news within the six months preceding the fall semester, and that arise during the semester. The class will meet for six sessions. Each student will be responsible for selecting one topic of discussion, and for, after consultation with the professor selecting readings appropriate for the topic. Each student will have partial responsibility for the discussion of their own topic, and also partial responsibility for the discussion of one topic chosen by another student.",
+      "officialDataStatus": "offered-current-term",
+      "grading": "Satisfactory/Unsatisfactory",
+      "officialRosterCrseId": "375759",
+      "officialRosterLastChecked": "2026-08-26T17:11:43.019Z",
+      "assessmentEvidence": {
+        "source": "Cornell Fall 2026 Class Roster/API, Cornell Law Course Offerings, and Cornell Law Registrar notice",
+        "sourceUrl": "https://classes.cornell.edu/browse/roster/FA26/class/LAW/7202",
+        "supplementalSourceUrl": "https://support.law.cornell.edu/CourseOfferings/",
+        "checkedAt": "2026-08-26T17:11:43.019Z",
+        "assignments": [
+          "Each student selects a discussion topic and, after consulting the professor, selects readings appropriate for that topic.",
+          "Each student shares responsibility for discussing their own topic and one topic selected by another student."
+        ],
+        "finalAssessment": [
+          "No paper or examination is required."
+        ],
+        "finalMethods": [
+          {
+            "type": "none",
+            "labelZh": "无论文或考试",
+            "labelEn": "No paper or examination",
+            "evidence": "Cornell Law Registrar notice: Faculty Specialty Seminars require no paper or examination."
+          }
+        ],
+        "status": "explicit-no-paper-or-exam-in-registrar-notice"
+      },
+      "generatedChineseOverviewRemoved": false,
+      "descriptionZh": "本课程将探讨秋季学期开始前六个月内以及学期中新闻报道中的能源、气候与环境法动态。课程共安排六次讨论。每位学生须选定一个讨论主题，并在与教师协商后选择相关阅读材料；除部分负责本人所选主题的讨论外，还须参与另一名学生所选主题的部分讨论。",
+      "registrationConsentZh": "",
+      "registrationConsentEn": "",
+      "rosterDataSources": {
+        "api": "https://classes.cornell.edu/api/2.0/search/classes.json?roster=FA26&subject=LAW",
+        "classRoster": "https://classes.cornell.edu/browse/roster/FA26/class/LAW/7202",
+        "courseOfferings": "https://support.law.cornell.edu/CourseOfferings/",
+        "registrarNotice": "Cornell Law Registrar message received 2026-08-26 (exact meeting dates and no-paper/no-exam policy)",
+        "locations": "Cornell Law Course Offerings room listing"
+      },
+      "barCategories": [],
+      "barEvidence": null
+    },
+    {
       "id": "LAW-7222",
       "code": "LAW 7222",
       "catalogNbr": "7222",
@@ -10383,6 +10570,205 @@
       "rosterDataSources": {
         "api": "https://classes.cornell.edu/api/2.0/search/classes.json?roster=FA26&subject=LAW",
         "locations": "saved official FA26 subject HTML by class number"
+      },
+      "barCategories": [],
+      "barEvidence": null
+    },
+    {
+      "id": "LAW-7259",
+      "code": "LAW 7259",
+      "catalogNbr": "7259",
+      "classNumber": "19463",
+      "titleZh": "教师专题研讨会：新闻中的宪法",
+      "credits": 1,
+      "creditText": "1 Credit",
+      "instructors": [
+        "Sheri Lynn Johnson"
+      ],
+      "session": "Catalog",
+      "sections": [
+        {
+          "id": "LAW-7259-19463",
+          "label": "研讨课101",
+          "classNumber": "19463",
+          "component": "SEM",
+          "componentLabel": "Seminar",
+          "startDate": "2026-08-24",
+          "endDate": "2026-12-19",
+          "meetings": [
+            {
+              "pattern": "R",
+              "start": "18:30",
+              "end": "20:30",
+              "startDate": "2026-09-03",
+              "endDate": "2026-09-03",
+              "location": "Myron Taylor Hall 129",
+              "locationZh": "Myron Taylor Hall 129",
+              "locationStatus": "published",
+              "locationSource": "Cornell Law Course Offerings",
+              "campusZh": "Ithaca主校区或课程指定校区"
+            },
+            {
+              "pattern": "R",
+              "start": "18:30",
+              "end": "20:30",
+              "startDate": "2026-09-10",
+              "endDate": "2026-09-10",
+              "location": "Myron Taylor Hall 129",
+              "locationZh": "Myron Taylor Hall 129",
+              "locationStatus": "published",
+              "locationSource": "Cornell Law Course Offerings",
+              "campusZh": "Ithaca主校区或课程指定校区"
+            },
+            {
+              "pattern": "R",
+              "start": "18:30",
+              "end": "20:30",
+              "startDate": "2026-09-24",
+              "endDate": "2026-09-24",
+              "location": "Myron Taylor Hall 129",
+              "locationZh": "Myron Taylor Hall 129",
+              "locationStatus": "published",
+              "locationSource": "Cornell Law Course Offerings",
+              "campusZh": "Ithaca主校区或课程指定校区"
+            },
+            {
+              "pattern": "R",
+              "start": "18:30",
+              "end": "20:30",
+              "startDate": "2026-10-08",
+              "endDate": "2026-10-08",
+              "location": "Myron Taylor Hall 129",
+              "locationZh": "Myron Taylor Hall 129",
+              "locationStatus": "published",
+              "locationSource": "Cornell Law Course Offerings",
+              "campusZh": "Ithaca主校区或课程指定校区"
+            },
+            {
+              "pattern": "R",
+              "start": "18:30",
+              "end": "20:30",
+              "startDate": "2026-10-22",
+              "endDate": "2026-10-22",
+              "location": "Myron Taylor Hall 129",
+              "locationZh": "Myron Taylor Hall 129",
+              "locationStatus": "published",
+              "locationSource": "Cornell Law Course Offerings",
+              "campusZh": "Ithaca主校区或课程指定校区"
+            },
+            {
+              "pattern": "R",
+              "start": "18:30",
+              "end": "20:30",
+              "startDate": "2026-11-05",
+              "endDate": "2026-11-05",
+              "location": "Myron Taylor Hall 129",
+              "locationZh": "Myron Taylor Hall 129",
+              "locationStatus": "published",
+              "locationSource": "Cornell Law Course Offerings",
+              "campusZh": "Ithaca主校区或课程指定校区"
+            },
+            {
+              "pattern": "R",
+              "start": "18:30",
+              "end": "20:30",
+              "startDate": "2026-11-19",
+              "endDate": "2026-11-19",
+              "location": "Myron Taylor Hall 129",
+              "locationZh": "Myron Taylor Hall 129",
+              "locationStatus": "published",
+              "locationSource": "Cornell Law Course Offerings",
+              "campusZh": "Ithaca主校区或课程指定校区"
+            }
+          ],
+          "instructors": [
+            "Sheri Lynn Johnson"
+          ],
+          "instructionMode": "In Person",
+          "campusZh": "Ithaca主校区或课程指定校区",
+          "location": "Myron Taylor Hall 129",
+          "locationZh": "Myron Taylor Hall 129",
+          "locationStatus": "published",
+          "locationSource": "Cornell Law Course Offerings",
+          "notes": [
+            "9月3日为较短的组织会议；六次专题讨论分别在9月10日、24日，10月8日、22日，11月5日、19日举行。"
+          ],
+          "grading": "Satisfactory/Unsatisfactory (no audit)",
+          "gradingZh": "合格／不合格（S/U）",
+          "addConsent": "N",
+          "addConsentDescr": "No Special Consent Required",
+          "consentZh": "",
+          "consentEn": "",
+          "selectionGroup": "",
+          "selectionGroupLabel": "",
+          "selectionRequired": true,
+          "selectionMax": 1
+        }
+      ],
+      "barPrimary": null,
+      "barClassroomEligible": null,
+      "degreeRequired": false,
+      "llmSpecific": false,
+      "eligibility": "open",
+      "categories": [
+        "公法"
+      ],
+      "sourceUrl": "https://classes.cornell.edu/browse/roster/FA26/class/LAW/7259",
+      "catalogUrl": "https://support.law.cornell.edu/CourseOfferings/",
+      "campusZh": "康奈尔大学",
+      "location": "Myron Taylor Hall 129",
+      "gradingZh": "合格／不合格（S/U）",
+      "translationStatus": "source-grounded-chinese-translation",
+      "locationStatus": "published",
+      "lastTermsOffered": "Fall 2026, Fall 2025, Fall 2024, Fall 2023",
+      "catalogOnly": false,
+      "dataScope": "Fall 2026 official Class Roster/API and Cornell Law Course Offerings; Registrar schedule details received 2026-08-26",
+      "restrictionZh": "未列明特殊选课限制",
+      "prerequisitesZh": "无明确先修或共修要求",
+      "translationCompleteness": "complete",
+      "translationMethod": "Chinese translation shown alongside the current official English source.",
+      "restrictionTranslationComplete": true,
+      "prerequisiteTranslationComplete": true,
+      "gradingTranslationComplete": true,
+      "officialSourceTerm": "FA26",
+      "officialTitleEn": "Faculty Specialty Seminar: Constitutional Law in the News",
+      "officialDescriptionEn": "This course will explore constitutional issues in the news within the six months preceding the fall semester, and those that arise during the semester. Most of the issues will be constitutional rights issues, but some structural issues may also be addressed. The class will meet for six sessions plus one shorter organizational session. Each student will be responsible for selecting one topic for discussion, and for, after consultation with the professor, selecting readings appropriate for the topic. Each student will have partial responsibility for the discussion of his or her own topic, and also partial responsibility for the discussion of one topic chosen by another student.",
+      "officialDataStatus": "offered-current-term",
+      "grading": "Satisfactory/Unsatisfactory (no audit)",
+      "officialRosterCrseId": "369847",
+      "officialRosterLastChecked": "2026-08-26T17:11:43.019Z",
+      "assessmentEvidence": {
+        "source": "Cornell Fall 2026 Class Roster/API, Cornell Law Course Offerings, and Cornell Law Registrar notice",
+        "sourceUrl": "https://classes.cornell.edu/browse/roster/FA26/class/LAW/7259",
+        "supplementalSourceUrl": "https://support.law.cornell.edu/CourseOfferings/",
+        "checkedAt": "2026-08-26T17:11:43.019Z",
+        "assignments": [
+          "Each student selects a discussion topic and, after consulting the professor, selects readings appropriate for that topic.",
+          "Each student shares responsibility for discussing their own topic and one topic selected by another student."
+        ],
+        "finalAssessment": [
+          "No paper or examination is required."
+        ],
+        "finalMethods": [
+          {
+            "type": "none",
+            "labelZh": "无论文或考试",
+            "labelEn": "No paper or examination",
+            "evidence": "Cornell Law Registrar notice: Faculty Specialty Seminars require no paper or examination."
+          }
+        ],
+        "status": "explicit-no-paper-or-exam-in-registrar-notice"
+      },
+      "generatedChineseOverviewRemoved": false,
+      "descriptionZh": "本课程将探讨秋季学期开始前六个月内以及学期中新闻报道中的宪法问题。多数议题涉及宪法权利，也可能涉及结构性宪法问题。课程包括六次专题讨论及一次较短的组织会议。每位学生须选定一个讨论主题，并在与教师协商后选择相关阅读材料；除部分负责本人所选主题的讨论外，还须参与另一名学生所选主题的部分讨论。",
+      "registrationConsentZh": "",
+      "registrationConsentEn": "",
+      "rosterDataSources": {
+        "api": "https://classes.cornell.edu/api/2.0/search/classes.json?roster=FA26&subject=LAW",
+        "classRoster": "https://classes.cornell.edu/browse/roster/FA26/class/LAW/7259",
+        "courseOfferings": "https://support.law.cornell.edu/CourseOfferings/",
+        "registrarNotice": "Cornell Law Registrar message received 2026-08-26 (exact meeting dates and no-paper/no-exam policy)",
+        "locations": "Cornell Law Course Offerings room listing"
       },
       "barCategories": [],
       "barEvidence": null

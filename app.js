@@ -4,6 +4,8 @@
   const DAY_KEYS = ["M", "T", "W", "R", "F"];
   const DEFAULT_TERM = { orientationStart: "2026-08-06", instructionStart: "2026-08-24", instructionEnd: "2026-12-03", examEnd: "2026-12-18" };
   const CORNELL_NO_CLASS_DATES = ["2026-09-07", "2026-10-12", "2026-10-13", "2026-10-14", "2026-10-15", "2026-10-16", "2026-11-25", "2026-11-26", "2026-11-27"];
+  const NY_BAR_ALLOCATION = window.NY_BAR_ALLOCATION;
+  if (!NY_BAR_ALLOCATION) throw new Error("NY Bar allocation helper failed to load.");
 
   const SCHOOL_PRESETS = [
     { id:"cornell", nameZh:"康奈尔法学院", nameEn:"Cornell Law School", shortZh:"康奈尔", termLabel:"Fall 2026", sourceKind:"offline", sourceLabel:"经核验的 Fall 2026 课程库", catalogUrl:"https://classes.cornell.edu/browse/roster/FA26/subject/LAW", apiGuideUrl:"https://classes.cornell.edu/content/FA26/api-details", term:{...DEFAULT_TERM}, noClassDates:CORNELL_NO_CLASS_DATES, specialScheduleDays:{"2026-12-01":"F"}, autoEnrollCodes:["LAW 6091"], degreeCreditTarget:20, degreeCreditLabel:"Cornell 其他法学分", degreeExcludeCodes:["LAW 6091"] },
@@ -78,6 +80,7 @@
     american: "NY Bar · 美国法",
     core: "NYLE / Bar 考试科目"
   };
+  const BAR_SHORT_LABELS = { professional:"职业责任", writing:"法律研究与写作", american:"美国法体系", core:"NYLE / Bar 考试科目" };
   const BAR_STATUS_LABELS = {
     eligible: "NY Bar 课堂学分",
     ineligible: "不计入 NY Bar",
@@ -94,6 +97,7 @@
   };
   const BAR_STATUS_LABELS_EN = { eligible:"NY Bar classroom credit", ineligible:"Does not count toward NY Bar", review:"School confirmation required", core:"NYLE / Bar tested subjects" };
   const BAR_LABELS_EN = { professional:"NY Bar · Professional Responsibility", writing:"NY Bar · Legal Writing", american:"NY Bar · U.S. Law", core:"NYLE / Bar tested subjects" };
+  const BAR_SHORT_LABELS_EN = { professional:"Professional Responsibility", writing:"Legal Research & Writing", american:"American legal system", core:"NYLE / Bar tested subjects" };
   const ENROLLMENT_LABELS_EN = { automatic:"Auto-enrolled", open:"LL.M. direct enrollment", application:"Application required", permission:"Instructor permission", department:"Department consent required", restricted:"Restricted program" };
   const FAQ_ITEMS = [
     {
@@ -113,16 +117,16 @@
     {
       category: "NY Bar",
       question: "24 个 NY Bar 学分是不是全部都要选 Bar 考试科目？",
-      answer: "不是。24 学分是符合 Rule 520.6 的课堂课程总量；其中至少应包括职业责任 2 学分、法律研究／写作／分析 2 学分、美国法研究或美国法律体系 2 学分，以及 NY Bar／NYLE 考试科目 6 学分。软件会在进度面板将这些法定类别单列显示。",
+      answer: "不是。24 学分是符合 Rule 520.6 的课堂课程总量；其中至少应包括职业责任 2 学分、法律研究／写作／分析 2 学分、美国法研究或美国法律体系 2 学分，以及 NY Bar／NYLE 考试科目 6 学分。软件会在进度面板将这些法定类别单列显示；多分类课程一次只能归入其中一栏。",
       sourceLabel: "Cornell Law：New York State Bar Examination Memorandum",
-      sourceUrl: "https://community.lawschool.cornell.edu/academics/2025-2026-new-york-state-bar-examination-memorandum/"
+      sourceUrl: "https://community.lawschool.cornell.edu/wp-content/uploads/2026/05/NYS-Bar-Requirements-for-LLMs_Fall-2026.pdf"
     },
     {
       category: "NY Bar",
       question: "NY Bar 筛选的四个状态分别是什么意思？",
-      answer: "“NY Bar 课堂学分”会按你所选班次计入 24 个课堂学分统计：一般是康奈尔法学院线下讲授、研讨或讨论班次，且没有明确排除原因。线上、独立研究及明确不适用的班次不会计入；诊所、实践课和项目限制班次会显示“需院系确认”。“NYLE／Bar 考试科目”是 Cornell memo 列示的课程，可任选组合以满足至少 6 学分，并同时计入 24 学分。职业责任、法律研究与写作和美国法体系是另列的法定类别。",
+      answer: "“NY Bar 课堂学分”会按你所选班次计入 24 个课堂学分统计：一般是康奈尔法学院线下讲授、研讨或讨论班次，且没有明确排除原因。线上、独立研究及明确不适用的班次不会计入；诊所、实践课和项目限制班次会显示“需院系确认”。“NYLE／Bar 考试科目”是 Cornell memo 列示的课程，可任选组合以满足至少 6 学分，并同时计入 24 学分。职业责任、法律研究与写作和美国法体系是另列的法定类别；多分类课程可在学分进度中选择归类，但不会重复计入。",
       sourceLabel: "Cornell Law：NY Bar Memorandum",
-      sourceUrl: "https://community.lawschool.cornell.edu/academics/2025-2026-new-york-state-bar-examination-memorandum/"
+      sourceUrl: "https://community.lawschool.cornell.edu/wp-content/uploads/2026/05/NYS-Bar-Requirements-for-LLMs_Fall-2026.pdf"
     },
     {
       category: "学位",
@@ -185,8 +189,8 @@
   const FAQ_EN = [
     { category:"Grading", question:"What is Satisfactory/Unsatisfactory (S/U)?", answer:"S/U is a pass/fail-style grade that does not show a letter grade. Under Cornell Law's rules, a grade of C- or better in an eligible course is generally recorded as S, while D+ or below is U. A course designated S/U only does not require a separate election." },
     { category:"Grading", question:"How does S/U differ from the LL.M. default grading system and JD letter grades?", answer:"The General LL.M. default grading system uses HH/H/S/U. Students may also elect the JD letter-grade and curve system for the entire academic year by the stated deadline. A course-level S/U election and an annual switch to the JD grading system are separate choices." },
-    { category:"NY Bar", question:"Do all 24 NY Bar credits have to be bar-exam subjects?", answer:"No. The 24 credits are the total qualifying classroom credits under Rule 520.6. They include at least 2 credits each in Professional Responsibility, Legal Research/Writing/Analysis, and American legal studies or the American legal system, plus at least 6 credits in NY Bar or NYLE tested subjects. The planner lists these requirements separately instead of using an ambiguous 'required category' filter." },
-    { category:"NY Bar", question:"What do the four NY Bar filter states mean?", answer:"'NY Bar classroom credit' is calculated from the section you selected: ordinarily an in-person Cornell Law lecture, seminar, or discussion section without an official exclusion. Online and independent-study sections do not count; clinics, practica, and restricted sections require confirmation. 'NYLE / Bar tested subjects' identifies Cornell-listed tested-subject courses. Choose a combination totaling at least 6 credits; these credits also count toward the 24-credit total. Professional Responsibility, Legal Writing, and American legal studies appear separately in Credit Progress." },
+    { category:"NY Bar", question:"Do all 24 NY Bar credits have to be bar-exam subjects?", answer:"No. The 24 credits are the total qualifying classroom credits under Rule 520.6. They include at least 2 credits each in Professional Responsibility, Legal Research/Writing/Analysis, and American legal studies or the American legal system, plus at least 6 credits in NY Bar or NYLE tested subjects. The planner lists these requirements separately, and a multi-category course is allocated to only one category at a time." },
+    { category:"NY Bar", question:"What do the four NY Bar filter states mean?", answer:"'NY Bar classroom credit' is calculated from the section you selected: ordinarily an in-person Cornell Law lecture, seminar, or discussion section without an official exclusion. Online and independent-study sections do not count; clinics, practica, and restricted sections require confirmation. 'NYLE / Bar tested subjects' identifies Cornell-listed tested-subject courses. Choose a combination totaling at least 6 credits; these credits also count toward the 24-credit total. Professional Responsibility, Legal Writing, and American legal studies appear separately in Credit Progress. A course listed in more than one category can be reallocated there, but it is never counted twice." },
     { category:"Degree", question:"Why is IALS added automatically, and can it conflict with regular courses?", answer:"IALS is a required General LL.M. course delivered during Orientation. The planner uses its actual dates, so it appears only during Orientation and does not create a conflict with regular classes beginning on August 24 unless dates truly overlap." },
     { category:"Enrollment", question:"Does putting a course in the Shopping Cart mean I am enrolled?", answer:"No. The Shopping Cart only saves a course in advance. When enrollment opens, you must still click ENROLL and confirm that the system reports successful enrollment. Prepare both first-choice and backup schedules." },
     { category:"Workload", question:"How are assignments and final assessments shown, and does the planner guess workload?", answer:"v5.9 separates ordinary coursework from final assessment. Only an expressly stated final requirement, final examination, final paper, final project, or final presentation appears in the final-assessment filter. Mid-course work, class activities, and generic writing references do not. Chinese translations are shown with the current official English original available in the detail page." },
@@ -277,17 +281,22 @@
   function isEnglish() { return uiLanguage === "en"; }
   function dayLabel(day) { return (isEnglish() ? DAY_MAP_EN : DAY_MAP)[day] || day; }
   function localizedLabel(item) { return isEnglish() ? (item.labelEn || item.label) : item.label; }
+  function creditCount(value) { const count = Number(value || 0); return isEnglish() ? `${count} ${count === 1 ? "credit" : "credits"}` : `${count} 学分`; }
+  function courseCount(value) { const count = Number(value || 0); return isEnglish() ? `${count} ${count === 1 ? "course" : "courses"}` : `${count} 门`; }
   function barStatusLabel(status) { return (isEnglish() ? BAR_STATUS_LABELS_EN : BAR_STATUS_LABELS)[status] || status; }
   function barPrimaryLabel(primary) { return (isEnglish() ? BAR_LABELS_EN : BAR_LABELS)[primary] || primary; }
+  function barCategoryShortLabel(category) { return (isEnglish() ? BAR_SHORT_LABELS_EN : BAR_SHORT_LABELS)[category] || category; }
   function enrollmentLabel(value) { return (isEnglish() ? ENROLLMENT_LABELS_EN : ENROLLMENT_LABELS)[value] || (isEnglish() ? "To confirm" : "资格待核实"); }
   function courseTitle(c) { return isEnglish() ? (c.officialTitleEn || c.titleEn || c.titleZh || "Course title pending") : (c.titleZh || c.officialTitleEn || "课程中文名待补充"); }
+  function normalizedCourseTitle(c) { return String(c.officialTitleEn || c.titleEn || c.titleZh || "").normalize("NFKC").toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ").trim(); }
   function officialCourseDescription(c) { return c.officialDescriptionEn || c.descriptionEn || ""; }
   function courseDescription(c) {
     if (isEnglish()) return officialCourseDescription(c) || "No official course description is available.";
     return c.descriptionZh || "当前尚无基于官方原文的中文译文；请在详情查看官方英文原文。";
   }
   function courseOfficialText(c) { return `${c.officialTitleEn || c.titleEn || ""} ${officialCourseDescription(c)} ${(c.categories || []).join(" ")}`.toLowerCase(); }
-  function barCategories(c) { return [...new Set((Array.isArray(c.barCategories) ? c.barCategories : [c.barPrimary]).filter(category => ["professional","writing","american","core"].includes(category)))]; }
+  function barCategories(c) { return NY_BAR_ALLOCATION.categories(c); }
+  function assignedBarCategory(c) { return NY_BAR_ALLOCATION.assignedCategory(c, state?.barCategoryAllocations || {}); }
   function nyBarFilterBucket(c, sectionId = undefined) { return barCategories(c).includes("core") ? "core" : barStatus(c, sectionId === undefined ? sectionSelectionId(defaultSectionSelection(c)) : sectionId); }
   function assessmentEvidence(c) {
     const source = c.assessmentEvidence && typeof c.assessmentEvidence === "object" ? c.assessmentEvidence : {};
@@ -359,14 +368,14 @@
       const schoolState = root.schools?.[currentSchoolId];
       if (schoolState) return {
         selected: schoolState.selected || {}, scheduleWeekStart: schoolState.scheduleWeekStart || TERM.instructionStart,
-        locationOverrides: schoolState.locationOverrides || {}, roomSyncLocations: schoolState.roomSyncLocations || {}, roomSyncMeta: schoolState.roomSyncMeta || {}, recommendationProfile: schoolState.recommendationProfile || { directions:[], preferences:[] }, manualPlacements: schoolState.manualPlacements || {}, courseOverrides: schoolState.courseOverrides || {}, customCourses: schoolState.customCourses || [], miniScheduleCollapsed:Boolean(schoolState.miniScheduleCollapsed)
+        locationOverrides: schoolState.locationOverrides || {}, roomSyncLocations: schoolState.roomSyncLocations || {}, roomSyncMeta: schoolState.roomSyncMeta || {}, recommendationProfile: schoolState.recommendationProfile || { directions:[], preferences:[] }, manualPlacements: schoolState.manualPlacements || {}, courseOverrides: schoolState.courseOverrides || {}, customCourses: schoolState.customCourses || [], barCategoryAllocations:schoolState.barCategoryAllocations || {}, miniScheduleCollapsed:Boolean(schoolState.miniScheduleCollapsed)
       };
       if (currentSchoolId === "cornell") {
         const legacy = JSON.parse(localStorage.getItem("llm-course-planner-state") || "{}");
-        return { selected: legacy.selected || {}, scheduleWeekStart: legacy.scheduleWeekStart || TERM.instructionStart, locationOverrides: legacy.locationOverrides || {}, roomSyncLocations: legacy.roomSyncLocations || {}, roomSyncMeta: legacy.roomSyncMeta || {}, recommendationProfile:{ directions:[], preferences:[] }, manualPlacements:{}, courseOverrides:{}, customCourses:[], miniScheduleCollapsed:false };
+        return { selected: legacy.selected || {}, scheduleWeekStart: legacy.scheduleWeekStart || TERM.instructionStart, locationOverrides: legacy.locationOverrides || {}, roomSyncLocations: legacy.roomSyncLocations || {}, roomSyncMeta: legacy.roomSyncMeta || {}, recommendationProfile:{ directions:[], preferences:[] }, manualPlacements:{}, courseOverrides:{}, customCourses:[], barCategoryAllocations:{}, miniScheduleCollapsed:false };
       }
     } catch {}
-    return { selected: {}, scheduleWeekStart: TERM.instructionStart, locationOverrides: {}, roomSyncLocations: {}, roomSyncMeta: {}, recommendationProfile:{ directions:[], preferences:[] }, manualPlacements:{}, courseOverrides:{}, customCourses:[], miniScheduleCollapsed:false };
+    return { selected: {}, scheduleWeekStart: TERM.instructionStart, locationOverrides: {}, roomSyncLocations: {}, roomSyncMeta: {}, recommendationProfile:{ directions:[], preferences:[] }, manualPlacements:{}, courseOverrides:{}, customCourses:[], barCategoryAllocations:{}, miniScheduleCollapsed:false };
   }
 
   function saveState() {
@@ -612,7 +621,7 @@
           <div class="course-code">${esc(c.code)}${classNumber ? ` · ${isEnglish() ? "Class" : "班号"} ${esc(classNumber)}` : ""}</div>
           <div class="course-title-row"><h3 class="course-title">${esc(title)}</h3>${badgesHtml(c)}</div>
           <div class="course-meta">
-            <span>◷ ${esc(meetings)}</span><span>◫ ${c.credits} ${isEnglish() ? "credits" : "学分"}</span>
+            <span>◷ ${esc(meetings)}</span><span>◫ ${creditCount(c.credits)}</span>
             <span>◎ ${instructorsHtml(instructors)}</span><span>▱ ${esc(formatGrading(c.grading || c.gradingZh))}</span>${c.registrationConsentZh || c.registrationConsentEn ? `<span>▣ ${esc(isEnglish() ? (c.registrationConsentEn || c.registrationConsentZh) : c.registrationConsentZh)}</span>` : ""}
           </div>
           <div class="course-location-line"><strong>${isEnglish() ? "Teaching location" : "授课地点"}</strong> · ${locationLinkHtml(location)}</div>
@@ -661,7 +670,12 @@
     const out = [];
     const bucket = nyBarFilterBucket(c, sectionId);
     out.push(`<button type="button" class="badge badge-clickable badge-${bucket === "core" ? "core" : `bar-${bucket}`}" data-badge-filter="${bucket}" title="${isEnglish() ? "Filter: " : "点击筛选："}${barStatusLabel(bucket)}">${barStatusLabel(bucket)}</button>`);
-    barCategories(c).filter(category => category !== "core").forEach(category => out.push(`<span class="badge badge-mandatory" title="${isEnglish() ? "Official NY Bar category; credits are assigned once in progress." : "官方 NY Bar 分类；学分进度只会分配一次，避免重复计算。"}">${barPrimaryLabel(category)}</span>`));
+    const categories = barCategories(c);
+    categories.filter(category => category !== "core").forEach(category => out.push(`<span class="badge badge-mandatory" title="${isEnglish() ? "Official NY Bar category; credits are assigned once in progress." : "官方 NY Bar 分类；学分进度只会分配一次，避免重复计算。"}">${barPrimaryLabel(category)}</span>`));
+    if (categories.length > 1) {
+      const assigned = assignedBarCategory(c);
+      out.push(`<span class="badge badge-allocation" title="${isEnglish() ? "This course is listed in more than one official category. Change its one-time allocation in Credit Progress." : "本课同时属于多个官方类别；可在学分进度中调整唯一归类。"}">${isEnglish() ? "Credits allocated to: " : "学分当前计入："}${esc(barCategoryShortLabel(assigned))}</span>`);
+    }
     const enrollment = c.eligibility || "open";
     out.push(`<span class="badge badge-enrollment badge-enrollment-${esc(enrollment)}" title="${isEnglish() ? "Enrollment: " : "选课权限："}${esc(enrollmentLabel(enrollment))}">${esc(enrollmentLabel(enrollment))}</span>`);
     if (String(c.grading).toLowerCase().includes("s/u") || String(c.grading).toLowerCase().includes("satisfactory")) out.push(`<span class="badge badge-su">S/U</span>`);
@@ -974,7 +988,8 @@
   function renderProgress() {
     const selected = selectedCourses();
     const eligibleCredits = selected.filter(c => barStatus(c, state.selected[c.id]) === "eligible").reduce((sum, course) => sum + Number(course.credits || 0), 0);
-    const categoryCredits = type => selected.filter(c => c.barPrimary === type && barStatus(c, state.selected[c.id]) === "eligible").reduce((sum, course) => sum + Number(course.credits || 0), 0);
+    const categoryTotals = NY_BAR_ALLOCATION.creditsByCategory(selected, state.barCategoryAllocations || {}, course => barStatus(course, state.selected[course.id]) === "eligible");
+    const categoryCredits = type => categoryTotals[type] || 0;
     const selectedCredits = selected.reduce((sum, course) => sum + Number(course.credits || 0), 0);
     const barItems = [
       [isEnglish() ? "Professional Responsibility" : "职业责任", categoryCredits("professional"), 2],
@@ -983,18 +998,47 @@
       [isEnglish() ? "NYLE / Bar tested subjects" : "NYLE / Bar 考试科目", categoryCredits("core"), 6]
     ];
     if (currentSchoolId === "cornell") {
-      els.creditProgress.innerHTML = `${rangeProgressHtml(isEnglish() ? "LL.M. semester registration (10–15)" : "LL.M. 本学期注册学分（10–15）", selectedCredits, 10, 15)}${progressHtml(isEnglish() ? "NY Bar qualifying classroom credits" : "NY Bar 课堂课程学分", eligibleCredits, 24)}<p class="progress-policy-note">${isEnglish() ? "Calculated from the section you selected: in-person Cornell Law lecture, seminar, or discussion sections count unless an official restriction excludes them. Online and independent-study sections do not count; clinics, practica, and restricted sections require confirmation." : "按你所选班次计算：康奈尔法学院线下讲授、研讨或讨论班次会计入，除非官方明确排除；线上和独立研究不计入，诊所、实践课及项目限制班次须确认。"}</p><div class="progress-subheading">${isEnglish() ? "NY Bar required categories" : "NY Bar 分类要求"}</div>${barItems.map(([label, value, target]) => progressHtml(label, value, target)).join("")}<p class="progress-policy-note">${isEnglish() ? "Where Cornell lists a course in more than one category, the planner assigns its credits once to the primary category so it never automatically double counts. Confirm your final allocation with Cornell Law and BOLE." : "若 Cornell 将同一课程列入多个类别，工具只会把其学分分配至一个主类别，绝不自动重复计算；最终学分分配请向 Cornell Law 和 BOLE 确认。"}</p><p class="progress-policy-note">${isEnglish() ? "Cornell states that LL.M. students register for 10–15 credits per semester unless the Dean of Students approves otherwise. This planner does not determine immigration status." : "Cornell 公布的 LL.M. 每学期注册范围为 10–15 学分；超出范围需向 Dean of Students 申请。本工具不判断个人移民／签证身份。"}</p>`;
+      els.creditProgress.innerHTML = `${rangeProgressHtml(isEnglish() ? "LL.M. semester registration (10–15)" : "LL.M. 本学期注册学分（10–15）", selectedCredits, 10, 15)}${progressHtml(isEnglish() ? "NY Bar qualifying classroom credits" : "NY Bar 课堂课程学分", eligibleCredits, 24)}<p class="progress-policy-note">${isEnglish() ? "Calculated from the section you selected: in-person Cornell Law lecture, seminar, or discussion sections count unless an official restriction excludes them. Online and independent-study sections do not count; clinics, practica, and restricted sections require confirmation." : "按你所选班次计算：康奈尔法学院线下讲授、研讨或讨论班次会计入，除非官方明确排除；线上和独立研究不计入，诊所、实践课及项目限制班次须确认。"}</p><div class="progress-subheading">${isEnglish() ? "NY Bar required categories" : "NY Bar 分类要求"}</div>${barItems.map(([label, value, target]) => progressHtml(label, value, target)).join("")}${barAllocationControlsHtml(selected)}<p class="progress-policy-note">${isEnglish() ? "Where Cornell lists a course in more than one category, the planner counts it once in the category selected above. Confirm your final allocation with Cornell Law and BOLE." : "若 Cornell 将同一课程列入多个类别，工具仅按上方所选归类计入一次；最终学分分配请向 Cornell Law 和 BOLE 确认。"}</p><p class="progress-policy-note">${isEnglish() ? "Cornell states that LL.M. students register for 10–15 credits per semester unless the Dean of Students approves otherwise. This planner does not determine immigration status." : "Cornell 公布的 LL.M. 每学期注册范围为 10–15 学分；超出范围需向 Dean of Students 申请。本工具不判断个人移民／签证身份。"}</p>`;
+      bindBarAllocationControls();
       return;
     }
     const importedBarCredits = selected.filter(c => barStatus(c, state.selected[c.id]) === "eligible").reduce((sum, course) => sum + Number(course.credits || 0), 0);
     els.creditProgress.innerHTML = `<div class="progress-item"><div class="progress-label-row"><span class="progress-label">${isEnglish() ? "Selected-course credits" : "已选课程学分"}</span><span class="progress-value">${selectedCredits}</span></div><div class="progress-remaining">${isEnglish() ? "Degree and bar rules vary by school; verify them with your school's official LL.M. guidance." : "学位与 Bar 要求因学校而异，请以本校 LLM 官方指引为准。"}</div></div>${importedBarCredits ? progressHtml(isEnglish() ? "Imported NY Bar classroom credits" : "导入标注的 NY Bar 课堂学分", importedBarCredits, 24) : ""}`;
   }
 
+  function barAllocationControlsHtml(selected) {
+    const multiCategoryCourses = selected.filter(course => barCategories(course).length > 1 && barStatus(course, state.selected[course.id]) === "eligible");
+    if (!multiCategoryCourses.length) return "";
+    return `<section class="bar-allocation-panel" aria-label="${isEnglish() ? "Multi-category NY Bar credit allocation" : "NY Bar 多分类课程学分归类"}">
+      <strong>${isEnglish() ? "Choose one category for each multi-category course" : "多分类课程：选择唯一计入栏"}</strong>
+      <p>${isEnglish() ? "Changing this selection moves the course credits between category bars. It never changes the 24-credit classroom total or counts the course twice." : "切换后，课程学分会在分类进度条之间移动；不影响 24 个课堂学分总数，也不会重复计算。"}</p>
+      ${multiCategoryCourses.map(course => {
+        const assigned = assignedBarCategory(course);
+        const options = barCategories(course).map(category => `<option value="${category}" ${category === assigned ? "selected" : ""}>${esc(barCategoryShortLabel(category))}</option>`).join("");
+        return `<label class="bar-allocation-row"><span><b>${esc(course.code)}</b><small>${creditCount(course.credits)}</small></span><select data-bar-allocation-course="${esc(course.id)}" aria-label="${esc(`${course.code} ${isEnglish() ? "credit category" : "学分归类"}`)}">${options}</select></label>`;
+      }).join("")}
+    </section>`;
+  }
+
+  function bindBarAllocationControls() {
+    els.creditProgress.querySelectorAll("select[data-bar-allocation-course]").forEach(select => select.addEventListener("change", event => {
+      const course = courses.find(item => item.id === event.currentTarget.dataset.barAllocationCourse);
+      const category = event.currentTarget.value;
+      if (!course || !barCategories(course).includes(category)) return;
+      state.barCategoryAllocations ||= {};
+      if (category === course.barPrimary) delete state.barCategoryAllocations[course.id];
+      else state.barCategoryAllocations[course.id] = category;
+      saveState();
+      renderAll();
+      showToast(isEnglish() ? `${course.code}: credits allocated once to ${barCategoryShortLabel(category)}.` : `${course.code} 的学分已改为仅计入“${barCategoryShortLabel(category)}”。`);
+    }));
+  }
+
   function rangeProgressHtml(label, value, minimum, maximum) {
     const capped = Math.min(100, (value / maximum) * 100);
     const belowMinimum = value < minimum;
     const overMaximum = value > maximum;
-    const status = belowMinimum ? (isEnglish() ? `${minimum - value} credits below the published minimum` : `距公布下限还差 ${minimum - value} 学分`) : (isEnglish() ? "Within the published 10–15 credit range" : "处于公布的 10–15 学分范围内");
+    const status = belowMinimum ? (isEnglish() ? `${creditCount(minimum - value)} below the published minimum` : `距公布下限还差 ${minimum - value} 学分`) : (isEnglish() ? "Within the published 10–15 credit range" : "处于公布的 10–15 学分范围内");
     const threshold = Math.min(100, Math.max(0, (minimum / maximum) * 100));
     const limitAlert = overMaximum ? `<div class="progress-limit-alert" role="status"><span aria-hidden="true">⚠</span><strong>${isEnglish() ? `Over the ${maximum}-credit limit by ${value - maximum}` : `超过上限 ${value - maximum} 学分`}</strong><small>${isEnglish() ? "Approval required" : "需申请批准"}</small></div>` : "";
     const stateClass = overMaximum ? "is-over-limit" : belowMinimum ? "is-below-minimum" : "is-in-range";
@@ -1007,7 +1051,7 @@
     return `<div class="progress-item">
       <div class="progress-label-row"><span class="progress-label">${esc(label)}</span><span class="progress-value">${value} / ${target}</span></div>
       <div class="progress-track"><div class="progress-fill ${remaining === 0 ? "is-done" : ""}" style="width:${capped}%"></div></div>
-      <div class="progress-remaining">${remaining === 0 ? (isEnglish() ? "Complete" : "已满足") : (isEnglish() ? `${remaining} credits remaining` : `还差 ${remaining} 学分`)}</div>
+      <div class="progress-remaining">${remaining === 0 ? (isEnglish() ? "Complete" : "已满足") : (isEnglish() ? `${creditCount(remaining)} remaining` : `还差 ${remaining} 学分`)}</div>
     </div>`;
   }
 
@@ -1072,7 +1116,7 @@
     els.miniSchedule.querySelectorAll(".mini-course-item").forEach(x => x.addEventListener("click", () => openCourseDetail(x.dataset.courseId)));
     const credits = selected.reduce((s,c) => s + Number(c.credits || 0), 0);
     const eligible = selected.filter(c => barStatus(c, state.selected[c.id]) === "eligible").reduce((s,c) => s + Number(c.credits || 0), 0);
-    els.selectedSummary.innerHTML = `<div class="summary-row"><span>${isEnglish() ? "Selected courses" : "已选课程"}</span><strong>${selected.length} ${isEnglish() ? "courses" : "门"}</strong></div><div class="summary-row"><span>${isEnglish() ? "Fall credits" : "秋季总学分"}</span><strong>${credits}</strong></div><div class="summary-row"><span>${isEnglish() ? "NY Bar classroom credits" : "NY Bar 课堂课程学分"}</span><strong>${eligible}</strong></div>`;
+    els.selectedSummary.innerHTML = `<div class="summary-row"><span>${isEnglish() ? "Selected courses" : "已选课程"}</span><strong>${courseCount(selected.length)}</strong></div><div class="summary-row"><span>${isEnglish() ? "Fall credits" : "秋季总学分"}</span><strong>${credits}</strong></div><div class="summary-row"><span>${isEnglish() ? "NY Bar classroom credits" : "NY Bar 课堂课程学分"}</span><strong>${eligible}</strong></div>`;
   }
 
   function renderCareerControls() {
@@ -1204,7 +1248,7 @@
   function recommendationCardHtml(c) {
     const selected = Boolean(state.selected[c.id]);
     const topics = courseTopics(c).slice(0, 2).map(id => COURSE_TOPICS.find(topic => topic.id === id)).filter(Boolean);
-    return `<article class="recommendation-card ${selected ? "is-selected" : ""}" draggable="true" data-course-id="${esc(c.id)}"><div class="course-code">${esc(c.code)} · ${c.credits} ${isEnglish() ? "credits" : "学分"}</div><h4>${esc(courseTitle(c))}</h4><div>${badgesHtml(c)}</div>${topics.length ? `<div class="topic-chip-row">${topics.map(topic => `<span class="topic-chip">${esc(localizedLabel(topic))}</span>`).join("")}</div>` : ""}<p>${esc(recommendReason(c))}</p><div class="recommendation-card-actions"><span class="drag-course-handle" aria-hidden="true">⋮⋮ ${isEnglish() ? "Drag to schedule" : "拖入课表"}</span><button class="add-course-btn ${selected ? "remove" : ""}" data-course-id="${esc(c.id)}">${selected ? (isEnglish() ? "Remove" : "移除") : (isEnglish() ? "Add to schedule" : "加入课表")}</button></div></article>`;
+    return `<article class="recommendation-card ${selected ? "is-selected" : ""}" draggable="true" data-course-id="${esc(c.id)}"><div class="course-code">${esc(c.code)} · ${creditCount(c.credits)}</div><h4>${esc(courseTitle(c))}</h4><div>${badgesHtml(c)}</div>${topics.length ? `<div class="topic-chip-row">${topics.map(topic => `<span class="topic-chip">${esc(localizedLabel(topic))}</span>`).join("")}</div>` : ""}<p>${esc(recommendReason(c))}</p><div class="recommendation-card-actions"><span class="drag-course-handle" aria-hidden="true">⋮⋮ ${isEnglish() ? "Drag to schedule" : "拖入课表"}</span><button class="add-course-btn ${selected ? "remove" : ""}" data-course-id="${esc(c.id)}">${selected ? (isEnglish() ? "Remove" : "移除") : (isEnglish() ? "Add to schedule" : "加入课表")}</button></div></article>`;
   }
 
   function recommendReason(c) {
@@ -1212,7 +1256,7 @@
     const parts = [];
     const profile = state.recommendationProfile || { directions:[], preferences:[] };
     if (/s\/u|satisfactory/i.test(String(c.grading || c.gradingZh))) parts.push(en ? "S/U reduces letter-grade competition" : "S/U 降低具体等级竞争");
-    if (Number(c.credits || 0) <= 2) parts.push(en ? `${c.credits} credits` : `${c.credits} 学分`);
+    if (Number(c.credits || 0) <= 2) parts.push(en ? creditCount(c.credits) : `${c.credits} 学分`);
     if (c.llmSpecific) parts.push(en ? "Designed for LL.M. students" : "面向 LL.M. 设计");
     if (c.barPrimary) parts.push(en ? "Advances an NY Bar category requirement" : "可推进 NY Bar 分类要求");
     if (hasAssignmentEvidence(c)) parts.push(en ? "Official description mentions written assignments" : "说明提及书面作业");
@@ -1643,10 +1687,10 @@
 
   function renderSchoolIdentity() {
     currentSchoolProfile = getSchoolProfile(currentSchoolId);
-    if (els.brandSubtitle) els.brandSubtitle.textContent = `${isEnglish() ? (currentSchoolProfile.nameEn || currentSchoolProfile.nameZh) : (currentSchoolProfile.nameZh || currentSchoolProfile.nameEn)} · ${currentSchoolProfile.termLabel || (isEnglish() ? "Custom term" : "自定义学期")} · v5.23`;
+    if (els.brandSubtitle) els.brandSubtitle.textContent = `${isEnglish() ? (currentSchoolProfile.nameEn || currentSchoolProfile.nameZh) : (currentSchoolProfile.nameZh || currentSchoolProfile.nameEn)} · ${currentSchoolProfile.termLabel || (isEnglish() ? "Custom term" : "自定义学期")} · v5.24`;
     if (els.currentSchoolShort) els.currentSchoolShort.textContent = isEnglish() ? (currentSchoolProfile.nameEn || currentSchoolProfile.nameZh) : (currentSchoolProfile.shortZh || currentSchoolProfile.nameZh);
     if (els.currentTermShort) els.currentTermShort.textContent = currentSchoolProfile.termLabel || (isEnglish() ? "Custom term" : "自定义学期");
-    document.title = `${isEnglish() ? (currentSchoolProfile.nameEn || currentSchoolProfile.nameZh) : (currentSchoolProfile.shortZh || currentSchoolProfile.nameEn)} LL.M. Course Planner v5.23`;
+    document.title = `${isEnglish() ? (currentSchoolProfile.nameEn || currentSchoolProfile.nameZh) : (currentSchoolProfile.shortZh || currentSchoolProfile.nameEn)} LL.M. Course Planner v5.24`;
   }
 
   function renderSchoolManager() {
@@ -2193,11 +2237,12 @@
     if (eligibility.status === "ineligible") return isEnglish() ? `Does not count toward the NY Bar 24-credit classroom total: ${eligibility.reasonEn}` : `不计入 NY Bar 24 个课堂学分：${eligibility.reasonZh}`;
     if (eligibility.status === "review") return isEnglish() ? `NY Bar eligibility requires confirmation: ${eligibility.reasonEn}` : `NY Bar 计分资格待确认：${eligibility.reasonZh}`;
     const categories = barCategories(c);
-    if (categories.length > 1) return isEnglish() ? `Cornell lists this course in ${categories.map(barPrimaryLabel).join(" and ")}. The planner assigns its credits once to ${barPrimaryLabel(c.barPrimary)} to avoid automatic double counting.` : `Cornell 将本课列入${categories.map(barPrimaryLabel).join("和")}；为避免自动重复计算，工具将其学分分配至${barPrimaryLabel(c.barPrimary)}。`;
-    if (c.barPrimary === "professional") return isEnglish() ? "Counts toward the NY Bar 24-credit total and the Professional Responsibility category." : "计入 NY Bar 24 学分，并用于职业责任类别。";
-    if (c.barPrimary === "writing") return isEnglish() ? "Counts toward the NY Bar 24-credit total and Legal Research, Writing and Analysis." : "计入 NY Bar 24 学分，并用于法律研究、写作与分析类别。";
-    if (c.barPrimary === "american") return isEnglish() ? "Counts toward the NY Bar 24-credit total and American legal system category." : "计入 NY Bar 24 学分，并用于美国法律体系类别。";
-    if (c.barPrimary === "core") return isEnglish() ? "Counts toward the NY Bar 24-credit total and may be used toward the 6-credit NYLE / Bar tested-subject requirement." : "计入 NY Bar 24 学分，并可用于 NYLE / Bar 考试科目至少 6 学分的要求。";
+    const assigned = assignedBarCategory(c);
+    if (categories.length > 1) return isEnglish() ? `Cornell lists this course in ${categories.map(barPrimaryLabel).join(" and ")}. Its credits are currently allocated once to ${barPrimaryLabel(assigned)}. If the course is selected, you can move that one-time allocation in Credit Progress; it is never counted twice.` : `Cornell 将本课列入${categories.map(barPrimaryLabel).join("和")}；目前学分仅计入${barPrimaryLabel(assigned)}。选课后可在“学分进度”调整这一唯一归类，但不会重复计入。`;
+    if (assigned === "professional") return isEnglish() ? "Counts toward the NY Bar 24-credit total and the Professional Responsibility category." : "计入 NY Bar 24 学分，并用于职业责任类别。";
+    if (assigned === "writing") return isEnglish() ? "Counts toward the NY Bar 24-credit total and Legal Research, Writing and Analysis." : "计入 NY Bar 24 学分，并用于法律研究、写作与分析类别。";
+    if (assigned === "american") return isEnglish() ? "Counts toward the NY Bar 24-credit total and American legal system category." : "计入 NY Bar 24 学分，并用于美国法律体系类别。";
+    if (assigned === "core") return isEnglish() ? "Counts toward the NY Bar 24-credit total and may be used toward the 6-credit NYLE / Bar tested-subject requirement." : "计入 NY Bar 24 学分，并可用于 NYLE / Bar 考试科目至少 6 学分的要求。";
     if (eligibility.status === "eligible") return isEnglish() ? "The selected section is an in-person Cornell Law classroom section and counts toward the NY Bar 24-credit classroom total." : "所选班次为康奈尔法学院线下课堂班次，计入 NY Bar 24 个课堂学分总数。";
     return isEnglish() ? "The selected section is an in-person Cornell Law classroom section and counts toward the NY Bar 24-credit classroom total." : "所选班次为康奈尔法学院线下课堂班次，计入 NY Bar 24 个课堂学分总数。";
   }
@@ -2478,24 +2523,33 @@
       .filter(course => course.eligibility !== "restricted" && (course.sections || []).length)
       .sort((a,b) => careerMatchScore(b) - careerMatchScore(a));
     const picked = {};
+    const pickedTitles = new Set();
     let credits = 0;
     for (const code of currentSchoolProfile.autoEnrollCodes || []) {
       const course = courses.find(item => item.code === code);
       const section = course?.sections?.[0];
-      if (course && section) { picked[course.id] = section.id; credits += Number(course.credits || 0); }
+      if (course && section) {
+        picked[course.id] = section.id;
+        credits += Number(course.credits || 0);
+        const titleKey = normalizedCourseTitle(course);
+        if (titleKey) pickedTitles.add(titleKey);
+      }
     }
     for (const course of candidates) {
       if (credits >= 12) break;
+      const titleKey = normalizedCourseTitle(course);
+      if (titleKey && pickedTitles.has(titleKey)) continue;
       const section = course.sections?.find(candidate => !Object.entries(picked).some(([courseId, sectionId]) => {
         const existing = courses.find(item => item.id === courseId);
         return existing && sectionsConflict(candidate, getSection(existing, sectionId));
-      })) || course.sections?.[0];
+      }));
       if (!section) continue;
       picked[course.id] = section.id;
       credits += Number(course.credits || 0);
+      if (titleKey) pickedTitles.add(titleKey);
     }
     state.selected = picked;
-    saveState(); renderAll(); showToast(`已按当前职业方向与偏好生成 ${credits} 学分方案`);
+    saveState(); renderAll(); showToast(isEnglish() ? `Generated a ${creditCount(credits)} plan from the current career directions and preferences.` : `已按当前职业方向与偏好生成 ${credits} 学分方案`);
   }
 
   function clearSchedule() {
@@ -2533,7 +2587,7 @@
     document.documentElement.lang = isEnglish() ? "en" : "zh-CN";
     if (els.languageToggleBtn) els.languageToggleBtn.textContent = isEnglish() ? "EN / 中文" : "中文 / EN";
     renderCreatorCredit();
-    const translations = new Map([["课程检索","Course Search"],["课程推荐","Recommendations"],["我的课表","My Schedule"],["学校与数据","Schools & Data"],["新生 FAQ","New Student FAQ"],["学分进度","Credit Progress"],["重置","Reset"],["标签说明","Label Guide"],["查看全部标签含义","View all label definitions"],["设置偏好并生成推荐","Set preferences"],["更新课程数据","Update course data"],["课程库","Course Catalog"],["已选课程","Selected Courses"],["展开","Open"],["随机组合两个方向","Randomize two directions"],["职业方向（可多选）","Career directions (multi-select)"],["课程偏好","Course preferences"],["当前组合","Current profile"],["清空","Clear"],["生成推荐方案","Generate recommendation plan"],["按周查看课表","Weekly Schedule"],["清空课表","Clear schedule"],["打印课表","Print schedule"],["新建课程／安排","New course / commitment"],["新建课程","New course"],["跳转到日期","Go to date"],["回到正式课程第1周","Go to first instructional week"],["常见 T14 法学院预设","Common T14 law-school presets"],["课程数据导入","Course data import"],["复制提示词","Copy prompt"],["导入预览","Import preview"],["保存到本地并切换","Save locally and switch"],["读取并预览","Read and preview"],["全部状态","All statuses"],["推荐度优先","Recommendation score"],["课程代号","Course code"],["评分方式","Grading"],["学分","Credits"],["上课日","Meeting day"],["课程方向","Course focus"],["全部课程方向","All course focuses"],["上课形式","Course format"],["全部上课形式","All course formats"],["讲授课","Lecture"],["研讨课","Seminar"],["诊所","Clinic"],["实践课","Practicum"],["讨论课","Discussion"],["独立研究","Independent study"],["LLM 专设","LL.M. specific"],["LLM 直选课","LL.M. direct enrollment"],["快捷标签","Quick tags"],["公司／交易／金融","Corporate / transactions / finance"],["诉讼／争议解决","Litigation / dispute resolution"],["科技／数据／知识产权","Technology / data / IP"],["国际／跨境","International / cross-border"],["公法／公共利益","Public law / public interest"],["研究／理论","Research / theory"],["刑事法","Criminal law"],["实务技能","Practice skills"],["全部学分","All credits"],["0–1 学分","0–1 credits"],["2 学分","2 credits"],["3 学分","3 credits"],["4 学分","4 credits"],["5 学分及以上","5+ credits"],["全部上课日","All meeting days"],["周一","Mon"],["周二","Tue"],["周三","Wed"],["周四","Thu"],["周五","Fri"],["学分筛选","Credit filter"],["上课日筛选","Meeting-day filter"],["排序","Sort"],["学分从低到高","Credits low to high"],["学分从高到低","Credits high to low"],["通用 LL.M. 职业方向推荐","General LL.M. career guidance"],["先选择方向，再生成组合","Choose directions, then generate a plan"],["选择一个或多个职业方向，再叠加“低负担、NY Bar、写作或实务”等偏好，系统会即时重排更适合你的课程组合。","Choose one or more career directions, then add preferences such as lower workload, NY Bar, writing, or practice skills. The planner will immediately re-rank suitable course combinations."],["中国 General LL.M. 新生指南","Guide for new Chinese General LL.M. students"],["先理解规则，再选择课程","Understand the rules before choosing courses"],["这里用中文解释评分方式、NY Bar 学分、选课流程、课程负担与常见标签。每项规则都附 Cornell 官方来源入口。","This guide explains grading, NY Bar credits, enrollment, workload, and common labels. Each rule includes an official Cornell source."],["联系作者","Contact author"],["支持作者","Support author"],["官方课程说明、NY Bar 标识与拖拽排课","Official course descriptions, NY Bar labels and drag-to-schedule"],["每门课都会显示一个 NY Bar 计分状态和一个选课权限状态。","Each course displays an NY Bar-credit status and an enrollment status."],["拖动课程卡到这里，展开后按周查看","Drag course cards here; open My Schedule for the weekly view"],["多校课程数据中心","Multi-school course data"],["康奈尔默认，其他法学院按官方数据源导入","Cornell is built in; import other schools from official data"],["康奈尔课程已经离线内置。使用其他法学院时，可按照导入向导连接学校提供的数据接口，或上传整理好的 JSON／CSV 课程文件。","Cornell data is built in for offline use. For another law school, follow the import guide to use its official data interface or upload a prepared JSON/CSV course file."],["打开当前学校官方课程页面 ↗","Open current school's official course page ↗"],["当前学校","Current school"],["门课程","courses"],["“T14”是习惯称呼，不同年份排名可能变化；这里作为常见顶尖法学院入口集合。","T14 is a customary label and rankings can change; these are common entry points for leading U.S. law schools."],["本页面由袁敬轩使用","Designed by Yuan Jingxuan with"],["设计","design"],["NYLE / Bar 考试科目","NYLE / Bar tested subjects"],["全部方式","All grading"],["评分方式筛选","Grading filter"],["自动保存在当前浏览器","Saved automatically in this browser"],["刷新页面不会清空课表；换设备、换浏览器、使用无痕窗口或清除网站数据后无法自动恢复。不同访问者不会共用课表；共用同一浏览器用户资料时则会看到同一份本地数据。","Refreshing will not erase the schedule. It will not automatically follow you to another device, browser, private window, or domain, and clearing site data removes it. Visitors do not share a plan unless they use the same browser profile."],["正在确认本地保存状态…","Checking local save status…"],["备份我的课表","Back up my plan"],["恢复备份","Restore backup"]]);
+    const translations = new Map([["课程检索","Course Search"],["课程推荐","Recommendations"],["我的课表","My Schedule"],["学校与数据","Schools & Data"],["新生 FAQ","New Student FAQ"],["学分进度","Credit Progress"],["重置","Reset"],["标签说明","Label Guide"],["查看全部标签含义","View all label definitions"],["设置偏好并生成推荐","Set preferences"],["更新课程数据","Update course data"],["课程库","Course Catalog"],["已选课程","Selected Courses"],["展开","Open"],["随机组合两个方向","Randomize two directions"],["职业方向（可多选）","Career directions (multi-select)"],["课程偏好","Course preferences"],["当前组合","Current profile"],["清空","Clear"],["生成推荐方案","Generate recommendation plan"],["按周查看课表","Weekly Schedule"],["清空课表","Clear schedule"],["打印课表","Print schedule"],["新建课程／安排","New course / commitment"],["新建课程","New course"],["跳转到日期","Go to date"],["回到正式课程第1周","Go to first instructional week"],["常见 T14 法学院预设","Common T14 law-school presets"],["课程数据导入","Course data import"],["复制提示词","Copy prompt"],["导入预览","Import preview"],["保存到本地并切换","Save locally and switch"],["读取并预览","Read and preview"],["全部状态","All statuses"],["推荐度优先","Recommendation score"],["课程代号","Course code"],["评分方式","Grading"],["学分","Credits"],["上课日","Meeting day"],["课程方向","Course focus"],["全部课程方向","All course focuses"],["上课形式","Course format"],["全部上课形式","All course formats"],["讲授课","Lecture"],["研讨课","Seminar"],["诊所","Clinic"],["实践课","Practicum"],["讨论课","Discussion"],["独立研究","Independent study"],["LLM 专设","LL.M. specific"],["LLM 直选课","LL.M. direct enrollment"],["快捷标签","Quick tags"],["公司／交易／金融","Corporate / transactions / finance"],["诉讼／争议解决","Litigation / dispute resolution"],["科技／数据／知识产权","Technology / data / IP"],["国际／跨境","International / cross-border"],["公法／公共利益","Public law / public interest"],["研究／理论","Research / theory"],["刑事法","Criminal law"],["实务技能","Practice skills"],["全部学分","All credits"],["0–1 学分","0–1 credits"],["1 学分及以下","1 credit or less"],["2 学分","2 credits"],["3 学分","3 credits"],["4 学分","4 credits"],["5 学分及以上","5+ credits"],["全部上课日","All meeting days"],["周一","Mon"],["周二","Tue"],["周三","Wed"],["周四","Thu"],["周五","Fri"],["学分筛选","Credit filter"],["上课日筛选","Meeting-day filter"],["排序","Sort"],["学分从低到高","Credits low to high"],["学分从高到低","Credits high to low"],["通用 LL.M. 职业方向推荐","General LL.M. career guidance"],["先选择方向，再生成组合","Choose directions, then generate a plan"],["选择一个或多个职业方向，再叠加“低负担、NY Bar、写作或实务”等偏好，系统会即时重排更适合你的课程组合。","Choose one or more career directions, then add preferences such as lower workload, NY Bar, writing, or practice skills. The planner will immediately re-rank suitable course combinations."],["中国 General LL.M. 新生指南","Guide for new Chinese General LL.M. students"],["先理解规则，再选择课程","Understand the rules before choosing courses"],["这里用中文解释评分方式、NY Bar 学分、选课流程、课程负担与常见标签。每项规则都附 Cornell 官方来源入口。","This guide explains grading, NY Bar credits, enrollment, workload, and common labels. Each rule includes an official Cornell source."],["联系作者","Contact author"],["支持作者","Support author"],["官方课程说明、NY Bar 标识与拖拽排课","Official course descriptions, NY Bar labels and drag-to-schedule"],["每门课都会显示一个 NY Bar 计分状态和一个选课权限状态。","Each course displays an NY Bar-credit status and an enrollment status."],["拖动课程卡到这里，展开后按周查看","Drag course cards here; open My Schedule for the weekly view"],["多校课程数据中心","Multi-school course data"],["康奈尔默认，其他法学院按官方数据源导入","Cornell is built in; import other schools from official data"],["康奈尔课程已经离线内置。使用其他法学院时，可按照导入向导连接学校提供的数据接口，或上传整理好的 JSON／CSV 课程文件。","Cornell data is built in for offline use. For another law school, follow the import guide to use its official data interface or upload a prepared JSON/CSV course file."],["打开当前学校官方课程页面 ↗","Open current school's official course page ↗"],["当前学校","Current school"],["门课程","courses"],["“T14”是习惯称呼，不同年份排名可能变化；这里作为常见顶尖法学院入口集合。","T14 is a customary label and rankings can change; these are common entry points for leading U.S. law schools."],["本页面由袁敬轩使用","Designed by Yuan Jingxuan with"],["设计","design"],["NYLE / Bar 考试科目","NYLE / Bar tested subjects"],["全部方式","All grading"],["评分方式筛选","Grading filter"],["NY Bar 筛选分为四个互斥状态；具体的法定类别学分在进度面板单列显示。","NY Bar filters use four mutually exclusive statuses; statutory category credits are shown separately in Credit Progress."],["自动保存在当前浏览器","Saved automatically in this browser"],["刷新页面不会清空课表；换设备、换浏览器、使用无痕窗口或清除网站数据后无法自动恢复。不同访问者不会共用课表；共用同一浏览器用户资料时则会看到同一份本地数据。","Refreshing will not erase the schedule. It will not automatically follow you to another device, browser, private window, or domain, and clearing site data removes it. Visitors do not share a plan unless they use the same browser profile."],["正在确认本地保存状态…","Checking local save status…"],["备份我的课表","Back up my plan"],["恢复备份","Restore backup"]]);
     [["不计 NY Bar","Does not count toward NY Bar"],["不计入 NY Bar","Does not count toward NY Bar"],["资格待确认","School confirmation required"],["仅 S/U","S/U only"],["仅字母等级","Letter grades only"],["推荐度","Recommendation"],["学分","Credits"],["教师","Instructor"],["每周课堂时间","Weekly class time"],["作业／持续性任务","Assignments / continuous work"],["最终考核方式","Final assessment method"],["全部最终考核方式","All final assessment methods"],["期末考试","Final examination"],["期末书面作业／论文","Final written work/paper"],["期末项目","Final project"],["期末展示","Final presentation"],["其他明确的期末要求","Other stated final requirement"],["官方说明未载明最终考核方式","Final assessment method not stated"],["NY Bar 计分","NY Bar credit"],["限制与先修","Enrollment and prerequisites"],["官方页面","Official page"],["班次、时间与地点","Sections, times and locations"],["如何补充上课地点","How to add a location"],["授课地点","Teaching location"],["粘贴／修改具体地点","Paste or edit location"],["按所选班次加入课表","Add selected section"],["从课表移除","Remove from schedule"],["时间未公布或不进入普通周课表","Time not published or not shown in the weekly grid"],["本周没有上课","No meeting this week"],["无课","No class"],["全天／集中课程","Intensive sessions"],["上一步","Previous week"],["下一周 →","Next week"],["本周无时间冲突","No conflicts this week"],["课程","Courses"],["学校中文名","School name (Chinese)"],["学校英文名","School name (English)"],["学期名称","Term"],["开课日期","Instruction start"],["结课日期","Instruction end"],["官方课程页面","Official course page"],["数据源类型","Data source"],["API 地址","API URL"],["请求头（JSON，可选）","Request headers (JSON, optional)"],["字段映射（JSON，可选）","Field mapping (JSON, optional)"],["选择文件","Choose file"],["粘贴标准 JSON","Paste standard JSON"],["下载本校操作清单","Download school checklist"],["下载 JSON/CSV 模板","Download JSON/CSV templates"],["上传智能助手返回的压缩包（推荐）","Upload AI return package (recommended)"],["上传智能助手生成的 JSON","Upload AI-generated JSON"],["上传标准 CSV","Upload standard CSV"],["学校官方 JSON API","Official school JSON API"],["智能助手导入提示词","AI import prompt"],["导入结果与预览","Import result and preview"],["第一次使用：笨拙但可靠的五步导入法","First time: five reliable import steps"]].forEach(([zh,en]) => translations.set(zh,en));
     [["NY Bar 课堂学分","NY Bar classroom credit"],["需院系确认","School confirmation required"],["NYLE / Bar 考试科目","NYLE / Bar tested subjects"],["LLM 直选课","LL.M. direct enrollment"],["需院系同意","Department consent required"],["新建安排","New commitment"],["课程负担与考核","Assessment and scheduled load"],["官方课程说明","Official course description"],["中文译文","Chinese translation"],["最终考核","Final assessment"],["下方周课表与此处课程一一对应。请从“课程检索”页直接拖入或加入课程；此处用于核对和移除。","Each card corresponds to the weekly schedule below. Add or drag courses from Course Search; use this area to compare and remove them."],["暂未选择课程。请在“课程检索”页加入或直接拖入课程；选择后会在这里与下方周课表对应显示。","No course is selected yet. Add or drag courses from Course Search; selected courses will appear here alongside the weekly schedule."],["移除","Remove"],["LLM","LL.M."]].forEach(([zh,en]) => translations.set(zh,en));
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT), nodes = [];
@@ -2548,6 +2602,21 @@
     document.querySelectorAll("[placeholder]").forEach(el => {
       if (isEnglish() && placeholderMap[el.placeholder]) { el.dataset.zhPlaceholder = el.placeholder; el.placeholder = placeholderMap[el.placeholder]; }
       else if (!isEnglish() && el.dataset.zhPlaceholder) el.placeholder = el.dataset.zhPlaceholder;
+    });
+    const attributeMap = {
+      "主导航":"Main navigation", "点击打开课表；也可将课程拖到这里":"Open the schedule; courses can also be dragged here",
+      "清空课表":"Clear schedule", "切换学校或导入课程数据":"Switch schools or import course data", "切换中文或英文界面":"Switch Chinese or English interface",
+      "课程筛选与排序":"Course filters and sorting", "NY Bar 筛选":"NY Bar filter", "评分方式筛选":"Grading filter", "学分筛选":"Credit filter",
+      "上课日筛选":"Meeting-day filter", "课程方向筛选":"Course-focus filter", "上课形式筛选":"Course-format filter", "排序":"Sort",
+      "清除搜索和全部筛选":"Clear search and all filters", "快捷标签筛选":"Quick-tag filters"
+    };
+    document.querySelectorAll("[aria-label], [title]").forEach(el => {
+      for (const attribute of ["aria-label", "title"]) {
+        const value = el.getAttribute(attribute);
+        const dataKey = attribute === "aria-label" ? "zhAriaLabel" : "zhTitle";
+        if (isEnglish() && attributeMap[value]) { el.dataset[dataKey] = value; el.setAttribute(attribute, attributeMap[value]); }
+        else if (!isEnglish() && el.dataset[dataKey]) el.setAttribute(attribute, el.dataset[dataKey]);
+      }
     });
     updateScheduleStorageStatus();
   }

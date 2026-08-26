@@ -7,8 +7,8 @@ const dataDir = path.join(root, "data");
 const sourceUrl = "https://community.lawschool.cornell.edu/wp-content/uploads/2026/05/NYS-Bar-Requirements-for-LLMs_Fall-2026.pdf";
 
 // Cornell's 2026-27 NY Bar memo, page 3, Fall column. A course may appear in
-// more than one official category, but the planner assigns one primary category
-// for progress so credits are never double counted automatically.
+// more than one official category. The planner uses one primary category by
+// default and lets the user move that one-time allocation without double counting.
 const CATEGORY_MAP = {
   "LAW 6641": ["professional", "core"],
   "LAW 6761": ["writing"],
@@ -62,7 +62,7 @@ function updateDataset(file, catalogName, metaName) {
         source: "Cornell Law 2026-27 NYS Bar Examination Memorandum, p. 3 (Fall column)",
         sourceUrl,
         categories,
-        note: categories.length > 1 ? "Multiple official categories; primary category is used for progress to avoid automatic double counting." : "Officially listed for this category."
+        note: categories.length > 1 ? "Multiple official categories; primary category is the default, and the user may select one category for progress without double counting." : "Officially listed for this category."
       } : null
     };
     if (!String(course.officialDescriptionEn || "").trim()) {
