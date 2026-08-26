@@ -65,9 +65,12 @@ if (totals.core !== 3 || totals.professional !== 0) fail("reassignment must move
 
 const index = fs.readFileSync(path.join(root, "index.html"), "utf8");
 const app = fs.readFileSync(path.join(root, "app.js"), "utf8");
-if (!/LL\.M\. Course Planner v5\.(?:24|25)/.test(index)) fail("page version marker is missing");
+if (!/LL\.M\. Course Planner v5\.(?:24|25|30)/.test(index)) fail("page version marker is missing");
 if (index.indexOf("./nybar-allocation.js") < 0 || index.indexOf("./nybar-allocation.js") > index.indexOf("./app.js")) fail("allocation helper must load before app.js");
-if (index.includes("cornell.catalog.spring-2027")) fail("Spring database must remain separate until the planner gains an explicit term selector");
+for (const file of ["./data/cornell.catalog.spring-2027.zh-CN.js", "./data/cornell.catalog.spring-2027.en.js"]) {
+  if (index.indexOf(file) < 0 || index.indexOf(file) > index.indexOf("./app.js")) fail(`${file} must load before app.js`);
+}
+if (!index.includes('id="termFilter"') || !index.includes('id="termSwitchOverlay"')) fail("Spring catalogs require an explicit term filter and term switcher");
 for (const marker of ["barCategoryAllocations", "bindBarAllocationControls", "creditsByCategory"]) if (!app.includes(marker)) fail(`allocation interface marker absent: ${marker}`);
 for (const marker of ["normalizedCourseTitle", "pickedTitles.has(titleKey)"]) if (!app.includes(marker)) fail(`recommendation de-duplication marker absent: ${marker}`);
 if (app.includes("})) || course.sections?.[0];")) fail("recommendation generation must skip a course when every section conflicts");

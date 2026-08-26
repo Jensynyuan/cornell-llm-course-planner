@@ -71,7 +71,59 @@
     ],
     "universityClassRosterStatus": "SP27 API endpoint returned HTTP 404 on 2026-08-26; class numbers and consent codes are intentionally left unconfirmed.",
     "dataScope": "Spring 2027 courses announced on Cornell Law Course Offerings, after the user-requested eligibility exclusions.",
-    "language": "zh-CN"
+    "language": "zh-CN",
+    "springNyBarCategoryAudit": {
+      "generatedAt": "2026-08-26T19:04:06.661Z",
+      "sourceUrl": "https://community.lawschool.cornell.edu/wp-content/uploads/2026/05/NYS-Bar-Requirements-for-LLMs_Fall-2026.pdf",
+      "sourceDescription": "Cornell Law 2026-27 NYS Bar Examination Memorandum, page 3, Spring column",
+      "officialMapCourseCodes": [
+        "LAW 6641",
+        "LAW 6761",
+        "LAW 5001",
+        "LAW 6011",
+        "LAW 6131",
+        "LAW 5061",
+        "LAW 6264",
+        "LAW 6401",
+        "LAW 6431",
+        "LAW 6203",
+        "LAW 5121"
+      ],
+      "appliedSpringOfferingCodes": [
+        "LAW 5061",
+        "LAW 5121",
+        "LAW 6011",
+        "LAW 6131",
+        "LAW 6203",
+        "LAW 6264",
+        "LAW 6401",
+        "LAW 6431",
+        "LAW 6641",
+        "LAW 6761"
+      ],
+      "officialAcademicYearCoursesNotSeparateSpringOfferings": [
+        {
+          "code": "LAW 5001",
+          "titleEn": "Civil Procedure",
+          "reason": "Spring memo lists an academic-year course with fall enrollment; no separate SP27 offering exists in the current Course Offerings dataset."
+        }
+      ],
+      "officialCategoryCourseCount": 10,
+      "categoryCounts": {
+        "professional": 1,
+        "writing": 1,
+        "american": 0,
+        "core": 9
+      },
+      "creditConflicts": [
+        {
+          "code": "LAW 6264",
+          "memoCredits": 3,
+          "currentOfferingCredits": 2,
+          "status": "source-conflict-needs-confirmation"
+        }
+      ]
+    }
   },
   "courses": [
     {
@@ -630,8 +682,8 @@
           }
         }
       ],
-      "barPrimary": null,
-      "barClassroomEligible": null,
+      "barPrimary": "core",
+      "barClassroomEligible": true,
       "degreeRequired": false,
       "llmSpecific": false,
       "eligibility": "review",
@@ -706,8 +758,19 @@
         "courseOfferings": "https://support.law.cornell.edu/CourseOfferings/",
         "universityClassRoster": "SP27 endpoint unavailable (HTTP 404) as of 2026-08-26"
       },
-      "barCategories": [],
-      "barEvidence": null
+      "barCategories": [
+        "core"
+      ],
+      "barEvidence": {
+        "source": "Cornell Law 2026-27 NYS Bar Examination Memorandum, page 3, Spring column",
+        "sourceZh": "康奈尔法学院 2026—2027 学年纽约州律师资格考试备忘录第3页（Spring 栏）",
+        "sourceUrl": "https://community.lawschool.cornell.edu/wp-content/uploads/2026/05/NYS-Bar-Requirements-for-LLMs_Fall-2026.pdf",
+        "categories": [
+          "core"
+        ],
+        "note": "Officially listed in the Spring column for this category.",
+        "noteZh": "该课程已由官方备忘录 Spring 栏列入本类别。"
+      }
     },
     {
       "id": "LAW-5082-SP27",
@@ -1802,8 +1865,8 @@
           }
         }
       ],
-      "barPrimary": null,
-      "barClassroomEligible": null,
+      "barPrimary": "core",
+      "barClassroomEligible": true,
       "degreeRequired": false,
       "llmSpecific": false,
       "eligibility": "review",
@@ -1877,8 +1940,19 @@
         "courseOfferings": "https://support.law.cornell.edu/CourseOfferings/",
         "universityClassRoster": "SP27 endpoint unavailable (HTTP 404) as of 2026-08-26"
       },
-      "barCategories": [],
-      "barEvidence": null
+      "barCategories": [
+        "core"
+      ],
+      "barEvidence": {
+        "source": "Cornell Law 2026-27 NYS Bar Examination Memorandum, page 3, Spring column",
+        "sourceZh": "康奈尔法学院 2026—2027 学年纽约州律师资格考试备忘录第3页（Spring 栏）",
+        "sourceUrl": "https://community.lawschool.cornell.edu/wp-content/uploads/2026/05/NYS-Bar-Requirements-for-LLMs_Fall-2026.pdf",
+        "categories": [
+          "core"
+        ],
+        "note": "Officially listed in the Spring column for this category.",
+        "noteZh": "该课程已由官方备忘录 Spring 栏列入本类别。"
+      }
     },
     {
       "id": "LAW-6011-SP27",
@@ -1969,8 +2043,8 @@
           }
         }
       ],
-      "barPrimary": null,
-      "barClassroomEligible": null,
+      "barPrimary": "core",
+      "barClassroomEligible": true,
       "degreeRequired": false,
       "llmSpecific": false,
       "eligibility": "review",
@@ -2048,8 +2122,19 @@
         "courseOfferings": "https://support.law.cornell.edu/CourseOfferings/",
         "universityClassRoster": "SP27 endpoint unavailable (HTTP 404) as of 2026-08-26"
       },
-      "barCategories": [],
-      "barEvidence": null
+      "barCategories": [
+        "core"
+      ],
+      "barEvidence": {
+        "source": "Cornell Law 2026-27 NYS Bar Examination Memorandum, page 3, Spring column",
+        "sourceZh": "康奈尔法学院 2026—2027 学年纽约州律师资格考试备忘录第3页（Spring 栏）",
+        "sourceUrl": "https://community.lawschool.cornell.edu/wp-content/uploads/2026/05/NYS-Bar-Requirements-for-LLMs_Fall-2026.pdf",
+        "categories": [
+          "core"
+        ],
+        "note": "Officially listed in the Spring column for this category.",
+        "noteZh": "该课程已由官方备忘录 Spring 栏列入本类别。"
+      }
     },
     {
       "id": "LAW-6025-SP27",
@@ -2811,8 +2896,8 @@
           }
         }
       ],
-      "barPrimary": null,
-      "barClassroomEligible": null,
+      "barPrimary": "core",
+      "barClassroomEligible": true,
       "degreeRequired": false,
       "llmSpecific": false,
       "eligibility": "review",
@@ -2886,8 +2971,19 @@
         "courseOfferings": "https://support.law.cornell.edu/CourseOfferings/",
         "universityClassRoster": "SP27 endpoint unavailable (HTTP 404) as of 2026-08-26"
       },
-      "barCategories": [],
-      "barEvidence": null
+      "barCategories": [
+        "core"
+      ],
+      "barEvidence": {
+        "source": "Cornell Law 2026-27 NYS Bar Examination Memorandum, page 3, Spring column",
+        "sourceZh": "康奈尔法学院 2026—2027 学年纽约州律师资格考试备忘录第3页（Spring 栏）",
+        "sourceUrl": "https://community.lawschool.cornell.edu/wp-content/uploads/2026/05/NYS-Bar-Requirements-for-LLMs_Fall-2026.pdf",
+        "categories": [
+          "core"
+        ],
+        "note": "Officially listed in the Spring column for this category.",
+        "noteZh": "该课程已由官方备忘录 Spring 栏列入本类别。"
+      }
     },
     {
       "id": "LAW-6147-SP27",
@@ -3317,8 +3413,8 @@
           }
         }
       ],
-      "barPrimary": null,
-      "barClassroomEligible": null,
+      "barPrimary": "core",
+      "barClassroomEligible": true,
       "degreeRequired": false,
       "llmSpecific": false,
       "eligibility": "review",
@@ -3392,8 +3488,19 @@
         "courseOfferings": "https://support.law.cornell.edu/CourseOfferings/",
         "universityClassRoster": "SP27 endpoint unavailable (HTTP 404) as of 2026-08-26"
       },
-      "barCategories": [],
-      "barEvidence": null
+      "barCategories": [
+        "core"
+      ],
+      "barEvidence": {
+        "source": "Cornell Law 2026-27 NYS Bar Examination Memorandum, page 3, Spring column",
+        "sourceZh": "康奈尔法学院 2026—2027 学年纽约州律师资格考试备忘录第3页（Spring 栏）",
+        "sourceUrl": "https://community.lawschool.cornell.edu/wp-content/uploads/2026/05/NYS-Bar-Requirements-for-LLMs_Fall-2026.pdf",
+        "categories": [
+          "core"
+        ],
+        "note": "Officially listed in the Spring column for this category.",
+        "noteZh": "该课程已由官方备忘录 Spring 栏列入本类别。"
+      }
     },
     {
       "id": "LAW-6209-SP27",
@@ -3976,8 +4083,8 @@
           }
         }
       ],
-      "barPrimary": null,
-      "barClassroomEligible": null,
+      "barPrimary": "core",
+      "barClassroomEligible": true,
       "degreeRequired": false,
       "llmSpecific": false,
       "eligibility": "review",
@@ -4052,8 +4159,24 @@
         "courseOfferings": "https://support.law.cornell.edu/CourseOfferings/",
         "universityClassRoster": "SP27 endpoint unavailable (HTTP 404) as of 2026-08-26"
       },
-      "barCategories": [],
-      "barEvidence": null
+      "barCategories": [
+        "core"
+      ],
+      "barEvidence": {
+        "source": "Cornell Law 2026-27 NYS Bar Examination Memorandum, page 3, Spring column",
+        "sourceZh": "康奈尔法学院 2026—2027 学年纽约州律师资格考试备忘录第3页（Spring 栏）",
+        "sourceUrl": "https://community.lawschool.cornell.edu/wp-content/uploads/2026/05/NYS-Bar-Requirements-for-LLMs_Fall-2026.pdf",
+        "categories": [
+          "core"
+        ],
+        "note": "The May 4, 2026 memorandum lists this Spring course at 3 credits, while the current Spring 2027 Course Offerings snapshot lists 2 credits. The planner preserves the current offering at 2 credits and flags this source conflict for confirmation.",
+        "noteZh": "2026年5月4日的备忘录将该春季课程列为3学分，而当前 Spring 2027 Course Offerings 快照列为2学分。本工具保留当前开课数据的2学分，并标记该来源冲突，供进一步确认。",
+        "creditConflict": {
+          "memoCredits": 3,
+          "currentOfferingCredits": 2,
+          "status": "source-conflict-needs-confirmation"
+        }
+      }
     },
     {
       "id": "LAW-6273-SP27",
@@ -4991,8 +5114,8 @@
           }
         }
       ],
-      "barPrimary": null,
-      "barClassroomEligible": null,
+      "barPrimary": "core",
+      "barClassroomEligible": true,
       "degreeRequired": false,
       "llmSpecific": false,
       "eligibility": "review",
@@ -5066,8 +5189,19 @@
         "courseOfferings": "https://support.law.cornell.edu/CourseOfferings/",
         "universityClassRoster": "SP27 endpoint unavailable (HTTP 404) as of 2026-08-26"
       },
-      "barCategories": [],
-      "barEvidence": null
+      "barCategories": [
+        "core"
+      ],
+      "barEvidence": {
+        "source": "Cornell Law 2026-27 NYS Bar Examination Memorandum, page 3, Spring column",
+        "sourceZh": "康奈尔法学院 2026—2027 学年纽约州律师资格考试备忘录第3页（Spring 栏）",
+        "sourceUrl": "https://community.lawschool.cornell.edu/wp-content/uploads/2026/05/NYS-Bar-Requirements-for-LLMs_Fall-2026.pdf",
+        "categories": [
+          "core"
+        ],
+        "note": "Officially listed in the Spring column for this category.",
+        "noteZh": "该课程已由官方备忘录 Spring 栏列入本类别。"
+      }
     },
     {
       "id": "LAW-6421-SP27",
@@ -5325,8 +5459,8 @@
           }
         }
       ],
-      "barPrimary": null,
-      "barClassroomEligible": null,
+      "barPrimary": "core",
+      "barClassroomEligible": true,
       "degreeRequired": false,
       "llmSpecific": false,
       "eligibility": "review",
@@ -5401,8 +5535,19 @@
         "courseOfferings": "https://support.law.cornell.edu/CourseOfferings/",
         "universityClassRoster": "SP27 endpoint unavailable (HTTP 404) as of 2026-08-26"
       },
-      "barCategories": [],
-      "barEvidence": null
+      "barCategories": [
+        "core"
+      ],
+      "barEvidence": {
+        "source": "Cornell Law 2026-27 NYS Bar Examination Memorandum, page 3, Spring column",
+        "sourceZh": "康奈尔法学院 2026—2027 学年纽约州律师资格考试备忘录第3页（Spring 栏）",
+        "sourceUrl": "https://community.lawschool.cornell.edu/wp-content/uploads/2026/05/NYS-Bar-Requirements-for-LLMs_Fall-2026.pdf",
+        "categories": [
+          "core"
+        ],
+        "note": "Officially listed in the Spring column for this category.",
+        "noteZh": "该课程已由官方备忘录 Spring 栏列入本类别。"
+      }
     },
     {
       "id": "LAW-6441-SP27",
@@ -6919,8 +7064,8 @@
           }
         }
       ],
-      "barPrimary": null,
-      "barClassroomEligible": null,
+      "barPrimary": "professional",
+      "barClassroomEligible": true,
       "degreeRequired": false,
       "llmSpecific": false,
       "eligibility": "review",
@@ -6997,8 +7142,21 @@
         "courseOfferings": "https://support.law.cornell.edu/CourseOfferings/",
         "universityClassRoster": "SP27 endpoint unavailable (HTTP 404) as of 2026-08-26"
       },
-      "barCategories": [],
-      "barEvidence": null
+      "barCategories": [
+        "professional",
+        "core"
+      ],
+      "barEvidence": {
+        "source": "Cornell Law 2026-27 NYS Bar Examination Memorandum, page 3, Spring column",
+        "sourceZh": "康奈尔法学院 2026—2027 学年纽约州律师资格考试备忘录第3页（Spring 栏）",
+        "sourceUrl": "https://community.lawschool.cornell.edu/wp-content/uploads/2026/05/NYS-Bar-Requirements-for-LLMs_Fall-2026.pdf",
+        "categories": [
+          "professional",
+          "core"
+        ],
+        "note": "The course is listed in more than one official Spring category. The primary category is the default one-time allocation, and the user may move that allocation without double counting.",
+        "noteZh": "该课程同时列入官方 Spring 栏的多个类别；主类别为默认的唯一计入项，用户可调整归类，但不得重复计算学分。"
+      }
     },
     {
       "id": "LAW-6654-SP27",
@@ -8168,8 +8326,8 @@
           }
         }
       ],
-      "barPrimary": null,
-      "barClassroomEligible": null,
+      "barPrimary": "writing",
+      "barClassroomEligible": true,
       "degreeRequired": false,
       "llmSpecific": false,
       "eligibility": "review",
@@ -8242,8 +8400,19 @@
         "courseOfferings": "https://support.law.cornell.edu/CourseOfferings/",
         "universityClassRoster": "SP27 endpoint unavailable (HTTP 404) as of 2026-08-26"
       },
-      "barCategories": [],
-      "barEvidence": null
+      "barCategories": [
+        "writing"
+      ],
+      "barEvidence": {
+        "source": "Cornell Law 2026-27 NYS Bar Examination Memorandum, page 3, Spring column",
+        "sourceZh": "康奈尔法学院 2026—2027 学年纽约州律师资格考试备忘录第3页（Spring 栏）",
+        "sourceUrl": "https://community.lawschool.cornell.edu/wp-content/uploads/2026/05/NYS-Bar-Requirements-for-LLMs_Fall-2026.pdf",
+        "categories": [
+          "writing"
+        ],
+        "note": "Officially listed in the Spring column for this category.",
+        "noteZh": "该课程已由官方备忘录 Spring 栏列入本类别。"
+      }
     },
     {
       "id": "LAW-6768-SP27",

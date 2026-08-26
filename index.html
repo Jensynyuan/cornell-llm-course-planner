@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="data:,">
   <meta name="description" content="A bilingual Cornell LL.M. course, NY Bar credit, schedule and calendar planner." />
-  <title>LL.M. Course Planner v5.25</title>
+  <title>LL.M. Course Planner v5.30</title>
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
@@ -15,7 +15,7 @@
         <div class="brand-mark">L</div>
         <div>
           <div class="brand-title">LL.M. Planner</div>
-          <div id="brandSubtitle" class="brand-subtitle">Cornell Law · Fall 2026 · v5.25</div>
+          <div id="brandSubtitle" class="brand-subtitle">Cornell Law · Fall 2026 + Spring 2027 · v5.30</div>
         </div>
       </div>
 
@@ -75,22 +75,25 @@
             <input id="searchInput" type="search" placeholder="搜索中文课程名、课程代号、教师或关键词" autocomplete="off" />
           </div>
           <div class="filter-strip" aria-label="课程筛选与排序">
-            <label class="filter-field"><span>NY Bar</span><select id="barFilter" class="select-control" aria-label="NY Bar 筛选">
+            <label class="filter-field"><span>学期</span><select id="termFilter" class="select-control multi-filter-source" multiple aria-label="学期筛选">
+              <option value="FA26">Fall 2026</option><option value="SP27">Spring 2027</option>
+            </select></label>
+            <label class="filter-field"><span>NY Bar</span><select id="barFilter" class="select-control multi-filter-source" multiple aria-label="NY Bar 筛选">
               <option value="all">全部状态</option><option value="eligible">NY Bar 课堂学分</option><option value="review">需院系确认</option><option value="ineligible">不计入 NY Bar</option><option value="core">NYLE / Bar 考试科目</option>
             </select></label>
-            <label class="filter-field"><span>评分方式</span><select id="gradingFilter" class="select-control" aria-label="评分方式筛选">
+            <label class="filter-field"><span>评分方式</span><select id="gradingFilter" class="select-control multi-filter-source" multiple aria-label="评分方式筛选">
               <option value="all">全部方式</option><option value="su">仅 S/U</option><option value="graded">仅字母等级</option>
             </select></label>
-            <label class="filter-field"><span>学分</span><select id="creditsFilter" class="select-control" aria-label="学分筛选">
+            <label class="filter-field"><span>学分</span><select id="creditsFilter" class="select-control multi-filter-source" multiple aria-label="学分筛选">
               <option value="all">全部学分</option><option value="0-1">1 学分及以下</option><option value="2">2 学分</option><option value="3">3 学分</option><option value="4">4 学分</option><option value="5+">5 学分及以上</option>
             </select></label>
-            <label class="filter-field"><span>上课日</span><select id="meetingDayFilter" class="select-control" aria-label="上课日筛选">
+            <label class="filter-field"><span>上课日</span><select id="meetingDayFilter" class="select-control multi-filter-source" multiple aria-label="上课日筛选">
               <option value="all">全部上课日</option><option value="M">周一</option><option value="T">周二</option><option value="W">周三</option><option value="R">周四</option><option value="F">周五</option>
             </select></label>
-            <label class="filter-field"><span>课程方向</span><select id="topicFilter" class="select-control" aria-label="课程方向筛选">
+            <label class="filter-field"><span>课程方向</span><select id="topicFilter" class="select-control multi-filter-source" multiple aria-label="课程方向筛选">
               <option value="all">全部课程方向</option><option value="corporate">公司／交易／金融</option><option value="litigation">诉讼／争议解决</option><option value="tech">科技／数据／知识产权</option><option value="international">国际／跨境</option><option value="public">公法／公共利益</option><option value="research">研究／理论</option><option value="criminal">刑事法</option><option value="practice">实务技能</option>
             </select></label>
-            <label class="filter-field"><span>上课形式</span><select id="courseFormatFilter" class="select-control" aria-label="上课形式筛选">
+            <label class="filter-field"><span>上课形式</span><select id="courseFormatFilter" class="select-control multi-filter-source" multiple aria-label="上课形式筛选">
               <option value="all">全部上课形式</option><option value="lecture">讲授课</option><option value="seminar">研讨课</option><option value="clinic">诊所</option><option value="practicum">实践课</option><option value="discussion">讨论课</option><option value="independent">独立研究</option>
             </select></label>
             <select id="llmFilter" hidden aria-hidden="true" tabindex="-1"><option value="all">全部 LLM 标签</option><option value="specific">LLM 专设</option><option value="direct">LLM 直选课</option></select>
@@ -201,7 +204,8 @@
           </div>
           <label class="date-jump">跳转到日期 <input id="scheduleDateInput" type="date" min="2026-01-01" max="2030-12-31" value="2026-08-24"></label>
           <button id="nextWeekBtn" class="secondary-button" aria-label="下一周">下一周 →</button>
-          <button id="regularWeekBtn" class="text-button">回到正式课程第1周</button>
+          <button id="fallWeekBtn" class="text-button">跳到 Fall 2026 开学周</button>
+          <button id="springWeekBtn" class="text-button">跳到 Spring 2027 开学周</button>
         </div>
         <div id="scheduleDropShell" class="schedule-drop-shell"><div id="scheduleDropMessage" class="schedule-drop-message">松开鼠标，将课程按官方时间加入课表</div><div id="fullSchedule" class="weekly-schedule"></div></div>
         <div id="unscheduledCourses" class="unscheduled-list"></div>
@@ -277,6 +281,20 @@
     </section>
   </div>
 
+  <div id="termSwitchOverlay" class="overlay" hidden data-i18n-exempt>
+    <section class="choice-dialog term-switch-dialog" role="dialog" aria-modal="true" aria-labelledby="termSwitchTitle" aria-describedby="termSwitchDescription">
+      <button id="closeTermSwitchBtn" class="drawer-close" type="button" aria-label="Close">×</button>
+      <h2 id="termSwitchTitle">Choose a planning term</h2>
+      <p id="termSwitchDescription">Show both semesters in Course Search, or focus the planner on one Cornell Law term.</p>
+      <div class="term-switch-options" role="group" aria-label="Planning term">
+        <button type="button" class="term-choice-button" data-term-choice="all"><strong>All terms</strong><span>Fall 2026 + Spring 2027</span></button>
+        <button type="button" class="term-choice-button" data-term-choice="FA26"><strong>Fall 2026</strong><span>136 planning courses</span></button>
+        <button type="button" class="term-choice-button" data-term-choice="SP27"><strong>Spring 2027</strong><span>126 planning courses</span></button>
+      </div>
+      <button id="manageSchoolDataBtn" class="secondary-button term-manage-data-button" type="button">Manage schools and data</button>
+    </section>
+  </div>
+
   <div id="sectionPickerOverlay" class="overlay" hidden><section class="choice-dialog" role="dialog" aria-modal="true"><button id="closeSectionPickerBtn" class="drawer-close" aria-label="关闭">×</button><h2>选择班次</h2><p id="sectionPickerCourseTitle"></p><div id="sectionPickerOptions" class="section-picker-options"></div></section></div>
 
   <div id="conflictOverlay" class="overlay" hidden><section class="choice-dialog conflict-dialog" role="dialog" aria-modal="true"><button id="closeConflictBtn" class="drawer-close" aria-label="关闭">×</button><span class="conflict-icon">!</span><h2>检测到时间冲突</h2><p id="conflictMessage"></p><div id="conflictDetails" class="conflict-details"></div><div class="dialog-actions"><button id="cancelConflictBtn" class="secondary-button">取消加入</button><button id="forceAddConflictBtn" class="danger-button">仍然加入</button></div></section></div>
@@ -287,12 +305,14 @@
 
   <div id="calendarExportOverlay" class="overlay" hidden data-i18n-exempt><section class="choice-dialog calendar-export-dialog" role="dialog" aria-modal="true" aria-labelledby="calendarExportTitle"><button id="closeCalendarExportBtn" class="drawer-close" aria-label="Close">×</button><span class="calendar-dialog-icon" aria-hidden="true">▦</span><h2 id="calendarExportTitle"></h2><p id="calendarExportIntro"></p><div id="calendarExportSummary" class="calendar-export-summary"></div><div class="calendar-export-options"><button id="googleCalendarExportBtn" class="calendar-provider-button calendar-provider-google" type="button"><strong id="googleCalendarExportTitle"></strong><span id="googleCalendarExportCopy"></span></button><button id="icsCalendarExportBtn" class="calendar-provider-button" type="button"><strong id="icsCalendarExportTitle"></strong><span id="icsCalendarExportCopy"></span></button></div><p id="calendarExportPrivacy" class="calendar-privacy-note"></p></section></div>
 
-  <div id="authorAnnouncementOverlay" class="overlay" hidden data-i18n-exempt><section class="choice-dialog author-announcement-dialog" role="dialog" aria-modal="true" aria-labelledby="authorAnnouncementTitle"><button id="closeAuthorAnnouncementBtn" class="drawer-close" aria-label="Close">×</button><header class="author-announcement-hero"><span id="authorAnnouncementEyebrow" class="announcement-eyebrow"></span><h2 id="authorAnnouncementTitle"></h2><a class="support-contact-link" href="mailto:jy2279@cornell.edu">jy2279@cornell.edu</a><p id="authorAnnouncementInvite"></p><a id="authorAnnouncementMailBtn" class="primary-button announcement-mail-button" href="mailto:jy2279@cornell.edu"></a></header><div class="announcement-heading-row"><h3 id="authorAnnouncementHistoryTitle"></h3><span>v5.25</span></div><div id="authorAnnouncementList" class="author-announcement-list"></div></section></div>
+  <div id="authorAnnouncementOverlay" class="overlay" hidden data-i18n-exempt><section class="choice-dialog author-announcement-dialog" role="dialog" aria-modal="true" aria-labelledby="authorAnnouncementTitle"><button id="closeAuthorAnnouncementBtn" class="drawer-close" aria-label="Close">×</button><header class="author-announcement-hero"><span id="authorAnnouncementEyebrow" class="announcement-eyebrow"></span><h2 id="authorAnnouncementTitle"></h2><a class="support-contact-link" href="mailto:jy2279@cornell.edu">jy2279@cornell.edu</a><p id="authorAnnouncementInvite"></p><a id="authorAnnouncementMailBtn" class="primary-button announcement-mail-button" href="mailto:jy2279@cornell.edu"></a></header><div class="announcement-heading-row"><h3 id="authorAnnouncementHistoryTitle"></h3><span>v5.30</span></div><div id="authorAnnouncementList" class="author-announcement-list"></div></section></div>
 
   <div id="toast" class="toast" hidden></div>
 
   <script src="./data/cornell.catalog.zh-CN.js"></script>
   <script src="./data/cornell.catalog.en.js"></script>
+  <script src="./data/cornell.catalog.spring-2027.zh-CN.js"></script>
+  <script src="./data/cornell.catalog.spring-2027.en.js"></script>
   <script src="./data/cureviews/cureviews-law-current.js"></script>
   <script src="./nybar-allocation.js"></script>
   <script src="./calendar-integration.js"></script>

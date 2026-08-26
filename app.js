@@ -3,15 +3,26 @@
   const DAY_MAP_EN = { M: "Mon", T: "Tue", W: "Wed", R: "Thu", F: "Fri" };
   const DAY_KEYS = ["M", "T", "W", "R", "F"];
   const DEFAULT_TERM = { orientationStart: "2026-08-06", instructionStart: "2026-08-24", instructionEnd: "2026-12-03", examEnd: "2026-12-18" };
-  const CORNELL_NO_CLASS_DATES = ["2026-09-07", "2026-10-12", "2026-10-13", "2026-10-14", "2026-10-15", "2026-10-16", "2026-11-25", "2026-11-26", "2026-11-27"];
+  const CORNELL_TERM_PROFILES = {
+    FA26: {
+      code:"FA26", label:"Fall 2026", labelZh:"2026 秋季", orientationStart:"2026-08-06", instructionStart:"2026-08-24", instructionEnd:"2026-12-03", examEnd:"2026-12-18",
+      noClassDates:["2026-09-07", "2026-10-12", "2026-10-13", "2026-10-14", "2026-10-15", "2026-10-16", "2026-11-25", "2026-11-26", "2026-11-27"], specialScheduleDays:{"2026-12-01":"F"}
+    },
+    SP27: {
+      code:"SP27", label:"Spring 2027", labelZh:"2027 春季", orientationStart:"2027-01-25", instructionStart:"2027-01-25", instructionEnd:"2027-05-11", examEnd:"2027-05-22",
+      noClassDates:["2027-02-13", "2027-02-14", "2027-02-15", "2027-02-16", "2027-03-27", "2027-03-28", "2027-03-29", "2027-03-30", "2027-03-31", "2027-04-01", "2027-04-02", "2027-04-03", "2027-04-04"], specialScheduleDays:{}
+    }
+  };
+  const CORNELL_NO_CLASS_DATES = Object.values(CORNELL_TERM_PROFILES).flatMap(term => term.noClassDates);
+  const CORNELL_ACADEMIC_YEAR_TERM = { ...CORNELL_TERM_PROFILES.FA26, instructionEnd:CORNELL_TERM_PROFILES.SP27.instructionEnd, examEnd:CORNELL_TERM_PROFILES.SP27.examEnd };
   const NY_BAR_ALLOCATION = window.NY_BAR_ALLOCATION;
   const CALENDAR = window.LLM_CALENDAR;
-  const APP_VERSION = "v5.25";
+  const APP_VERSION = "v5.30";
   if (!NY_BAR_ALLOCATION) throw new Error("NY Bar allocation helper failed to load.");
   if (!CALENDAR) throw new Error("Calendar integration helper failed to load.");
 
   const SCHOOL_PRESETS = [
-    { id:"cornell", nameZh:"康奈尔法学院", nameEn:"Cornell Law School", shortZh:"康奈尔", termLabel:"Fall 2026", sourceKind:"offline", sourceLabel:"经核验的 Fall 2026 课程库", catalogUrl:"https://classes.cornell.edu/browse/roster/FA26/subject/LAW", apiGuideUrl:"https://classes.cornell.edu/content/FA26/api-details", term:{...DEFAULT_TERM}, noClassDates:CORNELL_NO_CLASS_DATES, specialScheduleDays:{"2026-12-01":"F"}, autoEnrollCodes:["LAW 6091"], degreeCreditTarget:20, degreeCreditLabel:"Cornell 其他法学分", degreeExcludeCodes:["LAW 6091"] },
+    { id:"cornell", nameZh:"康奈尔法学院", nameEn:"Cornell Law School", shortZh:"康奈尔", termLabel:"Fall 2026 + Spring 2027", sourceKind:"offline", sourceLabel:"经核验的 2026–27 课程库", catalogUrl:"https://support.law.cornell.edu/CourseOfferings/", apiGuideUrl:"https://classes.cornell.edu/content/FA26/api-details", term:{...CORNELL_ACADEMIC_YEAR_TERM}, noClassDates:CORNELL_NO_CLASS_DATES, specialScheduleDays:{...CORNELL_TERM_PROFILES.FA26.specialScheduleDays}, autoEnrollCodes:["LAW 6091"], degreeCreditTarget:20, degreeCreditLabel:"Cornell 其他法学分", degreeExcludeCodes:["LAW 6091"] },
     { id:"yale", nameZh:"耶鲁法学院", nameEn:"Yale Law School", shortZh:"耶鲁", termLabel:"自定义学期", sourceKind:"catalog", sourceLabel:"官方课程系统／文件导入", catalogUrl:"https://courses.law.yale.edu/" },
     { id:"stanford", nameZh:"斯坦福法学院", nameEn:"Stanford Law School", shortZh:"斯坦福", termLabel:"自定义学期", sourceKind:"api-available", sourceLabel:"官方课程接口（需转为 JSON）", catalogUrl:"https://law.stanford.edu/courses/", apiGuideUrl:"https://explorecourses.stanford.edu/about" },
     { id:"harvard", nameZh:"哈佛法学院", nameEn:"Harvard Law School", shortZh:"哈佛", termLabel:"自定义学期", sourceKind:"api-key", sourceLabel:"官方 API 需申请密钥", catalogUrl:"https://hls.harvard.edu/courses/", apiGuideUrl:"https://data.harvard.edu/apis" },
@@ -60,6 +71,7 @@
     { id:"independent", zh:"独立研究", en:"Independent study", patterns:[/\bind\b/i,/independent study/i,/独立研究/u] }
   ];
   const RELEASE_NOTES = [
+    { version:"v5.30", zh:["修复 Spring 2027 课程未接入页面的严重问题：课程库现同时提供 136 门 Fall 与 126 门 Spring 课程，并在卡片、搜索和课表中明确标注学期。","新增学期多选及所有筛选器的多选逻辑；顶部学期入口可切换 Fall、Spring 或同时查看，NY Bar 官方春季分类也已接入。","课表每次打开会定位到用户当前日期所在周，并提供一键跳转 Fall 2026 与 Spring 2027 第一周；公告和操作提示统一在屏幕中央打开。"], en:["Fixed the Spring 2027 catalog integration: Course Search now includes 136 Fall and 126 Spring offerings, with term labels across cards, search, and schedule views.","Added multi-select term and facet filters. The top term control switches between Fall, Spring, or both, and official Spring NY Bar categories are now searchable.","My Schedule now opens on the user's current local week and includes one-click jumps to the first Fall 2026 and Spring 2027 instructional weeks. Notices and action dialogs now open in the center of the screen."] },
     { version:"v5.25", zh:["新增双向日历功能：可从 Google／Apple 导出的 .ics 文件读取个人日程并纳入冲突检测，也可把已选课程导出到 Google Calendar、Apple Calendar 或 Outlook。","新增中英文作者公告与版本记录；首次访问默认使用英文界面，仍可随时切换中文。"], en:["Added two-way calendar support: import personal events from Google or Apple .ics files for conflict checking, and export selected classes to Google Calendar, Apple Calendar, or Outlook.","Added bilingual author updates and release history. New visitors now start in English and can still switch to Chinese at any time."] },
     { version:"v5.24", zh:["修复 LAW 6641 多分类学分归类与推荐方案冲突兜底；新增 LAW 7202、LAW 7259，并建立中英文 Spring 2027 独立课程库。"], en:["Fixed LAW 6641 multi-category credit allocation and recommendation conflict handling; added LAW 7202 and LAW 7259 plus separate bilingual Spring 2027 catalogs."] },
     { version:"v5.23", zh:["恢复“1 学分及以下”筛选，中英文界面同步支持。"], en:["Restored the 1-credit-or-less filter in both languages."] },
@@ -80,7 +92,7 @@
   const customSchoolStore = loadCustomSchoolStore();
   // Imports are tied to a data build so a prior browser snapshot cannot silently
   // replace the current verified Cornell dataset.
-  const CURRENT_CORNELL_DATASET_VERSION = "v5.15";
+  const CURRENT_CORNELL_DATASET_VERSION = "v5.30";
   const BUNDLED_CORNELL_DATABASE_VERSION = CURRENT_CORNELL_DATASET_VERSION;
   let cornellImportedDataset = loadCornellImportedDataset();
   let currentSchoolId = safeLocalStorageGet("llm-course-planner-current-school") || "cornell";
@@ -182,16 +194,16 @@
     {
       category: "数据",
       question: "打开软件需要配置 OpenAI API 或联网吗？",
-      answer: "不需要。软件已经预装经核对的 Cornell Fall 2026 LAW 课程快照，打开后即可离线搜索、查看和排课。只有主动导入其他学校或更新后的课程数据时才需要联网。",
-      sourceLabel: "v5.3 离线双语课程数据说明",
+      answer: "不需要。软件已经预装经核对的 Cornell 2026–27 Fall 与 Spring LAW 课程快照，打开后即可离线搜索、查看和排课。只有主动导入其他学校或更新后的课程数据时才需要联网。",
+      sourceLabel: "v5.30 离线双语课程数据说明",
       sourceUrl: "./README.md"
     },
     {
       category: "数据",
       question: "当前 Cornell 数据库包含什么？",
-      answer: "官方 Fall 2026 LAW roster 有 137 条开课记录；软件默认库已剔除 3 门官方明确仅限本科生的课程，因此保留 134 门可作为 LL.M. 规划候选的课程。所有保留课程均有官方课程页链接；课程时间和地点仅在官方当期数据已经公布时显示。",
-      sourceLabel: "Cornell University Class Roster 与 Catalog",
-      sourceUrl: "https://classes.cornell.edu/browse/roster/FA26/subject/LAW"
+      answer: "当前数据库按学期保留 262 条开课记录，包括 Fall 2026 的 136 门与 Spring 2027 的 126 门。春季数据已按要求剔除仅限本科生、仅限 JD 及仅限 Cornell Tech LL.M. 的课程；每条记录均标明学期，同一课程号在春秋两季开设时会分别显示。",
+      sourceLabel: "Cornell Law Course Offerings 与 Cornell Class Roster",
+      sourceUrl: "https://support.law.cornell.edu/CourseOfferings/"
     },
     {
       category: "数据",
@@ -212,7 +224,7 @@
     { category:"Calendar", question:"Why does the same course not appear in every week?", answer:"The weekly calendar follows each meeting pattern's actual start and end dates and excludes law-school no-class dates. Seven-week, Orientation, and early-ending courses appear only in the weeks when they actually meet." },
     { category:"Location", question:"Why do some courses show only a campus rather than a room?", answer:"Locations follow Cornell's official roster. When a specific room is not published, the planner says so rather than treating Ithaca campus or Cornell Law School as a room. Published building and room information is included in the bundled official roster data where available." },
     { category:"Data", question:"Do I need an OpenAI API key or internet access to open the planner?", answer:"No. The Cornell 2026-27 law-course dataset is bundled for offline search, review, and scheduling. Internet access is only needed when you choose to import or update an external school dataset." },
-    { category:"Data", question:"What does the current Cornell dataset include?", answer:"The default database contains only the 137 actual Fall 2026 LAW offerings cross-checked against the Cornell Class Roster and API. Every course links to its official page; meeting times and locations appear only where current official data publishes them." },
+    { category:"Data", question:"What does the current Cornell dataset include?", answer:"The bundled database contains 262 term-specific offerings: 136 for Fall 2026 and 126 for Spring 2027. Spring offerings explicitly limited to undergraduates, JD students, or Cornell Tech LL.M. students are excluded. Each offering carries a term label, so a course taught in both terms appears separately." },
     { category:"Data", question:"Will refreshing erase my schedule, or can another user see it?", answer:"No. The planner automatically saves the schedule in this browser under the current site domain, so a normal refresh or reopening the page keeps it. Visitors on another device or browser cannot read it, but people sharing the same browser profile will see the same local data. Use Export to calendar in My Schedule to download an .ics file for Google, Apple, or Outlook; use Import from calendar to add personal busy times. Calendar files are processed only on this device." }
   ];
   const palette = [
@@ -222,9 +234,14 @@
   ];
 
   let uiLanguage = safeLocalStorageGet("llm-course-planner-ui-language") === "zh" ? "zh" : "en";
-  const cornellCatalog = Array.isArray(window.CORNELL_COURSE_CATALOG) ? window.CORNELL_COURSE_CATALOG : [];
-  const cornellCatalogEn = Array.isArray(window.CORNELL_COURSE_CATALOG_EN) ? window.CORNELL_COURSE_CATALOG_EN : [];
+  const cornellFallCatalog = Array.isArray(window.CORNELL_COURSE_CATALOG) ? window.CORNELL_COURSE_CATALOG : [];
+  const cornellFallCatalogEn = Array.isArray(window.CORNELL_COURSE_CATALOG_EN) ? window.CORNELL_COURSE_CATALOG_EN : [];
+  const cornellSpringCatalog = Array.isArray(window.CORNELL_SPRING_2027_COURSE_CATALOG) ? window.CORNELL_SPRING_2027_COURSE_CATALOG : [];
+  const cornellSpringCatalogEn = Array.isArray(window.CORNELL_SPRING_2027_COURSE_CATALOG_EN) ? window.CORNELL_SPRING_2027_COURSE_CATALOG_EN : [];
+  const cornellCatalog = [...cornellFallCatalog, ...cornellSpringCatalog];
+  const cornellCatalogEn = [...cornellFallCatalogEn, ...cornellSpringCatalogEn];
   const cornellMeta = window.CORNELL_DATA_META || {};
+  const cornellSpringMeta = window.CORNELL_SPRING_2027_DATA_META || {};
   const cureviewsSnapshot = window.CUREVIEWS_LAW_CURRENT || {};
   const cureviewsRecords = cureviewsSnapshot.records && typeof cureviewsSnapshot.records === "object" ? cureviewsSnapshot.records : {};
   const generatedRaw = [];
@@ -277,9 +294,9 @@
     const imported = Array.isArray(cornellImportedDataset?.courses) && cornellImportedDataset.courses.length ? cornellImportedDataset.courses : null;
     if (imported) return imported.map(course => isEnglish() ? ({ ...course, titleZh:course.titleEn || course.titleZh, descriptionZh:course.descriptionEn || course.descriptionZh, gradingZh:course.grading || course.gradingZh, restrictionZh:course.restrictionEn || course.restriction || course.restrictionZh, prerequisitesZh:course.prerequisitesEn || course.prerequisites || course.prerequisitesZh, assessmentZh:course.assessmentEn || course.assessmentZh, displayLanguage:"en" }) : ({ ...course }));
     if (uiLanguage !== "en" || !cornellCatalogEn.length) return [...cornellCatalog];
-    const englishByCode = new Map(cornellCatalogEn.map(course => [course.code, course]));
+    const englishByOffering = new Map(cornellCatalogEn.map(course => [catalogOfferingKey(course), course]));
     return cornellCatalog.map(course => {
-      const english = englishByCode.get(course.code) || {};
+      const english = englishByOffering.get(catalogOfferingKey(course)) || {};
       return {
         ...course,
         titleZh: english.titleEn || course.titleZh,
@@ -295,6 +312,27 @@
   }
 
   function isEnglish() { return uiLanguage === "en"; }
+  function courseTermCode(course) {
+    const explicit = String(course?.officialSourceTerm || course?.term || "").toUpperCase();
+    if (explicit.includes("SP27") || explicit.includes("SPRING 2027")) return "SP27";
+    if (explicit.includes("FA26") || explicit.includes("FALL 2026")) return "FA26";
+    if (/-SP27(?:-|$)/i.test(String(course?.id || "")) || /spring\s*2027/i.test(String(course?.session || ""))) return "SP27";
+    return currentSchoolId === "cornell" ? "FA26" : explicit || "CUSTOM";
+  }
+  function catalogOfferingKey(course) { return String(course?.id || `${courseTermCode(course)}:${course?.code || ""}`); }
+  function termProfileForCourse(course) { return currentSchoolId === "cornell" ? (CORNELL_TERM_PROFILES[courseTermCode(course)] || CORNELL_TERM_PROFILES.FA26) : TERM; }
+  function termProfileForDate(date) {
+    if (currentSchoolId !== "cornell") return TERM;
+    const iso = toIsoDate(date);
+    return Object.values(CORNELL_TERM_PROFILES).find(term => iso >= term.orientationStart && iso <= term.examEnd) || null;
+  }
+  function termLabel(code, short = false) {
+    const term = CORNELL_TERM_PROFILES[code];
+    if (!term) return code;
+    if (short) return code === "FA26" ? (isEnglish() ? "Fall" : "秋季") : (isEnglish() ? "Spring" : "春季");
+    return isEnglish() ? term.label : term.labelZh;
+  }
+  function courseTermLabel(course, short = false) { return termLabel(courseTermCode(course), short); }
   function dayLabel(day) { return (isEnglish() ? DAY_MAP_EN : DAY_MAP)[day] || day; }
   function localizedLabel(item) { return isEnglish() ? (item.labelEn || item.label) : item.label; }
   function creditCount(value) { const count = Number(value || 0); return isEnglish() ? `${count} ${count === 1 ? "credit" : "credits"}` : `${count} 学分`; }
@@ -312,7 +350,22 @@
   }
   function courseOfficialText(c) { return `${c.officialTitleEn || c.titleEn || ""} ${officialCourseDescription(c)} ${(c.categories || []).join(" ")}`.toLowerCase(); }
   function barCategories(c) { return NY_BAR_ALLOCATION.categories(c); }
-  function assignedBarCategory(c) { return NY_BAR_ALLOCATION.assignedCategory(c, state?.barCategoryAllocations || {}); }
+  function assignedBarCategory(c) {
+    const categories = barCategories(c);
+    const explicit = state?.barCategoryAllocations?.[c.id];
+    if (categories.includes(explicit)) return explicit;
+    if (categories.length <= 1) return NY_BAR_ALLOCATION.assignedCategory(c, {});
+    const targets = { professional:2, writing:2, american:2, core:6 };
+    const otherSelected = selectedCourses().filter(course => course.id !== c.id && courseTermCode(course) === courseTermCode(c) && barStatus(course, state.selected[course.id]) === "eligible");
+    const totals = NY_BAR_ALLOCATION.creditsByCategory(otherSelected, state?.barCategoryAllocations || {}, course => barStatus(course, state.selected[course.id]) === "eligible");
+    const credits = Number(c.credits || 0);
+    return [...categories].sort((a, b) => {
+      const gainA = Math.min(credits, Math.max(0, (targets[a] || 0) - (totals[a] || 0)));
+      const gainB = Math.min(credits, Math.max(0, (targets[b] || 0) - (totals[b] || 0)));
+      if (gainA !== gainB) return gainB - gainA;
+      return a === c.barPrimary ? -1 : b === c.barPrimary ? 1 : categories.indexOf(a) - categories.indexOf(b);
+    })[0] || NY_BAR_ALLOCATION.assignedCategory(c, {});
+  }
   function nyBarFilterBucket(c, sectionId = undefined) { return barCategories(c).includes("core") ? "core" : barStatus(c, sectionId === undefined ? sectionSelectionId(defaultSectionSelection(c)) : sectionId); }
   function assessmentEvidence(c) {
     const source = c.assessmentEvidence && typeof c.assessmentEvidence === "object" ? c.assessmentEvidence : {};
@@ -329,7 +382,7 @@
   }
   const els = {
     courseList: document.getElementById("courseList"), courseCountText: document.getElementById("courseCountText"),
-    searchInput: document.getElementById("searchInput"), barFilter: document.getElementById("barFilter"),
+    searchInput: document.getElementById("searchInput"), termFilter:document.getElementById("termFilter"), barFilter: document.getElementById("barFilter"),
     gradingFilter: document.getElementById("gradingFilter"), creditsFilter: document.getElementById("creditsFilter"), meetingDayFilter: document.getElementById("meetingDayFilter"), topicFilter: document.getElementById("topicFilter"), llmFilter: document.getElementById("llmFilter"), courseFormatFilter: document.getElementById("courseFormatFilter"), sortSelect: document.getElementById("sortSelect"),
     resetFiltersBtn: document.getElementById("resetFiltersBtn"), languageToggleBtn:document.getElementById("languageToggleBtn"), scheduleNavDropTarget: document.getElementById("scheduleNavDropTarget"),
     creditProgress: document.getElementById("creditProgress"), miniSchedule: document.getElementById("miniSchedule"),
@@ -340,7 +393,7 @@
     pageTitle: document.getElementById("pageTitle"), pageSubtitle: document.getElementById("pageSubtitle"),
     tagHelpOverlay: document.getElementById("tagHelpOverlay"),
     previousWeekBtn: document.getElementById("previousWeekBtn"), nextWeekBtn: document.getElementById("nextWeekBtn"),
-    scheduleDateInput: document.getElementById("scheduleDateInput"), regularWeekBtn: document.getElementById("regularWeekBtn"),
+    scheduleDateInput: document.getElementById("scheduleDateInput"), fallWeekBtn: document.getElementById("fallWeekBtn"), springWeekBtn: document.getElementById("springWeekBtn"),
     scheduleWeekLabel: document.getElementById("scheduleWeekLabel"), scheduleWeekNumber: document.getElementById("scheduleWeekNumber"),
     scheduleWeekCaption: document.getElementById("scheduleWeekCaption"), faqList: document.getElementById("faqList"),
     faqSearchInput: document.getElementById("faqSearchInput"), locationAgenda: document.getElementById("locationAgenda"), faqIntroEyebrow:document.getElementById("faqIntroEyebrow"), faqIntroTitle:document.getElementById("faqIntroTitle"), faqIntroCopy:document.getElementById("faqIntroCopy"),
@@ -365,7 +418,8 @@
     printScheduleBtn:document.getElementById("printScheduleBtn"), newCourseBtn:document.getElementById("newCourseBtn"), miniSchedulePanel:document.getElementById("miniSchedulePanel"), courseContentGrid:document.getElementById("courseContentGrid"), miniScheduleCollapseBtn:document.getElementById("miniScheduleCollapseBtn"),
     courseEditorOverlay:document.getElementById("courseEditorOverlay"), courseEditorForm:document.getElementById("courseEditorForm"), editorCourseId:document.getElementById("editorCourseId"), editorCourseCode:document.getElementById("editorCourseCode"), editorCourseCredits:document.getElementById("editorCourseCredits"), editorTitleZh:document.getElementById("editorTitleZh"), editorTitleEn:document.getElementById("editorTitleEn"), editorMeetingDay:document.getElementById("editorMeetingDay"), editorStartTime:document.getElementById("editorStartTime"), editorEndTime:document.getElementById("editorEndTime"), editorLocation:document.getElementById("editorLocation"), editorDescriptionZh:document.getElementById("editorDescriptionZh"), deleteCourseBtn:document.getElementById("deleteCourseBtn"), supportAuthorOverlay:document.getElementById("supportAuthorOverlay"),
     calendarImportBtn:document.getElementById("calendarImportBtn"), calendarExportBtn:document.getElementById("calendarExportBtn"), calendarFileInput:document.getElementById("calendarFileInput"), clearImportedCalendarBtn:document.getElementById("clearImportedCalendarBtn"), calendarExportOverlay:document.getElementById("calendarExportOverlay"),
-    authorAnnouncementOverlay:document.getElementById("authorAnnouncementOverlay"), authorAnnouncementList:document.getElementById("authorAnnouncementList")
+    authorAnnouncementOverlay:document.getElementById("authorAnnouncementOverlay"), authorAnnouncementList:document.getElementById("authorAnnouncementList"),
+    termSwitchOverlay:document.getElementById("termSwitchOverlay"), termSwitchDescription:document.getElementById("termSwitchDescription")
   };
 
   init();
@@ -373,6 +427,7 @@
   function init() {
     applyLocalCourseEdits();
     ensureIalsSelected();
+    initializeMultiSelectControls();
     bindEvents();
     renderSchoolIdentity();
     renderLocalDataStatus();
@@ -420,14 +475,126 @@
     saveState();
   }
 
+  function selectedFilterValues(select) {
+    if (!select) return new Set();
+    return new Set([...select.selectedOptions].map(option => option.value).filter(value => value && value !== "all"));
+  }
+
+  function setFilterValues(select, values = []) {
+    if (!select) return;
+    const wanted = new Set(values);
+    [...select.options].forEach(option => { option.selected = option.value !== "all" && wanted.has(option.value); });
+    refreshMultiSelectControls();
+  }
+
+  function initializeMultiSelectControls() {
+    document.querySelectorAll("select.multi-filter-source").forEach(select => {
+      [...select.options].forEach(option => { if (option.value === "all") option.selected = false; });
+      if (select.nextElementSibling?.classList.contains("filter-multiselect")) return;
+      const details = document.createElement("details");
+      details.className = "filter-multiselect";
+      details.dataset.filterFor = select.id;
+      const options = [...select.options].filter(option => option.value !== "all");
+      details.innerHTML = `<summary><span class="multi-filter-summary"></span><span aria-hidden="true">⌄</span></summary><div class="multi-filter-menu">${options.map(option => `<label class="multi-filter-option"><input type="checkbox" value="${esc(option.value)}"><span>${esc(option.textContent)}</span></label>`).join("")}</div>`;
+      select.insertAdjacentElement("afterend", details);
+      details.querySelectorAll("input[type=checkbox]").forEach(checkbox => checkbox.addEventListener("change", () => {
+        const option = [...select.options].find(item => item.value === checkbox.value);
+        if (option) option.selected = checkbox.checked;
+        refreshMultiSelectControls();
+        select.dispatchEvent(new Event("input", { bubbles:true }));
+      }));
+    });
+    document.addEventListener("click", event => document.querySelectorAll("details.filter-multiselect[open]").forEach(details => {
+      if (!details.contains(event.target)) details.open = false;
+    }));
+    refreshMultiSelectControls();
+  }
+
+  function refreshMultiSelectControls() {
+    document.querySelectorAll("details.filter-multiselect").forEach(details => {
+      const select = document.getElementById(details.dataset.filterFor);
+      if (!select) return;
+      const selected = selectedFilterValues(select);
+      details.querySelectorAll("input[type=checkbox]").forEach(checkbox => {
+        const option = [...select.options].find(item => item.value === checkbox.value);
+        checkbox.checked = selected.has(checkbox.value);
+        checkbox.disabled = Boolean(option?.disabled);
+        const label = checkbox.nextElementSibling;
+        if (label && option) label.textContent = option.textContent;
+      });
+      const summary = details.querySelector(".multi-filter-summary");
+      const selectedLabels = [...select.options].filter(option => selected.has(option.value)).map(option => option.textContent);
+      if (summary) summary.textContent = !selectedLabels.length ? (isEnglish() ? "All" : "全部") : selectedLabels.length === 1 ? selectedLabels[0] : (isEnglish() ? `${selectedLabels.length} selected` : `已选 ${selectedLabels.length} 项`);
+      details.classList.toggle("has-selection", selectedLabels.length > 0);
+    });
+  }
+
+  function activePlanningTermCode() {
+    if (currentSchoolId !== "cornell") return "CUSTOM";
+    const selectedTerms = [...selectedFilterValues(els.termFilter)];
+    if (selectedTerms.length === 1) return selectedTerms[0];
+    const currentTerm = termProfileForDate(new Date());
+    if (currentTerm?.code) return currentTerm.code;
+    const scheduleTerm = termProfileForDate(parseIsoDate(state?.scheduleWeekStart || CORNELL_TERM_PROFILES.FA26.instructionStart));
+    return scheduleTerm?.code || "FA26";
+  }
+
+  function planningTermCourses(list = courses) {
+    if (currentSchoolId !== "cornell") return list;
+    const code = activePlanningTermCode();
+    return list.filter(course => courseTermCode(course) === code);
+  }
+
+  function currentUserWeekStart(now = new Date()) { return toIsoDate(startOfWeek(now)); }
+
+  function chooseTermFilter(choice) {
+    setFilterValues(els.termFilter, choice === "all" ? [] : [choice]);
+    els.termFilter?.dispatchEvent(new Event("input", { bubbles:true }));
+    closeTermSwitch();
+    switchView("courses");
+  }
+
+  function renderTermSwitchDialog() {
+    if (!els.termSwitchOverlay) return;
+    if (els.termSwitchDescription) els.termSwitchDescription.textContent = isEnglish()
+      ? "Choose one term for term-specific credits and recommendations, or show both terms in Course Search. The current term button opens this selector at any time."
+      : "选择单一学期后，学分进度与推荐会按该学期计算；也可在课程检索中同时查看两个学期。顶部学期按钮可随时再次打开这里。";
+    const selected = selectedFilterValues(els.termFilter);
+    document.querySelectorAll("[data-term-choice]").forEach(button => {
+      const choice = button.dataset.termChoice;
+      button.classList.toggle("is-active", choice === "all" ? selected.size === 0 || selected.size === 2 : selected.size === 1 && selected.has(choice));
+      button.setAttribute("aria-pressed", button.classList.contains("is-active") ? "true" : "false");
+      if (choice === "all") button.innerHTML = `<strong>${isEnglish() ? "Fall + Spring" : "秋季 + 春季"}</strong><span>${isEnglish() ? `${cornellCatalog.length} term-specific offerings` : `共 ${cornellCatalog.length} 条分学期开课记录`}</span>`;
+      if (choice === "FA26") button.innerHTML = `<strong>${isEnglish() ? "Fall 2026" : "2026 秋季"}</strong><span>${isEnglish() ? `${cornellFallCatalog.length} planning courses` : `${cornellFallCatalog.length} 门候选课程`}</span>`;
+      if (choice === "SP27") button.innerHTML = `<strong>${isEnglish() ? "Spring 2027" : "2027 春季"}</strong><span>${isEnglish() ? `${cornellSpringCatalog.length} planning courses` : `${cornellSpringCatalog.length} 门候选课程`}</span>`;
+    });
+    const title = document.getElementById("termSwitchTitle");
+    if (title) title.textContent = isEnglish() ? "Choose catalog term" : "选择课程学期";
+    const manage = document.getElementById("manageSchoolDataBtn");
+    if (manage) manage.textContent = isEnglish() ? "Schools & Data" : "学校与数据";
+  }
+
+  function openTermSwitch() {
+    if (!els.termSwitchOverlay) return switchView("schools");
+    renderTermSwitchDialog();
+    els.termSwitchOverlay.hidden = false;
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeTermSwitch() {
+    if (els.termSwitchOverlay) els.termSwitchOverlay.hidden = true;
+    if ((!els.authorAnnouncementOverlay || els.authorAnnouncementOverlay.hidden) && (!els.calendarExportOverlay || els.calendarExportOverlay.hidden)) document.body.style.overflow = "";
+  }
+
   function bindEvents() {
     [els.searchInput, els.barFilter, els.gradingFilter, els.creditsFilter, els.meetingDayFilter, els.topicFilter, els.llmFilter, els.courseFormatFilter, els.sortSelect].filter(Boolean).forEach(el => el.addEventListener("input", renderCourseList));
+    els.termFilter?.addEventListener("input", () => { renderCourseList(); renderProgress(); renderMiniSchedule(); renderRecommendations(); renderSchoolIdentity(); renderTermSwitchDialog(); });
     els.resetFiltersBtn?.addEventListener("click", resetCourseFilters);
     document.querySelectorAll(".nav-item").forEach(btn => btn.addEventListener("click", () => switchView(btn.dataset.view)));
     document.querySelectorAll("[data-view-target]").forEach(btn => btn.addEventListener("click", () => switchView(btn.dataset.viewTarget)));
     document.getElementById("closeDrawerBtn").addEventListener("click", closeDrawer);
     els.detailOverlay.addEventListener("click", e => { if (e.target === els.detailOverlay) closeDrawer(); });
-    document.addEventListener("keydown", e => { if (e.key === "Escape") { closeDrawer(); closeTagHelp(); closeCalendarExport(); closeAuthorAnnouncement(); } });
+    document.addEventListener("keydown", e => { if (e.key === "Escape") { closeDrawer(); closeTagHelp(); closeCalendarExport(); closeAuthorAnnouncement(); closeTermSwitch(); } });
     document.getElementById("clearScheduleBtn").addEventListener("click", clearSchedule);
     els.printScheduleBtn?.addEventListener("click", printSchedule);
     els.calendarImportBtn?.addEventListener("keydown", event => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); els.calendarFileInput?.click(); } });
@@ -452,10 +619,15 @@
     document.addEventListener("click", handleBadgeFilterClick);
     els.previousWeekBtn?.addEventListener("click", () => moveScheduleWeek(-7));
     els.nextWeekBtn?.addEventListener("click", () => moveScheduleWeek(7));
-    els.regularWeekBtn?.addEventListener("click", () => setScheduleWeek(TERM.instructionStart));
+    els.fallWeekBtn?.addEventListener("click", () => setScheduleWeek(CORNELL_TERM_PROFILES.FA26.instructionStart));
+    els.springWeekBtn?.addEventListener("click", () => setScheduleWeek(CORNELL_TERM_PROFILES.SP27.instructionStart));
     els.scheduleDateInput?.addEventListener("change", () => setScheduleWeek(els.scheduleDateInput.value));
     els.faqSearchInput?.addEventListener("input", renderFaq);
-    els.schoolSwitcherBtn?.addEventListener("click", () => switchView("schools"));
+    els.schoolSwitcherBtn?.addEventListener("click", () => currentSchoolId === "cornell" ? openTermSwitch() : switchView("schools"));
+    document.getElementById("closeTermSwitchBtn")?.addEventListener("click", closeTermSwitch);
+    document.getElementById("manageSchoolDataBtn")?.addEventListener("click", () => { closeTermSwitch(); switchView("schools"); });
+    document.querySelectorAll("[data-term-choice]").forEach(button => button.addEventListener("click", () => chooseTermFilter(button.dataset.termChoice)));
+    els.termSwitchOverlay?.addEventListener("click", event => { if (event.target === els.termSwitchOverlay) closeTermSwitch(); });
     els.randomCareerBtn?.addEventListener("click", randomizeCareerProfile);
     els.clearCareerProfileBtn?.addEventListener("click", () => { state.recommendationProfile = { directions:[], preferences:[] }; saveState(); renderCareerControls(); renderRecommendations(); });
     els.importSourceType?.addEventListener("change", updateImportSourceFields);
@@ -494,6 +666,7 @@
   }
 
   function switchView(view) {
+    const priorView = currentView;
     currentView = view;
     document.querySelectorAll(".view").forEach(v => v.classList.toggle("is-active", v.id === `view-${view}`));
     document.querySelectorAll(".nav-item").forEach(v => v.classList.toggle("is-active", v.dataset.view === view));
@@ -511,13 +684,24 @@
       faq: ["新生 FAQ", "用中文理解评分、学分、选课和课程负担"]
     };
     [els.pageTitle.textContent, els.pageSubtitle.textContent] = titles[view];
-    if (view === "schedule") { renderSchedule(); renderScheduleCourseTray(); }
+    if (view === "schedule") {
+      if (priorView !== "schedule") state.scheduleWeekStart = currentUserWeekStart();
+      saveState(); renderSchedule(); renderScheduleCourseTray();
+    }
     if (view === "schools") renderSchoolManager();
     if (view === "faq") renderFaq();
   }
 
   function getFilteredCourses() {
     const q = els.searchInput.value.trim().toLowerCase();
+    const termValues = selectedFilterValues(els.termFilter);
+    const barValues = selectedFilterValues(els.barFilter);
+    const gradingValues = selectedFilterValues(els.gradingFilter);
+    const creditValues = selectedFilterValues(els.creditsFilter);
+    const meetingDayValues = selectedFilterValues(els.meetingDayFilter);
+    const topicValues = selectedFilterValues(els.topicFilter);
+    const llmValues = selectedFilterValues(els.llmFilter);
+    const formatValues = selectedFilterValues(els.courseFormatFilter);
     let list = courses.filter(c => {
       const locationText = (c.sections || []).flatMap(section => (section.meetings || []).map(m => meetingLocation(m, section, c))).join(" ");
       const barCategoryAliases = barCategories(c).flatMap(category => ({
@@ -526,27 +710,24 @@
         american:["美国法体系", "美国法律体系", "american legal system", "american legal studies"],
         core:["nyle", "bar 考试科目", "ny bar tested subjects"]
       })[category] || []);
-      const hay = [c.code, c.titleZh, c.titleEn, c.officialTitleEn, officialCourseDescription(c), ...(c.instructors || []), ...(c.categories || []), ...barCategoryAliases, locationText].join(" ").toLowerCase();
+      const courseTerm = courseTermCode(c);
+      const termAliases = courseTerm === "SP27" ? ["spring", "spring 2027", "2027 spring", "春季", "2027 春季"] : courseTerm === "FA26" ? ["fall", "fall 2026", "2026 fall", "秋季", "2026 秋季"] : [];
+      const hay = [c.code, c.titleZh, c.titleEn, c.officialTitleEn, officialCourseDescription(c), c.officialSourceTerm, c.session, courseTerm, ...termAliases, ...(c.instructors || []), ...(c.categories || []), ...barCategoryAliases, locationText].join(" ").toLowerCase();
       if (q && !hay.includes(q)) return false;
-      const bf = els.barFilter.value;
-      if (bf !== "all" && nyBarFilterBucket(c) !== bf) return false;
-      const gf = els.gradingFilter.value;
-      if (gf === "su" && !/s\/u|satisfactory/i.test(String(c.grading || c.gradingZh))) return false;
-      if (gf === "graded" && /s\/u|satisfactory/i.test(String(c.grading || c.gradingZh))) return false;
-      const creditsFilter = els.creditsFilter?.value || "all";
+      if (termValues.size && !termValues.has(courseTerm)) return false;
+      if (barValues.size && !barValues.has(nyBarFilterBucket(c))) return false;
+      const isSu = /s\/u|satisfactory/i.test(String(c.grading || c.gradingZh));
+      if (gradingValues.size && ![...gradingValues].some(value => value === "su" ? isSu : value === "graded" ? !isSu : true)) return false;
       const credits = Number(c.credits || 0);
-      if (creditsFilter === "0-1" && (credits < 0 || credits > 1)) return false;
-      if (["2", "3", "4"].includes(creditsFilter) && credits !== Number(creditsFilter)) return false;
-      if (creditsFilter === "5+" && credits < 5) return false;
-      const meetingDay = els.meetingDayFilter?.value || "all";
-      if (meetingDay !== "all" && !(c.sections || []).some(section => (section.meetings || []).some(meeting => parsePattern(meeting.pattern).includes(meetingDay)))) return false;
-      const topic = els.topicFilter?.value || "all";
-      if (topic !== "all" && !courseTopics(c).includes(topic)) return false;
-      const llm = els.llmFilter?.value || "all";
-      if (llm === "specific" && !c.llmSpecific) return false;
-      if (llm === "direct" && c.eligibility !== "open") return false;
-      const format = els.courseFormatFilter?.value || "all";
-      if (format !== "all" && !courseFormats(c).includes(format)) return false;
+      const creditMatches = value => value === "0-1" ? credits >= 0 && credits <= 1 : value === "5+" ? credits >= 5 : credits === Number(value);
+      if (creditValues.size && ![...creditValues].some(creditMatches)) return false;
+      const courseDays = new Set((c.sections || []).flatMap(section => (section.meetings || []).flatMap(meeting => parsePattern(meeting.pattern))));
+      if (meetingDayValues.size && ![...meetingDayValues].some(day => courseDays.has(day))) return false;
+      const topics = courseTopics(c);
+      if (topicValues.size && ![...topicValues].some(topic => topics.includes(topic))) return false;
+      if (llmValues.size && ![...llmValues].some(value => value === "specific" ? c.llmSpecific : value === "direct" ? c.eligibility === "open" : true)) return false;
+      const formats = courseFormats(c);
+      if (formatValues.size && ![...formatValues].some(format => formats.includes(format))) return false;
       return true;
     });
     const sort = els.sortSelect.value;
@@ -572,6 +753,7 @@
 
   function pruneEmptyFilterOptions() {
     const availability = {
+      termFilter: value => value === "all" || courses.some(course => courseTermCode(course) === value),
       barFilter: value => value === "all" || courses.some(course => nyBarFilterBucket(course) === value),
       gradingFilter: value => value === "all" || courses.some(course => value === "su" ? /s\/u|satisfactory/i.test(String(course.gradingZh || course.grading)) : !/s\/u|satisfactory/i.test(String(course.gradingZh || course.grading))),
       creditsFilter: value => value === "all" || courses.some(course => value === "0-1" ? Number(course.credits || 0) >= 0 && Number(course.credits || 0) <= 1 : value === "5+" ? Number(course.credits || 0) >= 5 : Number(course.credits || 0) === Number(value)),
@@ -587,9 +769,10 @@
         const available = hasCourses(option.value);
         option.hidden = !available;
         option.disabled = !available;
+        if (!available) option.selected = false;
       });
-      if (select.selectedOptions[0]?.disabled) select.value = "all";
     });
+    refreshMultiSelectControls();
   }
 
   function renderMiniSchedulePanelState() {
@@ -613,7 +796,9 @@
     pruneEmptyFilterOptions();
     renderMiniSchedulePanelState();
     const list = getFilteredCourses();
-    const snapshotLabel = currentSchoolId === "cornell" ? (isEnglish() ? `${courses.length} LL.M. planning courses` : `${courses.length} 门 LLM 规划候选课程`) : (isEnglish() ? "locally imported courses" : "用户导入课程");
+    const fallCount = courses.filter(course => courseTermCode(course) === "FA26").length;
+    const springCount = courses.filter(course => courseTermCode(course) === "SP27").length;
+    const snapshotLabel = currentSchoolId === "cornell" ? (isEnglish() ? `${fallCount} Fall · ${springCount} Spring` : `${fallCount} 门秋季 · ${springCount} 门春季`) : (isEnglish() ? "locally imported courses" : "用户导入课程");
     els.courseCountText.textContent = isEnglish() ? `${list.length} of ${courses.length} courses · ${currentSchoolProfile.nameEn || currentSchoolProfile.nameZh} · ${snapshotLabel}` : `显示 ${list.length} / ${courses.length} 门课程 · ${currentSchoolProfile.shortZh || currentSchoolProfile.nameZh} · ${snapshotLabel}`;
     els.courseList.innerHTML = list.map(courseCardHtml).join("");
     els.courseList.querySelectorAll(".course-card").forEach(card => {
@@ -693,6 +878,7 @@
 
   function badgesHtml(c, sectionId = undefined) {
     const out = [];
+    if (currentSchoolId === "cornell") out.push(`<span class="badge badge-term badge-term-${courseTermCode(c).toLowerCase()}" title="${isEnglish() ? "Course term" : "开课学期"}">${esc(courseTermLabel(c))}</span>`);
     const bucket = nyBarFilterBucket(c, sectionId);
     out.push(`<button type="button" class="badge badge-clickable badge-${bucket === "core" ? "core" : `bar-${bucket}`}" data-badge-filter="${bucket}" title="${isEnglish() ? "Filter: " : "点击筛选："}${barStatusLabel(bucket)}">${barStatusLabel(bucket)}</button>`);
     const categories = barCategories(c);
@@ -731,7 +917,7 @@
     }
     const sections = course.sections || [];
     if (!sections.length) {
-      showToast(`${course.code} 已完整收录中文课程信息，但当前固定 Fall 2026 快照未包含可排入课表的班次时间。`, true);
+      showToast(isEnglish() ? `${course.code} is in the ${courseTermLabel(course)} catalog, but no schedulable section time is currently published.` : `${course.code} 已收录于${courseTermLabel(course)}课程库，但当前未公布可排入课表的班次时间。`, true);
       openCourseDetail(course.id);
       return;
     }
@@ -1043,9 +1229,13 @@
   }
 
   function renderProgress() {
-    const selected = selectedCourses();
+    const selected = planningTermCourses(selectedCourses());
     const eligibleCredits = selected.filter(c => barStatus(c, state.selected[c.id]) === "eligible").reduce((sum, course) => sum + Number(course.credits || 0), 0);
-    const categoryTotals = NY_BAR_ALLOCATION.creditsByCategory(selected, state.barCategoryAllocations || {}, course => barStatus(course, state.selected[course.id]) === "eligible");
+    const categoryTotals = Object.fromEntries(NY_BAR_ALLOCATION.VALID_CATEGORIES.map(category => [category, 0]));
+    selected.filter(course => barStatus(course, state.selected[course.id]) === "eligible").forEach(course => {
+      const category = assignedBarCategory(course);
+      if (category) categoryTotals[category] += Number(course.credits || 0);
+    });
     const categoryCredits = type => categoryTotals[type] || 0;
     const selectedCredits = selected.reduce((sum, course) => sum + Number(course.credits || 0), 0);
     const barItems = [
@@ -1055,7 +1245,8 @@
       [isEnglish() ? "NYLE / Bar tested subjects" : "NYLE / Bar 考试科目", categoryCredits("core"), 6]
     ];
     if (currentSchoolId === "cornell") {
-      els.creditProgress.innerHTML = `${rangeProgressHtml(isEnglish() ? "LL.M. semester registration (10–15)" : "LL.M. 本学期注册学分（10–15）", selectedCredits, 10, 15)}${progressHtml(isEnglish() ? "NY Bar qualifying classroom credits" : "NY Bar 课堂课程学分", eligibleCredits, 24)}<p class="progress-policy-note">${isEnglish() ? "Calculated from the section you selected: in-person Cornell Law lecture, seminar, or discussion sections count unless an official restriction excludes them. Online and independent-study sections do not count; clinics, practica, and restricted sections require confirmation." : "按你所选班次计算：康奈尔法学院线下讲授、研讨或讨论班次会计入，除非官方明确排除；线上和独立研究不计入，诊所、实践课及项目限制班次须确认。"}</p><div class="progress-subheading">${isEnglish() ? "NY Bar required categories" : "NY Bar 分类要求"}</div>${barItems.map(([label, value, target]) => progressHtml(label, value, target)).join("")}${barAllocationControlsHtml(selected)}<p class="progress-policy-note">${isEnglish() ? "Where Cornell lists a course in more than one category, the planner counts it once in the category selected above. Confirm your final allocation with Cornell Law and BOLE." : "若 Cornell 将同一课程列入多个类别，工具仅按上方所选归类计入一次；最终学分分配请向 Cornell Law 和 BOLE 确认。"}</p><p class="progress-policy-note">${isEnglish() ? "Cornell states that LL.M. students register for 10–15 credits per semester unless the Dean of Students approves otherwise. This planner does not determine immigration status." : "Cornell 公布的 LL.M. 每学期注册范围为 10–15 学分；超出范围需向 Dean of Students 申请。本工具不判断个人移民／签证身份。"}</p>`;
+      const planningTerm = termLabel(activePlanningTermCode());
+      els.creditProgress.innerHTML = `<p class="progress-term-context">${isEnglish() ? `Planning term: ${planningTerm}` : `当前统计学期：${planningTerm}`}</p>${rangeProgressHtml(isEnglish() ? "LL.M. semester registration (10–15)" : "LL.M. 本学期注册学分（10–15）", selectedCredits, 10, 15)}${progressHtml(isEnglish() ? "NY Bar qualifying classroom credits" : "NY Bar 课堂课程学分", eligibleCredits, 24)}<p class="progress-policy-note">${isEnglish() ? "Calculated from the section you selected: in-person Cornell Law lecture, seminar, or discussion sections count unless an official restriction excludes them. Online and independent-study sections do not count; clinics, practica, and restricted sections require confirmation." : "按你所选班次计算：康奈尔法学院线下讲授、研讨或讨论班次会计入，除非官方明确排除；线上和独立研究不计入，诊所、实践课及项目限制班次须确认。"}</p><div class="progress-subheading">${isEnglish() ? "NY Bar required categories" : "NY Bar 分类要求"}</div>${barItems.map(([label, value, target]) => progressHtml(label, value, target)).join("")}${barAllocationControlsHtml(selected)}<p class="progress-policy-note">${isEnglish() ? "Where Cornell lists a course in more than one category, the planner counts it once in the category selected above. Confirm your final allocation with Cornell Law and BOLE." : "若 Cornell 将同一课程列入多个类别，工具仅按上方所选归类计入一次；最终学分分配请向 Cornell Law 和 BOLE 确认。"}</p><p class="progress-policy-note">${isEnglish() ? "Cornell states that LL.M. students register for 10–15 credits per semester unless the Dean of Students approves otherwise. This planner does not determine immigration status." : "Cornell 公布的 LL.M. 每学期注册范围为 10–15 学分；超出范围需向 Dean of Students 申请。本工具不判断个人移民／签证身份。"}</p>`;
       bindBarAllocationControls();
       return;
     }
@@ -1155,9 +1346,9 @@
 
   function resetCourseFilters() {
     if (els.searchInput) els.searchInput.value = "";
-    for (const select of [els.barFilter, els.gradingFilter, els.creditsFilter, els.meetingDayFilter, els.topicFilter, els.llmFilter, els.courseFormatFilter, els.sortSelect]) {
-      if (select) select.value = select === els.sortSelect ? "recommended" : "all";
-    }
+    for (const select of [els.termFilter, els.barFilter, els.gradingFilter, els.creditsFilter, els.meetingDayFilter, els.topicFilter, els.llmFilter, els.courseFormatFilter]) setFilterValues(select, []);
+    if (els.sortSelect) els.sortSelect.value = "recommended";
+    renderSchoolIdentity(); renderProgress(); renderMiniSchedule(); renderRecommendations();
     renderCourseList();
     els.searchInput?.focus();
   }
@@ -1168,12 +1359,15 @@
     if (!selected.length) els.miniSchedule.innerHTML = `<div class="drop-hint">${isEnglish() ? "Drag a course here to add it to your schedule" : "将课程拖到此处加入课表"}</div>`;
     else els.miniSchedule.innerHTML = selected.map((c,i) => {
       const sec = getSection(c, state.selected[c.id]); const color = palette[i % palette.length][1];
-      return `<div class="mini-course-item" style="--item-color:${color}" data-course-id="${esc(c.id)}"><strong>${esc(c.code)} · ${esc(courseTitle(c))}</strong><span>${esc(formatSectionMeetings(sec))}</span><small>⌖ ${esc(sectionLocationSummary(sec, c))}</small></div>`;
+      return `<div class="mini-course-item" style="--item-color:${color}" data-course-id="${esc(c.id)}"><strong>${esc(c.code)} · ${esc(courseTitle(c))}</strong><span>${currentSchoolId === "cornell" ? `${esc(courseTermLabel(c))} · ` : ""}${esc(formatSectionMeetings(sec))}</span><small>⌖ ${esc(sectionLocationSummary(sec, c))}</small></div>`;
     }).join("");
     els.miniSchedule.querySelectorAll(".mini-course-item").forEach(x => x.addEventListener("click", () => openCourseDetail(x.dataset.courseId)));
-    const credits = selected.reduce((s,c) => s + Number(c.credits || 0), 0);
-    const eligible = selected.filter(c => barStatus(c, state.selected[c.id]) === "eligible").reduce((s,c) => s + Number(c.credits || 0), 0);
-    els.selectedSummary.innerHTML = `<div class="summary-row"><span>${isEnglish() ? "Selected courses" : "已选课程"}</span><strong>${courseCount(selected.length)}</strong></div><div class="summary-row"><span>${isEnglish() ? "Fall credits" : "秋季总学分"}</span><strong>${credits}</strong></div><div class="summary-row"><span>${isEnglish() ? "NY Bar classroom credits" : "NY Bar 课堂课程学分"}</span><strong>${eligible}</strong></div>`;
+    const fallSelected = selected.filter(course => courseTermCode(course) === "FA26");
+    const springSelected = selected.filter(course => courseTermCode(course) === "SP27");
+    const creditsFor = list => list.reduce((sum, course) => sum + Number(course.credits || 0), 0);
+    const activeSelected = planningTermCourses(selected);
+    const eligible = activeSelected.filter(c => barStatus(c, state.selected[c.id]) === "eligible").reduce((s,c) => s + Number(c.credits || 0), 0);
+    els.selectedSummary.innerHTML = `<div class="summary-row"><span>${isEnglish() ? "Selected offerings" : "已选课程"}</span><strong>${courseCount(selected.length)}</strong></div>${currentSchoolId === "cornell" ? `<div class="summary-row"><span>${isEnglish() ? "Fall 2026 credits" : "2026 秋季学分"}</span><strong>${creditsFor(fallSelected)}</strong></div><div class="summary-row"><span>${isEnglish() ? "Spring 2027 credits" : "2027 春季学分"}</span><strong>${creditsFor(springSelected)}</strong></div>` : `<div class="summary-row"><span>${isEnglish() ? "Total credits" : "总学分"}</span><strong>${creditsFor(selected)}</strong></div>`}<div class="summary-row"><span>${isEnglish() ? `${termLabel(activePlanningTermCode())} NY Bar credits` : `${termLabel(activePlanningTermCode())} NY Bar 学分`}</span><strong>${eligible}</strong></div>`;
   }
 
   function renderCareerControls() {
@@ -1260,7 +1454,8 @@
       els.recommendationGroups.innerHTML = `<div class="empty-state recommendation-empty"><strong>${isEnglish() ? "Choose your priorities first" : "请先选择偏好"}</strong><p>${isEnglish() ? "Select one or more career directions or course preferences above. Then choose Generate recommendation plan." : "从上方选择一个或多个职业方向或课程偏好，再点击“生成推荐方案”。"}</p></div>`;
       return;
     }
-    const ranked = [...courses].filter(course => course.sections?.length && !(currentSchoolProfile.autoEnrollCodes || []).includes(course.code)).sort((a,b) => careerMatchScore(b) - careerMatchScore(a));
+    const termCourses = planningTermCourses(courses);
+    const ranked = [...termCourses].filter(course => course.sections?.length && !(currentSchoolProfile.autoEnrollCodes || []).includes(course.code)).sort((a,b) => careerMatchScore(b) - careerMatchScore(a));
     const selectedDirections = (profile.directions || []).map(id => CAREER_DIRECTIONS.find(item => item.id === id)).filter(Boolean);
     const directionCourses = selectedDirections.length ? ranked.filter(course => {
         const text = courseOfficialText(course);
@@ -1280,7 +1475,7 @@
       {
         title: isEnglish() ? "Lighter scheduled load" : "较少课时与学分",
         desc: isEnglish() ? "Ranks only published credits and classroom time; it does not infer actual assignments or grading from the course category." : "仅按已公布的学分和课堂时间排序；不从课程类别推断实际作业量或给分。",
-        courses: [...courses].filter(course => course.sections?.length && !(currentSchoolProfile.autoEnrollCodes || []).includes(course.code)).sort((a,b) => scheduledLoadScore(b)-scheduledLoadScore(a)).slice(0, 8)
+        courses: [...termCourses].filter(course => course.sections?.length && !(currentSchoolProfile.autoEnrollCodes || []).includes(course.code)).sort((a,b) => scheduledLoadScore(b)-scheduledLoadScore(a)).slice(0, 8)
       }
     ];
     els.recommendationGroups.innerHTML = groups.map(group => `<section class="recommendation-group"><h3>${esc(group.title)}</h3><p>${esc(group.desc)}</p><div class="recommendation-card-grid">${group.courses.map(recommendationCardHtml).join("")}</div></section>`).join("");
@@ -1347,7 +1542,7 @@
       const conflictLabels = [...conflictCodes, ...calendarTitles.map(title => isEnglish() ? `Calendar: ${title}` : `日程：${title}`)];
       const conflictNote = conflictLabels.length ? `<em class="schedule-token-conflict">⚠ ${isEnglish() ? `Conflicts with ${conflictLabels.join(", ")}` : `与 ${conflictLabels.join("、")} 时间冲突`}</em>` : "";
       return `<article class="schedule-course-token is-selected ${conflictLabels.length ? "has-schedule-conflict" : ""}" data-course-id="${esc(course.id)}" style="--token-bg:${bg};--token-border:${border}">
-        <div><strong>${esc(course.code)} · ${esc(courseTitle(course))}</strong><span>◷ ${esc(formatSectionMeetings(section))}</span><small>◎ ${esc(instructors)} · ⌖ ${esc(room)}</small></div>
+        <div><strong>${esc(course.code)} · ${esc(courseTitle(course))}</strong><span>${currentSchoolId === "cornell" ? `${esc(courseTermLabel(course))} · ` : ""}◷ ${esc(formatSectionMeetings(section))}</span><small>◎ ${esc(instructors)} · ⌖ ${esc(room)}</small></div>
         ${conflictNote}<button type="button" class="schedule-token-remove ${conflictLabels.length ? "is-conflict-remove" : ""}" data-tray-remove="${esc(course.id)}">${conflictLabels.length ? (isEnglish() ? "Remove conflict" : "移除冲突课程") : (isEnglish() ? "Remove" : "移除")}</button>
       </article>`;
     }).join("");
@@ -1448,7 +1643,7 @@
 
   function renderSchedule() {
     const selected = selectedCourses();
-    const weekStart = startOfWeek(parseIsoDate(state.scheduleWeekStart || TERM.instructionStart));
+    const weekStart = startOfWeek(parseIsoDate(state.scheduleWeekStart || currentUserWeekStart()));
     state.scheduleWeekStart = toIsoDate(weekStart);
     saveState();
     const weekDates = DAY_KEYS.map((_, i) => addDays(weekStart, i));
@@ -1562,22 +1757,24 @@
   }
 
   function semesterWeekLabel(weekStart) {
-    const orientation = parseIsoDate(TERM.orientationStart);
-    const instruction = startOfWeek(parseIsoDate(TERM.instructionStart));
-    const termEnd = startOfWeek(parseIsoDate(TERM.examEnd));
-    if (weekStart < startOfWeek(orientation) || weekStart > termEnd) {
+    const profile = termProfileForDate(addDays(weekStart, 2));
+    if (!profile) {
       return isEnglish() ? "Calendar week" : "日历周";
     }
+    const orientation = parseIsoDate(profile.orientationStart || profile.instructionStart);
+    const instruction = startOfWeek(parseIsoDate(profile.instructionStart));
+    const termEnd = startOfWeek(parseIsoDate(profile.examEnd));
+    if (weekStart < startOfWeek(orientation) || weekStart > termEnd) return isEnglish() ? "Calendar week" : "日历周";
     if (weekStart < instruction) {
       const n = Math.floor((weekStart - startOfWeek(orientation)) / 604800000) + 1;
-      return isEnglish() ? `Orientation · Week ${Math.max(1,n)}` : `Orientation 第${Math.max(1,n)}周`;
+      return isEnglish() ? `${profile.label} · Orientation · Week ${Math.max(1,n)}` : `${profile.labelZh} · Orientation 第${Math.max(1,n)}周`;
     }
     const n = Math.floor((weekStart - instruction) / 604800000) + 1;
-    return isEnglish() ? `Instruction · Week ${Math.max(1,n)}` : `正式课程第${Math.max(1,n)}周`;
+    return isEnglish() ? `${profile.label} · Instruction · Week ${Math.max(1,n)}` : `${profile.labelZh} · 正式课程第${Math.max(1,n)}周`;
   }
 
   function moveScheduleWeek(days) {
-    const base = parseIsoDate(state.scheduleWeekStart || TERM.instructionStart);
+    const base = parseIsoDate(state.scheduleWeekStart || currentUserWeekStart());
     setScheduleWeek(toIsoDate(addDays(base, days)));
   }
 
@@ -1589,27 +1786,31 @@
     renderMiniSchedule();
   }
 
-  function getMeetingsForDate(section, date) {
+  function getMeetingsForDate(section, date, course = null) {
     if (!section || isNoClassDate(date)) return [];
     const iso = toIsoDate(date);
-    const scheduleDay = SPECIAL_SCHEDULE_DAYS[iso] || DAY_KEYS[date.getDay()-1];
+    const term = course ? termProfileForCourse(course) : (termProfileForDate(date) || TERM);
+    const scheduleDay = term?.specialScheduleDays?.[iso] || SPECIAL_SCHEDULE_DAYS[iso] || DAY_KEYS[date.getDay()-1];
     if (!scheduleDay) return [];
     return (section.meetings || []).filter(m => {
       if (!parsePattern(m.pattern).includes(scheduleDay)) return false;
-      const start = parseIsoDate(m.startDate || section.startDate || TERM.instructionStart);
-      const end = parseIsoDate(m.endDate || section.endDate || TERM.instructionEnd);
+      const start = parseIsoDate(m.startDate || section.startDate || term.instructionStart);
+      const end = parseIsoDate(m.endDate || section.endDate || term.instructionEnd);
       return date >= start && date <= end;
     });
   }
 
   function getScheduleMeetingsForDate(course, section, date) {
     const manual = state.manualPlacements?.[course?.id];
-    if (!manual) return getMeetingsForDate(section, date);
+    if (!manual) return getMeetingsForDate(section, date, course);
     if (isNoClassDate(date)) return [];
     const iso = toIsoDate(date);
-    const scheduleDay = SPECIAL_SCHEDULE_DAYS[iso] || DAY_KEYS[date.getDay()-1];
+    const term = termProfileForCourse(course);
+    const scheduleDay = term?.specialScheduleDays?.[iso] || SPECIAL_SCHEDULE_DAYS[iso] || DAY_KEYS[date.getDay()-1];
     if (scheduleDay !== manual.day) return [];
-    return [{ pattern:manual.day, start:manual.start, end:manual.end, startDate:TERM.instructionStart, endDate:TERM.instructionEnd, location:meetingLocation(section?.meetings?.[0], section, course), manualPlacement:true }];
+    const isoDate = toIsoDate(date);
+    if (isoDate < term.instructionStart || isoDate > term.instructionEnd) return [];
+    return [{ pattern:manual.day, start:manual.start, end:manual.end, startDate:term.instructionStart, endDate:term.instructionEnd, location:meetingLocation(section?.meetings?.[0], section, course), manualPlacement:true }];
   }
 
   function detectWeekConflicts(selected, weekDates) {
@@ -1769,9 +1970,15 @@
 
   function renderSchoolIdentity() {
     currentSchoolProfile = getSchoolProfile(currentSchoolId);
-    if (els.brandSubtitle) els.brandSubtitle.textContent = `${isEnglish() ? (currentSchoolProfile.nameEn || currentSchoolProfile.nameZh) : (currentSchoolProfile.nameZh || currentSchoolProfile.nameEn)} · ${currentSchoolProfile.termLabel || (isEnglish() ? "Custom term" : "自定义学期")} · ${APP_VERSION}`;
+    const termFilterField = els.termFilter?.closest(".filter-field");
+    if (termFilterField) termFilterField.hidden = currentSchoolId !== "cornell";
+    const selectedTerms = selectedFilterValues(els.termFilter);
+    const cornellTermSummary = selectedTerms.size === 1 ? termLabel([...selectedTerms][0]) : (isEnglish() ? "Fall 2026 + Spring 2027" : "2026 秋季 + 2027 春季");
+    const identityTerm = currentSchoolId === "cornell" ? cornellTermSummary : (currentSchoolProfile.termLabel || (isEnglish() ? "Custom term" : "自定义学期"));
+    if (els.brandSubtitle) els.brandSubtitle.textContent = `${isEnglish() ? (currentSchoolProfile.nameEn || currentSchoolProfile.nameZh) : (currentSchoolProfile.nameZh || currentSchoolProfile.nameEn)} · ${identityTerm} · ${APP_VERSION}`;
     if (els.currentSchoolShort) els.currentSchoolShort.textContent = isEnglish() ? (currentSchoolProfile.nameEn || currentSchoolProfile.nameZh) : (currentSchoolProfile.shortZh || currentSchoolProfile.nameZh);
-    if (els.currentTermShort) els.currentTermShort.textContent = currentSchoolProfile.termLabel || (isEnglish() ? "Custom term" : "自定义学期");
+    if (els.currentTermShort) els.currentTermShort.textContent = identityTerm;
+    if (els.schoolSwitcherBtn) els.schoolSwitcherBtn.title = currentSchoolId === "cornell" ? (isEnglish() ? "Switch Fall/Spring term; schools and data are available inside" : "切换秋季／春季；弹窗内可进入学校与数据") : (isEnglish() ? "Switch schools or import course data" : "切换学校或导入课程数据");
     document.title = `${isEnglish() ? (currentSchoolProfile.nameEn || currentSchoolProfile.nameZh) : (currentSchoolProfile.shortZh || currentSchoolProfile.nameEn)} LL.M. Course Planner ${APP_VERSION}`;
   }
 
@@ -1780,7 +1987,7 @@
     els.currentSchoolFullName.textContent = currentSchoolProfile.nameEn || currentSchoolProfile.nameZh;
     els.currentSchoolCourseCount.textContent = courses.length;
     els.currentSchoolDataStatus.textContent = currentSchoolId === "cornell"
-      ? (isEnglish() ? `${courses.length} LL.M.-eligible Fall 2026 Law offerings; undergraduate-only offerings are excluded after official roster review.` : `Fall 2026 Law 中 ${courses.length} 门可作为 LL.M. 规划候选；已剔除官方标明仅限本科生的课程。`)
+      ? (isEnglish() ? `${courses.length} term-specific offerings: ${cornellFallCatalog.length} Fall 2026 and ${cornellSpringCatalog.length} Spring 2027. Undergraduate-only, JD-only, and Cornell Tech LL.M.-only Spring offerings are excluded.` : `${courses.length} 条分学期开课记录：Fall 2026 共 ${cornellFallCatalog.length} 门，Spring 2027 共 ${cornellSpringCatalog.length} 门；春季已剔除仅限本科生、仅限 JD 及仅限 Cornell Tech LL.M. 的课程。`)
       : `${isEnglish() ? "Locally imported catalog" : "本地导入课程库"} · ${customSchoolStore[currentSchoolId]?.updatedAt ? `${isEnglish() ? "updated" : "更新于"} ${new Date(customSchoolStore[currentSchoolId].updatedAt).toLocaleString(isEnglish() ? "en-US" : "zh-CN")}` : (isEnglish() ? "available offline" : "离线可用")}`;
     els.currentSchoolCatalogLink.href = currentSchoolProfile.catalogUrl || "#";
     els.schoolPresetGrid.innerHTML = SCHOOL_PRESETS.map(profile => schoolPresetCardHtml(profile)).join("");
@@ -1809,7 +2016,7 @@
   function sourceLabel(profile) {
     if (!isEnglish()) return profile.sourceLabel;
     const labels = {
-      offline:"Verified Fall 2026 dataset", catalog:"Official catalog / file import", "api-available":"Official course interface (convert to JSON)", "api-key":"Official API key required", custom:"Custom API / JSON / CSV"
+      offline:"Verified 2026–27 Fall + Spring dataset", catalog:"Official catalog / file import", "api-available":"Official course interface (convert to JSON)", "api-key":"Official API key required", custom:"Custom API / JSON / CSV"
     };
     return labels[profile.sourceKind] || "Official data source";
   }
@@ -1854,6 +2061,7 @@
     try { localStorage.setItem("llm-course-planner-current-school", id); }
     catch { showToast(isEnglish() ? "The browser blocked local storage; the selected school may not persist after reopening." : "浏览器阻止了本地存储；重新打开后可能无法保留当前学校。", true); }
     currentSchoolProfile = getSchoolProfile(id);
+    if (id !== "cornell") setFilterValues(els.termFilter, []);
     TERM = { ...DEFAULT_TERM, ...(currentSchoolProfile.term || {}) };
     NO_CLASS_DATES = new Set(currentSchoolProfile.noClassDates || []);
     SPECIAL_SCHEDULE_DAYS = { ...(currentSchoolProfile.specialScheduleDays || {}) };
@@ -2574,12 +2782,17 @@
     event.stopPropagation();
     const value = badge.dataset.badgeFilter;
     if (["eligible","ineligible","review","mandatory","core"].includes(value)) {
-      els.barFilter.value = value;
+      const selected = selectedFilterValues(els.barFilter);
+      selected.has(value) ? selected.delete(value) : selected.add(value);
+      setFilterValues(els.barFilter, selected);
       switchView("courses");
       renderCourseList();
     }
     if (["llm-specific","llm-direct"].includes(value)) {
-      els.llmFilter.value = value === "llm-specific" ? "specific" : "direct";
+      const filterValue = value === "llm-specific" ? "specific" : "direct";
+      const selected = selectedFilterValues(els.llmFilter);
+      selected.has(filterValue) ? selected.delete(filterValue) : selected.add(filterValue);
+      setFilterValues(els.llmFilter, selected);
       switchView("courses");
       renderCourseList();
     }
@@ -2670,19 +2883,20 @@
     const end = els.editorEndTime.value || "10:00";
     if (day && timeToMinutes(end) <= timeToMinutes(start)) return showToast(isEnglish() ? "End time must be later than start time." : "结束时间必须晚于开始时间。", true);
     const id = existing?.id || `CUSTOM-${Date.now()}`;
+    const editorTerm = existing ? termProfileForCourse(existing) : (currentSchoolId === "cornell" ? CORNELL_TERM_PROFILES[activePlanningTermCode()] : TERM);
     const location = cleanLocation(els.editorLocation.value);
     const originalMeeting = existing ? getSection(existing, state.selected[existing.id])?.meetings?.[0] : null;
     const scheduleChanged = !existing || day !== (originalMeeting ? parsePattern(originalMeeting.pattern)[0] || "" : "") || start !== (originalMeeting?.start || "09:00") || end !== (originalMeeting?.end || "10:00");
     let sections = existing?.sections || [];
     if (day && scheduleChanged) {
-      sections = [{ id:`${id}-001`, label:isEnglish() ? "Personal schedule" : "个人安排", classNumber:"", startDate:TERM.instructionStart, endDate:TERM.instructionEnd, campusZh:currentSchoolProfile.nameZh, location, locationStatus:location ? "published" : "unpublished", meetings:[{ pattern:day, start, end, startDate:TERM.instructionStart, endDate:TERM.instructionEnd, location, locationZh:location, locationStatus:location ? "published" : "unpublished" }] }];
+      sections = [{ id:`${id}-001`, label:isEnglish() ? "Personal schedule" : "个人安排", classNumber:"", startDate:editorTerm.instructionStart, endDate:editorTerm.instructionEnd, campusZh:currentSchoolProfile.nameZh, location, locationStatus:location ? "published" : "unpublished", meetings:[{ pattern:day, start, end, startDate:editorTerm.instructionStart, endDate:editorTerm.instructionEnd, location, locationZh:location, locationStatus:location ? "published" : "unpublished" }] }];
     } else if (day && location && sections.length) {
       sections = sections.map((section, index) => index ? section : ({ ...section, location, locationStatus:"published", meetings:(section.meetings || []).map(meeting => ({ ...meeting, location, locationZh:location, locationStatus:"published" })) }));
     } else if (!day) sections = [];
     const next = {
       ...(existing || {}), id, code, catalogNbr:code.replace(/^.*?\s/, ""), titleZh, titleEn:els.editorTitleEn.value.trim() || titleZh,
       descriptionZh:els.editorDescriptionZh.value.trim(), descriptionEn:existing?.descriptionEn || "", credits:Number(els.editorCourseCredits.value || 0), creditText:`${Number(els.editorCourseCredits.value || 0)} Credits`, sections,
-      instructors:existing?.instructors || [isEnglish() ? "Personal" : "个人安排"], gradingZh:existing?.gradingZh || (isEnglish() ? "Not applicable" : "不适用"), grading:existing?.grading || "", session:"Personal", categories:existing?.categories || [isEnglish() ? "Personal" : "个人安排"], eligibility:existing?.eligibility || "open", recommendation:existing?.recommendation || 50, workload:existing?.workload || (isEnglish() ? "Custom" : "自定义"), sourceUrl:existing?.sourceUrl || "", officialDataStatus:existing?.officialDataStatus || "local-custom", locallyEdited:true, schoolId:currentSchoolId
+      instructors:existing?.instructors || [isEnglish() ? "Personal" : "个人安排"], gradingZh:existing?.gradingZh || (isEnglish() ? "Not applicable" : "不适用"), grading:existing?.grading || "", session:existing?.session || (currentSchoolId === "cornell" ? termLabel(activePlanningTermCode()) : "Personal"), term:existing?.term || (currentSchoolId === "cornell" ? activePlanningTermCode() : "CUSTOM"), categories:existing?.categories || [isEnglish() ? "Personal" : "个人安排"], eligibility:existing?.eligibility || "open", recommendation:existing?.recommendation || 50, workload:existing?.workload || (isEnglish() ? "Custom" : "自定义"), sourceUrl:existing?.sourceUrl || "", officialDataStatus:existing?.officialDataStatus || "local-custom", locallyEdited:true, schoolId:currentSchoolId
     };
     if (state.customCourses.some(course => course.id === id)) state.customCourses = state.customCourses.map(course => course.id === id ? next : course);
     else if (existing) state.courseOverrides[id] = next;
@@ -2717,14 +2931,15 @@
       showToast(isEnglish() ? "Choose at least one direction or course preference first." : "请先选择至少一个职业方向或课程偏好。", true);
       return;
     }
-    const candidates = [...courses]
+    const termCourses = planningTermCourses(courses);
+    const candidates = [...termCourses]
       .filter(course => course.eligibility !== "restricted" && (course.sections || []).length)
       .sort((a,b) => careerMatchScore(b) - careerMatchScore(a));
     const picked = {};
     const pickedTitles = new Set();
     let credits = 0;
     for (const code of currentSchoolProfile.autoEnrollCodes || []) {
-      const course = courses.find(item => item.code === code);
+      const course = termCourses.find(item => item.code === code);
       const section = course?.sections?.[0];
       if (course && section) {
         picked[course.id] = section.id;
@@ -2746,7 +2961,11 @@
       credits += Number(course.credits || 0);
       if (titleKey) pickedTitles.add(titleKey);
     }
-    state.selected = picked;
+    const retainedOtherTerms = currentSchoolId === "cornell" ? Object.fromEntries(Object.entries(state.selected).filter(([courseId]) => {
+      const course = courses.find(item => item.id === courseId);
+      return course && courseTermCode(course) !== activePlanningTermCode();
+    })) : {};
+    state.selected = { ...retainedOtherTerms, ...picked };
     saveState(); renderAll(); showToast(isEnglish() ? `Generated a ${creditCount(credits)} plan from the current career directions and preferences.` : `已按当前职业方向与偏好生成 ${credits} 学分方案`);
   }
 
@@ -2785,7 +3004,7 @@
     document.documentElement.lang = isEnglish() ? "en" : "zh-CN";
     if (els.languageToggleBtn) els.languageToggleBtn.textContent = isEnglish() ? "EN / 中文" : "中文 / EN";
     renderCreatorCredit();
-    const translations = new Map([["课程检索","Course Search"],["课程推荐","Recommendations"],["我的课表","My Schedule"],["学校与数据","Schools & Data"],["新生 FAQ","New Student FAQ"],["学分进度","Credit Progress"],["重置","Reset"],["标签说明","Label Guide"],["查看全部标签含义","View all label definitions"],["设置偏好并生成推荐","Set preferences"],["作者公告","Author Updates"],["课程库","Course Catalog"],["已选课程","Selected Courses"],["展开","Open"],["随机组合两个方向","Randomize two directions"],["职业方向（可多选）","Career directions (multi-select)"],["课程偏好","Course preferences"],["当前组合","Current profile"],["清空","Clear"],["生成推荐方案","Generate recommendation plan"],["按周查看课表","Weekly Schedule"],["清空课表","Clear schedule"],["打印课表","Print schedule"],["新建课程／安排","New course / commitment"],["新建课程","New course"],["跳转到日期","Go to date"],["回到正式课程第1周","Go to first instructional week"],["常见 T14 法学院预设","Common T14 law-school presets"],["课程数据导入","Course data import"],["复制提示词","Copy prompt"],["导入预览","Import preview"],["保存到本地并切换","Save locally and switch"],["读取并预览","Read and preview"],["全部状态","All statuses"],["推荐度优先","Recommendation score"],["课程代号","Course code"],["评分方式","Grading"],["学分","Credits"],["上课日","Meeting day"],["课程方向","Course focus"],["全部课程方向","All course focuses"],["上课形式","Course format"],["全部上课形式","All course formats"],["讲授课","Lecture"],["研讨课","Seminar"],["诊所","Clinic"],["实践课","Practicum"],["讨论课","Discussion"],["独立研究","Independent study"],["LLM 专设","LL.M. specific"],["LLM 直选课","LL.M. direct enrollment"],["快捷标签","Quick tags"],["公司／交易／金融","Corporate / transactions / finance"],["诉讼／争议解决","Litigation / dispute resolution"],["科技／数据／知识产权","Technology / data / IP"],["国际／跨境","International / cross-border"],["公法／公共利益","Public law / public interest"],["研究／理论","Research / theory"],["刑事法","Criminal law"],["实务技能","Practice skills"],["全部学分","All credits"],["0–1 学分","0–1 credits"],["1 学分及以下","1 credit or less"],["2 学分","2 credits"],["3 学分","3 credits"],["4 学分","4 credits"],["5 学分及以上","5+ credits"],["全部上课日","All meeting days"],["周一","Mon"],["周二","Tue"],["周三","Wed"],["周四","Thu"],["周五","Fri"],["学分筛选","Credit filter"],["上课日筛选","Meeting-day filter"],["排序","Sort"],["学分从低到高","Credits low to high"],["学分从高到低","Credits high to low"],["通用 LL.M. 职业方向推荐","General LL.M. career guidance"],["先选择方向，再生成组合","Choose directions, then generate a plan"],["选择一个或多个职业方向，再叠加“低负担、NY Bar、写作或实务”等偏好，系统会即时重排更适合你的课程组合。","Choose one or more career directions, then add preferences such as lower workload, NY Bar, writing, or practice skills. The planner will immediately re-rank suitable course combinations."],["中国 General LL.M. 新生指南","Guide for new Chinese General LL.M. students"],["先理解规则，再选择课程","Understand the rules before choosing courses"],["这里用中文解释评分方式、NY Bar 学分、选课流程、课程负担与常见标签。每项规则都附 Cornell 官方来源入口。","This guide explains grading, NY Bar credits, enrollment, workload, and common labels. Each rule includes an official Cornell source."],["联系作者","Contact author"],["支持作者","Support author"],["官方课程说明、NY Bar 标识与拖拽排课","Official course descriptions, NY Bar labels and drag-to-schedule"],["每门课都会显示一个 NY Bar 计分状态和一个选课权限状态。","Each course displays an NY Bar-credit status and an enrollment status."],["拖动课程卡到这里，展开后按周查看","Drag course cards here; open My Schedule for the weekly view"],["多校课程数据中心","Multi-school course data"],["康奈尔默认，其他法学院按官方数据源导入","Cornell is built in; import other schools from official data"],["康奈尔课程已经离线内置。使用其他法学院时，可按照导入向导连接学校提供的数据接口，或上传整理好的 JSON／CSV 课程文件。","Cornell data is built in for offline use. For another law school, follow the import guide to use its official data interface or upload a prepared JSON/CSV course file."],["打开当前学校官方课程页面 ↗","Open current school's official course page ↗"],["当前学校","Current school"],["门课程","courses"],["“T14”是习惯称呼，不同年份排名可能变化；这里作为常见顶尖法学院入口集合。","T14 is a customary label and rankings can change; these are common entry points for leading U.S. law schools."],["本页面由袁敬轩使用","Designed by Yuan Jingxuan with"],["设计","design"],["NYLE / Bar 考试科目","NYLE / Bar tested subjects"],["全部方式","All grading"],["评分方式筛选","Grading filter"],["NY Bar 筛选分为四个互斥状态；具体的法定类别学分在进度面板单列显示。","NY Bar filters use four mutually exclusive statuses; statutory category credits are shown separately in Credit Progress."],["自动保存在当前浏览器","Saved automatically in this browser"],["刷新页面不会清空课表；换设备、换浏览器、使用无痕窗口或清除网站数据后无法自动恢复。不同访问者不会共用课表；共用同一浏览器用户资料时则会看到同一份本地数据。","Refreshing will not erase the schedule. It will not automatically follow you to another device, browser, private window, or domain, and clearing site data removes it. Visitors do not share a plan unless they use the same browser profile."],["正在确认本地保存状态…","Checking local save status…"],["从日历导入","Import from calendar"],["导入日历","Export to calendar"]]);
+    const translations = new Map([["课程检索","Course Search"],["课程推荐","Recommendations"],["我的课表","My Schedule"],["学校与数据","Schools & Data"],["新生 FAQ","New Student FAQ"],["学分进度","Credit Progress"],["重置","Reset"],["标签说明","Label Guide"],["查看全部标签含义","View all label definitions"],["设置偏好并生成推荐","Set preferences"],["作者公告","Author Updates"],["课程库","Course Catalog"],["已选课程","Selected Courses"],["展开","Open"],["随机组合两个方向","Randomize two directions"],["职业方向（可多选）","Career directions (multi-select)"],["课程偏好","Course preferences"],["当前组合","Current profile"],["清空","Clear"],["生成推荐方案","Generate recommendation plan"],["按周查看课表","Weekly Schedule"],["清空课表","Clear schedule"],["打印课表","Print schedule"],["新建课程／安排","New course / commitment"],["新建课程","New course"],["跳转到日期","Go to date"],["回到正式课程第1周","Go to first instructional week"],["跳到 Fall 2026 开学周","Go to Fall 2026 opening week"],["跳到 Spring 2027 开学周","Go to Spring 2027 opening week"],["学期","Term"],["常见 T14 法学院预设","Common T14 law-school presets"],["课程数据导入","Course data import"],["复制提示词","Copy prompt"],["导入预览","Import preview"],["保存到本地并切换","Save locally and switch"],["读取并预览","Read and preview"],["全部状态","All statuses"],["推荐度优先","Recommendation score"],["课程代号","Course code"],["评分方式","Grading"],["学分","Credits"],["上课日","Meeting day"],["课程方向","Course focus"],["全部课程方向","All course focuses"],["上课形式","Course format"],["全部上课形式","All course formats"],["讲授课","Lecture"],["研讨课","Seminar"],["诊所","Clinic"],["实践课","Practicum"],["讨论课","Discussion"],["独立研究","Independent study"],["LLM 专设","LL.M. specific"],["LLM 直选课","LL.M. direct enrollment"],["快捷标签","Quick tags"],["公司／交易／金融","Corporate / transactions / finance"],["诉讼／争议解决","Litigation / dispute resolution"],["科技／数据／知识产权","Technology / data / IP"],["国际／跨境","International / cross-border"],["公法／公共利益","Public law / public interest"],["研究／理论","Research / theory"],["刑事法","Criminal law"],["实务技能","Practice skills"],["全部学分","All credits"],["0–1 学分","0–1 credits"],["1 学分及以下","1 credit or less"],["2 学分","2 credits"],["3 学分","3 credits"],["4 学分","4 credits"],["5 学分及以上","5+ credits"],["全部上课日","All meeting days"],["周一","Mon"],["周二","Tue"],["周三","Wed"],["周四","Thu"],["周五","Fri"],["学分筛选","Credit filter"],["上课日筛选","Meeting-day filter"],["排序","Sort"],["学分从低到高","Credits low to high"],["学分从高到低","Credits high to low"],["通用 LL.M. 职业方向推荐","General LL.M. career guidance"],["先选择方向，再生成组合","Choose directions, then generate a plan"],["选择一个或多个职业方向，再叠加“低负担、NY Bar、写作或实务”等偏好，系统会即时重排更适合你的课程组合。","Choose one or more career directions, then add preferences such as lower workload, NY Bar, writing, or practice skills. The planner will immediately re-rank suitable course combinations."],["中国 General LL.M. 新生指南","Guide for new Chinese General LL.M. students"],["先理解规则，再选择课程","Understand the rules before choosing courses"],["这里用中文解释评分方式、NY Bar 学分、选课流程、课程负担与常见标签。每项规则都附 Cornell 官方来源入口。","This guide explains grading, NY Bar credits, enrollment, workload, and common labels. Each rule includes an official Cornell source."],["联系作者","Contact author"],["支持作者","Support author"],["官方课程说明、NY Bar 标识与拖拽排课","Official course descriptions, NY Bar labels and drag-to-schedule"],["每门课都会显示一个 NY Bar 计分状态和一个选课权限状态。","Each course displays an NY Bar-credit status and an enrollment status."],["拖动课程卡到这里，展开后按周查看","Drag course cards here; open My Schedule for the weekly view"],["多校课程数据中心","Multi-school course data"],["康奈尔默认，其他法学院按官方数据源导入","Cornell is built in; import other schools from official data"],["康奈尔课程已经离线内置。使用其他法学院时，可按照导入向导连接学校提供的数据接口，或上传整理好的 JSON／CSV 课程文件。","Cornell data is built in for offline use. For another law school, follow the import guide to use its official data interface or upload a prepared JSON/CSV course file."],["打开当前学校官方课程页面 ↗","Open current school's official course page ↗"],["当前学校","Current school"],["门课程","courses"],["“T14”是习惯称呼，不同年份排名可能变化；这里作为常见顶尖法学院入口集合。","T14 is a customary label and rankings can change; these are common entry points for leading U.S. law schools."],["本页面由袁敬轩使用","Designed by Yuan Jingxuan with"],["设计","design"],["NYLE / Bar 考试科目","NYLE / Bar tested subjects"],["全部方式","All grading"],["评分方式筛选","Grading filter"],["NY Bar 筛选分为四个互斥状态；具体的法定类别学分在进度面板单列显示。","NY Bar filters use four mutually exclusive statuses; statutory category credits are shown separately in Credit Progress."],["自动保存在当前浏览器","Saved automatically in this browser"],["刷新页面不会清空课表；换设备、换浏览器、使用无痕窗口或清除网站数据后无法自动恢复。不同访问者不会共用课表；共用同一浏览器用户资料时则会看到同一份本地数据。","Refreshing will not erase the schedule. It will not automatically follow you to another device, browser, private window, or domain, and clearing site data removes it. Visitors do not share a plan unless they use the same browser profile."],["正在确认本地保存状态…","Checking local save status…"],["从日历导入","Import from calendar"],["导入日历","Export to calendar"]]);
     [["不计 NY Bar","Does not count toward NY Bar"],["不计入 NY Bar","Does not count toward NY Bar"],["资格待确认","School confirmation required"],["仅 S/U","S/U only"],["仅字母等级","Letter grades only"],["推荐度","Recommendation"],["学分","Credits"],["教师","Instructor"],["每周课堂时间","Weekly class time"],["作业／持续性任务","Assignments / continuous work"],["最终考核方式","Final assessment method"],["全部最终考核方式","All final assessment methods"],["期末考试","Final examination"],["期末书面作业／论文","Final written work/paper"],["期末项目","Final project"],["期末展示","Final presentation"],["其他明确的期末要求","Other stated final requirement"],["官方说明未载明最终考核方式","Final assessment method not stated"],["NY Bar 计分","NY Bar credit"],["限制与先修","Enrollment and prerequisites"],["官方页面","Official page"],["班次、时间与地点","Sections, times and locations"],["如何补充上课地点","How to add a location"],["授课地点","Teaching location"],["粘贴／修改具体地点","Paste or edit location"],["按所选班次加入课表","Add selected section"],["从课表移除","Remove from schedule"],["时间未公布或不进入普通周课表","Time not published or not shown in the weekly grid"],["本周没有上课","No meeting this week"],["无课","No class"],["全天／集中课程","Intensive sessions"],["上一步","Previous week"],["下一周 →","Next week"],["本周无时间冲突","No conflicts this week"],["课程","Courses"],["学校中文名","School name (Chinese)"],["学校英文名","School name (English)"],["学期名称","Term"],["开课日期","Instruction start"],["结课日期","Instruction end"],["官方课程页面","Official course page"],["数据源类型","Data source"],["API 地址","API URL"],["请求头（JSON，可选）","Request headers (JSON, optional)"],["字段映射（JSON，可选）","Field mapping (JSON, optional)"],["选择文件","Choose file"],["粘贴标准 JSON","Paste standard JSON"],["下载本校操作清单","Download school checklist"],["下载 JSON/CSV 模板","Download JSON/CSV templates"],["上传智能助手返回的压缩包（推荐）","Upload AI return package (recommended)"],["上传智能助手生成的 JSON","Upload AI-generated JSON"],["上传标准 CSV","Upload standard CSV"],["学校官方 JSON API","Official school JSON API"],["智能助手导入提示词","AI import prompt"],["导入结果与预览","Import result and preview"],["第一次使用：笨拙但可靠的五步导入法","First time: five reliable import steps"]].forEach(([zh,en]) => translations.set(zh,en));
     [["NY Bar 课堂学分","NY Bar classroom credit"],["需院系确认","School confirmation required"],["NYLE / Bar 考试科目","NYLE / Bar tested subjects"],["LLM 直选课","LL.M. direct enrollment"],["需院系同意","Department consent required"],["新建安排","New commitment"],["课程负担与考核","Assessment and scheduled load"],["官方课程说明","Official course description"],["中文译文","Chinese translation"],["最终考核","Final assessment"],["下方周课表与此处课程一一对应。请从“课程检索”页直接拖入或加入课程；此处用于核对和移除。","Each card corresponds to the weekly schedule below. Add or drag courses from Course Search; use this area to compare and remove them."],["暂未选择课程。请在“课程检索”页加入或直接拖入课程；选择后会在这里与下方周课表对应显示。","No course is selected yet. Add or drag courses from Course Search; selected courses will appear here alongside the weekly schedule."],["移除","Remove"],["LLM","LL.M."]].forEach(([zh,en]) => translations.set(zh,en));
     [["作者公告","Author Updates"],["从日历导入","Import from calendar"],["导入日历","Export to calendar"],["清除已导入日程","Clear imported events"]].forEach(([zh,en]) => translations.set(zh,en));
@@ -2818,6 +3037,8 @@
       }
     });
     renderAuthorAnnouncement();
+    renderTermSwitchDialog();
+    refreshMultiSelectControls();
     if (pendingCalendarExportEvents.length) renderCalendarExportDialog();
     updateScheduleStorageStatus();
   }
@@ -2995,13 +3216,13 @@
   function renderLocalDataStatus() {
     if (!els.localDataStatus) return;
     if (currentSchoolId === "cornell") {
-      const scheduled = Number(cornellMeta.scheduledMetadataCount || courses.filter(c => c.sections?.length).length);
-      const snapshot = cornellMeta.snapshotDate || "2026-07-16";
+      const scheduled = courses.reduce((sum, course) => sum + Number((course.sections || []).length), 0);
+      const snapshot = cornellSpringMeta.sourceCheckedAt?.slice(0, 10) || cornellMeta.snapshotDate || "2026-08-26";
       const roomCount = Object.values(state.roomSyncLocations || {}).filter(Boolean).length;
       const roomStatus = roomCount ? (isEnglish() ? ` · ${roomCount} saved section locations` : ` · 已记录 ${roomCount} 个班次教室`) : "";
       els.localDataStatus.textContent = isEnglish()
-        ? `Cornell offline course dataset: ${courses.length} Fall 2026 official offerings · ${scheduled} schedulable sections published · snapshot ${snapshot}${roomStatus} · assignments and final assessments reflect only explicit official descriptions`
-        : `康奈尔离线课程库：${courses.length} 门 · 全部为 Fall 2026 官方实际开课课程 · ${scheduled} 门已公布可排课班次 · 数据日期 ${snapshot}${roomStatus} · 作业与期末信息仅提取官方课程说明中的明示内容`;
+        ? `Cornell offline course dataset: ${cornellFallCatalog.length} Fall 2026 + ${cornellSpringCatalog.length} Spring 2027 offerings · ${scheduled} sections · snapshot ${snapshot}${roomStatus} · assignments and final assessments reflect only explicit official descriptions`
+        : `康奈尔离线课程库：Fall 2026 共 ${cornellFallCatalog.length} 门 + Spring 2027 共 ${cornellSpringCatalog.length} 门 · ${scheduled} 个班次 · 数据日期 ${snapshot}${roomStatus} · 作业与期末信息仅提取官方课程说明中的明示内容`;
       return;
     }
     const updatedAt = customSchoolStore[currentSchoolId]?.updatedAt;

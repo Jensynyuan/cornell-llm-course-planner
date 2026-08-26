@@ -10,7 +10,7 @@ const read = file => fs.readFileSync(path.join(root, file), "utf8");
 const fail = message => { throw new Error(`v5.25 release check failed: ${message}`); };
 const index = read("index.html"), app = read("app.js"), calendar = read("calendar-integration.js"), styles = read("styles.css");
 
-if (!index.includes("LL.M. Course Planner v5.25")) fail("v5.25 page version marker is missing");
+if (!/LL\.M\. Course Planner v5\.(?:25|30)/.test(index)) fail("v5.25-or-later page version marker is missing");
 if (!index.includes('<html lang="en">')) fail("new visitors must start with English document metadata");
 if (!app.includes('safeLocalStorageGet("llm-course-planner-ui-language") === "zh" ? "zh" : "en"')) fail("English must be the default unless a saved Chinese choice exists");
 if (!app.includes("toggleLanguage") || !index.includes('id="languageToggleBtn"')) fail("language switching must remain available");
