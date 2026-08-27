@@ -1,6 +1,12 @@
-# LL.M. Course Planner v5.33
+# LL.M. Course Planner v5.34
 
 本机离线课程规划工具，默认以英文界面打开，提供 Cornell Fall 2026 的 136 门课程与 Spring 2027 的 127 门课程，并保留中英文一键切换；其他法学院可按“官方材料 → AI 整理 → ZIP 导入”的方式扩展。
+
+## v5.34 重点
+
+- 依据 Cornell Law [2026–27 General LL.M. Student Handbook](https://publications.lawschool.cornell.edu/student-handbook/academic-degree-requirements/llm/) 将每学期注册范围由旧版 10–15 学分更正为 10–17 学分；Fall 总注册 16 学分现在正确显示为范围内。
+- IALS（LAW 6091）继续计入 Fall 总注册学分，但仍从 General LL.M. 学位要求的 20 个其他法学分中排除；两种计算口径在界面中明确分开。
+- 界面同时提示来源冲突：当前学年专门 Handbook 明确为 10–17，Registrar 通用 FAQ 仍写 10–15；如 Student Center 实际阻止 16 或 17 学分注册，应向 Registrar／Dean of Students 确认操作口径。
 
 ## v5.33 重点
 
@@ -11,7 +17,7 @@
 ## v5.32 重点
 
 - 修复学期筛选误作用于个人进度的问题：Fall 与 Spring 已选课程始终属于同一份 2026–27 学年记录，NY Bar 24 学分及四项分类统一累计；课程库切到 Spring 不再让 Fall 进度显示为 0。
-- Cornell LL.M. 每学期 10–15 学分要求分别显示 Fall 2026 与 Spring 2027 两条进度，不把两个学期相加后套用一次门槛。
+- Cornell LL.M. 每学期注册要求分别显示 Fall 2026 与 Spring 2027 两条进度，不把两个学期相加后套用一次门槛；该版本当时仍沿用了旧的 10–15 上限，已由 v5.34 按当前学年 Handbook 更正为 10–17。
 - 按 Cornell Law 官方 JD／Ithaca LL.M. [2026–27 Academic Calendar](https://community.lawschool.cornell.edu/academics/2026-27-academic-calendar/) 校正 Spring 2027 日期：1 月 19 日开课、4 月 28 日结束授课、5 月 14 日考试结束；课表可见显示 1 月 18 日 MLK Holiday、2 月 15–16 日 February Break、3 月 29 日至 4 月 2 日 Spring Break，并在 4 月 28 日按周一课表运行。
 - 修复已选课程卡内“学分当前计入／Credits allocated to”标签的固定高度与溢出问题；中英文长标签均完整包含在课程卡中。
 - 发布硬门新增：先选 Fall LAW 6641，再切换 Spring，年度 NY Bar 进度、Fall 注册学分、已选课程与本地记录必须全部保持；假期名称、4 月 28 日特殊课表及标签 DOM 边界必须通过浏览器检查。

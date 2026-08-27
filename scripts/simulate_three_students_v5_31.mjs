@@ -65,13 +65,13 @@ function buildPlan({ name, catalog, seed, dayChoices = [], barFirst = false }) {
   for (const course of candidates) {
     const section = firstUsableSection(course);
     const value = Number(course.credits || 0);
-    if (credits + value > 15) continue;
+    if (credits + value > 17) continue;
     if (picked.some(item => sectionsConflict(item.section, section))) continue;
     picked.push({ course, section });
     credits += value;
     if (credits >= 12) break;
   }
-  if (credits < 10 || credits > 15) fail(`${name} has ${credits} credits`);
+  if (credits < 10 || credits > 17) fail(`${name} has ${credits} credits`);
   if (new Set(picked.map(item => item.course.id)).size !== picked.length) fail(`${name} contains a duplicate offering ID`);
   if (picked.some(item => excluded.has(item.course.code))) fail(`${name} contains an excluded course`);
   for (let i = 0; i < picked.length; i++) for (let j = i + 1; j < picked.length; j++) if (sectionsConflict(picked[i].section, picked[j].section)) fail(`${name} has a time conflict`);

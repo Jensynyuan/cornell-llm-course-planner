@@ -20,11 +20,11 @@ const eligibilitySandbox = { window:{} };
 vm.runInNewContext(read("nybar-eligibility.js"), eligibilitySandbox, { filename:"nybar-eligibility.js" });
 const eligibility = eligibilitySandbox.window.NY_BAR_ELIGIBILITY;
 
-assert.match(app, /const APP_VERSION = "v5\.33"/);
-assert.match(app, /const CURRENT_CORNELL_DATASET_VERSION = "v5\.32"/, "Code-only v5.33 must not invalidate the verified v5.32 dataset snapshot.");
+assert.match(app, /const APP_VERSION = "v5\.(?:33|34)"/);
+assert.match(app, /const CURRENT_CORNELL_DATASET_VERSION = "v5\.32"/, "Code-only releases after v5.32 must not invalidate the verified v5.32 dataset snapshot.");
 assert.match(app, /version:"v5\.33"[\s\S]*?zh:\[[\s\S]*?en:\[/, "v5.33 release note must remain bilingual");
-assert.match(index, /LL\.M\. Course Planner v5\.33/);
-assert.match(index, /<span>v5\.33<\/span>/);
+assert.match(index, /LL\.M\. Course Planner v5\.(?:33|34)/);
+assert.match(index, /<span>v5\.(?:33|34)<\/span>/);
 assert.match(app, /Enrollment to confirm/);
 assert.match(app, /选课资格待确认/);
 assert.ok(eligibility, "Production NY Bar eligibility helper must load in the release test.");

@@ -1,3 +1,23 @@
+# v5.34 发布测试报告
+
+测试日期：2026-08-27
+
+## 本次发布结论
+
+- Cornell Law 2026–27 General LL.M. Student Handbook 明确规定每学期最低 10 学分、最高 17 学分；网站原先沿用旧版 15 学分上限，导致 16 学分被误报为超学分，现已更正为 10–17。
+- 用户列明的 LAW 6745（2）、LAW 6007（3）、LAW 7991（3）、LAW 6131（3）及 LAW 6641（3）合计 14 学分；IALS／LAW 6091（2）计入 Fall 注册总学分，因此 Fall 总数为 16。16 未超过 17，无须因学分总数申请超额注册批准。
+- IALS 仍不计入 General LL.M. 学位要求中另行计算的 20 个其他法学分；“计入学期注册总学分”和“不计入该 20 学分要求”是两个不同口径。
+- Cornell Registrar 通用 FAQ 目前仍显示 10–15 学分，与 2026–27 学年专门 Handbook 存在冲突。页面已明确披露该冲突并以学年专门 Handbook 为当前计算依据；若 Student Center 实际阻止注册 16 学分，用户应向 Registrar／Dean of Students 确认操作口径。
+
+## 回归结果
+
+- `verify_release_v5_34.mjs`：通过。精确验证五门普通课程为 14、IALS 为 2、Fall 总数为 16，并确认 16 不触发 17 学分上限。
+- `verify_ui_v5_31.mjs`：通过。既有双语、筛选、课程归类及持久化 UI 门禁均保持正常。
+- `simulate_three_students_v5_31.mjs`：通过。三个 Fall／Spring 选课组合及课程形式、星期筛选、双语覆盖均无回归。
+- `node --check app.js`：通过。
+
+---
+
 # v5.33 发布测试报告
 
 测试日期：2026-08-26

@@ -11,12 +11,12 @@ const index = read("index.html");
 const styles = read("styles.css");
 const frontendOnly = process.argv.includes("--frontend-only");
 
-assert.match(app, /const APP_VERSION = "v5\.31"/);
-assert.match(app, /const CURRENT_CORNELL_DATASET_VERSION = "v5\.31"/, "a stale v5.30 Cornell import must not override the bundled v5.31 database");
+assert.match(app, /const APP_VERSION = "v5\.34"/, "the UI regression suite must run against the current app release");
+assert.match(app, /const CURRENT_CORNELL_DATASET_VERSION = "v5\.32"/, "a stale Cornell import must not override the current bundled database");
 assert.match(app, /parsed\?\.bundledDatabaseVersion !== CURRENT_CORNELL_DATASET_VERSION[\s\S]{0,160}removeItem\("llm-course-planner-cornell-import"\)/, "stale imported Cornell snapshots must be removed during startup");
 assert.match(app, /version:"v5\.31"[\s\S]*?zh:\[[\s\S]*?en:\[/, "v5.31 release note must be bilingual");
-assert.match(index, /LL\.M\. Course Planner v5\.31/);
-assert.match(index, /<span>v5\.31<\/span>/);
+assert.match(index, /LL\.M\. Course Planner v5\.34/);
+assert.match(index, /<span>v5\.34<\/span>/);
 
 assert.doesNotMatch(app, /<span aria-hidden="true">[⌄∨v]<\/span>/, "multi-select summary must not render its own duplicate arrow");
 assert.match(styles, /\.filter-multiselect\s*>\s*summary::after\s*\{/, "the shared CSS arrow must remain present");
