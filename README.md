@@ -169,3 +169,10 @@ Updated both languages from Cornell Law Course Catalog to 133 current Spring cou
 ## v5.36 — Schedule text layout
 
 Schedule cards now use non-shrinking text rows with ellipsis, preserving the time-grid geometry and all personal selections. Short classes use two rows; longer classes use three. Full details remain available on hover and click.
+
+
+## v5.37 — Adaptive complete schedule cards
+
+Course names and metadata wrap without ellipses or reduced fonts. A shared hourly scale keeps the timeline aligned and is capped at 120 px/hour. Small screens or dense content switch automatically to full day-by-day cards, preserving all details. Timeline drag placement reads the same scale; list drops use official meeting times. Week navigation is grouped, selected-course management collapses, and the interface uses restrained Cornell colors and clearer spacing. Original selection and section identities remain unchanged.
+
+Drag previews distinguish official meeting patterns from explicitly labelled personal placements. All open overlays share a scroll lock; day lists respond to their own container width, and print uses complete day-by-day cards.

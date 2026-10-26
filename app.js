@@ -2,6 +2,10 @@
   const DAY_MAP = { M: "周一", T: "周二", W: "周三", R: "周四", F: "周五" };
   const DAY_MAP_EN = { M: "Mon", T: "Tue", W: "Wed", R: "Thu", F: "Fri" };
   const DAY_KEYS = ["M", "T", "W", "R", "F"];
+  const SCHEDULE_START_HOUR = 8, SCHEDULE_END_HOUR = 21;
+  const SCHEDULE_BASE_HOUR_HEIGHT = 44, SCHEDULE_MAX_HOUR_HEIGHT = 120;
+  // Below this container width five timeline columns cannot hold readable cards.
+  const SCHEDULE_MIN_TIMELINE_WIDTH = 600;
   const DEFAULT_TERM = { orientationStart: "2026-08-06", instructionStart: "2026-08-24", instructionEnd: "2026-12-03", examEnd: "2026-12-18" };
   const CORNELL_TERM_PROFILES = {
     FA26: {
@@ -23,7 +27,9 @@
   const NY_BAR_ALLOCATION = window.NY_BAR_ALLOCATION;
   const NY_BAR_ELIGIBILITY = window.NY_BAR_ELIGIBILITY;
   const CALENDAR = window.LLM_CALENDAR;
-  const APP_VERSION = "v5.36";
+  const APP_VERSION = "v5.37";
+  let scheduleContentObserver = null;
+  let scheduleFitFrame = 0;
   const CORNELL_LLM_REGISTRATION_POLICY = Object.freeze({
     minimum:10,
     maximum:17,
@@ -84,6 +90,7 @@
     { id:"independent", zh:"独立研究", en:"Independent study", patterns:[/\bind\b/i,/independent/i,/directed (?:study|work)/i,/独立研究/u] }
   ];
   const RELEASE_NOTES = [
+    { version:"v5.37", zh:["课表完整显示课程名并自动换行；时间轴按内容适配，小屏及密集日程自动按日完整显示；优化导航、配色及操作层次。","拖入周课表时显示课程的官方时间框与实际落点：放进官方时间框即按全部官方上课日加入，放在其他位置才作为仅限当天的个人安排，并在课程卡上标明。"], en:["Schedule cards wrap complete names and details. The adaptive timeline switches to day-by-day cards on small screens or dense weeks, with clearer navigation and visual hierarchy.","Dragging into the weekly grid now outlines the course's official times and previews the exact landing slot. Dropping inside an official outline adds every official meeting; dropping elsewhere creates a one-day personal placement, which is labelled on the card."] },
     { version:"v5.36", zh:["修复周课表卡片文字被压缩、截断的问题：课程号与名称、时间与教师、地点按完整文字行显示；短课时采用两行，长文字可悬停或点击查看。"], en:["Fixed compressed and clipped text in weekly schedule cards. Course identity, time and instructor, and location use complete text rows; shorter classes use two rows, with full details on hover or click."] },
     { version:"v5.35", zh:["按2026年10月26日法学院官方目录更新春季中英文课程库：133门课程、153个班次，时间、教师、教室和学分同步更新。","保留原有秋春已选课程及班次；最新清单未列出的原选课会显示待确认提示，不自动换班。","按实际日期安排非每周课程；官方日期或编号有冲突的班次在确认前不自动排课。"], en:["Refreshed both Spring catalogs from Cornell Law's October 26, 2026 catalog: 133 courses and 153 sections, including current times, instructors, rooms and credits.","Preserved existing Fall and Spring selections and section IDs. Selections absent from the current listing are retained with a confirmation notice, without automatic section substitution.","Scheduled irregular classes on their published dates; conflicting official dates or identifiers require confirmation before automatic scheduling."] },
     { version:"v5.34", zh:["按 Cornell Law 2026–27 General LL.M. Student Handbook 将每学期注册范围由旧版 10–15 更正为 10–17 学分；16 学分不再被误报为超学分。","IALS（LAW 6091）仍按 Fall 注册课程计入学期总注册学分，但不计入 General LL.M. 学位要求的 20 个其他法学分。","新增政策来源与冲突提示：当前学年专门 Handbook 明确为 10–17；Registrar 通用 FAQ 仍显示 10–15，如 Student Center 实际拦截应向 Registrar／Dean of Students 确认。"], en:["Corrected the per-semester General LL.M. registration range from the outdated 10–15 rule to 10–17 credits under Cornell Law's 2026–27 Student Handbook; a 16-credit semester is no longer misreported as an overload.","IALS (LAW 6091) remains included in Fall registered credits, while remaining excluded from the separate 20-credit General LL.M. degree-course requirement.","Added policy provenance and a source-conflict notice: the year-specific Handbook states 10–17, while the generic Registrar FAQ still says 10–15; confirm with the Registrar or Dean of Students if Student Center applies a lower operational cap."] },
@@ -234,7 +241,7 @@
     {
       category: "数据",
       question: "网页刷新后课表会消失吗？其他用户能看到我的课表吗？",
-      answer: "不会。课表会自动保存在当前浏览器对应网站域名的本地存储中，正常刷新或关闭后重新打开仍会保留；其他设备或浏览器上的访问者不能读取。若多人共用同一浏览器用户资料，他们也会看到这份本地数据。换设备或浏览器时，可在“我的课表”使用“导入日历”下载 .ics，再导入 Google、Apple 或 Outlook；也可用“从日历导入”读取个人忙碌时段。日历文件只在本机处理。",
+      answer: "不会。课表会自动保存在当前浏览器对应网站域名的本地存储中，正常刷新或关闭后重新打开仍会保留；其他设备或浏览器上的访问者不能读取。若多人共用同一浏览器用户资料，他们也会看到这份本地数据。换设备或浏览器时，可在“我的课表”使用“导出日历”下载 .ics，再导入 Google、Apple 或 Outlook；也可用“从日历导入”读取个人忙碌时段。日历文件只在本机处理。",
       sourceLabel: "本项目浏览器本地保存说明",
       sourceUrl: "./CLOUDFLARE_DEPLOY.md"
     }
@@ -514,6 +521,25 @@
     ensureIalsSelected();
     initializeMultiSelectControls();
     bindEvents();
+    scheduleContentObserver = new ResizeObserver(queueScheduleFit);
+    // Refit after a sidebar, window, zoom or minimum-font-size change. Ignore
+    // height-only notifications so fitting the time axis cannot create a loop.
+    let scheduleWidth = 0;
+    new ResizeObserver(entries => {
+      const width = entries[0].contentRect.width;
+      if (Math.abs(width - scheduleWidth) < 0.5) return;
+      scheduleWidth = width;
+      queueScheduleFit();
+    }).observe(els.fullSchedule);
+    // Every dialog toggles its overlay's hidden attribute. Deriving the page
+    // scroll lock from those attributes means closing one dialog can neither
+    // unlock the page under another open dialog nor leave the wheel locked.
+    const overlayObserver = new MutationObserver(syncBodyScrollLock);
+    document.querySelectorAll(".overlay").forEach(overlay => overlayObserver.observe(overlay, { attributes:true, attributeFilter:["hidden"] }));
+    syncBodyScrollLock();
+    document.fonts?.ready.then(fitScheduleContent);
+    window.addEventListener("beforeprint", fitScheduleContent);
+    window.addEventListener("afterprint", fitScheduleContent);
     renderSchoolIdentity();
     renderLocalDataStatus();
     renderAll();
@@ -547,7 +573,7 @@
       updateScheduleStorageStatus();
     } catch (error) {
       updateScheduleStorageStatus(true);
-      showToast(isEnglish() ? "This browser could not save the plan. Export the schedule to your calendar and check site-storage settings." : "浏览器未能保存课表，请先导入日历并检查网站存储设置。", true);
+      showToast(isEnglish() ? "This browser could not save the plan. Export the schedule to your calendar and check site-storage settings." : "浏览器未能保存课表，请先导出课表并检查网站存储设置。", true);
       console.error("Unable to save planner state", error);
     }
   }
@@ -775,6 +801,7 @@
     }
     if (view === "schools") renderSchoolManager();
     if (view === "faq") renderFaq();
+    if (priorView !== view) window.scrollTo({ top:0, behavior:"auto" });
   }
 
   function getFilteredCourses() {
@@ -1032,14 +1059,15 @@
       return false;
     }
     state.selected[course.id] = sectionId;
-    // A new official section must control the schedule again. A prior manual
-    // drag placement belongs to the old section and would otherwise mask it.
-    if (origin === "switch") delete state.manualPlacements?.[course.id];
+    // Adding or switching starts from the official meeting pattern. A manual
+    // placement left from an earlier selection of this course would otherwise
+    // resurface and hide the official days; a new drop placement is set below.
+    delete state.manualPlacements?.[course.id];
     saveState();
     renderAll();
     if (placement) setManualPlacement(course.id, placement, true);
     else if (origin === "switch") showToast(isEnglish() ? `${course.code} section updated in your schedule.` : `${course.code} 已切换班次，课表已更新。`);
-    else showToast(origin === "drag" ? `已按官方时间排入 ${course.code}` : `已加入 ${course.code}`);
+    else showToast(origin === "drag" ? (isEnglish() ? `${course.code} added at its official times.` : `已按官方时间排入 ${course.code}`) : (isEnglish() ? `${course.code} added.` : `已加入 ${course.code}`));
     return true;
   }
 
@@ -1060,6 +1088,9 @@
     element.addEventListener("dragstart", event => {
       const id = element.dataset.courseId;
       if (!id) return event.preventDefault();
+      // Native HTML drag takes over the gesture. A later pointercancel is not
+      // a drop and must not display a failure toast or handle the course twice.
+      cleanupPointerDrag();
       activeDraggedCourseId = id;
       element.classList.add("native-drag-active");
       event.dataTransfer?.setData("text/course-id", id);
@@ -1108,7 +1139,7 @@
       drag.ghost = document.createElement("div");
       drag.ghost.className = "course-drag-ghost";
       const course = courses.find(item => item.id === drag.courseId);
-      drag.ghost.innerHTML = `<strong>${esc(course?.code || "课程")}</strong><span>${esc(course?.titleZh || "拖入课表")}</span>`;
+      drag.ghost.innerHTML = `<strong>${esc(course?.code || (isEnglish() ? "Course" : "课程"))}</strong><span>${esc(course ? courseTitle(course) : (isEnglish() ? "Drag to schedule" : "拖入课表"))}</span><em class="course-drag-ghost-slot" hidden></em>`;
       document.body.appendChild(drag.ghost);
       drag.element?.classList.add("is-dragging");
       document.body.classList.add("is-course-dragging");
@@ -1121,6 +1152,7 @@
   function finishPointerDrag(event) {
     const drag = pointerDragState;
     if (!drag || !dragEventMatches(event)) return;
+    if (event.type === "pointercancel") { cleanupPointerDrag(); return; }
     const wasDragging = drag.dragging;
     // Keep the last verified target as well. A few desktop webviews report an
     // empty elementFromPoint during pointerup after a horizontal tray scroll.
@@ -1143,12 +1175,11 @@
     const scheduleNav = target?.closest?.('[data-view="schedule"]');
     const scheduleArea = target?.closest?.("#scheduleDropShell, #miniSchedule, #view-schedule");
     if (scheduleNav || scheduleArea) {
-      const placement = point ? placementFromPoint(target, point.x, point.y) : null;
-      beginAddCourse(courseId, null, "drag", placement);
+      applyScheduleDrop(courseId, point ? scheduleDropIntent(target, point.x, point.y, courseId) : null);
       if (scheduleNav) switchView("schedule");
       return true;
     }
-    showToast("请把课程放到“我的课表”、右侧已选课程区或周课表中");
+    showToast(isEnglish() ? "Drop the course on My Schedule, Selected Courses, or the weekly calendar." : "请把课程放到“我的课表”、右侧已选课程区或周课表中");
     return false;
   }
 
@@ -1169,6 +1200,12 @@
     els.scheduleNavDropTarget?.classList.toggle("is-drop-target", Boolean(scheduleNav));
     if (scheduleNav && currentView !== "schedule") switchView("schedule");
     document.querySelectorAll(".schedule-day-column").forEach(column => column.classList.toggle("is-drop-target", Boolean(schedule && target.closest?.(".schedule-day-column") === column)));
+    const intent = schedule ? renderScheduleDropPreview(target, x, y, pointerDragState?.courseId) : (clearScheduleDropPreview(), null);
+    const slotLabel = pointerDragState?.ghost?.querySelector(".course-drag-ghost-slot");
+    if (slotLabel) {
+      slotLabel.hidden = !intent;
+      slotLabel.textContent = intent ? scheduleDropIntentLabel(intent, pointerDragState.courseId) : "";
+    }
   }
 
   function clearAllDropHighlights() {
@@ -1176,6 +1213,7 @@
     els.miniSchedule?.classList.remove("is-over");
     els.scheduleNavDropTarget?.classList.remove("is-drop-target");
     document.querySelectorAll(".schedule-day-column").forEach(column => column.classList.remove("is-drop-target"));
+    clearScheduleDropPreview();
   }
 
   function cleanupPointerDrag() {
@@ -1184,7 +1222,11 @@
     drag?.element?.classList.remove("is-dragging");
     document.body.classList.remove("is-course-dragging");
     clearAllDropHighlights();
-    activeDraggedCourseId = null;
+    // A mouse drag on a draggable card becomes a native drag: the browser fires
+    // pointercancel right after dragstart. Only clear the id this pointer drag
+    // set itself, or the native drag loses it (dataTransfer is unreadable in
+    // dragover) and cannot preview where it will land.
+    if (drag?.dragging) activeDraggedCourseId = null;
     pointerDragState = null;
   }
 
@@ -1713,20 +1755,26 @@
       shell.classList.add("is-drag-over");
       const target = event.target.closest?.(".schedule-day-column");
       document.querySelectorAll(".schedule-day-column").forEach(column => column.classList.toggle("is-drop-target", column === target));
+      renderScheduleDropPreview(event.target, event.clientX, event.clientY, activeDraggedCourseId);
     });
     shell.addEventListener("dragleave", event => {
       if (shell.contains(event.relatedTarget)) return;
       shell.classList.remove("is-drag-over");
       document.querySelectorAll(".schedule-day-column").forEach(column => column.classList.remove("is-drop-target"));
+      clearScheduleDropPreview();
     });
     shell.addEventListener("drop", event => {
       event.preventDefault();
       shell.classList.remove("is-drag-over");
       document.querySelectorAll(".schedule-day-column").forEach(column => column.classList.remove("is-drop-target"));
+      clearScheduleDropPreview();
       const courseId = event.dataTransfer.getData("text/course-id") || event.dataTransfer.getData("text/plain") || activeDraggedCourseId;
-      const placement = placementFromPoint(event.target, event.clientX, event.clientY);
-      if (courseId) beginAddCourse(courseId, null, "drag", placement);
+      if (courseId) applyScheduleDrop(courseId, scheduleDropIntent(event.target, event.clientX, event.clientY, courseId));
     });
+  }
+
+  function currentScheduleHourHeight() {
+    return parseFloat(getComputedStyle(els.fullSchedule).getPropertyValue("--hour-height")) || SCHEDULE_BASE_HOUR_HEIGHT;
   }
 
   function placementFromPoint(target, clientX, clientY) {
@@ -1735,19 +1783,128 @@
     const day = column.dataset.day;
     const gridScroll = column.closest(".schedule-grid-scroll");
     if (!day || !gridScroll) return null;
-    const hourHeight = 44, startHour = 8;
+    // A list has no pixel-to-time mapping; dropping there uses official times.
+    if (els.fullSchedule.classList.contains("is-agenda")) return null;
+    const hourHeight = currentScheduleHourHeight();
+    const startHour = SCHEDULE_START_HOUR;
     const rect = column.getBoundingClientRect();
-    const relative = Math.max(0, Math.min(12.5 * hourHeight, clientY - rect.top));
+    const relative = Math.max(0, Math.min((SCHEDULE_END_HOUR - startHour - 0.5) * hourHeight, clientY - rect.top));
     const minutes = startHour * 60 + Math.round((relative / hourHeight) * 2) * 30;
-    const start = minutesToTime(Math.min(minutes, 20 * 60 + 30));
+    const start = minutesToTime(Math.min(minutes, (SCHEDULE_END_HOUR - 0.5) * 60));
     return { day, start, droppedAt:new Date().toISOString() };
+  }
+
+  // The section a drop would use: the saved one, or the default that an add
+  // without the section picker would choose.
+  function dropSectionFor(course) {
+    return course ? getSection(course, state.selected[course.id] || sectionSelectionId(defaultSectionSelection(course))) : null;
+  }
+
+  // Shared by the drop preview and setManualPlacement so both report one end time.
+  function manualPlacementDuration(course) {
+    const original = dropSectionFor(course)?.meetings?.[0];
+    return original ? Math.max(30, Math.min(180, timeToMinutes(original.end) - timeToMinutes(original.start))) : 60;
+  }
+
+  function scheduleColumnDate(column) {
+    const dayIndex = DAY_KEYS.indexOf(column?.dataset?.day);
+    if (dayIndex < 0) return null;
+    return addDays(startOfWeek(parseIsoDate(state.scheduleWeekStart || currentUserWeekStart())), dayIndex);
+  }
+
+  // Official meetings of the dragged course in this column's date, using the
+  // same date rules as the weekly grid. Intensive sessions live in the strip.
+  function officialSlotsForColumn(course, column) {
+    const date = scheduleColumnDate(column);
+    const section = dropSectionFor(course);
+    if (!date || !section) return [];
+    return getMeetingsForDate(section, date, course)
+      .map(meeting => ({ start:timeToMinutes(meeting.start), end:timeToMinutes(meeting.end) }))
+      .filter(slot => slot.end > slot.start && slot.end - slot.start < 240);
+  }
+
+  // Resolve what a drop at this point will do, with the exact geometry used by
+  // the grid. Inside an official outline the course keeps its official days;
+  // elsewhere the existing one-day personal placement applies.
+  function scheduleDropIntent(target, clientX, clientY, courseId) {
+    const placement = placementFromPoint(target, clientX, clientY);
+    if (!placement) return null;
+    const column = target.closest(".schedule-day-column");
+    const course = courses.find(item => item.id === courseId);
+    const pointerMinutes = SCHEDULE_START_HOUR * 60 + (clientY - column.getBoundingClientRect().top) / currentScheduleHourHeight() * 60;
+    const slot = officialSlotsForColumn(course, column).find(item => pointerMinutes >= item.start && pointerMinutes < item.end);
+    if (slot) return { official:true, column, day:placement.day, start:slot.start, end:slot.end, placement:null };
+    const start = timeToMinutes(placement.start);
+    return { official:false, column, day:placement.day, start, end:start + manualPlacementDuration(course), placement };
+  }
+
+  function scheduleDropIntentLabel(intent, courseId) {
+    const en = isEnglish();
+    const range = `${dayLabel(intent.day)} ${minutesToTime(intent.start)}–${minutesToTime(intent.end)}`;
+    if (!intent.official) return `${range} · ${en ? "personal placement, this day only" : "个人安排，仅此日"}`;
+    if (state.selected[courseId]) return `${range} · ${state.manualPlacements?.[courseId] ? (en ? "restore official times" : "恢复官方时间") : (en ? "already scheduled" : "已在课表中")}`;
+    return `${range} · ${en ? "official times, all meeting days" : "按官方时间加入（全部上课日）"}`;
+  }
+
+  function clearScheduleDropPreview() {
+    els.fullSchedule?.querySelectorAll(".schedule-drop-preview, .schedule-official-slot").forEach(node => node.remove());
+    els.scheduleDropShell?.classList.remove("has-slot-preview");
+  }
+
+  function renderScheduleDropPreview(target, clientX, clientY, courseId) {
+    const intent = target && courseId ? scheduleDropIntent(target, clientX, clientY, courseId) : null;
+    if (!intent) { clearScheduleDropPreview(); return null; }
+    const hourHeight = currentScheduleHourHeight();
+    const top = minutes => `${(minutes - SCHEDULE_START_HOUR * 60) / 60 * hourHeight}px`;
+    const height = minutes => `${minutes / 60 * hourHeight}px`;
+    let preview = els.fullSchedule.querySelector(".schedule-drop-preview");
+    const key = `${courseId}|${state.scheduleWeekStart}|${hourHeight}`;
+    if (!preview || els.fullSchedule.dataset.dropPreviewKey !== key) {
+      clearScheduleDropPreview();
+      els.fullSchedule.dataset.dropPreviewKey = key;
+      const course = courses.find(item => item.id === courseId);
+      els.fullSchedule.querySelectorAll(".schedule-day-column").forEach(column => officialSlotsForColumn(course, column).forEach(slot => {
+        const outline = document.createElement("div");
+        outline.className = "schedule-official-slot";
+        outline.setAttribute("aria-hidden", "true");
+        outline.style.top = top(slot.start);
+        outline.style.height = height(slot.end - slot.start);
+        outline.textContent = `${isEnglish() ? "Official" : "官方时间"} ${minutesToTime(slot.start)}–${minutesToTime(slot.end)}`;
+        column.appendChild(outline);
+      }));
+      preview = document.createElement("div");
+      preview.className = "schedule-drop-preview";
+      preview.setAttribute("aria-hidden", "true");
+    }
+    if (preview.parentElement !== intent.column) intent.column.appendChild(preview);
+    preview.classList.toggle("is-official", intent.official);
+    preview.style.top = top(intent.start);
+    preview.style.height = height(intent.end - intent.start);
+    preview.textContent = scheduleDropIntentLabel(intent, courseId);
+    els.scheduleDropShell?.classList.add("has-slot-preview");
+    return intent;
+  }
+
+  function applyScheduleDrop(courseId, intent) {
+    const course = courses.find(item => item.id === courseId);
+    if (intent?.official && course && state.selected[courseId]) {
+      if (!state.manualPlacements?.[courseId]) return showToast(isEnglish() ? `${course.code} is already in your schedule.` : `${course.code} 已在课表中。`);
+      delete state.manualPlacements[courseId];
+      saveState();
+      renderAll();
+      return showToast(isEnglish() ? `${course.code} restored to its official meeting times.` : `${course.code} 已恢复为官方上课时间。`);
+    }
+    beginAddCourse(courseId, null, "drag", intent && !intent.official ? intent.placement : null);
+  }
+
+  function syncBodyScrollLock() {
+    const locked = [...document.querySelectorAll(".overlay")].some(overlay => !overlay.hidden);
+    document.body.style.overflow = locked ? "hidden" : "";
   }
 
   function setManualPlacement(courseId, placement, silent = false) {
     const course = courses.find(item => item.id === courseId);
-    const section = course ? getSection(course, state.selected[courseId]) : null;
-    const original = section?.meetings?.[0];
-    const duration = original ? Math.max(30, Math.min(180, timeToMinutes(original.end) - timeToMinutes(original.start))) : 60;
+    const duration = manualPlacementDuration(course);
     state.manualPlacements ||= {};
     state.manualPlacements[courseId] = { ...placement, end:minutesToTime(timeToMinutes(placement.start) + duration), duration };
     saveState();
@@ -1804,7 +1961,7 @@
     els.conflictStatus.classList.toggle("has-conflict", Boolean(activeConflictCount));
     renderWeekNavigator(weekStart, weekDates);
 
-    const startHour = 8, endHour = 21, hourHeight = 44;
+    const startHour = SCHEDULE_START_HOUR, endHour = SCHEDULE_END_HOUR, hourHeight = SCHEDULE_BASE_HOUR_HEIGHT;
     const intensiveMeetings = [];
     weekDates.forEach((date, dayIndex) => selected.forEach((course, courseIndex) => {
       const section = getSection(course, state.selected[course.id]);
@@ -1818,7 +1975,7 @@
     const intensiveHtml = intensiveMeetings.length ? `<section class="intensive-course-strip"><div><strong>${isEnglish() ? "Intensive sessions and all-day events" : "全天／集中课程与日程"}</strong><span>${isEnglish() ? "Shown compactly so they do not hide the hourly grid." : "已紧凑显示，不再遮挡左侧时间表格。"}</span></div><div class="intensive-course-list">${intensiveMeetings.map(item => `<button type="button" class="intensive-course-chip ${item.calendarEvent ? "is-imported-calendar" : ""}" ${item.calendarEvent ? `data-calendar-event-id="${esc(item.calendarEvent.id)}"` : `data-course-id="${esc(item.course.id)}"`}><strong>${esc(dayLabel(DAY_KEYS[item.dayIndex]))} ${item.date.getMonth()+1}/${item.date.getDate()} · ${esc(item.course.code)}</strong><span>${esc(courseTitle(item.course))} · ${item.calendarEvent?.allDay ? (isEnglish() ? "All day" : "全天") : `${item.meeting.start}–${item.meeting.end}`}</span></button>`).join("")}</div></section>` : "";
     let grid = `<div class="schedule-header schedule-corner"></div>${weekDates.map((date, index) => {
       const specialLabel = specialScheduleLabelForDate(date);
-      return `<div class="schedule-header ${specialLabel ? "has-special-schedule" : ""}"><strong>${dayLabel(DAY_KEYS[index])}</strong><span>${date.getMonth()+1}/${date.getDate()}</span>${specialLabel ? `<small>${esc(specialLabel)}</small>` : ""}</div>`;
+      return `<div class="schedule-header ${specialLabel ? "has-special-schedule" : ""}" data-day="${DAY_KEYS[index]}"><strong>${dayLabel(DAY_KEYS[index])}</strong><span>${date.getMonth()+1}/${date.getDate()}</span>${specialLabel ? `<small>${esc(specialLabel)}</small>` : ""}</div>`;
     }).join("")}`;
     grid += `<div class="schedule-time-column">${Array.from({length:endHour-startHour+1},(_,i)=>`<div class="time-label ${i === 0 ? "is-first" : ""}" style="top:${i*hourHeight}px">${String(startHour+i).padStart(2,"0")}:00</div>`).join("")}</div>`;
 
@@ -1848,7 +2005,7 @@
         if (overlaps) {
           const frameTop = Math.min(...group.map(item => item.top));
           const frameBottom = Math.max(...group.map(item => item.top + item.height));
-          frames.push(`<div class="schedule-conflict-frame" style="top:${frameTop}px;height:${frameBottom-frameTop}px" aria-label="${isEnglish() ? "Overlapping courses" : "课程时间重叠"}"></div>`);
+          frames.push(`<div class="schedule-conflict-frame" data-start-minute="${Math.min(...group.map(item => item.startMinutes))}" data-end-minute="${Math.max(...group.map(item => item.endMinutes))}" style="top:${frameTop}px;height:${frameBottom-frameTop}px" aria-label="${isEnglish() ? "Overlapping courses" : "课程时间重叠"}"></div>`);
         }
         group.forEach((item, conflictIndex) => {
           const { course:c, section:sec, meeting:m, courseIndex, top, height, duration, calendarEvent } = item;
@@ -1856,17 +2013,18 @@
           const room = meetingLocation(m, sec, c);
           const roomShort = scheduleLocationSummary(room);
           const instructor = scheduleInstructorSummary(sec, c);
+          const meetingTime = calendarEvent ? `${calendarEvent.start}–${calendarEvent.end}` : `${m.start}–${m.end}`;
           const density = duration < 70 ? "compact" : duration < 100 ? "standard" : "spacious";
-          const compactVisual = height < 60 || overlaps;
           const customLabel = m.manualPlacement ? (isEnglish() ? "Personal placement" : "个人课表安排") : "";
-          const tooltip = `${c.code} ${courseTitle(c)} · ${m.start}–${m.end}${!calendarEvent ? ` · ${instructor}` : ""} · ${room}${customLabel ? ` · ${customLabel}` : ""}`;
-          const overlapStyle = overlaps ? `left:${4 + conflictIndex * (92 / group.length)}%;width:${92 / group.length}%;right:auto;` : "";
+          const tooltip = `${c.code} ${courseTitle(c)} · ${meetingTime}${!calendarEvent ? ` · ${instructor}` : ""} · ${room}${customLabel ? ` · ${customLabel}` : ""}`;
+          const overlapStyle = overlaps ? `left:${4 + conflictIndex * (92 / group.length)}%;width:calc(${92 / group.length}% - 3px);right:auto;` : "";
           const conflictWith = overlaps ? group.filter(other => other.course.id !== c.id).map(other => other.course.code).join(", ") : "";
           const displayTitle = calendarEvent ? calendarEvent.title : courseTitle(c);
-          const metadata = [`${m.start}–${m.end}`, !calendarEvent ? `◎ ${instructor}` : "", compactVisual && roomShort ? `⌖ ${roomShort}` : ""].filter(Boolean).join(" · ");
-          const blockDetails = `<div class="schedule-heading"><strong>${esc(c.code)}</strong><span class="schedule-event-title">${esc(displayTitle)}</span></div><div class="schedule-event-meta">${esc(metadata)}</div>${!compactVisual && roomShort ? `<div class="schedule-event-room">⌖ ${esc(roomShort)}</div>` : ""}`;
+          // A personal placement replaces the official days, so the card says so.
+          const metadata = [meetingTime, !calendarEvent ? `◎ ${instructor}` : "", customLabel ? `✎ ${customLabel}` : ""].filter(Boolean).join(" · ");
+          const blockDetails = `<div class="schedule-heading"><strong>${esc(c.code)}</strong> <span class="schedule-event-title">${esc(displayTitle)}</span></div><div class="schedule-event-meta">${esc(metadata)}</div>${roomShort ? `<div class="schedule-event-room">⌖ ${esc(roomShort)}</div>` : ""}`;
           const dataAttribute = calendarEvent ? `data-calendar-event-id="${esc(calendarEvent.id)}"` : `data-course-id="${esc(c.id)}"`;
-          blocks.push(`<div class="schedule-block is-${density} ${compactVisual ? "is-compact-visual" : ""} ${calendarEvent ? "is-imported-calendar" : ""} ${overlaps ? "is-conflict in-conflict-group" : ""}" ${dataAttribute} data-conflict-with="${esc(conflictWith)}" title="${esc(tooltip)}" aria-label="${esc(tooltip)}" style="top:${top}px;height:${height}px;--block-bg:${bg};--block-border:${border};${overlapStyle}">${blockDetails}</div>`);
+          blocks.push(`<div class="schedule-block is-${density} ${calendarEvent ? "is-imported-calendar" : ""} ${overlaps ? "is-conflict in-conflict-group" : ""}" ${dataAttribute} data-start-minute="${item.startMinutes}" data-end-minute="${item.endMinutes}" data-conflict-with="${esc(conflictWith)}" title="${esc(tooltip)}" aria-label="${esc(tooltip)}" style="top:${top}px;height:${height}px;--block-bg:${bg};--block-border:${border};${overlapStyle}">${blockDetails}</div>`);
         });
       });
       const noClass = isNoClassDate(date);
@@ -1875,6 +2033,9 @@
       grid += `<div class="schedule-day-column ${noClass ? "is-no-class" : ""}" data-day="${DAY_KEYS[dayIndex]}">${Array.from({length:endHour-startHour},(_,i)=>`<div class="hour-line" style="top:${i*hourHeight}px"></div><div class="half-hour-line" style="top:${i*hourHeight+hourHeight/2}px"></div>`).join("")}${noClassHtml}${frames.join("")}${blocks.join("")}</div>`;
     });
     els.fullSchedule.innerHTML = `${intensiveHtml}<div class="schedule-grid-scroll" aria-label="${isEnglish() ? "Weekly calendar" : "每周课表"}"><div class="weekly-grid">${grid}</div></div>`;
+    fitScheduleContent();
+    scheduleContentObserver?.disconnect();
+    els.fullSchedule.querySelectorAll(".schedule-block > div").forEach(row => scheduleContentObserver?.observe(row));
     els.fullSchedule.querySelectorAll(".schedule-block[data-course-id], .intensive-course-chip[data-course-id]").forEach(b => b.addEventListener("click", () => openCourseDetail(b.dataset.courseId)));
     els.fullSchedule.querySelectorAll("[data-calendar-event-id]").forEach(block => block.addEventListener("click", () => {
       const event = importedCalendarEvents().find(item => item.id === block.dataset.calendarEventId);
@@ -1893,6 +2054,54 @@
     if (notThisWeek.length) parts.push(`<div><h3>${isEnglish() ? "No class this week" : "本周没有上课"}</h3>${notThisWeek.map(c=>`<span class="unscheduled-chip muted">${esc(c.code)} · ${esc(courseTitle(c))}</span>`).join("")}</div>`);
     els.unscheduledCourses.innerHTML = parts.join("");
     renderLocationAgenda(selected, weekDates);
+  }
+
+  function queueScheduleFit() {
+    if (scheduleFitFrame) return;
+    scheduleFitFrame = requestAnimationFrame(() => { scheduleFitFrame = 0; fitScheduleContent(); });
+  }
+
+  function fitScheduleContent() {
+    const root = els.fullSchedule;
+    const width = root?.getBoundingClientRect().width || 0;
+    if (!width) return;
+    // Phones and narrow containers (tablets, split windows, high zoom) always
+    // use the day list, so they skip the temporary timeline layout entirely.
+    const forceList = window.matchMedia("print").matches || window.matchMedia("(max-width:760px)").matches || width < SCHEDULE_MIN_TIMELINE_WIDTH;
+    let requiredHourHeight = SCHEDULE_BASE_HOUR_HEIGHT;
+    if (!forceList) {
+      // Always measure the timeline geometry. Measuring already-stacked cards
+      // would alternate between list and timeline when conflict columns are narrow.
+      root.classList.remove("is-agenda");
+      root.querySelectorAll(".schedule-block").forEach(block => {
+        const children = [...block.children];
+        if (!children.length) return;
+        const style = getComputedStyle(block);
+        const contentHeight = children.at(-1).getBoundingClientRect().bottom - children[0].getBoundingClientRect().top;
+        const requiredHeight = contentHeight + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom) + parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth) + 2;
+        const duration = Number(block.dataset.endMinute) - Number(block.dataset.startMinute);
+        if (duration > 0) requiredHourHeight = Math.max(requiredHourHeight, Math.ceil(requiredHeight * 60 / duration));
+      });
+    }
+    const agenda = forceList || requiredHourHeight > SCHEDULE_MAX_HOUR_HEIGHT;
+    root.classList.toggle("is-agenda", agenda);
+    const hint = document.getElementById("scheduleScrollHint");
+    hint.hidden = !agenda;
+    hint.textContent = isEnglish() ? "Day-by-day view · Full course details" : "按日显示 · 完整课程信息";
+    const hourHeight = Math.min(requiredHourHeight, SCHEDULE_MAX_HOUR_HEIGHT);
+    // One shared scale keeps card edges, grid lines and drop targets aligned.
+    root.style.setProperty("--hour-height", `${hourHeight}px`);
+    root.style.setProperty("--schedule-hours", `${SCHEDULE_END_HOUR - SCHEDULE_START_HOUR}`);
+    root.querySelectorAll(".time-label").forEach((label, index) => label.style.top = `${index * hourHeight}px`);
+    root.querySelectorAll(".schedule-day-column").forEach(column => {
+      column.querySelectorAll(".hour-line").forEach((line, index) => line.style.top = `${index * hourHeight}px`);
+      column.querySelectorAll(".half-hour-line").forEach((line, index) => line.style.top = `${(index + 0.5) * hourHeight}px`);
+    });
+    root.querySelectorAll(".schedule-block, .schedule-conflict-frame").forEach(block => {
+      const start = Number(block.dataset.startMinute), end = Number(block.dataset.endMinute);
+      block.style.top = `${(start - SCHEDULE_START_HOUR * 60) / 60 * hourHeight}px`;
+      block.style.height = `${(end - start) / 60 * hourHeight}px`;
+    });
   }
 
   function renderWeekNavigator(weekStart, weekDates) {
@@ -3160,10 +3369,10 @@
     document.documentElement.lang = isEnglish() ? "en" : "zh-CN";
     if (els.languageToggleBtn) els.languageToggleBtn.textContent = isEnglish() ? "EN / 中文" : "中文 / EN";
     renderCreatorCredit();
-    const translations = new Map([["课程检索","Course Search"],["课程推荐","Recommendations"],["我的课表","My Schedule"],["学校与数据","Schools & Data"],["新生 FAQ","New Student FAQ"],["学分进度","Credit Progress"],["重置","Reset"],["标签说明","Label Guide"],["查看全部标签含义","View all label definitions"],["设置偏好并生成推荐","Set preferences"],["作者公告","Author Updates"],["课程库","Course Catalog"],["已选课程","Selected Courses"],["展开","Open"],["随机组合两个方向","Randomize two directions"],["职业方向（可多选）","Career directions (multi-select)"],["课程偏好","Course preferences"],["当前组合","Current profile"],["清空","Clear"],["生成推荐方案","Generate recommendation plan"],["按周查看课表","Weekly Schedule"],["清空课表","Clear schedule"],["打印课表","Print schedule"],["新建课程／安排","New course / commitment"],["新建课程","New course"],["跳转到日期","Go to date"],["回到正式课程第1周","Go to first instructional week"],["跳到 Fall 2026 开学周","Go to Fall 2026 opening week"],["跳到 Spring 2027 开学周","Go to Spring 2027 opening week"],["学期","Term"],["常见 T14 法学院预设","Common T14 law-school presets"],["课程数据导入","Course data import"],["复制提示词","Copy prompt"],["导入预览","Import preview"],["保存到本地并切换","Save locally and switch"],["读取并预览","Read and preview"],["全部状态","All statuses"],["推荐度优先","Recommendation score"],["课程代号","Course code"],["评分方式","Grading"],["学分","Credits"],["上课日","Meeting day"],["课程方向","Course focus"],["全部课程方向","All course focuses"],["上课形式","Course format"],["全部上课形式","All course formats"],["讲授课","Lecture"],["研讨课","Seminar"],["诊所","Clinic"],["实践课","Practicum"],["讨论课","Discussion"],["独立研究","Independent study"],["LLM 专设","LL.M. specific"],["LLM 直选课","LL.M. direct enrollment"],["快捷标签","Quick tags"],["公司／交易／金融","Corporate / transactions / finance"],["诉讼／争议解决","Litigation / dispute resolution"],["科技／数据／知识产权","Technology / data / IP"],["国际／跨境","International / cross-border"],["公法／公共利益","Public law / public interest"],["研究／理论","Research / theory"],["刑事法","Criminal law"],["实务技能","Practice skills"],["全部学分","All credits"],["0–1 学分","0–1 credits"],["1 学分及以下","1 credit or less"],["2 学分","2 credits"],["3 学分","3 credits"],["4 学分","4 credits"],["5 学分及以上","5+ credits"],["全部上课日","All meeting days"],["周一","Mon"],["周二","Tue"],["周三","Wed"],["周四","Thu"],["周五","Fri"],["学分筛选","Credit filter"],["上课日筛选","Meeting-day filter"],["排序","Sort"],["学分从低到高","Credits low to high"],["学分从高到低","Credits high to low"],["通用 LL.M. 职业方向推荐","General LL.M. career guidance"],["先选择方向，再生成组合","Choose directions, then generate a plan"],["选择一个或多个职业方向，再叠加“低负担、NY Bar、写作或实务”等偏好，系统会即时重排更适合你的课程组合。","Choose one or more career directions, then add preferences such as lower workload, NY Bar, writing, or practice skills. The planner will immediately re-rank suitable course combinations."],["中国 General LL.M. 新生指南","Guide for new Chinese General LL.M. students"],["先理解规则，再选择课程","Understand the rules before choosing courses"],["这里用中文解释评分方式、NY Bar 学分、选课流程、课程负担与常见标签。每项规则都附 Cornell 官方来源入口。","This guide explains grading, NY Bar credits, enrollment, workload, and common labels. Each rule includes an official Cornell source."],["联系作者","Contact author"],["支持作者","Support author"],["官方课程说明、NY Bar 标识与拖拽排课","Official course descriptions, NY Bar labels and drag-to-schedule"],["每门课都会显示一个 NY Bar 计分状态和一个选课权限状态。","Each course displays an NY Bar-credit status and an enrollment status."],["拖动课程卡到这里，展开后按周查看","Drag course cards here; open My Schedule for the weekly view"],["多校课程数据中心","Multi-school course data"],["康奈尔默认，其他法学院按官方数据源导入","Cornell is built in; import other schools from official data"],["康奈尔课程已经离线内置。使用其他法学院时，可按照导入向导连接学校提供的数据接口，或上传整理好的 JSON／CSV 课程文件。","Cornell data is built in for offline use. For another law school, follow the import guide to use its official data interface or upload a prepared JSON/CSV course file."],["打开当前学校官方课程页面 ↗","Open current school's official course page ↗"],["当前学校","Current school"],["门课程","courses"],["“T14”是习惯称呼，不同年份排名可能变化；这里作为常见顶尖法学院入口集合。","T14 is a customary label and rankings can change; these are common entry points for leading U.S. law schools."],["本页面由袁敬轩使用","Designed by Yuan Jingxuan with"],["设计","design"],["NYLE / Bar 考试科目","NYLE / Bar tested subjects"],["全部方式","All grading"],["评分方式筛选","Grading filter"],["NY Bar 筛选分为四个互斥状态；具体的法定类别学分在进度面板单列显示。","NY Bar filters use four mutually exclusive statuses; statutory category credits are shown separately in Credit Progress."],["自动保存在当前浏览器","Saved automatically in this browser"],["刷新页面不会清空课表；换设备、换浏览器、使用无痕窗口或清除网站数据后无法自动恢复。不同访问者不会共用课表；共用同一浏览器用户资料时则会看到同一份本地数据。","Refreshing will not erase the schedule. It will not automatically follow you to another device, browser, private window, or domain, and clearing site data removes it. Visitors do not share a plan unless they use the same browser profile."],["正在确认本地保存状态…","Checking local save status…"],["从日历导入","Import from calendar"],["导入日历","Export to calendar"]]);
+    const translations = new Map([["课程检索","Course Search"],["课程推荐","Recommendations"],["我的课表","My Schedule"],["学校与数据","Schools & Data"],["新生 FAQ","New Student FAQ"],["学分进度","Credit Progress"],["重置","Reset"],["标签说明","Label Guide"],["查看全部标签含义","View all label definitions"],["设置偏好并生成推荐","Set preferences"],["作者公告","Author Updates"],["课程库","Course Catalog"],["已选课程","Selected Courses"],["展开","Open"],["随机组合两个方向","Randomize two directions"],["职业方向（可多选）","Career directions (multi-select)"],["课程偏好","Course preferences"],["当前组合","Current profile"],["清空","Clear"],["生成推荐方案","Generate recommendation plan"],["按周查看课表","Weekly Schedule"],["清空课表","Clear schedule"],["打印课表","Print schedule"],["新建课程／安排","New course / commitment"],["新建课程","New course"],["跳转到日期","Go to date"],["回到正式课程第1周","Go to first instructional week"],["跳到 Fall 2026 开学周","Go to Fall 2026 opening week"],["跳到 Spring 2027 开学周","Go to Spring 2027 opening week"],["学期","Term"],["常见 T14 法学院预设","Common T14 law-school presets"],["课程数据导入","Course data import"],["复制提示词","Copy prompt"],["导入预览","Import preview"],["保存到本地并切换","Save locally and switch"],["读取并预览","Read and preview"],["全部状态","All statuses"],["推荐度优先","Recommendation score"],["课程代号","Course code"],["评分方式","Grading"],["学分","Credits"],["上课日","Meeting day"],["课程方向","Course focus"],["全部课程方向","All course focuses"],["上课形式","Course format"],["全部上课形式","All course formats"],["讲授课","Lecture"],["研讨课","Seminar"],["诊所","Clinic"],["实践课","Practicum"],["讨论课","Discussion"],["独立研究","Independent study"],["LLM 专设","LL.M. specific"],["LLM 直选课","LL.M. direct enrollment"],["快捷标签","Quick tags"],["公司／交易／金融","Corporate / transactions / finance"],["诉讼／争议解决","Litigation / dispute resolution"],["科技／数据／知识产权","Technology / data / IP"],["国际／跨境","International / cross-border"],["公法／公共利益","Public law / public interest"],["研究／理论","Research / theory"],["刑事法","Criminal law"],["实务技能","Practice skills"],["全部学分","All credits"],["0–1 学分","0–1 credits"],["1 学分及以下","1 credit or less"],["2 学分","2 credits"],["3 学分","3 credits"],["4 学分","4 credits"],["5 学分及以上","5+ credits"],["全部上课日","All meeting days"],["周一","Mon"],["周二","Tue"],["周三","Wed"],["周四","Thu"],["周五","Fri"],["学分筛选","Credit filter"],["上课日筛选","Meeting-day filter"],["排序","Sort"],["学分从低到高","Credits low to high"],["学分从高到低","Credits high to low"],["通用 LL.M. 职业方向推荐","General LL.M. career guidance"],["先选择方向，再生成组合","Choose directions, then generate a plan"],["选择一个或多个职业方向，再叠加“低负担、NY Bar、写作或实务”等偏好，系统会即时重排更适合你的课程组合。","Choose one or more career directions, then add preferences such as lower workload, NY Bar, writing, or practice skills. The planner will immediately re-rank suitable course combinations."],["中国 General LL.M. 新生指南","Guide for new Chinese General LL.M. students"],["先理解规则，再选择课程","Understand the rules before choosing courses"],["这里用中文解释评分方式、NY Bar 学分、选课流程、课程负担与常见标签。每项规则都附 Cornell 官方来源入口。","This guide explains grading, NY Bar credits, enrollment, workload, and common labels. Each rule includes an official Cornell source."],["联系作者","Contact author"],["支持作者","Support author"],["官方课程说明、NY Bar 标识与拖拽排课","Official course descriptions, NY Bar labels and drag-to-schedule"],["每门课都会显示一个 NY Bar 计分状态和一个选课权限状态。","Each course displays an NY Bar-credit status and an enrollment status."],["拖动课程卡到这里，展开后按周查看","Drag course cards here; open My Schedule for the weekly view"],["多校课程数据中心","Multi-school course data"],["康奈尔默认，其他法学院按官方数据源导入","Cornell is built in; import other schools from official data"],["康奈尔课程已经离线内置。使用其他法学院时，可按照导入向导连接学校提供的数据接口，或上传整理好的 JSON／CSV 课程文件。","Cornell data is built in for offline use. For another law school, follow the import guide to use its official data interface or upload a prepared JSON/CSV course file."],["打开当前学校官方课程页面 ↗","Open current school's official course page ↗"],["当前学校","Current school"],["门课程","courses"],["“T14”是习惯称呼，不同年份排名可能变化；这里作为常见顶尖法学院入口集合。","T14 is a customary label and rankings can change; these are common entry points for leading U.S. law schools."],["本页面由袁敬轩使用","Designed by Yuan Jingxuan with"],["设计","design"],["NYLE / Bar 考试科目","NYLE / Bar tested subjects"],["全部方式","All grading"],["评分方式筛选","Grading filter"],["NY Bar 筛选分为四个互斥状态；具体的法定类别学分在进度面板单列显示。","NY Bar filters use four mutually exclusive statuses; statutory category credits are shown separately in Credit Progress."],["自动保存在当前浏览器","Saved automatically in this browser"],["刷新页面不会清空课表；换设备、换浏览器、使用无痕窗口或清除网站数据后无法自动恢复。不同访问者不会共用课表；共用同一浏览器用户资料时则会看到同一份本地数据。","Refreshing will not erase the schedule. It will not automatically follow you to another device, browser, private window, or domain, and clearing site data removes it. Visitors do not share a plan unless they use the same browser profile."],["正在确认本地保存状态…","Checking local save status…"],["从日历导入","Import from calendar"],["导出日历","Export to calendar"]]);
     [["不计 NY Bar","Does not count toward NY Bar"],["不计入 NY Bar","Does not count toward NY Bar"],["资格待确认","School confirmation required"],["仅 S/U","S/U only"],["仅字母等级","Letter grades only"],["推荐度","Recommendation"],["学分","Credits"],["教师","Instructor"],["每周课堂时间","Weekly class time"],["作业／持续性任务","Assignments / continuous work"],["最终考核方式","Final assessment method"],["全部最终考核方式","All final assessment methods"],["期末考试","Final examination"],["期末书面作业／论文","Final written work/paper"],["期末项目","Final project"],["期末展示","Final presentation"],["其他明确的期末要求","Other stated final requirement"],["官方说明未载明最终考核方式","Final assessment method not stated"],["NY Bar 计分","NY Bar credit"],["限制与先修","Enrollment and prerequisites"],["官方页面","Official page"],["班次、时间与地点","Sections, times and locations"],["如何补充上课地点","How to add a location"],["授课地点","Teaching location"],["粘贴／修改具体地点","Paste or edit location"],["按所选班次加入课表","Add selected section"],["从课表移除","Remove from schedule"],["时间未公布或不进入普通周课表","Time not published or not shown in the weekly grid"],["本周没有上课","No meeting this week"],["无课","No class"],["全天／集中课程","Intensive sessions"],["上一步","Previous week"],["下一周 →","Next week"],["本周无时间冲突","No conflicts this week"],["课程","Courses"],["学校中文名","School name (Chinese)"],["学校英文名","School name (English)"],["学期名称","Term"],["开课日期","Instruction start"],["结课日期","Instruction end"],["官方课程页面","Official course page"],["数据源类型","Data source"],["API 地址","API URL"],["请求头（JSON，可选）","Request headers (JSON, optional)"],["字段映射（JSON，可选）","Field mapping (JSON, optional)"],["选择文件","Choose file"],["粘贴标准 JSON","Paste standard JSON"],["下载本校操作清单","Download school checklist"],["下载 JSON/CSV 模板","Download JSON/CSV templates"],["上传智能助手返回的压缩包（推荐）","Upload AI return package (recommended)"],["上传智能助手生成的 JSON","Upload AI-generated JSON"],["上传标准 CSV","Upload standard CSV"],["学校官方 JSON API","Official school JSON API"],["智能助手导入提示词","AI import prompt"],["导入结果与预览","Import result and preview"],["第一次使用：笨拙但可靠的五步导入法","First time: five reliable import steps"]].forEach(([zh,en]) => translations.set(zh,en));
     [["NY Bar 课堂学分","NY Bar classroom credit"],["需院系确认","School confirmation required"],["NYLE / Bar 考试科目","NYLE / Bar tested subjects"],["LLM 直选课","LL.M. direct enrollment"],["需院系同意","Department consent required"],["新建安排","New commitment"],["课程负担与考核","Assessment and scheduled load"],["官方课程说明","Official course description"],["中文译文","Chinese translation"],["最终考核","Final assessment"],["下方周课表与此处课程一一对应。请从“课程检索”页直接拖入或加入课程；此处用于核对和移除。","Each card corresponds to the weekly schedule below. Add or drag courses from Course Search; use this area to compare and remove them."],["暂未选择课程。请在“课程检索”页加入或直接拖入课程；选择后会在这里与下方周课表对应显示。","No course is selected yet. Add or drag courses from Course Search; selected courses will appear here alongside the weekly schedule."],["移除","Remove"],["LLM","LL.M."]].forEach(([zh,en]) => translations.set(zh,en));
-    [["作者公告","Author Updates"],["从日历导入","Import from calendar"],["导入日历","Export to calendar"],["清除已导入日程","Clear imported events"]].forEach(([zh,en]) => translations.set(zh,en));
+    [["作者公告","Author Updates"],["从日历导入","Import from calendar"],["导出日历","Export to calendar"],["清除已导入日程","Clear imported events"]].forEach(([zh,en]) => translations.set(zh,en));
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT), nodes = [];
     while (walker.nextNode()) nodes.push(walker.currentNode);
     nodes.forEach(node => {
@@ -3197,6 +3406,19 @@
     refreshMultiSelectControls();
     if (pendingCalendarExportEvents.length) renderCalendarExportDialog();
     updateScheduleStorageStatus();
+    els.previousWeekBtn.textContent = "‹";
+    els.nextWeekBtn.textContent = "›";
+    els.previousWeekBtn.setAttribute("aria-label", isEnglish() ? "Previous week" : "上一周");
+    els.nextWeekBtn.setAttribute("aria-label", isEnglish() ? "Next week" : "下一周");
+    els.previousWeekBtn.title = isEnglish() ? "Previous week" : "上一周";
+    els.nextWeekBtn.title = isEnglish() ? "Next week" : "下一周";
+    if (els.scheduleDropMessage) els.scheduleDropMessage.textContent = isEnglish() ? "Release to add this course at its official times" : "松开鼠标，将课程按官方时间加入课表";
+    document.querySelectorAll(".drawer-close").forEach(button => button.setAttribute("aria-label", isEnglish() ? "Close" : "关闭"));
+    els.sectionPickerOverlay.querySelector("h2").textContent = isEnglish() ? "Choose sections" : "选择班次";
+    els.conflictOverlay.querySelector("h2").textContent = isEnglish() ? "Schedule conflict" : "检测到时间冲突";
+    document.getElementById("cancelConflictBtn").textContent = isEnglish() ? "Cancel addition" : "取消加入";
+    document.getElementById("forceAddConflictBtn").textContent = isEnglish() ? "Add anyway" : "仍然加入";
+    queueScheduleFit();
   }
 
   function renderCreatorCredit() {

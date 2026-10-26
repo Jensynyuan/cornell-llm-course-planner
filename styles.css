@@ -185,7 +185,7 @@ button { cursor: pointer; }
 .weekly-grid { position: relative; display: grid; grid-template-columns: 76px repeat(5, minmax(0, 1fr)); min-width: 0; background: white; }
 .schedule-header { height: 46px; display: grid; place-items: center; font-size: 12px; font-weight: 650; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); background: #fafafa; position: sticky; top: 0; z-index: 5; }
 .schedule-corner { left: 0; z-index: 7; }
-.schedule-time-column, .schedule-day-column { position: relative; height: calc(13 * var(--hour-height)); }
+.schedule-time-column, .schedule-day-column { position: relative; height: calc(var(--schedule-hours,13) * var(--hour-height)); }
 .schedule-time-column { border-right: 1px solid var(--line); background: #fafafa; position: sticky; left: 0; z-index: 4; }
 .schedule-day-column { border-right: 1px solid var(--line); }
 .schedule-day-column:last-child { border-right: 0; }
@@ -1190,11 +1190,222 @@ body.is-course-dragging .schedule-drop-shell { transition: outline .15s ease, ba
 
 .catalog-update-notice{background:#fff5dc;border:1px solid #d9b96c;border-radius:8px;padding:8px 12px;color:#6a4a14;font-size:12px;line-height:1.55;overflow-wrap:anywhere}.catalog-update-notice p{margin:3px 0}.schedule-course-token .catalog-update-notice{grid-column:1/-1}.section-option-content>p{font-size:12px;line-height:1.6;margin:6px 0}
 
-/* Schedule rows must keep their full line height, including browser minimum fonts. */
-.weekly-schedule .schedule-block { display:flex; flex-direction:column; justify-content:flex-start; gap:1px; padding:2px 5px; box-sizing:border-box; }
-.weekly-schedule .schedule-block > div { flex:0 0 auto; min-width:0; margin:0; padding:0; border:0; font-size:11px; line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.weekly-schedule .schedule-block .schedule-heading { display:flex; align-items:baseline; gap:5px; }
-.weekly-schedule .schedule-heading strong { flex:0 0 auto; font-size:11px; line-height:1.2; }
-.weekly-schedule .schedule-heading .schedule-event-title { display:block; flex:1 1 auto; min-width:0; margin:0; font-size:11px; line-height:1.2; color:#3e444b; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+/* Wrap complete information; JS fits one shared time scale to its natural height. */
+.weekly-schedule .schedule-block { display:flex; flex-direction:column; justify-content:flex-start; gap:2px; padding:4px 6px; box-sizing:border-box; }
+.weekly-schedule .schedule-block > div { flex:0 0 auto; min-width:0; margin:0; padding:0; border:0; font-size:12px; line-height:1.35; white-space:normal; overflow:visible; overflow-wrap:anywhere; text-overflow:clip; }
+.weekly-schedule .schedule-block .schedule-heading { display:block; }
+.weekly-schedule .schedule-heading strong { display:inline; margin-right:4px; font-size:12px; line-height:1.35; white-space:normal; }
+.weekly-schedule .schedule-heading .schedule-event-title { display:inline; margin:0; font-size:12px; line-height:1.35; color:#3e444b; white-space:normal; overflow:visible; text-overflow:clip; }
 .weekly-schedule .schedule-event-meta { color:#555b62; font-variant-numeric:tabular-nums; }
 .weekly-schedule .schedule-event-room { color:#315d70; }
+.schedule-scroll-hint { color:#667078; font-size:12px; margin:0 0 9px; }
+@media (max-width:760px) {
+  .weekly-schedule { overflow-x:auto; }
+  .schedule-grid-scroll,.weekly-grid { min-width:960px; }
+}
+
+/* A quiet reading surface with clear controls and a calendar-first hierarchy. */
+:root { --bg:#f5f5f2; --ink:#202a30; --muted:#667078; --line:#e1e5e4; --accent:#842c37; --accent-soft:#f4eaeb; --sidebar:264px; }
+body { font-size:14px; -webkit-font-smoothing:antialiased; }
+.sidebar { background:#fcfcfa; padding:24px 18px; }
+.brand-mark { background:#842c37; box-shadow:0 4px 12px #842c371a; }
+.brand-subtitle { font-size:11px; line-height:1.6; }
+.nav-list { gap:7px; }
+.nav-item { min-height:42px; font-size:13px; border-radius:9px; }
+.nav-item.is-active { background:#f4eaeb; color:#782936; font-weight:650; }
+.topbar { padding:22px 28px; background:rgba(250,250,247,.96); backdrop-filter:blur(12px); }
+.topbar h1 { font-size:24px; letter-spacing:-.035em; }
+.topbar p { font-size:12px; line-height:1.5; }
+.topbar-actions { gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+.primary-button { background:#842c37; border-color:#842c37; }
+.primary-button:hover { background:#6d202c; }
+.secondary-button { box-shadow:0 1px 2px #23323705; }
+button:focus-visible,summary:focus-visible,a:focus-visible,input:focus-visible { outline:3px solid #b46974; outline-offset:3px; }
+.schedule-toolbar { align-items:flex-start; gap:16px; flex-wrap:wrap; }
+.schedule-toolbar-actions { flex-wrap:wrap; }
+.status-pill { white-space:nowrap; }
+.schedule-toolbar h2 { font-size:18px; letter-spacing:-.02em; }
+.schedule-toolbar p { font-size:12px; line-height:1.6; }
+.schedule-storage-notice { border-color:#dbe7e0; background:#f7fbf8; padding:12px 16px; border-radius:12px; }
+.schedule-storage-copy p,.schedule-storage-copy small { font-size:11px; line-height:1.55; }
+.selected-course-panel { background:#fff; padding:0; border:1px solid var(--line); border-radius:12px; }
+.selected-course-panel > summary { display:flex; flex-wrap:nowrap; cursor:pointer; padding:15px 18px; margin:0; list-style:none; align-items:center; }
+.selected-course-panel > summary::-webkit-details-marker { display:none; }
+.selected-course-panel > summary::after { content:''; flex:0 0 auto; width:7px; height:7px; margin-left:12px; border:solid #7b858a; border-width:0 2px 2px 0; transform:rotate(45deg); }
+.selected-course-panel[open] > summary::after { transform:rotate(225deg); }
+.selected-course-panel > summary > div { flex:1; }
+.selected-course-panel:not([open]) summary p { display:none; }
+.selected-course-panel h3 { font-size:13px; margin:0; white-space:nowrap; }
+.selected-course-count,.progress-value { white-space:nowrap; flex:0 0 auto; }
+.progress-label-row { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px; }
+.selected-course-panel .schedule-course-tray { padding:0 16px 16px; gap:10px; align-items:start; }
+.schedule-course-token { border-left-width:3px; box-shadow:none; }
+.week-navigator { border-radius:12px; padding:14px 16px; gap:12px; box-shadow:0 2px 8px #23323703; }
+.week-current strong { font-size:14px; }
+.week-current span { font-size:11px; }
+.week-primary-navigation { display:flex; align-items:center; gap:12px; flex:1; min-width:min(100%,310px); }
+.week-primary-navigation .week-current { order:0; width:auto; min-width:0; flex:1; }
+.week-primary-navigation button { min-width:38px; min-height:38px; padding:3px 10px; font-size:24px; }
+.schedule-grid-scroll { border-radius:12px; box-shadow:0 4px 18px #23323704; }
+.schedule-header { height:54px; background:#fafbf9; }
+.schedule-header strong { font-size:13px; }
+.schedule-header span { font-size:11px; color:#758087; }
+.schedule-time-column { background:#fbfcfa; }
+.time-label { color:#748087; font-size:11px; }
+.time-label.is-first { top:0 !important; transform:none; }
+.time-label:last-child { transform:translateY(-100%); }
+.half-hour-line { border-top:1px solid #f1f3f1; }
+.weekly-schedule .schedule-block { border-radius:8px; border:1px solid #2332370b; border-left:3px solid var(--block-border); box-shadow:0 2px 5px #23323706; }
+.weekly-schedule .schedule-block.is-conflict { border-color:#d07775; border-left-color:#ba4d4b; }
+.weekly-schedule .schedule-event-title { hyphens:auto; text-wrap:pretty; }
+.toast { left:auto; right:24px; bottom:24px; transform:none; max-width:min(360px,calc(100vw - 32px)); pointer-events:none; font-size:12px; }
+#authorAnnouncementBtn { background:transparent; color:#667078; border-color:var(--line); box-shadow:none; }
+.school-switcher-button em { color:#77545a; font-style:normal; }
+.author-announcement-dialog { display:flex; flex-direction:column; }
+.author-announcement-hero,.announcement-heading-row { flex:0 0 auto; }
+.author-announcement-list { flex:1 1 auto; min-height:0; max-height:none; }
+.course-card { border-radius:13px; box-shadow:0 2px 8px #23323703; }
+.course-card h3 { font-size:16px; line-height:1.45; letter-spacing:-.015em; }
+.course-meta,.course-summary { font-size:12px; line-height:1.65; }
+@media (max-width:1100px) { .topbar { align-items:flex-start; } .topbar-actions { max-width:60%; } }
+@media (max-width:760px) {
+  .topbar { padding:18px 16px; flex-direction:column; }
+  .topbar-actions { display:flex; max-width:none; width:100%; justify-content:flex-start; }
+  .topbar-actions button { min-height:44px; }
+  .nav-list { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .nav-item { font-size:11px; }
+  .schedule-toolbar,.schedule-toolbar-actions { flex-wrap:wrap; }
+  .week-navigator { gap:10px; }
+  .week-current { min-width:calc(100% - 110px); text-align:left; }
+}
+
+/* On small screens or dense weeks, keep every detail in a natural day list. */
+.weekly-schedule.is-agenda { overflow:visible; }
+.is-agenda .schedule-grid-scroll,.is-agenda .weekly-grid { min-width:0; }
+.is-agenda .weekly-grid { grid-template-columns:repeat(5,minmax(0,1fr)); }
+.is-agenda .schedule-time-column,.is-agenda .schedule-corner,.is-agenda .hour-line,.is-agenda .half-hour-line,.is-agenda .schedule-conflict-frame { display:none; }
+.is-agenda .schedule-day-column { display:flex; flex-direction:column; gap:9px; height:auto; min-height:90px; padding:10px; }
+.is-agenda .schedule-block { position:relative; top:auto !important; left:auto !important; right:auto !important; height:auto !important; width:auto !important; min-height:0; }
+.is-agenda .no-class-label { position:static; transform:none; width:auto; max-width:none; margin:auto; }
+.is-agenda .schedule-day-column:not(:has(.schedule-block)):not(.is-no-class)::after { content:'本日无排定课程'; color:#758087; font-size:12px; padding:8px 0; }
+html[lang="en"] .is-agenda .schedule-day-column:not(:has(.schedule-block)):not(.is-no-class)::after { content:'No scheduled meetings'; }
+.is-agenda .schedule-block.is-conflict::after { content:'⚠ 冲突课程：' attr(data-conflict-with); color:#a43734; font-size:11px; line-height:1.4; overflow-wrap:anywhere; }
+html[lang="en"] .is-agenda .schedule-block.is-conflict::after { content:'⚠ Overlaps: ' attr(data-conflict-with); }
+@media (max-width:760px) {
+  .sidebar { padding:14px 16px; }
+  .brand-row { padding-bottom:10px; }
+  .nav-list { margin-bottom:0; }
+  #pageSubtitle,.topbar-actions #authorAnnouncementBtn,.topbar-actions .school-switcher-button em { display:none; }
+  .schedule-storage-copy p { display:none; }
+}
+
+/* Stack the day list whenever the schedule itself is narrow (phones, tablets,
+   split windows, high zoom), instead of squeezing five list columns. */
+.schedule-drop-shell { container:schedule / inline-size; }
+@container schedule (max-width:760px) {
+  .is-agenda .weekly-grid { display:flex; flex-direction:column; }
+  .is-agenda .schedule-header { position:static; display:flex; align-items:baseline; gap:8px; justify-content:flex-start; padding:11px 14px; height:auto; min-height:0; border-right:0; }
+  .is-agenda .schedule-day-column { border-right:0; border-bottom:1px solid var(--line); min-height:0; padding:10px 14px 14px; }
+  .is-agenda .schedule-day-column:last-child { border-bottom:0; }
+  .is-agenda .schedule-day-column:not(:has(.schedule-block)) { padding-block:4px 10px; }
+  .is-agenda .schedule-header[data-day="M"] { order:0; }.is-agenda .schedule-day-column[data-day="M"] { order:1; }
+  .is-agenda .schedule-header[data-day="T"] { order:2; }.is-agenda .schedule-day-column[data-day="T"] { order:3; }
+  .is-agenda .schedule-header[data-day="W"] { order:4; }.is-agenda .schedule-day-column[data-day="W"] { order:5; }
+  .is-agenda .schedule-header[data-day="R"] { order:6; }.is-agenda .schedule-day-column[data-day="R"] { order:7; }
+  .is-agenda .schedule-header[data-day="F"] { order:8; }.is-agenda .schedule-day-column[data-day="F"] { order:9; }
+}
+
+/* Time labels: every label sits just below its own hour line, so 08:00 and
+   09:00 read the same way and nothing is clipped at the grid's bottom edge. */
+.time-label,.time-label.is-first { transform:translateY(5px); }
+.time-label:last-child { display:none; }
+
+/* Drag feedback: official meeting outlines plus the exact landing slot. */
+.schedule-official-slot { position:absolute; left:3px; right:3px; z-index:4; box-sizing:border-box; padding:3px 6px; border:1.5px dashed #2f7a55; border-radius:8px; background:rgba(255,255,255,.6); color:#245f43; font-size:10.5px; font-weight:650; line-height:1.3; overflow:hidden; pointer-events:none; }
+.schedule-drop-preview { position:absolute; left:3px; right:3px; z-index:6; box-sizing:border-box; padding:4px 7px; border:2px dashed #842c37; border-radius:8px; background:rgba(251,244,245,.94); color:#5f1c27; font-size:11px; font-weight:700; line-height:1.3; overflow:hidden; pointer-events:none; box-shadow:0 6px 16px rgba(132,44,55,.14); }
+.schedule-drop-preview.is-official { border-style:solid; border-color:#18794e; background:rgba(239,248,242,.96); color:#14583a; box-shadow:0 6px 16px rgba(24,121,78,.14); }
+.schedule-drop-message { inset:10px 16px auto; padding:11px 14px; border:1.5px dashed #b46974; background:rgba(251,246,246,.97); color:#6d202c; font-size:13px; }
+.schedule-drop-shell.has-slot-preview .schedule-drop-message { display:none; }
+.course-drag-ghost-slot { color:#842c37; font-size:10.5px; font-style:normal; font-weight:700; }
+.course-drag-ghost-slot[hidden] { display:none; }
+html[lang="en"] .nav-item.schedule-nav-drop-target.is-drop-target::after { content:"Drop to add"; }
+
+/* Scrolling: keep the scrollbar gutter so locking the page for a dialog, or
+   switching between list and timeline, never shifts the layout; keep wheel
+   scrolling inside dialogs and menus instead of chaining to the page. */
+html { scrollbar-gutter:stable; }
+.overlay,.detail-drawer,.choice-dialog,.tag-help-dialog,.author-announcement-list,.multi-filter-menu { overscroll-behavior:contain; }
+
+/* Author updates on short screens: nothing is clipped, the release list keeps
+   a usable height, the whole dialog scrolls when needed, and close stays put. */
+.author-announcement-dialog { overflow-y:auto; overscroll-behavior:contain; }
+.author-announcement-dialog > .drawer-close { position:sticky; top:12px; right:auto; z-index:3; flex:0 0 auto; align-self:flex-end; margin:12px 14px -42px 0; background:rgba(255,255,255,.94); color:#202a30; }
+.author-announcement-list { min-height:min(220px,34vh); min-height:min(220px,34dvh); }
+@media (max-height:680px) {
+  .author-announcement-hero { padding:18px 24px 16px; }
+  .author-announcement-hero h2 { font-size:20px; }
+  .author-announcement-hero p { margin-top:8px; }
+  .author-announcement-hero .announcement-mail-button { margin-top:10px; }
+  .announcement-heading-row { padding:12px 24px 6px; }
+  .author-announcement-list { flex:0 0 auto; min-height:0; overflow:visible; }
+}
+
+/* One accent family: burgundy for actions, links and selection; warm neutrals
+   for information panels. Removes the leftover blue accents. */
+:root { --accent-strong:#6d202c; --accent-line:#e6cfd3; --info-bg:#f6f5f1; --info-line:#e4e1d9; --info-ink:#3f4a4e; }
+.new-course-button,.legend-row .new-course-button { border-color:#842c37; background:#842c37; box-shadow:0 6px 14px rgba(132,44,55,.16); }
+.new-course-button:hover,.legend-row .new-course-button:hover { border-color:#6d202c; background:#6d202c; box-shadow:0 8px 18px rgba(132,44,55,.2); }
+.new-course-button span:first-child,.legend-row .new-course-button span { color:#f3d9dc; }
+.contact-author-button span:first-child { color:#842c37; }
+.contact-author-button:hover { border-color:var(--accent-line); background:#fbf6f6; color:#6d202c; }
+.progress-term-context,.bar-allocation-panel,.bar-credit-breakdown,.import-result-card,.calendar-export-summary,.intensive-course-strip { border-color:var(--info-line); background:var(--info-bg); color:var(--info-ink); }
+.progress-term-context strong,.bar-allocation-panel > strong,.bar-credit-breakdown summary { color:#2c3437; }
+.progress-term-context span,.bar-allocation-panel > p,.bar-credit-breakdown summary span,.bar-credit-breakdown-totals span { color:#5f696e; }
+.bar-allocation-row,.bar-credit-breakdown-list { border-top-color:var(--info-line); }
+.bar-credit-breakdown-row { border-bottom-color:#ebe8e1; }
+.bar-allocation-row > span { color:#2f383b; }
+.bar-allocation-row select { border-color:#d6d3cb; }
+.bar-allocation-row select:focus-visible { outline-color:#b46974; }
+.location-link,.course-review-line a,.cureviews-section a,.faq-answer a,.support-contact-link { color:#842c37; }
+.professor-link:hover { color:#842c37; text-decoration-color:#842c37; }
+.badge-core { background:#f6ecee; color:#7a2a35; border-color:#ead0d4; }
+.badge-enrollment-open { background:#eef1ef; color:#3d4a46; border-color:#dce2de; }
+.badge-term { background:#f2efe9; color:#5a4e40; border-color:#e2dacd; }
+.section-switch-hint { border-color:var(--accent-line); background:#fbf6f6; color:#6d202c; }
+.detail-footer .section-switch-button { background:#6d202c; box-shadow:0 6px 16px rgba(109,32,44,.2); }
+.status-pill-travel { background:#f2efe9; color:#5a4e40; }
+.mini-schedule-card.is-collapsed #miniScheduleCollapseBtn { color:#6d202c; border-color:var(--accent-line); background:#fbf6f6; }
+.multi-filter-option:has(input:checked) { background:#f6ecee; color:#6d202c; }
+.multi-filter-option input { accent-color:#842c37; }
+.filter-search-box:focus-within,.filter-field .select-control:focus,.filter-multiselect[open] > summary { border-color:#c99aa1; box-shadow:0 0 0 3px rgba(132,44,55,.08); }
+.calendar-dialog-icon { background:#f4eaeb; color:#842c37; }
+.calendar-provider-google { border-color:var(--info-line); background:var(--info-bg); }
+.calendar-provider-button:hover,.term-choice-button:hover { border-color:#c99aa1; background:#fdf9f9; }
+.term-choice-button[aria-pressed="true"],.term-choice-button.is-active { border-color:#842c37; background:#fbf6f6; box-shadow:inset 0 0 0 1px rgba(132,44,55,.12); }
+.announcement-eyebrow { color:#e7b9c0; }
+.author-announcement-hero .support-contact-link { color:#f1d6da; }
+.announcement-release > div span { background:#f4eaeb; color:#842c37; }
+.announcement-release.is-current { background:#faf6f3; }
+.school-preset-card.is-current { border-color:#c99aa1; box-shadow:0 0 0 2px #f4eaeb; }
+.intensive-course-chip { border-color:#d9d4ca; }
+.schedule-drop-shell.is-drag-over { outline-color:#842c37; }
+.schedule-day-column.is-drop-target { background:#fbf5f5; }
+.mini-schedule-dropzone.is-over { background:#fbf6f6; border-color:#c99aa1; }
+.nav-item.schedule-nav-drop-target.is-drop-target { color:#6d202c; background:#f4eaeb; box-shadow:inset 0 0 0 1px #d9b3b9, 0 6px 18px rgba(132,44,55,.12); }
+.nav-item.schedule-nav-drop-target.is-drop-target::after { color:#842c37; }
+.weekly-schedule .schedule-event-room,.location-online { color:#4e5a56; }
+.section-selection-group legend,.detail-section-group legend { color:#4a4f52; }
+
+/* Keep a long name together on the next line instead of leaving one character
+   beneath the course code, and retain the final time-axis label in bounds. */
+.weekly-schedule .schedule-block .schedule-heading { display:flex; flex-wrap:wrap; align-items:baseline; gap:0 5px; text-wrap:pretty; }
+.weekly-schedule .schedule-heading strong { display:block; flex:0 1 auto; max-width:100%; margin:0; }
+.weekly-schedule .schedule-heading .schedule-event-title { display:block; flex:1 1 max-content; max-width:100%; min-width:0; }
+.time-label:last-child { display:block; transform:translateY(-100%); }
+
+@media print {
+  .schedule-storage-notice,.schedule-scroll-hint,.schedule-drop-message { display:none !important; }
+  .weekly-schedule .schedule-block > div,.weekly-schedule .schedule-heading strong,.weekly-schedule .schedule-heading .schedule-event-title { font-size:10px !important; line-height:1.3 !important; }
+  .is-agenda .schedule-header { height:32px; }
+  .is-agenda .schedule-block,.is-agenda .schedule-day-column { break-inside:avoid; }
+}
