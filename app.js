@@ -23,7 +23,7 @@
   const NY_BAR_ALLOCATION = window.NY_BAR_ALLOCATION;
   const NY_BAR_ELIGIBILITY = window.NY_BAR_ELIGIBILITY;
   const CALENDAR = window.LLM_CALENDAR;
-  const APP_VERSION = "v5.35";
+  const APP_VERSION = "v5.36";
   const CORNELL_LLM_REGISTRATION_POLICY = Object.freeze({
     minimum:10,
     maximum:17,
@@ -84,6 +84,7 @@
     { id:"independent", zh:"独立研究", en:"Independent study", patterns:[/\bind\b/i,/independent/i,/directed (?:study|work)/i,/独立研究/u] }
   ];
   const RELEASE_NOTES = [
+    { version:"v5.36", zh:["修复周课表卡片文字被压缩、截断的问题：课程号与名称、时间与教师、地点按完整文字行显示；短课时采用两行，长文字可悬停或点击查看。"], en:["Fixed compressed and clipped text in weekly schedule cards. Course identity, time and instructor, and location use complete text rows; shorter classes use two rows, with full details on hover or click."] },
     { version:"v5.35", zh:["按2026年10月26日法学院官方目录更新春季中英文课程库：133门课程、153个班次，时间、教师、教室和学分同步更新。","保留原有秋春已选课程及班次；最新清单未列出的原选课会显示待确认提示，不自动换班。","按实际日期安排非每周课程；官方日期或编号有冲突的班次在确认前不自动排课。"], en:["Refreshed both Spring catalogs from Cornell Law's October 26, 2026 catalog: 133 courses and 153 sections, including current times, instructors, rooms and credits.","Preserved existing Fall and Spring selections and section IDs. Selections absent from the current listing are retained with a confirmation notice, without automatic section substitution.","Scheduled irregular classes on their published dates; conflicting official dates or identifiers require confirmation before automatic scheduling."] },
     { version:"v5.34", zh:["按 Cornell Law 2026–27 General LL.M. Student Handbook 将每学期注册范围由旧版 10–15 更正为 10–17 学分；16 学分不再被误报为超学分。","IALS（LAW 6091）仍按 Fall 注册课程计入学期总注册学分，但不计入 General LL.M. 学位要求的 20 个其他法学分。","新增政策来源与冲突提示：当前学年专门 Handbook 明确为 10–17；Registrar 通用 FAQ 仍显示 10–15，如 Student Center 实际拦截应向 Registrar／Dean of Students 确认。"], en:["Corrected the per-semester General LL.M. registration range from the outdated 10–15 rule to 10–17 credits under Cornell Law's 2026–27 Student Handbook; a 16-credit semester is no longer misreported as an overload.","IALS (LAW 6091) remains included in Fall registered credits, while remaining excluded from the separate 20-credit General LL.M. degree-course requirement.","Added policy provenance and a source-conflict notice: the year-specific Handbook states 10–17, while the generic Registrar FAQ still says 10–15; confirm with the Registrar or Dean of Students if Student Center applies a lower operational cap."] },
     { version:"v5.33", zh:["统一修复全库 NY Bar 授课方式判定：标准讲授课、研讨课和讨论课不会仅因 instruction mode 留空或尚未发布而被扣除；只有明确标为 Online／Remote 的课程才会因授课方式不计入。","LAW 6051、LAW 6734 与 LAW 7713 现在分别正确计入 1、3、3 学分；用户当前秋春合计 28 学分会显示为 28 个 NY Bar 合资格课堂学分。","NY Bar 总进度下新增逐门计算明细；只要存在待确认或不计入课程就会自动展开，并明确显示每门课程的学分、状态与理由。独立研究仍不计入，诊所、实践课、混合授课及项目限制课程仍提示确认。"], en:["Applied one NY Bar delivery-mode rule across the full catalog: standard lectures, seminars, and discussions no longer lose credit merely because instruction mode is blank or not yet published; only an explicit Online or Remote designation excludes a course on delivery-mode grounds.","LAW 6051, LAW 6734, and LAW 7713 now correctly contribute 1, 3, and 3 credits. The user's current Fall + Spring plan therefore shows 28 qualifying NY Bar classroom credits.","Added a course-by-course calculation directly below the NY Bar total. It automatically opens whenever a selected course is pending confirmation or excluded, showing each course's credits, status, and reason. Independent study remains excluded; clinics, practica, hybrid delivery, and program restrictions still require confirmation."] },
@@ -1856,18 +1857,16 @@
           const roomShort = scheduleLocationSummary(room);
           const instructor = scheduleInstructorSummary(sec, c);
           const density = duration < 70 ? "compact" : duration < 100 ? "standard" : "spacious";
-          const compactVisual = density === "compact" || overlaps;
+          const compactVisual = height < 60 || overlaps;
           const customLabel = m.manualPlacement ? (isEnglish() ? "Personal placement" : "个人课表安排") : "";
-          const tooltip = `${c.code} ${courseTitle(c)} · ${m.start}–${m.end} · ${room}${customLabel ? ` · ${customLabel}` : ""}`;
+          const tooltip = `${c.code} ${courseTitle(c)} · ${m.start}–${m.end}${!calendarEvent ? ` · ${instructor}` : ""} · ${room}${customLabel ? ` · ${customLabel}` : ""}`;
           const overlapStyle = overlaps ? `left:${4 + conflictIndex * (92 / group.length)}%;width:${92 / group.length}%;right:auto;` : "";
           const conflictWith = overlaps ? group.filter(other => other.course.id !== c.id).map(other => other.course.code).join(", ") : "";
-          const blockDetails = calendarEvent
-            ? `<span class="schedule-course-title">${esc(calendarEvent.title)}</span><span class="schedule-time">${esc(calendarEvent.start)}–${esc(calendarEvent.end)}</span>${calendarEvent.location ? `<span class="schedule-location">⌖ ${esc(calendarEvent.location)}</span>` : ""}`
-            : compactVisual
-              ? `<div class="schedule-compact-details"><span class="schedule-time">${m.start}–${m.end}</span><span class="schedule-instructor">◎ ${esc(instructor)}</span><span class="schedule-location">⌖ ${esc(roomShort)}</span></div>`
-              : `<span class="schedule-course-title">${esc(courseTitle(c))}</span><span class="schedule-time">${m.start}–${m.end}</span>${customLabel ? `<span class="schedule-custom-note">${customLabel}</span>` : ""}<span class="schedule-instructor">◎ ${esc(instructor)}</span><span class="schedule-location">⌖ ${esc(roomShort)}</span>`;
+          const displayTitle = calendarEvent ? calendarEvent.title : courseTitle(c);
+          const metadata = [`${m.start}–${m.end}`, !calendarEvent ? `◎ ${instructor}` : "", compactVisual && roomShort ? `⌖ ${roomShort}` : ""].filter(Boolean).join(" · ");
+          const blockDetails = `<div class="schedule-heading"><strong>${esc(c.code)}</strong><span class="schedule-event-title">${esc(displayTitle)}</span></div><div class="schedule-event-meta">${esc(metadata)}</div>${!compactVisual && roomShort ? `<div class="schedule-event-room">⌖ ${esc(roomShort)}</div>` : ""}`;
           const dataAttribute = calendarEvent ? `data-calendar-event-id="${esc(calendarEvent.id)}"` : `data-course-id="${esc(c.id)}"`;
-          blocks.push(`<div class="schedule-block is-${density} ${compactVisual ? "is-compact-visual" : ""} ${calendarEvent ? "is-imported-calendar" : ""} ${overlaps ? "is-conflict in-conflict-group" : ""}" ${dataAttribute} data-conflict-with="${esc(conflictWith)}" title="${esc(tooltip)}" aria-label="${esc(tooltip)}" style="top:${top}px;height:${height}px;--block-bg:${bg};--block-border:${border};${overlapStyle}"><strong>${esc(c.code)}</strong>${blockDetails}</div>`);
+          blocks.push(`<div class="schedule-block is-${density} ${compactVisual ? "is-compact-visual" : ""} ${calendarEvent ? "is-imported-calendar" : ""} ${overlaps ? "is-conflict in-conflict-group" : ""}" ${dataAttribute} data-conflict-with="${esc(conflictWith)}" title="${esc(tooltip)}" aria-label="${esc(tooltip)}" style="top:${top}px;height:${height}px;--block-bg:${bg};--block-border:${border};${overlapStyle}">${blockDetails}</div>`);
         });
       });
       const noClass = isNoClassDate(date);

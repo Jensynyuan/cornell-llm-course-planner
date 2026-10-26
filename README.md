@@ -165,3 +165,7 @@
 ## v5.35 — Spring 2027 catalog refresh (2026-10-26)
 
 Updated both languages from Cornell Law Course Catalog to 133 current Spring course numbers and 153 sections. Existing selected course and section IDs are preserved. Saved offerings or sections absent from the current listing remain available in the personal schedule with a confirmation notice. Irregular meetings use explicit dates; contradictory official schedule fields require confirmation. Personal browser data is never included in source or deployment artifacts.
+
+## v5.36 — Schedule text layout
+
+Schedule cards now use non-shrinking text rows with ellipsis, preserving the time-grid geometry and all personal selections. Short classes use two rows; longer classes use three. Full details remain available on hover and click.
