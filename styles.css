@@ -1187,3 +1187,5 @@ body.is-course-dragging .schedule-drop-shell { transition: outline .15s ease, ba
 .bar-credit-breakdown-row.is-review em { background:#fff7da; color:#7a5700; }
 .bar-credit-breakdown-row.is-ineligible em { background:#fff1ef; color:#9c3b34; }
 .bar-credit-breakdown-row > small { grid-column:1 / -1; color:#6f7a86; font-size:7.5px; line-height:1.4; }
+
+.catalog-update-notice{background:#fff5dc;border:1px solid #d9b96c;border-radius:8px;padding:8px 12px;color:#6a4a14;font-size:12px;line-height:1.55;overflow-wrap:anywhere}.catalog-update-notice p{margin:3px 0}.schedule-course-token .catalog-update-notice{grid-column:1/-1}.section-option-content>p{font-size:12px;line-height:1.6;margin:6px 0}

@@ -23,7 +23,7 @@
   const NY_BAR_ALLOCATION = window.NY_BAR_ALLOCATION;
   const NY_BAR_ELIGIBILITY = window.NY_BAR_ELIGIBILITY;
   const CALENDAR = window.LLM_CALENDAR;
-  const APP_VERSION = "v5.34";
+  const APP_VERSION = "v5.35";
   const CORNELL_LLM_REGISTRATION_POLICY = Object.freeze({
     minimum:10,
     maximum:17,
@@ -84,6 +84,7 @@
     { id:"independent", zh:"独立研究", en:"Independent study", patterns:[/\bind\b/i,/independent/i,/directed (?:study|work)/i,/独立研究/u] }
   ];
   const RELEASE_NOTES = [
+    { version:"v5.35", zh:["按2026年10月26日法学院官方目录更新春季中英文课程库：133门课程、153个班次，时间、教师、教室和学分同步更新。","保留原有秋春已选课程及班次；最新清单未列出的原选课会显示待确认提示，不自动换班。","按实际日期安排非每周课程；官方日期或编号有冲突的班次在确认前不自动排课。"], en:["Refreshed both Spring catalogs from Cornell Law's October 26, 2026 catalog: 133 courses and 153 sections, including current times, instructors, rooms and credits.","Preserved existing Fall and Spring selections and section IDs. Selections absent from the current listing are retained with a confirmation notice, without automatic section substitution.","Scheduled irregular classes on their published dates; conflicting official dates or identifiers require confirmation before automatic scheduling."] },
     { version:"v5.34", zh:["按 Cornell Law 2026–27 General LL.M. Student Handbook 将每学期注册范围由旧版 10–15 更正为 10–17 学分；16 学分不再被误报为超学分。","IALS（LAW 6091）仍按 Fall 注册课程计入学期总注册学分，但不计入 General LL.M. 学位要求的 20 个其他法学分。","新增政策来源与冲突提示：当前学年专门 Handbook 明确为 10–17；Registrar 通用 FAQ 仍显示 10–15，如 Student Center 实际拦截应向 Registrar／Dean of Students 确认。"], en:["Corrected the per-semester General LL.M. registration range from the outdated 10–15 rule to 10–17 credits under Cornell Law's 2026–27 Student Handbook; a 16-credit semester is no longer misreported as an overload.","IALS (LAW 6091) remains included in Fall registered credits, while remaining excluded from the separate 20-credit General LL.M. degree-course requirement.","Added policy provenance and a source-conflict notice: the year-specific Handbook states 10–17, while the generic Registrar FAQ still says 10–15; confirm with the Registrar or Dean of Students if Student Center applies a lower operational cap."] },
     { version:"v5.33", zh:["统一修复全库 NY Bar 授课方式判定：标准讲授课、研讨课和讨论课不会仅因 instruction mode 留空或尚未发布而被扣除；只有明确标为 Online／Remote 的课程才会因授课方式不计入。","LAW 6051、LAW 6734 与 LAW 7713 现在分别正确计入 1、3、3 学分；用户当前秋春合计 28 学分会显示为 28 个 NY Bar 合资格课堂学分。","NY Bar 总进度下新增逐门计算明细；只要存在待确认或不计入课程就会自动展开，并明确显示每门课程的学分、状态与理由。独立研究仍不计入，诊所、实践课、混合授课及项目限制课程仍提示确认。"], en:["Applied one NY Bar delivery-mode rule across the full catalog: standard lectures, seminars, and discussions no longer lose credit merely because instruction mode is blank or not yet published; only an explicit Online or Remote designation excludes a course on delivery-mode grounds.","LAW 6051, LAW 6734, and LAW 7713 now correctly contribute 1, 3, and 3 credits. The user's current Fall + Spring plan therefore shows 28 qualifying NY Bar classroom credits.","Added a course-by-course calculation directly below the NY Bar total. It automatically opens whenever a selected course is pending confirmation or excluded, showing each course's credits, status, and reason. Independent study remains excluded; clinics, practica, hybrid delivery, and program restrictions still require confirmation."] },
     { version:"v5.32", zh:["修复切换课程学期后另一学期记录看似丢失的问题：Fall 与 Spring 继续保存在同一份个人课表中，NY Bar 24 学分及四项分类按 2026–27 学年统一累计。","LL.M. 每学期 10–15 学分要求现分别显示 Fall 与 Spring 两条进度，课程库学期筛选不会再改变个人年度进度。","按 Cornell Law 的 JD／Ithaca LL.M. 2026–27 官方校历校正 Spring 日期，并在周课表中标出马丁·路德·金纪念日、二月假期与春假；4 月 28 日按周一课表运行。","修复已选课程卡片的“学分当前计入”标签溢出，中文和英文长标签均会完整包在课程卡内。"], en:["Fixed the apparent loss of another term's record after switching the catalog term. Fall and Spring remain in one personal schedule, while the 24 NY Bar credits and four required categories now aggregate across the 2026–27 academic year.","The 10–15 LL.M. registration-credit rule is now shown separately for Fall and Spring. Filtering the catalog by term no longer changes the student's academic-year progress.","Aligned Spring dates with Cornell Law's official 2026–27 JD/Ithaca LL.M. calendar and labeled the Martin Luther King, Jr. Holiday, February Break, and Spring Break in the weekly schedule; April 28 follows a Monday class schedule.","Fixed the selected-course allocation badge so long English and Chinese labels stay fully inside their course cards."] },
@@ -109,7 +110,7 @@
   const customSchoolStore = loadCustomSchoolStore();
   // Imports are tied to a data build so a prior browser snapshot cannot silently
   // replace the current verified Cornell dataset.
-  const CURRENT_CORNELL_DATASET_VERSION = "v5.32";
+  const CURRENT_CORNELL_DATASET_VERSION = "v5.35";
   const BUNDLED_CORNELL_DATABASE_VERSION = CURRENT_CORNELL_DATASET_VERSION;
   let cornellImportedDataset = loadCornellImportedDataset();
   let currentSchoolId = safeLocalStorageGet("llm-course-planner-current-school") || "cornell";
@@ -225,7 +226,7 @@
     {
       category: "数据",
       question: "当前 Cornell 数据库包含什么？",
-      answer: "当前数据库按学期保留 263 条开课记录，包括 Fall 2026 的 136 门与 Spring 2027 的 127 门。春季数据已按要求剔除仅限本科生、仅限 JD 及仅限 Cornell Tech LL.M. 的课程；每条记录均标明学期，同一课程号在春秋两季开设时会分别显示。",
+      answer: "当前数据库按学期保留 269 条当前开课记录，包括 Fall 2026 的 136 门与 Spring 2027 的 133 门。春季数据已按要求剔除仅限本科生、仅限 JD 及仅限 Cornell Tech LL.M. 的课程；每条记录均标明学期，同一课程号在春秋两季开设时会分别显示。",
       sourceLabel: "Cornell Law Course Offerings 与 Cornell Class Roster",
       sourceUrl: "https://support.law.cornell.edu/CourseOfferings/"
     },
@@ -249,7 +250,7 @@
     { category:"Calendar", question:"Why does the same course not appear in every week?", answer:"The weekly calendar follows each meeting pattern's actual start and end dates and excludes law-school no-class dates. Seven-week, Orientation, and early-ending courses appear only in the weeks when they actually meet." },
     { category:"Location", question:"Why do some courses show only a campus rather than a room?", answer:"Locations follow Cornell's official roster. When a specific room is not published, the planner says so rather than treating Ithaca campus or Cornell Law School as a room. Published building and room information is included in the bundled official roster data where available." },
     { category:"Data", question:"Do I need an OpenAI API key or internet access to open the planner?", answer:"No. The Cornell 2026-27 law-course dataset is bundled for offline search, review, and scheduling. Internet access is only needed when you choose to import or update an external school dataset." },
-    { category:"Data", question:"What does the current Cornell dataset include?", answer:"The bundled database contains 263 term-specific offerings: 136 for Fall 2026 and 127 for Spring 2027. Spring offerings explicitly limited to undergraduates, JD students, or Cornell Tech LL.M. students are excluded. Each offering carries a term label, so a course taught in both terms appears separately." },
+    { category:"Data", question:"What does the current Cornell dataset include?", answer:"The bundled database contains 269 current term-specific offerings: 136 for Fall 2026 and 133 for Spring 2027. Spring offerings explicitly limited to undergraduates, JD students, or Cornell Tech LL.M. students are excluded. Each offering carries a term label, so a course taught in both terms appears separately." },
     { category:"Data", question:"Will refreshing erase my schedule, or can another user see it?", answer:"No. The planner automatically saves the schedule in this browser under the current site domain, so a normal refresh or reopening the page keeps it. Visitors on another device or browser cannot read it, but people sharing the same browser profile will see the same local data. Use Export to calendar in My Schedule to download an .ics file for Google, Apple, or Outlook; use Import from calendar to add personal busy times. Calendar files are processed only on this device." }
   ];
   const palette = [
@@ -452,7 +453,7 @@
   function nyBarFilterBucket(c, sectionId = undefined) { return barCategories(c).includes("core") ? "core" : barStatus(c, sectionId === undefined ? sectionSelectionId(defaultSectionSelection(c)) : sectionId); }
   function assessmentEvidence(c) {
     const source = c.assessmentEvidence && typeof c.assessmentEvidence === "object" ? c.assessmentEvidence : {};
-    return { assignments:Array.isArray(source.assignments) ? source.assignments : [], finalAssessment:Array.isArray(source.finalAssessment) ? source.finalAssessment : [], finalMethods:Array.isArray(source.finalMethods) ? source.finalMethods : [], status:source.status || "not-stated-in-official-description", sourceUrl:source.sourceUrl || c.sourceUrl || "" };
+    return { assignments:!isEnglish() && Array.isArray(source.assignmentsZh) ? source.assignmentsZh : Array.isArray(source.assignments) ? source.assignments : [], finalAssessment:!isEnglish() && Array.isArray(source.finalAssessmentZh) ? source.finalAssessmentZh : Array.isArray(source.finalAssessment) ? source.finalAssessment : [], finalMethods:Array.isArray(source.finalMethods) ? source.finalMethods : [], status:source.status || "not-stated-in-official-description", sourceUrl:source.sourceUrl || c.sourceUrl || "" };
   }
   function hasAssignmentEvidence(c) { return assessmentEvidence(c).assignments.length > 0; }
   function finalMethods(c) { return assessmentEvidence(c).finalMethods; }
@@ -786,6 +787,7 @@
     const llmValues = selectedFilterValues(els.llmFilter);
     const formatValues = selectedFilterValues(els.courseFormatFilter);
     let list = courses.filter(c => {
+      if (c.catalogListingStatus === "not-listed") return false;
       const locationText = (c.sections || []).flatMap(section => (section.meetings || []).map(m => meetingLocation(m, section, c))).join(" ");
       const barCategoryAliases = barCategories(c).flatMap(category => ({
         professional:["职业责任", "professional responsibility"],
@@ -1312,6 +1314,11 @@
 
   function sectionSelectionId(ids) { return [...new Set(ids || [])].filter(Boolean).sort().join("|"); }
 
+  function catalogNoticeHtml(course, section) {
+    const messages = [isEnglish() ? course?.catalogWarningEn : course?.catalogWarningZh, isEnglish() ? section?.catalogWarningEn : section?.catalogWarningZh, isEnglish() ? section?.scheduleWarningEn : section?.scheduleWarningZh, ...(course?.sourceConflicts || []).map(item => isEnglish() ? item.messageEn : item.messageZh)].filter(Boolean);
+    return messages.length ? `<div class="catalog-update-notice" role="status">${[...new Set(messages)].map(message => `<p>⚠ ${esc(message)}</p>`).join("")}</div>` : "";
+  }
+
   function getSection(c, sid) {
     const selectedIds = String(sid || "").split("|").filter(Boolean);
     if (selectedIds.length > 1) {
@@ -1679,7 +1686,7 @@
       const allocationBadge = barCategories(course).length > 1 ? `<span class="badge badge-allocation schedule-allocation-badge">${isEnglish() ? "Credits allocated to: " : "学分当前计入："}${esc(barCategoryShortLabel(assignedBarCategory(course)))}</span>` : "";
       return `<article class="schedule-course-token is-selected ${conflictLabels.length ? "has-schedule-conflict" : ""}" data-course-id="${esc(course.id)}" style="--token-bg:${bg};--token-border:${border}">
         <div><strong>${esc(course.code)} · ${esc(courseTitle(course))}</strong><span>${currentSchoolId === "cornell" ? `${esc(courseTermLabel(course))} · ` : ""}◷ ${esc(formatSectionMeetings(section))}</span><small>◎ ${esc(instructors)} · ⌖ ${esc(room)}</small>${allocationBadge}</div>
-        ${conflictNote}<button type="button" class="schedule-token-remove ${conflictLabels.length ? "is-conflict-remove" : ""}" data-tray-remove="${esc(course.id)}">${conflictLabels.length ? (isEnglish() ? "Remove conflict" : "移除冲突课程") : (isEnglish() ? "Remove" : "移除")}</button>
+        ${catalogNoticeHtml(course, section)}${conflictNote}<button type="button" class="schedule-token-remove ${conflictLabels.length ? "is-conflict-remove" : ""}" data-tray-remove="${esc(course.id)}">${conflictLabels.length ? (isEnglish() ? "Remove conflict" : "移除冲突课程") : (isEnglish() ? "Remove" : "移除")}</button>
       </article>`;
     }).join("");
     els.scheduleCourseTray.querySelectorAll(".schedule-course-token").forEach(token => token.addEventListener("click", event => {
@@ -1930,6 +1937,7 @@
   }
 
   function getMeetingsForDate(section, date, course = null) {
+    if (course?.catalogListingStatus === "not-listed" || section?.catalogListingStatus === "not-listed") return [];
     if (!section || isNoClassDate(date)) return [];
     const iso = toIsoDate(date);
     const term = course ? termProfileForCourse(course) : (termProfileForDate(date) || TERM);
@@ -1944,6 +1952,7 @@
   }
 
   function getScheduleMeetingsForDate(course, section, date) {
+    if (course?.catalogListingStatus === "not-listed" || section?.catalogListingStatus === "not-listed" || section?.meetingStatus === "source-conflict") return [];
     const manual = state.manualPlacements?.[course?.id];
     if (!manual) return getMeetingsForDate(section, date, course);
     if (isNoClassDate(date)) return [];
@@ -2000,12 +2009,13 @@
         <div class="detail-stat detail-stat-location"><label>${en ? "Teaching location" : "授课地点"}</label><strong>${courseLocationSourceHtml(c, getSection(c, selectedDetailSectionId))}</strong><button type="button" class="manual-location-button" id="manualLocationBtn">${en ? "Paste or edit location" : "粘贴／修改具体地点"}</button></div>
         <div class="detail-stat"><label>${en ? "Recommendation" : "推荐度"}</label><strong>${recommendationScore(c)} / 100</strong></div>
       </div>
+      ${catalogNoticeHtml(c, getSection(c, selectedDetailSectionId))}
       ${detailDescriptionHtml(c, en)}
       ${detailAdditionalInformationHtml(c, en)}
       ${detailOfficialAttributesHtml(c, en)}
       <section class="detail-section"><h3>${en ? "Assessment and scheduled load" : "课程负担与考核"}</h3>
         <div class="workload-grid">
-          <div class="workload-item"><label>${en ? "Weekly class time" : "每周课堂时间"}</label><strong>${esc(profile.classTime)}</strong></div>
+          <div class="workload-item"><label>${en ? "Class meeting time" : "课堂时间安排"}</label><strong>${esc(profile.classTime)}</strong></div>
           <div class="workload-item"><label>${en ? "Coursework mentioned in description" : "课程说明提及的作业／持续性任务"}</label>${officialEvidenceHtml(profile.assignments, en ? "The official description does not state assigned work." : "官方课程说明未载明具体作业。")}</div>
           <div class="workload-item"><label>${en ? "Final assessment method" : "最终考核方式"}</label>${finalAssessmentHtml(c, en)}</div>
         </div>
@@ -2057,13 +2067,14 @@
   function sectionOptionHtml(c,s,group,selectedIds = new Set()) {
     const checked = selectedIds.has(s.id);
     const meetingRows = (s.meetings || []).length ? (s.meetings || []).map(m => `<div class="meeting-detail-row"><span>◷ ${esc(formatMeetingTime(m))}</span><span>⌖ ${locationLinkHtml(meetingLocation(m, s, c))}</span></div>`).join("") : `<div class="meeting-detail-row"><span>${isEnglish() ? "Time pending" : "时间待公布"}</span><span>⌖ ${locationLinkHtml(sectionLocationSummary(s, c))}</span></div>`;
-    return `<label class="section-option"><input type="radio" name="detail-${esc(group.id)}" data-detail-section-group="${esc(group.id)}" value="${esc(s.id)}" ${checked ? "checked" : ""}><span class="section-option-content"><strong>${sectionIdentityHtml(s)}</strong>${meetingRows}<small class="location-source-note">${sectionHasPublishedLocation(s) ? `${isEnglish() ? "Location from official school data" : `教室来自${esc(currentSchoolProfile.shortZh || currentSchoolProfile.nameZh)}官方课程数据`}` : `${isEnglish() ? "Specific room not published in official school data" : `${esc(currentSchoolProfile.shortZh || currentSchoolProfile.nameZh)}官方课程数据尚未发布具体教室`}`}</small>${s.grading || s.gradingZh ? `<small class="section-enrollment-note">▱ ${esc(formatGrading(s.grading || s.gradingZh))}</small>` : ""}${s.consentZh || s.consentEn ? `<small class="section-enrollment-note">▣ ${esc(isEnglish() ? (s.consentEn || s.consentZh) : s.consentZh)}</small>` : ""}</span></label>`;
+    return `<label class="section-option"><input type="radio" name="detail-${esc(group.id)}" data-detail-section-group="${esc(group.id)}" value="${esc(s.id)}" ${checked ? "checked" : ""}><span class="section-option-content"><strong>${sectionIdentityHtml(s)}</strong>${s.titleEn && c.officialTitleVariantsEn?.length > 1 ? `<p>${esc(isEnglish() ? s.titleEn : s.titleZh)}</p><p>${esc(isEnglish() ? s.descriptionEn : s.descriptionZh)}</p>` : ""}${catalogNoticeHtml(null,s)}${meetingRows}<small class="location-source-note">${sectionHasPublishedLocation(s) ? `${isEnglish() ? "Location from official school data" : `教室来自${esc(currentSchoolProfile.shortZh || currentSchoolProfile.nameZh)}官方课程数据`}` : `${isEnglish() ? "Specific room not published in official school data" : `${esc(currentSchoolProfile.shortZh || currentSchoolProfile.nameZh)}官方课程数据尚未发布具体教室`}`}</small>${s.grading || s.gradingZh ? `<small class="section-enrollment-note">▱ ${esc(formatGrading(s.grading || s.gradingZh))}</small>` : ""}${s.consentZh || s.consentEn ? `<small class="section-enrollment-note">▣ ${esc(isEnglish() ? (s.consentEn || s.consentZh) : s.consentZh)}</small>` : ""}</span></label>`;
   }
 
   function workloadProfile(c, section) {
     const meetings = section?.meetings || [];
     const weeklyMinutes = meetings.reduce((sum, m) => sum + Math.max(0, timeToMinutes(m.end) - timeToMinutes(m.start)) * parsePattern(m.pattern).length, 0);
-    const classTime = weeklyMinutes ? (isEnglish() ? `${Math.floor(weeklyMinutes/60)}h${weeklyMinutes%60 ? ` ${weeklyMinutes%60}m` : ""}` : `${Math.floor(weeklyMinutes/60)}小时${weeklyMinutes%60 ? `${weeklyMinutes%60}分钟` : ""}`) : (isEnglish() ? "Intensive course or meeting time not published" : "集中授课或时间未公布");
+    const irregular = meetings.length > 0 && meetings.every(m => m.startDate && m.startDate === m.endDate);
+    const classTime = irregular ? (isEnglish() ? `${meetings.length} dated meetings (see sections)` : `${meetings.length}次指定日期课程（见班次）`) : weeklyMinutes ? (isEnglish() ? `${Math.floor(weeklyMinutes/60)}h${weeklyMinutes%60 ? ` ${weeklyMinutes%60}m` : ""}` : `${Math.floor(weeklyMinutes/60)}小时${weeklyMinutes%60 ? `${weeklyMinutes%60}分钟` : ""}`) : (isEnglish() ? "Intensive course or meeting time not published" : "集中授课或时间未公布");
     const evidence = assessmentEvidence(c);
     return { classTime, assignments:evidence.assignments, finalAssessment:evidence.finalAssessment };
   }
@@ -2076,7 +2087,7 @@
   function finalAssessmentHtml(course, en) {
     const methods = finalMethods(course);
     if (!methods.length) return `<strong>${en ? "The official description does not state a final assessment method." : "官方课程说明未载明最终考核方式。"}</strong>`;
-    return `<ul class="official-evidence-list">${methods.map(method => `<li><strong>${esc(en ? method.labelEn : method.labelZh)}</strong><br>${esc(method.evidence)}</li>`).join("")}</ul>`;
+    return `<ul class="official-evidence-list">${methods.map(method => `<li><strong>${esc(en ? method.labelEn : method.labelZh)}</strong><br>${esc(en ? (method.evidenceEn || method.evidence) : (method.evidenceZh || method.evidence))}</li>`).join("")}</ul>`;
   }
 
   function loadCustomSchoolStore() {
@@ -2803,6 +2814,7 @@
   function barEligibility(c, selectedSectionId = undefined) {
     const sectionId = selectedSectionId === undefined ? (state.selected[c.id] || sectionSelectionId(defaultSectionSelection(c))) : selectedSectionId;
     const combinedSection = getSection(c, sectionId);
+    if (c.catalogListingStatus === "not-listed" || combinedSection?.catalogListingStatus === "not-listed") return { status:"review", code:"listing-unconfirmed", reasonEn:"the saved course or section is absent from the current listing", reasonZh:"原选课程或班次当前未列出，须确认" };
     const sections = combinedSection?.sourceSections || (combinedSection ? [combinedSection] : []);
     return NY_BAR_ELIGIBILITY.classifyCourse({ course:c, sections, schoolId:currentSchoolId });
   }
@@ -2818,7 +2830,7 @@
     if (isEnglish()) return text;
     if (low.includes("letter grades only") || low === "graded" || low.includes("letter graded")) return "仅字母等级评分";
     if (low.includes("satisfactory/unsatisfactory") || low === "s/u" || low.includes("sat/unsat")) return "合格／不合格（S/U）";
-    if (low.includes("student option") || low.includes("letter or satisfactory")) return "学生可选字母等级或 S/U";
+    if (low.includes("student option") || low.includes("letter or satisfactory") || low.includes("letter or s/u")) return "学生可选字母等级或 S/U";
     return text.replace(/Letter grades only/gi, "仅字母等级评分").replace(/Satisfactory\/Unsatisfactory/gi, "合格／不合格（S/U）");
   }
 
@@ -2959,6 +2971,7 @@
   }
 
   function applyLocalCourseEdits() {
+    if (currentSchoolId === "cornell" && window.CATALOG_COMPATIBILITY) courses = window.CATALOG_COMPATIBILITY.retainSelections(courses, state.selected, window.CORNELL_SPRING_RETAINED || {});
     state.courseOverrides ||= {};
     state.customCourses ||= [];
     const overrides = state.courseOverrides;

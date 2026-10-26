@@ -1,6 +1,6 @@
 # LL.M. Course Planner v5.34
 
-本机离线课程规划工具，默认以英文界面打开，提供 Cornell Fall 2026 的 136 门课程与 Spring 2027 的 127 门课程，并保留中英文一键切换；其他法学院可按“官方材料 → AI 整理 → ZIP 导入”的方式扩展。
+本机离线课程规划工具，默认以英文界面打开，提供 Cornell Fall 2026 的 136 门课程与 Spring 2027 的 133 门课程，并保留中英文一键切换；其他法学院可按“官方材料 → AI 整理 → ZIP 导入”的方式扩展。
 
 ## v5.34 重点
 
@@ -161,3 +161,7 @@
 ## 数据限制
 
 数据只保存在当前设备浏览器。软件不会绕过登录、权限或访问控制。NY Bar、学位及签证资格必须以学校和主管机构的最终确认为准。
+
+## v5.35 — Spring 2027 catalog refresh (2026-10-26)
+
+Updated both languages from Cornell Law Course Catalog to 133 current Spring course numbers and 153 sections. Existing selected course and section IDs are preserved. Saved offerings or sections absent from the current listing remain available in the personal schedule with a confirmation notice. Irregular meetings use explicit dates; contradictory official schedule fields require confirmation. Personal browser data is never included in source or deployment artifacts.
