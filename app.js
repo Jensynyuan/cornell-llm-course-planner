@@ -27,7 +27,7 @@
   const NY_BAR_ALLOCATION = window.NY_BAR_ALLOCATION;
   const NY_BAR_ELIGIBILITY = window.NY_BAR_ELIGIBILITY;
   const CALENDAR = window.LLM_CALENDAR;
-  const APP_VERSION = "v5.38";
+  const APP_VERSION = "v5.39";
   let scheduleContentObserver = null;
   let scheduleFitFrame = 0;
   const CORNELL_LLM_REGISTRATION_POLICY = Object.freeze({
@@ -90,6 +90,7 @@
     { id:"independent", zh:"独立研究", en:"Independent study", patterns:[/\bind\b/i,/independent/i,/directed (?:study|work)/i,/独立研究/u] }
   ];
   const RELEASE_NOTES = [
+    { version:"v5.39", zh:["LAW 7230 的不同专题可分别加入课表；旧专题选择会保留。", "多个专题的同时注册及分别计学分须向 Cornell Law 确认。"], en:["Plan different LAW 7230 topics independently while retaining existing topic selections.", "Confirm concurrent enrollment and separate credit with Cornell Law."] },
     { version:"v5.38", zh:["更新春季专题课程和短期课程日期，支持按专题名称搜索；官方来源有差异时显示核实提示。", "保留原有选课及班次；对授课形式有冲突的课程和时间未公布的新专题提示确认。"], en:["Updated spring seminar topics and short-course dates, added topic-name search, and surfaced differences between official sources.", "Existing selections and sections are retained; conflicting delivery information and the new topic with an unpublished meeting time are flagged for confirmation."] },
     { version:"v5.37", zh:["课表完整显示课程名并自动换行；时间轴按内容适配，小屏及密集日程自动按日完整显示；优化导航、配色及操作层次。","拖入周课表时显示课程的官方时间框与实际落点：放进官方时间框即按全部官方上课日加入，放在其他位置才作为仅限当天的个人安排，并在课程卡上标明。"], en:["Schedule cards wrap complete names and details. The adaptive timeline switches to day-by-day cards on small screens or dense weeks, with clearer navigation and visual hierarchy.","Dragging into the weekly grid now outlines the course's official times and previews the exact landing slot. Dropping inside an official outline adds every official meeting; dropping elsewhere creates a one-day personal placement, which is labelled on the card."] },
     { version:"v5.36", zh:["修复周课表卡片文字被压缩、截断的问题：课程号与名称、时间与教师、地点按完整文字行显示；短课时采用两行，长文字可悬停或点击查看。"], en:["Fixed compressed and clipped text in weekly schedule cards. Course identity, time and instructor, and location use complete text rows; shorter classes use two rows, with full details on hover or click."] },
@@ -315,6 +316,7 @@
     return result;
   }
   let state = loadState();
+  migrateSeminarSelection(state);
   let currentView = "courses";
   let currentDetailCourseId = null;
   let selectedDetailSectionId = null;
@@ -328,9 +330,9 @@
   function bundledCornellCourses() {
     const imported = Array.isArray(cornellImportedDataset?.courses) && cornellImportedDataset.courses.length ? cornellImportedDataset.courses : null;
     if (imported) return imported.map(course => isEnglish() ? ({ ...course, titleZh:course.titleEn || course.titleZh, descriptionZh:course.descriptionEn || course.descriptionZh, gradingZh:course.grading || course.gradingZh, restrictionZh:course.restrictionEn || course.restriction || course.restrictionZh, prerequisitesZh:course.prerequisitesEn || course.prerequisites || course.prerequisitesZh, assessmentZh:course.assessmentEn || course.assessmentZh, displayLanguage:"en" }) : ({ ...course }));
-    if (uiLanguage !== "en" || !cornellCatalogEn.length) return [...cornellCatalog];
+    if (uiLanguage !== "en" || !cornellCatalogEn.length) return splitSeminarTopics(cornellCatalog);
     const englishByOffering = new Map(cornellCatalogEn.map(course => [catalogOfferingKey(course), course]));
-    return cornellCatalog.map(course => {
+    return splitSeminarTopics(cornellCatalog.map(course => {
       const english = englishByOffering.get(catalogOfferingKey(course)) || {};
       return {
         ...course,
@@ -343,7 +345,55 @@
         campusZh: english.campusZh || course.campusZh,
         displayLanguage: "en"
       };
+    }));
+  }
+
+  // Each LAW 7230 topic is independently plannable while keeping the
+  // original course number and section identifiers from Cornell's catalog.
+  function splitSeminarTopics(catalog) {
+    return catalog.flatMap(course => {
+      if (course.id !== "LAW-7230-SP27" || (course.sections || []).length < 2) return [course];
+      return course.sections.map((section, index) => ({
+        ...course,
+        id: index === 0 ? course.id : `${course.id}-topic-${section.section}`,
+        independentlyPlannableTopic:true,
+        sections:[section],
+        titleEn:section.titleEn || course.titleEn,
+        officialTitleEn:section.titleEn || course.officialTitleEn,
+        titleZh:isEnglish() ? (section.titleEn || course.titleEn) : (section.titleZh || course.titleZh),
+        descriptionEn:section.descriptionEn || course.descriptionEn,
+        officialDescriptionEn:section.descriptionEn || course.officialDescriptionEn,
+        descriptionZh:isEnglish() ? (section.descriptionEn || course.descriptionEn) : (section.descriptionZh || course.descriptionZh),
+        instructors:section.instructors || course.instructors,
+        grading:section.grading || course.grading,
+        gradingZh:section.gradingZh || course.gradingZh,
+        additionalInformationEn:section.additionalInformationEn || [],
+        additionalInformationZh:section.additionalInformationZh || [],
+        assessmentEvidence:{ assignments:[], assignmentsZh:[], finalAssessment:[], finalAssessmentZh:[], finalMethods:[], status:"not-stated-in-official-description" },
+        credits:section.credits ?? course.credits,
+        officialTitleVariantsEn:[section.titleEn || course.titleEn],
+        sourceConflicts:(course.sourceConflicts || []).filter(item => item.field !== "multiple-topic-selection"),
+        catalogWarningZh:"不同 LAW 7230 专题可同时放入规划表；能否同学期重复注册并分别计学分，须向 Cornell Law 确认。",
+        catalogWarningEn:"Different LAW 7230 topics can be planned together. Confirm with Cornell Law whether concurrent enrollment and separate credit are permitted."
+      }));
     });
+  }
+
+  function migrateSeminarSelection(saved) {
+    const original = "LAW-7230-SP27";
+    const sectionId = saved?.selected?.[original];
+    const section = cornellSpringCatalog.find(course => course.id === original)?.sections?.find(item => item.id === sectionId);
+    if (!section || section.section === "101") return;
+    const target = `${original}-topic-${section.section}`;
+    if (saved.selected[target]) return; // Never overwrite a separate saved selection.
+    saved.selected[target] = sectionId;
+    delete saved.selected[original];
+    for (const name of ["manualPlacements", "barCategoryAllocations", "courseOverrides", "locationOverrides"]) {
+      if (saved[name] && Object.prototype.hasOwnProperty.call(saved[name], original) && !(target in saved[name])) {
+        saved[name][target] = saved[name][original];
+        delete saved[name][original];
+      }
+    }
   }
 
   function isEnglish() { return uiLanguage === "en"; }
@@ -974,7 +1024,7 @@
     return `<article class="course-card ${selected ? "is-selected" : ""}" draggable="true" data-course-id="${esc(c.id)}">
       <div class="course-card-top">
         <div class="course-card-content">
-          <div class="course-code">${esc(c.code)}${classNumber ? ` · ${isEnglish() ? "Class number" : "课程班号"} ${esc(classNumber)}` : ""}</div>
+          <div class="course-code">${esc(c.code)}${c.independentlyPlannableTopic ? ` · SEM ${esc(c.sections[0].section)}` : ""}${classNumber ? ` · ${isEnglish() ? "Class number" : "课程班号"} ${esc(classNumber)}` : ""}</div>
           <div class="course-title-row"><h3 class="course-title">${esc(title)}</h3>${badgesHtml(c, displaySection?.id)}</div>
           ${matchingTopics.length ? `<div class="course-location-line"><strong>${selected && !matchingTopics.some(section => section.id === selectedSection?.id) ? (isEnglish() ? "Matching topic (not selected)" : "匹配专题（非已选班次）") : (isEnglish() ? "Matching topic" : "匹配专题")}</strong> · ${[...new Set(matchingTopics.map(section => isEnglish() ? (section.titleEn || section.titleZh) : (section.titleZh || section.titleEn)))].map(esc).join("；")}</div>` : ""}
           ${catalogNoticeHtml(c, displaySection)}
@@ -1448,6 +1498,9 @@
         [isEnglish() ? "NYLE / Bar tested subjects" : "NYLE / Bar 考试科目", categoryCredits("core"), 6]
       ];
       els.creditProgress.innerHTML = `<p class="progress-term-context"><strong>${isEnglish() ? "2026–27 academic-year record" : "2026–27 秋春学年个人记录"}</strong><span>${isEnglish() ? "The catalog term filter never removes another term's selections or progress." : "课程库学期筛选不会移除另一学期的选课或进度。"}</span></p>${rangeProgressHtml(isEnglish() ? `Fall 2026 LL.M. registration (${registrationMinimum}–${registrationMaximum})` : `2026 秋季 LL.M. 注册学分（${registrationMinimum}–${registrationMaximum}）`, annual.registrationCredits.FA26, registrationMinimum, registrationMaximum)}${rangeProgressHtml(isEnglish() ? `Spring 2027 LL.M. registration (${registrationMinimum}–${registrationMaximum})` : `2027 春季 LL.M. 注册学分（${registrationMinimum}–${registrationMaximum}）`, annual.registrationCredits.SP27, registrationMinimum, registrationMaximum)}${progressHtml(isEnglish() ? "2026–27 NY Bar qualifying classroom credits" : "2026–27 学年 NY Bar 课堂课程学分", annual.eligibleCredits, 24)}${nyBarCreditBreakdownHtml(selected)}<p class="progress-policy-note">${isEnglish() ? "NY Bar credits and categories aggregate all selected Fall and Spring offerings. For Cornell Law lectures, seminars, and discussions, a blank or not-yet-published instruction mode does not remove classroom credit; an explicit Online or Remote designation does. Independent study does not count, while clinics, practica, hybrid delivery, and restricted sections require confirmation." : "NY Bar 课堂学分及分类统一累计全部秋季与春季已选课程。Cornell Law 的讲授课、研讨课和讨论课不会仅因授课方式留空或尚未发布而被扣除；明确标为 Online／Remote 才会因授课方式不计入。独立研究不计入，诊所、实践课、混合授课及项目限制班次须确认。"}</p><div class="progress-subheading">${isEnglish() ? "NY Bar required categories · full academic year" : "NY Bar 分类要求 · 秋春学年累计"}</div>${barItems.map(([label, value, target]) => progressHtml(label, value, target)).join("")}${barAllocationControlsHtml(selected)}<p class="progress-policy-note">${isEnglish() ? "Where Cornell lists a course in more than one category, the planner counts it once in the category selected above. Confirm your final allocation with Cornell Law and BOLE." : "若 Cornell 将同一课程列入多个类别，工具仅按上方所选归类计入一次；最终学分分配请向 Cornell Law 和 BOLE 确认。"}</p><p class="progress-policy-note">${isEnglish() ? `For 2026–27, the General LL.M. Student Handbook sets a ${registrationMinimum}–${registrationMaximum} credit registration range per semester; approval is required outside that range. IALS counts in the Fall registration total but not toward the separate 20-credit degree-course requirement. Cornell's generic Registrar FAQ still says 10–15, so confirm directly if Student Center applies a lower operational cap. ` : `2026–27 General LL.M. Student Handbook 规定每学期注册 ${registrationMinimum}–${registrationMaximum} 学分，超出范围须申请批准。IALS 计入 Fall 总注册学分，但不计入另行要求的 20 个其他法学分。Cornell Registrar 通用 FAQ 仍写 10–15；如 Student Center 实际采用更低上限，应直接确认。`}<a href="${CORNELL_LLM_REGISTRATION_POLICY.sourceUrl}" target="_blank" rel="noopener">${isEnglish() ? "Official 2026–27 Handbook" : "2026–27 官方 Handbook"}</a></p>`;
+      if (selected.filter(course => course.code === "LAW 7230" && courseTermCode(course) === "SP27").length > 1) {
+        els.creditProgress.insertAdjacentHTML("afterbegin", `<p class="catalog-update-notice">${isEnglish() ? "Planned registration credits include each selected LAW 7230 topic. Concurrent enrollment and separate credit are unconfirmed; these topics are pending in the NY Bar calculation." : "规划注册学分包含每个已选 LAW 7230 专题；同时注册和分别计分尚未确认，这些专题在 NY Bar 统计中列为待确认。"}</p>`);
+      }
       bindBarAllocationControls();
       return;
     }
@@ -2238,7 +2291,7 @@
     const sectionChanged = selected && state.selected[c.id] !== selectedDetailSectionId;
     const profile = workloadProfile(c, getSection(c, selectedDetailSectionId));
     const en = isEnglish();
-    const detailTopic = c.officialTitleVariantsEn?.length > 1 ? getSection(c, selectedDetailSectionId) : null;
+    const detailTopic = c.independentlyPlannableTopic || c.officialTitleVariantsEn?.length > 1 ? getSection(c, selectedDetailSectionId) : null;
     const detailTitle = detailTopic?.titleEn ? (en ? detailTopic.titleEn : (detailTopic.titleZh || detailTopic.titleEn)) : courseTitle(c);
     els.detailContent.innerHTML = `<div class="detail-code">${esc(c.code)}</div><h2 class="detail-title">${esc(detailTitle)}</h2><div class="detail-badges">${badgesHtml(c, selectedDetailSectionId)}</div>
       <div class="detail-grid">
@@ -2464,6 +2517,7 @@
     courses = id === "cornell" ? (generated.length ? generated : bundledCornellCourses()) : (customSchoolStore[id]?.courses || []);
     courses = courses.map(course => ({ ...course, schoolId:course.schoolId || id }));
     state = loadState();
+    migrateSeminarSelection(state);
     applyLocalCourseEdits();
     ensureIalsSelected();
     pendingImportedDataset = null;
@@ -3051,6 +3105,7 @@
   }
 
   function barEligibility(c, selectedSectionId = undefined) {
+    if (c.code === "LAW 7230" && courseTermCode(c) === "SP27" && selectedCourses().filter(course => course.code === "LAW 7230" && courseTermCode(course) === "SP27").length > 1) return { status:"review", code:"repeat-credit-unconfirmed", reasonEn:"Concurrent enrollment and separate credit for multiple LAW 7230 topics require Cornell Law confirmation.", reasonZh:"同时修读多个 LAW 7230 专题及分别计学分须经 Cornell Law 确认。" };
     const sectionId = selectedSectionId === undefined ? (state.selected[c.id] || sectionSelectionId(defaultSectionSelection(c))) : selectedSectionId;
     const combinedSection = getSection(c, sectionId);
     if (c.catalogListingStatus === "not-listed" || combinedSection?.catalogListingStatus === "not-listed") return { status:"review", code:"listing-unconfirmed", reasonEn:"the saved course or section is absent from the current listing", reasonZh:"原选课程或班次当前未列出，须确认" };
