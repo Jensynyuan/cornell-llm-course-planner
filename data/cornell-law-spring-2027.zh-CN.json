@@ -5,10 +5,10 @@
     "roster": "Spring 2027",
     "termCode": "SP27",
     "sourceUrl": "https://support.law.cornell.edu/CourseCatalog/",
-    "sourceCheckedAt": "2026-10-26T18:50:06.816Z",
-    "sourceSha256": "7ea4295bfcea4dbbe651ef46cbdddced4f889e89d77cf190af5da2df732ee640",
-    "sourceCourseRecordCount": 144,
-    "sourceSectionCount": 160,
+    "sourceCheckedAt": "2026-10-27T15:59:03.971Z",
+    "sourceSha256": "d1e359d037b115f090562164378ba8177b1b1ac55bb00ce72f5c9d3ebfa276c0",
+    "sourceCourseRecordCount": 145,
+    "sourceSectionCount": 161,
     "excludedSourceRecordCount": 7,
     "excludedCourses": [
       {
@@ -48,9 +48,9 @@
       }
     ],
     "exclusionPolicy": "Excluded only courses explicitly limited to undergraduates, JD students, or Cornell Tech LL.M. students.",
-    "includedSourceRecordCount": 137,
+    "includedSourceRecordCount": 138,
     "courseCount": 133,
-    "sectionCount": 153,
+    "sectionCount": 154,
     "mergedDuplicateCourseCodes": [
       "LAW 6761",
       "LAW 7230",
@@ -69,7 +69,7 @@
       "2027-04-01",
       "2027-04-02"
     ],
-    "universityClassRosterStatus": "2026-10-26: Class Roster API returned HTTP 503 during announced maintenance. Class numbers and consent codes remain unverified.",
+    "universityClassRosterStatus": "2026-10-27: Class Roster page and API returned HTTP 503 during announced maintenance. Class numbers and consent codes remain unverified.",
     "dataScope": "Spring 2027 courses announced on Cornell Law Course Offerings, after the user-requested eligibility exclusions.",
     "language": "zh-CN",
     "springNyBarCategoryAudit": {
@@ -4310,7 +4310,7 @@
       "catalogOnly": false,
       "dataScope": "Current Spring 2027 Cornell Law Course Offerings; historical official roster/catalog data is used only where explicitly identified by provenance.",
       "restrictionZh": "当前官方课程目录未单列本课程的选课限制。",
-      "prerequisitesZh": "当前官方课程目录未单列本课程的先修要求。",
+      "prerequisitesZh": "大学 Spring 2027 Class Roster 的检索快照列有先修 LAW 5081；法学院目录未列先修要求，请确认适用条件。",
       "translationCompleteness": "pending",
       "translationMethod": "Chinese translation checked against the official current English catalog, 2026-10-26.",
       "restrictionTranslationComplete": true,
@@ -4380,7 +4380,7 @@
         "checkedAt": "2026-10-26T19:13:22.143Z",
         "note": "Older enrollment text is not promoted to a Spring 2027 restriction. Current sources do not publish one."
       },
-      "prerequisitesEn": "Cornell's current Course Offerings page and the latest available 2026-27 official Catalog record do not publish a separate prerequisite for this course.",
+      "prerequisitesEn": "The cached Spring 2027 Class Roster states prerequisite LAW 5081. The Law School catalog does not list a prerequisite; confirm the applicable requirement.",
       "prerequisites": "当前官方课程目录未单列本课程的先修要求。",
       "prerequisitesProvenance": {
         "kind": "official-no-separate-prerequisite-status",
@@ -4433,7 +4433,22 @@
         },
         "secondaryDiscussion": null
       },
-      "sourceConflicts": [],
+      "sourceConflicts": [
+        {
+          "field": "prerequisite-and-assessment",
+          "status": "needs-confirmation",
+          "sourceUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6051",
+          "messageEn": "The indexed Spring 2027 Class Roster says LAW 5081 is a prerequisite, and lists three assignments, a due diligence report and no final exam. The current Law School catalog has a different description; confirm the current syllabus and prerequisites.",
+          "messageZh": "大学春季课表检索快照列有先修 LAW 5081、三项作业、一份尽调报告及无期末考试；法学院当前目录的课程说明不同，请以最新教学大纲及先修要求确认。"
+        },
+        {
+          "field": "grading-options",
+          "status": "needs-confirmation",
+          "sourceUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6051",
+          "messageEn": "The Law School catalog lists letter or S/U grading, while the indexed Spring 2027 Class Roster labels the section Graded. Confirm actual grading options in Student Center.",
+          "messageZh": "法学院目录列有字母等级或 S/U 评分，大学春季课表检索快照将班次标为 Graded；实际可选评分方式请在 Student Center 核实。"
+        }
+      ],
       "restrictionRawEn": "",
       "officialDescriptionRawEn": "Designed for students pursuing corporate, transactional, or regulatory careers, this course focuses on the research skills attorneys use in modern practice. Students will learn how to investigate companies, analyze securities filings, and navigate regulations and transaction precedents using both traditional sources and cutting-edge tools, including AI-assisted research platforms and deal analytics resources. Through realistic, practice-oriented problems, students will build the ability to deliver precise, efficient, and strategically informed research in business law settings.",
       "descriptionNormalization": null,
@@ -7161,7 +7176,7 @@
             "Bloom",
             "Greenberg"
           ],
-          "instructionMode": "Not published",
+          "instructionMode": "Needs confirmation",
           "campusZh": "康奈尔大学伊萨卡主校区或课程指定地点",
           "location": "Myron Taylor Hall G80",
           "locationZh": "迈伦·泰勒楼 G80 室",
@@ -7369,7 +7384,15 @@
         },
         "secondaryDiscussion": null
       },
-      "sourceConflicts": [],
+      "sourceConflicts": [
+        {
+          "field": "instruction-mode",
+          "status": "needs-confirmation",
+          "sourceUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6273",
+          "messageEn": "The Class Roster indexed October 16, 2026 lists LEC 001 as synchronous distance learning, while the current Law School catalog has no instruction mode. Confirm the current section and NY Bar classroom eligibility before counting its credits.",
+          "messageZh": "大学课表截至2026年10月16日的检索快照将 LEC 001 列为同步远程授课，法学院当前目录未写授课方式。计入 NY Bar 课堂学分前，请核实最新班次和授课形式。"
+        }
+      ],
       "restrictionRawEn": "",
       "officialDescriptionRawEn": "The goal of the course is to provide you with a foundational understanding of US privacy and cybersecurity laws and regulations as applied in a business environment. We will cover: key privacy laws impacting the use of consumer data in the business world, the obligations created by these laws, and the strategies used by companies to use this data in a compliant manner. We will also discuss the changes in privacy law, how the U.S. privacy scheme compares to those in other parts of the world, including the EU. We will cover data analytics and digital and online privacy issues (including AI). We will cover privacy notices and disclosures as well and privacy issues in vendor relationships and agreements. Finally, we will dedicate several sessions to understanding the laws and regulations governing data breaches and cybersecurity, looking at businesses’ obligations to manage cybersecurity risks generally, both in and outside the context of personal data. Class streams to individual devices.",
       "descriptionNormalization": null,
@@ -7402,16 +7425,16 @@
           "component": "LEC",
           "componentLabel": "Lecture",
           "componentStatus": "historical-official-roster",
-          "startDate": "2027-01-19",
+          "startDate": "2027-03-17",
           "endDate": "2027-04-28",
           "meetings": [
             {
               "pattern": "TR",
               "start": "10:10",
               "end": "11:25",
-              "startDate": "2027-01-19",
+              "startDate": "2027-03-17",
               "endDate": "2027-04-28",
-              "scheduleDateStatus": "regular-spring-term",
+              "scheduleDateStatus": "current-official-explicit-range",
               "location": "Myron Taylor Hall 390",
               "locationZh": "迈伦·泰勒楼 390 室",
               "locationStatus": "published",
@@ -7482,7 +7505,7 @@
           "titleZh": "职业体育组织中的文化与多元化",
           "descriptionZh": "上课日期为 3 月 17 日至 4 月 28 日。本课程考察北美若干职业体育组织现行的多元化举措，包括美国国家橄榄球联盟（NFL）、美国国家篮球协会（NBA）、美国职业棒球大联盟（MLB）和美国职业足球大联盟（MLS）。学生将选择其中一个俱乐部开展组织案例研究，并据此为所选俱乐部提出最佳实践与行动计划建议。高管层嘉宾将结合其体育和公司管理经验向学生提供见解；学生将通过互动方式评析这些高管，并吸收课程材料中的数据。\n课程目标：分析北美职业体育组织各业务单元的多元化举措是否有益于组织成果；探讨多元化举措对职业体育组织高管层和管理部门的影响；考察职业运动员在推动体育多元化方面的角色与责任。\n学习成果：深入掌握北美职业体育联盟的多元化举措；学会制作包含促进管理部门多元化之最佳实践和行动计划的案例研究；分析人口、文化与社会变化对美国体育的影响；识别职业体育及一般公司中最适合深入实施多元化举措的重要业务单元；识别并批判性评估多元化的商业理由及评价成果的相关指标；识别提升北美主要职业体育组织高管层治理多元化的策略；为落实多元化举措构建最佳实践和行动计划；通过课堂讨论和评析高管培养书面与口头沟通技能；识别边缘化群体进入职业体育组织管理岗位所面临的障碍；运用批判性思维把理论框架用于现实体育问题；识别进入职业体育组织就业的路径；以及拟定体现多元化价值的职位说明与任职资格。\n课程主题：DEI 的定义；一般公司及职业体育领域多元化程度的事实；职业体育多元化的历史背景与现状；支持或反对职业体育组织多元化的商业理由；体育组织实现多元化的障碍以及克服就业与所有权障碍的策略；多元化举措的最佳实践；运动员的责任与机会；供应商多元化；以及人工智能与体育多元化的交叉问题。",
           "additionalInformationZh": "LAW 6299 的上课日期为 3 月 17 日至 4 月 28 日。",
-          "scheduleDateStatus": "regular-spring-term",
+          "scheduleDateStatus": "current-official-explicit-range",
           "daysTimesStatus": "published-as-source-text",
           "meetingStatus": "published",
           "credits": 2,
@@ -12215,7 +12238,15 @@
         },
         "secondaryDiscussion": null
       },
-      "sourceConflicts": [],
+      "sourceConflicts": [
+        {
+          "field": "grading-options",
+          "status": "needs-confirmation",
+          "sourceUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6661",
+          "messageEn": "The Law School catalog lists letter or S/U grading, while the indexed Spring 2027 Class Roster labels the section Graded. Confirm actual grading options in Student Center.",
+          "messageZh": "法学院目录列有字母等级或 S/U 评分，大学春季课表检索快照将班次标为 Graded；实际可选评分方式请在 Student Center 核实。"
+        }
+      ],
       "restrictionRawEn": "",
       "officialDescriptionRawEn": "This course introduces students to the law and institutions of the European Union. It examines the composition, organization, functions and powers of the Union's governing bodies; analyzes the Union's governing treaties and constitutional law; and studies the Union's decision-making processes. The course also explores broader questions of political, economic and legal integration, such as the proper relation between the Union's law and the domestic law of the Union's Member states, and the desirability and feasibility of using the E.U. as a model on which to pattern other transnational agreements.",
       "descriptionNormalization": null,
@@ -12894,7 +12925,7 @@
       "catalogOnly": false,
       "dataScope": "Current Spring 2027 Cornell Law Course Offerings; historical official roster/catalog data is used only where explicitly identified by provenance.",
       "restrictionZh": "当前官方课程目录未单列本课程的选课限制。",
-      "prerequisitesZh": "对于 J.D. 学生，先修：Lawyering。",
+      "prerequisitesZh": "J.D. 学生先修 LAW 5081；大学春季课表检索快照注明 LL.M. 学生须先修或同修 LAW 6761，请确认最新要求。",
       "translationCompleteness": "pending",
       "translationMethod": "Chinese translation checked against the official current English catalog, 2026-10-26.",
       "restrictionTranslationComplete": true,
@@ -12981,7 +13012,7 @@
         "checkedAt": "2026-10-26T19:13:22.143Z",
         "note": "Older enrollment text is not promoted to a Spring 2027 restriction. Current sources do not publish one."
       },
-      "prerequisitesEn": "Prerequisite: Lawyering required for JD students.",
+      "prerequisitesEn": "For JD students: LAW 5081. The indexed Spring 2027 Class Roster lists LAW 6761 as a prerequisite or corequisite for LL.M. students; confirm current requirements.",
       "prerequisites": "对于 J.D. 学生，先修：Lawyering。",
       "prerequisitesProvenance": {
         "kind": "current-official-course-offerings",
@@ -13028,7 +13059,22 @@
         },
         "secondaryDiscussion": null
       },
-      "sourceConflicts": [],
+      "sourceConflicts": [
+        {
+          "field": "llm-prerequisite",
+          "status": "needs-confirmation",
+          "sourceUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6739",
+          "messageEn": "The indexed Spring 2027 Class Roster lists LAW 6761 as an LL.M. prerequisite or corequisite; confirm against the current course information.",
+          "messageZh": "大学春季课表检索快照注明 LL.M. 学生先修或同修 LAW 6761；请核对最新课程信息。"
+        },
+        {
+          "field": "grading-options",
+          "status": "needs-confirmation",
+          "sourceUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6739",
+          "messageEn": "The Law School catalog lists letter or S/U grading, while the indexed Spring 2027 Class Roster labels the section Graded. Confirm actual grading options in Student Center.",
+          "messageZh": "法学院目录列有字母等级或 S/U 评分，大学春季课表检索快照将班次标为 Graded；实际可选评分方式请在 Student Center 核实。"
+        }
+      ],
       "restrictionRawEn": "",
       "officialDescriptionRawEn": "Prerequisite: Lawyering required for JD students. LL.M. students who have already taken, or are concurrently enrolled in, Principles of American Legal Writing may take this course. Build upon the research skills honed in Lawyering to explore advanced strategies for conducting legal research. This course provides an overview of the resources, methods, and strategies necessary to conduct efficient and effective online legal research for upper-level courses and employment. Students will learn when and how to use subscription and open access databases for researching legal information. Students can expect to complete a series of research assignments and a final research project.",
       "descriptionNormalization": null,
@@ -18242,16 +18288,55 @@
           "component": "LEC",
           "componentLabel": "Lecture",
           "componentStatus": "historical-official-roster",
-          "startDate": "2027-01-19",
-          "endDate": "2027-04-28",
+          "startDate": "2027-04-12",
+          "endDate": "2027-04-15",
           "meetings": [
             {
-              "pattern": "MTWR",
+              "pattern": "M",
               "start": "17:45",
               "end": "21:15",
-              "startDate": "2027-01-19",
-              "endDate": "2027-04-28",
-              "scheduleDateStatus": "regular-spring-term",
+              "startDate": "2027-04-12",
+              "endDate": "2027-04-12",
+              "scheduleDateStatus": "current-official-explicit-date",
+              "location": "Myron Taylor Hall 182",
+              "locationZh": "迈伦·泰勒楼 182 室",
+              "locationStatus": "published",
+              "locationSource": "Cornell Law Course Offerings",
+              "campusZh": "康奈尔大学伊萨卡主校区或课程指定地点"
+            },
+            {
+              "pattern": "T",
+              "start": "17:45",
+              "end": "21:15",
+              "startDate": "2027-04-13",
+              "endDate": "2027-04-13",
+              "scheduleDateStatus": "current-official-explicit-date",
+              "location": "Myron Taylor Hall 182",
+              "locationZh": "迈伦·泰勒楼 182 室",
+              "locationStatus": "published",
+              "locationSource": "Cornell Law Course Offerings",
+              "campusZh": "康奈尔大学伊萨卡主校区或课程指定地点"
+            },
+            {
+              "pattern": "W",
+              "start": "17:45",
+              "end": "21:15",
+              "startDate": "2027-04-14",
+              "endDate": "2027-04-14",
+              "scheduleDateStatus": "current-official-explicit-date",
+              "location": "Myron Taylor Hall 182",
+              "locationZh": "迈伦·泰勒楼 182 室",
+              "locationStatus": "published",
+              "locationSource": "Cornell Law Course Offerings",
+              "campusZh": "康奈尔大学伊萨卡主校区或课程指定地点"
+            },
+            {
+              "pattern": "R",
+              "start": "17:45",
+              "end": "21:15",
+              "startDate": "2027-04-15",
+              "endDate": "2027-04-15",
+              "scheduleDateStatus": "current-official-explicit-date",
               "location": "Myron Taylor Hall 182",
               "locationZh": "迈伦·泰勒楼 182 室",
               "locationStatus": "published",
@@ -18322,7 +18407,7 @@
           "titleZh": "集体谈判前沿问题",
           "descriptionZh": "本课程与ILR 6189／LAW 7189交叉开设，先修为LAW 6592劳动法、实务与政策。这门进阶短期课程考察美国私营部门雇主与工会集体谈判中的若干当代关键问题。通过课前阅读、播客以及四次各三小时、邀请嘉宾参与的课堂，课程分析塑造当今谈判环境的重要发展，包括美国经济去工业化、工会会员占劳动者比例下降，以及由此产生的工资停滞、医疗福利和确定给付型养老金计划困境；近期工会组织与罢工活动增加；雇佣法及立法与集体谈判、仲裁之间的交叉；以及高等教育领域新兴的工会组织活动。",
           "additionalInformationZh": "LAW 7189集体谈判当前问题于2027年4月12日至15日上课。",
-          "scheduleDateStatus": "regular-spring-term",
+          "scheduleDateStatus": "current-official-explicit-date",
           "daysTimesStatus": "published-as-source-text",
           "meetingStatus": "published",
           "credits": 1,
@@ -18477,13 +18562,11 @@
       },
       "sourceConflicts": [
         {
-          "field": "supplemental-date-text",
-          "status": "current-source-year-conflict",
-          "officialTerm": "SP27",
-          "publishedText": [
-            "Law 7189, Current Issues in Collective Bargaining, will meet 4/20-23/2026."
-          ],
-          "resolution": "Spring 2027 section dates use the current term-specific schedule/date fields; the conflicting source text is retained verbatim in additionalInformationEn and is not used as a 2026 schedule."
+          "field": "grading-options",
+          "status": "needs-confirmation",
+          "sourceUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7189",
+          "messageEn": "The Law School catalog lists letter or S/U grading, while the indexed Spring 2027 Class Roster labels the section Graded. Confirm actual grading options in Student Center.",
+          "messageZh": "法学院目录列有字母等级或 S/U 评分，大学春季课表检索快照将班次标为 Graded；实际可选评分方式请在 Student Center 核实。"
         }
       ],
       "restrictionRawEn": "",
@@ -18510,7 +18593,8 @@
       "instructors": [
         "Whorton",
         "Wendel",
-        "Murray"
+        "Murray",
+        "Gardner"
       ],
       "session": "Spring 2027",
       "term": "SP27",
@@ -18901,6 +18985,92 @@
           "consentEn": "Class Roster consent code not verified during the 2026-10-26 service outage.",
           "consentZh": "2026年10月26日大学课程服务维护期间，尚未核实本班次的选课许可代码。",
           "labelZh": "研讨课 103 · 教师专题研讨课：监狱新闻报道与法律"
+        },
+        {
+          "id": "LAW-7230-SP27-104",
+          "label": "Seminar 104 · Faculty Specialty Seminar: Intro to Legal Academic Writing: Civil Procedure and Courts Scholarship",
+          "section": "104",
+          "classNumber": "",
+          "component": "SEM",
+          "componentLabel": "Seminar",
+          "courseFormat": "seminar",
+          "componentStatus": "current-official-title-description",
+          "componentProvenance": {
+            "kind": "current-official-title-description",
+            "sourceTerm": "SP27",
+            "sourceUrl": "https://support.law.cornell.edu/CourseOfferings/",
+            "checkedAt": "2026-10-27T15:49:05.110Z",
+            "note": "The current official title/description establishes the course format."
+          },
+          "startDate": "2027-01-19",
+          "endDate": "2027-04-28",
+          "scheduleDateStatus": "regular-spring-term",
+          "meetings": [],
+          "daysTimesRaw": "",
+          "daysTimesStatus": "not-published",
+          "meetingStatus": "not-published",
+          "credits": 1,
+          "creditText": "1 Credit",
+          "creditTextZh": "1 学分",
+          "instructors": [
+            "Gardner"
+          ],
+          "instructorStatus": "published",
+          "instructionMode": "Needs confirmation",
+          "campusZh": "康奈尔大学伊萨卡主校区或课程指定地点",
+          "location": "",
+          "locationZh": "官方未公布具体地点",
+          "locationStatus": "unpublished",
+          "locationSource": "Cornell Law Course Offerings",
+          "roomRaw": "",
+          "notes": [],
+          "grading": "Satisfactory/Unsatisfactory",
+          "gradingZh": "仅采用 S/U（合格／不合格）评分",
+          "titleEn": "Faculty Specialty Seminar: Intro to Legal Academic Writing: Civil Procedure and Courts Scholarship",
+          "descriptionEn": "This course will introduce students to the genre of law review scholarship, including the types and structures of law review articles, differences in methodologies used by legal scholars, and analysis of logic and reasoning within individual articles. The course will cover canonical literature in the field of civil procedure and access to justice and will provide students with an opportunity to critique recent scholarship or works in progress. It is intended for students who are working on journals, interested in legal academia, or interested in advanced study of civil procedure. While ungraded, the course involves a significant workload and active class participation.",
+          "descriptionRawEn": "This course will introduce students to the genre of law review scholarship, including the types and structures of law review articles, differences in methodologies used by legal scholars, and analysis of logic and reasoning within individual articles. The course will cover canonical literature in the field of civil procedure and access to justice and will provide students with an opportunity to critique recent scholarship or works in progress. It is intended for students who are working on journals, interested in legal academia, or interested in advanced study of civil procedure. While ungraded, the course involves a significant workload and active class participation.",
+          "descriptionNormalization": null,
+          "additionalInformationEn": "Prereq: Law 5002 Civil Procedure II",
+          "degreeRequirementsEn": "",
+          "syllabusUrl": "",
+          "preRegistration": true,
+          "dropDate": "",
+          "sourceAttributes": {
+            "ExperientialLearning": false,
+            "ProfessionalResponsibility": false,
+            "Writing": false,
+            "ILA1": false,
+            "ILA2": false,
+            "ILA3": false,
+            "JDLLM1": false,
+            "JDLLM2": false,
+            "AdvocacyConcentration": false,
+            "BusinessConcentration": false,
+            "GeneralConcentration": false,
+            "PublicConcentration": false,
+            "ConflictResolutionConcentration": false,
+            "TechnologyConcentration": false,
+            "LawAndInequityConcentration": false,
+            "NYTechCourse": false,
+            "TwentyCreditLimit": false
+          },
+          "officialSourceUrl": "https://support.law.cornell.edu/CourseOfferings/",
+          "officialSourceTerm": "SP27",
+          "officialSourceCheckedAt": "2026-10-27T15:49:05.110Z",
+          "titleZh": "教师专题研讨课：法律学术写作入门——民事诉讼与法院研究",
+          "descriptionZh": "本课程介绍法学评论论文的体裁，包括文章类型和结构、法学研究方法的差异，以及对论文逻辑与推理的分析。课程涵盖民事诉讼和司法救济领域的经典文献，并让学生评议近期研究或尚在撰写的作品。课程面向参与期刊工作、对法学学术研究感兴趣或希望深入学习民事诉讼的学生。虽然不采用等级评分，课程仍有较大的工作量，并要求积极参与课堂。",
+          "additionalInformationZh": "先修：LAW 5002 民事诉讼法（二）。",
+          "degreeRequirementsZh": "",
+          "selectionGroup": "",
+          "selectionGroupLabel": "",
+          "selectionRequired": true,
+          "selectionMax": 1,
+          "labelZh": "研讨课 104 · 教师专题研讨课：法律学术写作入门——民事诉讼与法院研究",
+          "addConsentDescr": "Class Roster consent code not verified during the service outage.",
+          "consentEn": "Class Roster consent code not verified during the service outage.",
+          "consentZh": "大学课程服务维护期间，尚未核实本班次的选课许可代码。",
+          "scheduleWarningEn": "The Law School catalog has not published this topic’s meeting time or delivery mode; confirm before counting classroom credit.",
+          "scheduleWarningZh": "法学院目录尚未公布本专题的上课时间和授课方式；计入课堂学分前请确认。"
         }
       ],
       "barPrimary": null,
@@ -18918,8 +19088,8 @@
         "checkedAt": "2026-10-26T19:13:22.143Z",
         "note": "Older enrollment text is not promoted to a Spring 2027 restriction. Current sources do not publish one."
       },
-      "prerequisitesEn": "Cornell's current Course Offerings page and the latest available 2026-27 official Catalog record do not publish a separate prerequisite for this course.",
-      "prerequisites": "当前官方课程目录未单列本课程的先修要求。",
+      "prerequisitesEn": "Section 104: LAW 5002 Civil Procedure II. Prerequisites for other topics are not separately stated in the Law School catalog.",
+      "prerequisites": "104 班先修 LAW 5002 民事诉讼法（二）；法学院目录未单列其他专题的先修要求。",
       "prerequisitesProvenance": {
         "kind": "official-no-separate-prerequisite-status",
         "sourceUrl": "https://support.law.cornell.edu/CourseOfferings/",
@@ -18975,22 +19145,26 @@
       "additionalInformationEn": [
         "LAW 7230-101 Faculty Specialty Seminar: Dungeons & Dragons and the Law meets January 21, February 4 & 18, March 4 & 18.",
         "Law 7301-104 Faculty Specialty Seminar: Legal Ethics in Challenging Times will meet Feb. 2 & 22, March 2 & 22, April 5 & 19.",
-        "Law 7301-103 Faculty Specialty Seminar: Prison Journalism and the Law will meet Jan. 29, Feb. 12, Feb. 26, Mar. 12, Mar. 26 and April 9."
+        "Law 7301-103 Faculty Specialty Seminar: Prison Journalism and the Law will meet Jan. 29, Feb. 12, Feb. 26, Mar. 12, Mar. 26 and April 9.",
+        "Prereq: Law 5002 Civil Procedure II"
       ],
       "additionalInformationZh": [
         "LAW 7230-101教师专题研讨课：龙与地下城与法律，上课日期为1月21日、2月4日及18日、3月4日及18日。",
         "官方附注写作LAW 7301-104：教师专题研讨课——变局中的法律职业伦理，上课日期为2月2日及22日、3月2日及22日、4月5日及19日。课程号和班次号与结构化记录不一致，须确认。",
-        "官方附注写作LAW 7301-103：教师专题研讨课——监狱新闻报道与法律，上课日期为1月29日、2月12日、2月26日、3月12日、3月26日及4月9日。课程号与结构化记录不一致，须确认。"
+        "官方附注写作LAW 7301-103：教师专题研讨课——监狱新闻报道与法律，上课日期为1月29日、2月12日、2月26日、3月12日、3月26日及4月9日。课程号与结构化记录不一致，须确认。",
+        "先修：LAW 5002 民事诉讼法（二）。"
       ],
       "officialTitleVariantsEn": [
         "Faculty Specialty Seminar: Dungeons & Dragons and the Law",
         "Faculty Specialty Seminar: Legal Ethics in Challenging Times",
-        "Faculty Specialty Seminar: Prison Journalism & the Law"
+        "Faculty Specialty Seminar: Prison Journalism & the Law",
+        "Faculty Specialty Seminar: Intro to Legal Academic Writing: Civil Procedure and Courts Scholarship"
       ],
       "officialDescriptionVariantsEn": [
         "This course is for beginners and veterans to role-playing games alike. In this hands-on course, we will explore how the world of role-playing games, particularly D&D, can develop essential skills for a successful legal career. Through a combination of hypotheticals and actual play, this course will focus on how the problem-solving, critical thinking, negotiation, and adjudication skills developed in role-playing games can directly apply to the practice of law.\r\n\r\nThroughout the course, we will learn how to play D&D, mastering the game’s mechanics, rules, and storytelling elements. We will then participate in a live campaign, where we will take on roles as adventurers and even game masters. We will explore the legal structures and ethical dilemmas found within fantasy realms, analyzing fictional legal systems and cultures. Additionally, we will engage in hypothetical scenarios and work to adjudicate in-game rule disputes, weighing the application of D&D rules to resolve conflicts and make fair judgments. We will also discuss legal issues that arise in the context of D&D, like fan-created content and intellectual property licensing.",
         "This seminar is an opportunity talk about how current events are putting pressure on lawyers' professional obligations. It is not limited to, but will certainly consider, issues facing lawyers in the DOJ and elsewhere in the administration, law firms facing executive orders, and organizations like the ABA, as well as the viability of state bar disciplinary proceedings against government lawyers (e.g. Jeff Clark, Pam Bondi, Todd Blanche). It will also include issues facing legal education, such as AI in the practice of law and alternatives. Basically, the subject matter of the seminar is whatever I've written about in my Substack, Legal Ethics Stuff. I want to have a critical, balanced discussion, although in some cases outrage is an appropriate reaction. Having taken PR is helpful but not necessary - we'll try not to go to deep in the weeds with the rules of professional conduct, but they may come up from time to time.",
-        "This seminar will examine the laws surrounding prison journalism that affect journalists reporting on the criminal justice system and incarcerated journalists reporting from the inside. Each student will be responsible for selecting one topic of discussion during the course of the seminar and selecting appropriate readings in consultation with the professor. In addition to seminal cases, the seminar will draw on journalism about the carceral system and articles by incarcerated writers."
+        "This seminar will examine the laws surrounding prison journalism that affect journalists reporting on the criminal justice system and incarcerated journalists reporting from the inside. Each student will be responsible for selecting one topic of discussion during the course of the seminar and selecting appropriate readings in consultation with the professor. In addition to seminal cases, the seminar will draw on journalism about the carceral system and articles by incarcerated writers.",
+        "This course will introduce students to the genre of law review scholarship, including the types and structures of law review articles, differences in methodologies used by legal scholars, and analysis of logic and reasoning within individual articles. The course will cover canonical literature in the field of civil procedure and access to justice and will provide students with an opportunity to critique recent scholarship or works in progress. It is intended for students who are working on journals, interested in legal academia, or interested in advanced study of civil procedure. While ungraded, the course involves a significant workload and active class participation."
       ],
       "courseOfferingAttributes": {
         "ExperientialLearning": false,
@@ -19033,13 +19207,20 @@
           "messageZh": "部分研讨课附注写作LAW 7301，结构化课程号为LAW 7230；102班的日期及编号也不一致，须确认。",
           "sourceUrl": "https://support.law.cornell.edu/CourseCatalog/",
           "checkedAt": "2026-10-26T18:50:06.816Z"
+        },
+        {
+          "field": "multiple-topic-selection",
+          "status": "needs-confirmation",
+          "sourceUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7230",
+          "messageEn": "This planner currently allows one LAW 7230 topic at a time. Whether two topics may be taken for separate credit requires confirmation from Cornell.",
+          "messageZh": "本网站目前一次只能选择一个 LAW 7230 专题；是否可同时修读两个专题并分别取得学分，请向 Cornell 确认。"
         }
       ],
       "barCategories": [],
       "barEvidence": null,
       "catalogListingStatus": "current",
       "titleZh": "教师专题研讨课：龙与地下城与法律",
-      "prerequisitesZh": "当前官方课程目录未单列本课程的先修要求。",
+      "prerequisitesZh": "104 班先修 LAW 5002 民事诉讼法（二）；法学院目录未单列其他专题的先修要求。",
       "restrictionZh": "当前官方课程目录未单列本课程的选课限制。",
       "translationMethod": "Chinese translation checked against the official current English catalog, 2026-10-26.",
       "translationCoverage": {
@@ -24310,16 +24491,16 @@
           "component": "LEC",
           "componentLabel": "Lecture",
           "componentStatus": "historical-official-roster",
-          "startDate": "2027-01-19",
-          "endDate": "2027-04-28",
+          "startDate": "2027-03-15",
+          "endDate": "2027-04-27",
           "meetings": [
             {
               "pattern": "MT",
               "start": "15:35",
               "end": "17:30",
-              "startDate": "2027-01-19",
-              "endDate": "2027-04-28",
-              "scheduleDateStatus": "regular-spring-term",
+              "startDate": "2027-03-15",
+              "endDate": "2027-04-27",
+              "scheduleDateStatus": "current-official-explicit-range",
               "location": "Myron Taylor Hall 277",
               "locationZh": "迈伦·泰勒楼 277 室",
               "locationStatus": "published",
@@ -24390,7 +24571,7 @@
           "titleZh": "并购税务",
           "descriptionZh": "课程于3月15日至4月27日举行。\n\n本课程将考察并购交易的联邦所得税问题，并使学生为并购背景下交易税务工作的实务环节做好准备。我们将探讨影响上市公司和非上市公司并购交易结构的若干税务问题，并特别关注与私募股权基金收购有关的税务考量。课程还将涵盖与并购税务有关、在当前政治层面具有现实意义的议题。学生将学习起草和谈判并购文件中的税务条款，并以交易税务律师的方式开展税务研究。本课程内容不仅适用于有意从事交易税务工作的学生，也适用于将从事更一般公司法业务、并将在工作中遇到重大税务问题的学生。",
           "additionalInformationZh": "LAW 7766（并购税务）的上课日期为 3 月 15 日至 4 月 27 日。",
-          "scheduleDateStatus": "regular-spring-term",
+          "scheduleDateStatus": "current-official-explicit-range",
           "daysTimesStatus": "published-as-source-text",
           "meetingStatus": "published",
           "credits": 2,
@@ -25355,7 +25536,15 @@
         },
         "secondaryDiscussion": null
       },
-      "sourceConflicts": [],
+      "sourceConflicts": [
+        {
+          "field": "grading-options",
+          "status": "needs-confirmation",
+          "sourceUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7789",
+          "messageEn": "The Law School catalog lists letter or S/U grading, while the indexed Spring 2027 Class Roster labels the section Graded. Confirm actual grading options in Student Center.",
+          "messageZh": "法学院目录列有字母等级或 S/U 评分，大学春季课表检索快照将班次标为 Graded；实际可选评分方式请在 Student Center 核实。"
+        }
+      ],
       "restrictionRawEn": "",
       "officialDescriptionRawEn": "Business laws can have substantial positive and negative implications for gender equality. Discriminatory laws or the absence of legislation could threaten women’s economic security or create a business environment that does not adequately support working women. On the contrary, supportive laws could promote women’s career growth, ability to run businesses, and equal employment opportunities, bringing economic advantages to women and society. In addition, trade liberalization policies as a primary source of economic development can affect gender equality. This explains why gender equality lies at the heart of the 2030 Agenda for Sustainable Development, which asserts gender equality as a fundamental human right and a necessary foundation for a sustainable world. This course examines women's rights in business and trade law as a gateway toward economic growth and development. The course introduces the basics of gender and the law. It, also, looks into the relationship between gender equality and business law, including the various legal aspects of governance and board diversity, women and ownership, gender equality and alternative dispute resolution, and the challenges and advantages facing women in business law. An examination of the relevance of integrating gender issues in trade policies and a discussion of the implications of women’s economic empowerment on trade follows. Economic empowerment of women is also highlighted, including promoting women in entrepreneurship, monitoring women into management roles, and empowering women in the workplace. Also, a course on women in business and trade law cannot be completed without elaborating on the role of gender equality in promoting the SDGs. The course concludes with a timely overview of how technology could be used to promote gender equality in general and women's rights in business and trade law in particular.",
       "descriptionNormalization": null,
