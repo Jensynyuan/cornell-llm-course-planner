@@ -48,10 +48,10 @@
 
     // Only raw course/meeting fields are inspected. Browser-entered or locally
     // synchronized room overrides are deliberately outside this pure helper.
-    if (REMOTE_PATTERN.test(`${mode} ${location}`)) return { status:"ineligible", code:"online-distance" };
     if (INDEPENDENT_PATTERN.test(mode) || kind === "independent") return { status:"ineligible", code:"independent-study" };
-    if (kind === "practice") return { status:"review", code:"clinic-practicum" };
     if (HYBRID_PATTERN.test(mode)) return { status:"review", code:"hybrid-delivery" };
+    if (REMOTE_PATTERN.test(`${mode} ${location}`)) return { status:"ineligible", code:"online-distance" };
+    if (kind === "practice") return { status:"review", code:"clinic-practicum" };
     if (IN_PERSON_PATTERN.test(mode) && kind === "classroom") return { status:"eligible", code:"in-person-classroom" };
 
     const modeNotPublished = !mode || UNPUBLISHED_MODE_PATTERN.test(mode);
@@ -93,6 +93,9 @@
     if (sectionResults.some(item => item.code === "independent-study")) {
       return result("ineligible", "independent-study", "the selected section is independent study or directed work", "所选班次为独立研究或指导性学习");
     }
+    if (sectionResults.some(item => item.code === "hybrid-delivery")) {
+      return result("review", "hybrid-delivery", "hybrid delivery requires confirmation of the classroom-contact requirement", "混合授课须确认是否满足课堂面授时数要求");
+    }
     if (/enrollment\s+limited\s+to:\s*undergraduates?|undergraduate-only/.test(notes)) {
       return result("ineligible", "undergraduate-only", "the selected section is limited to undergraduates", "所选班次仅限本科生");
     }
@@ -116,9 +119,6 @@
     }
     if (sectionResults.some(item => item.code === "clinic-practicum")) {
       return result("review", "clinic-practicum", "clinic, practicum, fieldwork, or laboratory credit requires school confirmation", "诊所、实践、实习或实验类学分须向学院确认");
-    }
-    if (sectionResults.some(item => item.code === "hybrid-delivery")) {
-      return result("review", "hybrid-delivery", "hybrid delivery requires confirmation of the classroom-contact requirement", "混合授课须确认是否满足课堂面授时数要求");
     }
     if (sectionResults.some(item => item.code === "unrecognized-delivery-mode")) {
       return result("review", "unrecognized-delivery-mode", "the published delivery mode requires school confirmation", "已公布的授课方式须向学院确认");

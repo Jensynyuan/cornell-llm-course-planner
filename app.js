@@ -27,7 +27,7 @@
   const NY_BAR_ALLOCATION = window.NY_BAR_ALLOCATION;
   const NY_BAR_ELIGIBILITY = window.NY_BAR_ELIGIBILITY;
   const CALENDAR = window.LLM_CALENDAR;
-  const APP_VERSION = "v5.39";
+  const APP_VERSION = "v5.40";
   let scheduleContentObserver = null;
   let scheduleFitFrame = 0;
   const CORNELL_LLM_REGISTRATION_POLICY = Object.freeze({
@@ -90,6 +90,7 @@
     { id:"independent", zh:"独立研究", en:"Independent study", patterns:[/\bind\b/i,/independent/i,/directed (?:study|work)/i,/独立研究/u] }
   ];
   const RELEASE_NOTES = [
+    { version:"v5.40", zh:["按恢复后的 Cornell 大学课表核对春季课程与班次，保留法学院目录并标出来源差异。", "保留已有选课和班次；课程专题与不确定的学分、时间和选课资格分别提示核实。"], en:["Reconciled spring courses and sections with the restored Cornell Class Roster while retaining the Law School catalog and flagging source differences.", "Existing selections and sections are preserved; uncertain topic listings, credits, times and eligibility are flagged."] },
     { version:"v5.39", zh:["LAW 7230 的不同专题可分别加入课表；旧专题选择会保留。", "多个专题的同时注册及分别计学分须向 Cornell Law 确认。"], en:["Plan different LAW 7230 topics independently while retaining existing topic selections.", "Confirm concurrent enrollment and separate credit with Cornell Law."] },
     { version:"v5.38", zh:["更新春季专题课程和短期课程日期，支持按专题名称搜索；官方来源有差异时显示核实提示。", "保留原有选课及班次；对授课形式有冲突的课程和时间未公布的新专题提示确认。"], en:["Updated spring seminar topics and short-course dates, added topic-name search, and surfaced differences between official sources.", "Existing selections and sections are retained; conflicting delivery information and the new topic with an unpublished meeting time are flagged for confirmation."] },
     { version:"v5.37", zh:["课表完整显示课程名并自动换行；时间轴按内容适配，小屏及密集日程自动按日完整显示；优化导航、配色及操作层次。","拖入周课表时显示课程的官方时间框与实际落点：放进官方时间框即按全部官方上课日加入，放在其他位置才作为仅限当天的个人安排，并在课程卡上标明。"], en:["Schedule cards wrap complete names and details. The adaptive timeline switches to day-by-day cards on small screens or dense weeks, with clearer navigation and visual hierarchy.","Dragging into the weekly grid now outlines the course's official times and previews the exact landing slot. Dropping inside an official outline adds every official meeting; dropping elsewhere creates a one-day personal placement, which is labelled on the card."] },
@@ -120,7 +121,7 @@
   const customSchoolStore = loadCustomSchoolStore();
   // Imports are tied to a data build so a prior browser snapshot cannot silently
   // replace the current verified Cornell dataset.
-  const CURRENT_CORNELL_DATASET_VERSION = "v5.35";
+  const CURRENT_CORNELL_DATASET_VERSION = "v5.40";
   const BUNDLED_CORNELL_DATABASE_VERSION = CURRENT_CORNELL_DATASET_VERSION;
   let cornellImportedDataset = loadCornellImportedDataset();
   let currentSchoolId = safeLocalStorageGet("llm-course-planner-current-school") || "cornell";
@@ -236,7 +237,7 @@
     {
       category: "数据",
       question: "当前 Cornell 数据库包含什么？",
-      answer: "当前数据库按学期保留 269 条当前开课记录，包括 Fall 2026 的 136 门与 Spring 2027 的 133 门。春季数据已按要求剔除仅限本科生、仅限 JD 及仅限 Cornell Tech LL.M. 的课程；每条记录均标明学期，同一课程号在春秋两季开设时会分别显示。",
+      answer: "课程库按学期整理秋季和春季课程，并将可单独规划的专题分别显示。大学课表与法学院目录有出入时，保留两种来源并提示核实；仅限本科生、JD 或 Cornell Tech LL.M. 的春季课程按既有范围排除。",
       sourceLabel: "Cornell Law Course Offerings 与 Cornell Class Roster",
       sourceUrl: "https://support.law.cornell.edu/CourseOfferings/"
     },
@@ -260,7 +261,7 @@
     { category:"Calendar", question:"Why does the same course not appear in every week?", answer:"The weekly calendar follows each meeting pattern's actual start and end dates and excludes law-school no-class dates. Seven-week, Orientation, and early-ending courses appear only in the weeks when they actually meet." },
     { category:"Location", question:"Why do some courses show only a campus rather than a room?", answer:"Locations follow Cornell's official roster. When a specific room is not published, the planner says so rather than treating Ithaca campus or Cornell Law School as a room. Published building and room information is included in the bundled official roster data where available." },
     { category:"Data", question:"Do I need an OpenAI API key or internet access to open the planner?", answer:"No. The Cornell 2026-27 law-course dataset is bundled for offline search, review, and scheduling. Internet access is only needed when you choose to import or update an external school dataset." },
-    { category:"Data", question:"What does the current Cornell dataset include?", answer:"The bundled database contains 269 current term-specific offerings: 136 for Fall 2026 and 133 for Spring 2027. Spring offerings explicitly limited to undergraduates, JD students, or Cornell Tech LL.M. students are excluded. Each offering carries a term label, so a course taught in both terms appears separately." },
+    { category:"Data", question:"What does the current Cornell dataset include?", answer:"The catalog groups courses by term and shows independently plannable topics separately. Differences between the university roster and Law School catalog are flagged. Spring offerings explicitly limited to undergraduates, JD students, or Cornell Tech LL.M. students remain outside the existing scope." },
     { category:"Data", question:"Will refreshing erase my schedule, or can another user see it?", answer:"No. The planner automatically saves the schedule in this browser under the current site domain, so a normal refresh or reopening the page keeps it. Visitors on another device or browser cannot read it, but people sharing the same browser profile will see the same local data. Use Export to calendar in My Schedule to download an .ics file for Google, Apple, or Outlook; use Import from calendar to add personal busy times. Calendar files are processed only on this device." }
   ];
   const palette = [
@@ -329,7 +330,7 @@
 
   function bundledCornellCourses() {
     const imported = Array.isArray(cornellImportedDataset?.courses) && cornellImportedDataset.courses.length ? cornellImportedDataset.courses : null;
-    if (imported) return imported.map(course => isEnglish() ? ({ ...course, titleZh:course.titleEn || course.titleZh, descriptionZh:course.descriptionEn || course.descriptionZh, gradingZh:course.grading || course.gradingZh, restrictionZh:course.restrictionEn || course.restriction || course.restrictionZh, prerequisitesZh:course.prerequisitesEn || course.prerequisites || course.prerequisitesZh, assessmentZh:course.assessmentEn || course.assessmentZh, displayLanguage:"en" }) : ({ ...course }));
+    if (imported) return splitSeminarTopics(imported.map(course => isEnglish() ? ({ ...course, titleZh:course.titleEn || course.titleZh, descriptionZh:course.descriptionEn || course.descriptionZh, gradingZh:course.grading || course.gradingZh, restrictionZh:course.restrictionEn || course.restriction || course.restrictionZh, prerequisitesZh:course.prerequisitesEn || course.prerequisites || course.prerequisitesZh, assessmentZh:course.assessmentEn || course.assessmentZh, displayLanguage:"en" }) : ({ ...course })));
     if (uiLanguage !== "en" || !cornellCatalogEn.length) return splitSeminarTopics(cornellCatalog);
     const englishByOffering = new Map(cornellCatalogEn.map(course => [catalogOfferingKey(course), course]));
     return splitSeminarTopics(cornellCatalog.map(course => {
@@ -353,17 +354,17 @@
   function splitSeminarTopics(catalog) {
     return catalog.flatMap(course => {
       if (course.id !== "LAW-7230-SP27" || (course.sections || []).length < 2) return [course];
-      return course.sections.map((section, index) => ({
+      return course.sections.map(section => ({
         ...course,
-        id: index === 0 ? course.id : `${course.id}-topic-${section.section}`,
+        id: String(section.section).padStart(3, "0") === "101" ? course.id : `${course.id}-topic-${section.section}`,
         independentlyPlannableTopic:true,
         sections:[section],
-        titleEn:section.titleEn || course.titleEn,
-        officialTitleEn:section.titleEn || course.officialTitleEn,
-        titleZh:isEnglish() ? (section.titleEn || course.titleEn) : (section.titleZh || course.titleZh),
-        descriptionEn:section.descriptionEn || course.descriptionEn,
-        officialDescriptionEn:section.descriptionEn || course.officialDescriptionEn,
-        descriptionZh:isEnglish() ? (section.descriptionEn || course.descriptionEn) : (section.descriptionZh || course.descriptionZh),
+        titleEn:section.titleEn || section.topicDescription || section.officialRosterTopic || course.code,
+        officialTitleEn:section.titleEn || section.topicDescription || section.officialRosterTopic || course.code,
+        titleZh:isEnglish() ? (section.titleEn || section.topicDescription || section.officialRosterTopic || course.code) : (section.titleZh || section.titleEn || section.topicDescription || section.officialRosterTopic || course.code),
+        descriptionEn:section.descriptionEn || "",
+        officialDescriptionEn:section.descriptionEn || "",
+        descriptionZh:isEnglish() ? (section.descriptionEn || "") : (section.descriptionZh || ""),
         instructors:section.instructors || course.instructors,
         grading:section.grading || course.grading,
         gradingZh:section.gradingZh || course.gradingZh,
@@ -372,9 +373,9 @@
         assessmentEvidence:{ assignments:[], assignmentsZh:[], finalAssessment:[], finalAssessmentZh:[], finalMethods:[], status:"not-stated-in-official-description" },
         credits:section.credits ?? course.credits,
         officialTitleVariantsEn:[section.titleEn || course.titleEn],
-        sourceConflicts:(course.sourceConflicts || []).filter(item => item.field !== "multiple-topic-selection"),
-        catalogWarningZh:"不同 LAW 7230 专题可同时放入规划表；能否同学期重复注册并分别计学分，须向 Cornell Law 确认。",
-        catalogWarningEn:"Different LAW 7230 topics can be planned together. Confirm with Cornell Law whether concurrent enrollment and separate credit are permitted."
+        sourceConflicts:(course.sourceConflicts || []).filter(item => item.field !== "multiple-topic-selection" && (item.field !== "section-identifiers-and-dates" || section.section === "102")),
+        catalogWarningZh:[course.catalogWarningZh,"不同 LAW 7230 专题可同时放入规划表；能否同学期重复注册并分别计学分，须向 Cornell Law 确认。"].filter(Boolean).join(" "),
+        catalogWarningEn:[course.catalogWarningEn,"Different LAW 7230 topics can be planned together. Confirm with Cornell Law whether concurrent enrollment and separate credit are permitted."].filter(Boolean).join(" ")
       }));
     });
   }
@@ -382,10 +383,11 @@
   function migrateSeminarSelection(saved) {
     const original = "LAW-7230-SP27";
     const sectionId = saved?.selected?.[original];
-    const section = cornellSpringCatalog.find(course => course.id === original)?.sections?.find(item => item.id === sectionId);
+    const source = (cornellImportedDataset?.courses?.length ? cornellImportedDataset.courses : cornellSpringCatalog);
+    const section = source.find(course => course.id === original)?.sections?.find(item => item.id === sectionId);
     if (!section || section.section === "101") return;
     const target = `${original}-topic-${section.section}`;
-    if (saved.selected[target]) return; // Never overwrite a separate saved selection.
+    if (saved.selected[target] || !courses.some(course => course.id === target)) return; // Never overwrite or migrate to a missing topic.
     saved.selected[target] = sectionId;
     delete saved.selected[original];
     for (const name of ["manualPlacements", "barCategoryAllocations", "courseOverrides", "locationOverrides"]) {
@@ -478,6 +480,20 @@
     const values = en ? english : chinese;
     if (!values.length) return "";
     return `<section class="detail-section official-additional-information"><h3>${en ? "Additional official information" : "官方补充信息"}</h3><ul>${values.map(value => `<li>${esc(value)}</li>`).join("")}</ul></section>`;
+  }
+
+  function detailUniversityRosterHtml(c, section, en = isEnglish()) {
+    if (!c.officialRosterUrl) return "";
+    const desc = c.officialRosterDescriptionDifferent ? (en ? c.officialRosterDescriptionEn : c.officialRosterDescriptionZh) : "";
+    const prereq = en ? c.officialRosterPrerequisites : (c.officialRosterPrerequisitesZh || c.officialRosterPrerequisites);
+    const priority = en ? c.officialRosterEnrollmentPriority : (c.officialRosterEnrollmentPriorityZh || c.officialRosterEnrollmentPriority);
+    const notes = (section?.sourceSections || [section]).filter(Boolean).flatMap(part => {
+      const original = (part.officialRosterNotes || []).map(note => typeof note === "string" ? note : note.descrlong || "").filter(Boolean);
+      return en ? original : ((part.officialRosterNotesZh || []).length ? part.officialRosterNotesZh : original);
+    });
+    const issue = en ? c.officialRosterDescriptionIssueEn : c.officialRosterDescriptionIssueZh;
+    const parts = [issue ? `<div class="catalog-update-notice"><p>⚠ ${esc(issue)}</p></div>` : "", desc ? `<p>${esc(desc)}</p>` : "", prereq ? `<p><strong>${en ? "Prerequisites / corequisites" : "先修／同修要求"}：</strong>${esc(prereq)}</p>` : "", priority ? `<p><strong>${en ? "Enrollment information" : "选课说明"}：</strong>${esc(priority)}</p>` : "", ...notes.map(note => `<p>${esc(note)}</p>`)];
+    return `<section class="detail-section"><h3>${en ? "University Class Roster" : "大学 Class Roster 课表"}</h3><p>${en ? "The university catalog and the Law School's current offering are separate official sources. Check the selected section for registration details." : "大学课程目录与法学院当学期开课信息是不同的官方来源；选课请以所选班次为准并核实。"} <a href="${esc(c.officialRosterUrl)}" target="_blank" rel="noopener">${en ? "Open official roster" : "查看官方课表"} ↗</a></p>${parts.join("")}</section>`;
   }
   function detailOfficialAttributesHtml(c, en = isEnglish()) {
     const asList = value => Array.isArray(value) ? value.filter(Boolean) : (String(value || "").trim() ? [String(value).trim()] : []);
@@ -971,6 +987,12 @@
   }
 
   function renderAll() {
+    const importWarning = document.getElementById("importVersionWarning");
+    if (importWarning) {
+      const staleImport = currentSchoolId === "cornell" && cornellImportedDataset?.bundledDatabaseVersion !== CURRENT_CORNELL_DATASET_VERSION && cornellImportedDataset?.courses?.length;
+      importWarning.hidden = !staleImport;
+      importWarning.textContent = staleImport ? (isEnglish() ? "This browser is using an older imported Cornell dataset; it is preserved and may not include the latest roster. Review it under Schools & Data before switching datasets." : "当前浏览器仍在使用较旧的导入课程库；原数据已保留，可能不含最新大学课表。可在“学校与数据”中核对并切换数据。") : "";
+    }
     renderCourseList(); renderProgress(); renderMiniSchedule(); renderCareerControls(); renderRecommendations(); renderSchedule(); renderScheduleCourseTray(); renderSchoolManager(); renderFaq(); applyLanguageChrome();
   }
 
@@ -980,8 +1002,8 @@
     const list = getFilteredCourses();
     const fallCount = courses.filter(course => courseTermCode(course) === "FA26").length;
     const springCount = courses.filter(course => courseTermCode(course) === "SP27").length;
-    const snapshotLabel = currentSchoolId === "cornell" ? (isEnglish() ? `${fallCount} Fall · ${springCount} Spring` : `${fallCount} 门秋季 · ${springCount} 门春季`) : (isEnglish() ? "locally imported courses" : "用户导入课程");
-    els.courseCountText.textContent = isEnglish() ? `${list.length} of ${courses.length} courses · ${currentSchoolProfile.nameEn || currentSchoolProfile.nameZh} · ${snapshotLabel}` : `显示 ${list.length} / ${courses.length} 门课程 · ${currentSchoolProfile.shortZh || currentSchoolProfile.nameZh} · ${snapshotLabel}`;
+    const snapshotLabel = currentSchoolId === "cornell" ? (isEnglish() ? `${fallCount} Fall · ${springCount} Spring` : `秋季 ${fallCount} 项 · 春季 ${springCount} 项`) : (isEnglish() ? "locally imported courses" : "用户导入课程");
+    els.courseCountText.textContent = isEnglish() ? `${list.length} of ${courses.length} courses and topics · ${currentSchoolProfile.nameEn || currentSchoolProfile.nameZh} · ${snapshotLabel}` : `显示 ${list.length} / ${courses.length} 项课程及专题 · ${currentSchoolProfile.shortZh || currentSchoolProfile.nameZh} · ${snapshotLabel}`;
     els.courseList.innerHTML = list.map(courseCardHtml).join("");
     els.courseList.querySelectorAll(".course-card").forEach(card => {
       card.addEventListener("click", e => { if (!e.target.closest("button, a")) openCourseDetail(card.dataset.courseId); });
@@ -1013,7 +1035,7 @@
     const selectedSection = selected ? getSection(c, state.selected[c.id]) : null;
     const matchingTopics = matchingSearchSections(c);
     const matchedSection = !selected && matchingTopics.length === 1 ? matchingTopics[0] : null;
-    const displaySection = selectedSection || matchedSection;
+    const displaySection = selectedSection || matchedSection || (c.independentlyPlannableTopic ? c.sections?.[0] : null);
     const topicSection = c.officialTitleVariantsEn?.length > 1 && displaySection?.titleEn ? displaySection : null;
     const title = topicSection ? (isEnglish() ? (topicSection.titleEn || topicSection.titleZh) : (topicSection.titleZh || topicSection.titleEn)) : courseTitle(c);
     const description = topicSection ? (isEnglish() ? (topicSection.descriptionEn || courseDescription(c)) : (topicSection.descriptionZh || courseDescription(c))) : courseDescription(c);
@@ -1311,7 +1333,11 @@
     const groups = sectionSelectionGroups(course);
     const matches = matchingSearchSections(course);
     const preferred = matches.length === 1 ? matches[0].id : null;
-    els.sectionPickerOptions.innerHTML = `${groups.map(group => `<fieldset class="section-selection-group"><legend>${esc(formatSectionGroupLabel(group.label))}</legend>${group.sections.map((section, index) => `<label class="section-picker-option"><input type="radio" name="picker-${esc(group.id)}" data-section-group="${esc(group.id)}" value="${esc(section.id)}" ${(group.sections.some(item => item.id === preferred) ? section.id === preferred : index === 0) ? "checked" : ""}><span><strong>${sectionIdentityHtml(section)}</strong><small>${esc(formatSectionMeetings(section))} · ⌖ ${esc(sectionLocationSummary(section, course))}</small></span></label>`).join("")}</fieldset>`).join("")}<button type="button" class="primary-button section-picker-confirm">${isEnglish() ? "Confirm section combination" : "确认班次组合"}</button>`;
+    const sectionNotes = section => {
+      const original = (section.officialRosterNotes || []).map(note => typeof note === "string" ? note : note.descrlong || "").filter(Boolean);
+      return isEnglish() ? original : ((section.officialRosterNotesZh || []).length ? section.officialRosterNotesZh : original);
+    };
+    els.sectionPickerOptions.innerHTML = `${groups.map(group => `<fieldset class="section-selection-group"><legend>${esc(formatSectionGroupLabel(group.label))}</legend>${group.sections.map((section, index) => `<label class="section-picker-option"><input type="radio" name="picker-${esc(group.id)}" data-section-group="${esc(group.id)}" value="${esc(section.id)}" ${(group.sections.some(item => item.id === preferred) ? section.id === preferred : index === 0) ? "checked" : ""}><span><strong>${sectionIdentityHtml(section)}</strong><small>${esc(formatSectionMeetings(section))} · ⌖ ${esc(sectionLocationSummary(section, course))}</small>${sectionNotes(section).map(note => `<small>${esc(note)}</small>`).join("")}${section.consentEn || section.consentZh ? `<small>${esc(isEnglish() ? section.consentEn : section.consentZh)}</small>` : ""}</span></label>`).join("")}</fieldset>`).join("")}<button type="button" class="primary-button section-picker-confirm">${isEnglish() ? "Confirm section combination" : "确认班次组合"}</button>`;
     els.sectionPickerOptions.querySelector(".section-picker-confirm")?.addEventListener("click", () => {
       const chosen = [...els.sectionPickerOptions.querySelectorAll("input[data-section-group]:checked")].map(input => input.value);
       if (chosen.length !== groups.filter(group => group.required).length) return showToast(isEnglish() ? "Choose one option for every required group." : "请为每个必选班次组选择一项。", true);
@@ -1403,17 +1429,22 @@
   function sectionsConflict(a, b) {
     if (!a || !b) return false;
     for (const ma of a.meetings || []) for (const mb of b.meetings || []) {
-      const daysA = parsePattern(ma.pattern), daysB = parsePattern(mb.pattern);
-      if (!daysA.some(d => daysB.includes(d))) continue;
-      if (!meetingDateRangesOverlap(ma, mb)) continue;
-      if (timeToMinutes(ma.start) < timeToMinutes(mb.end) && timeToMinutes(mb.start) < timeToMinutes(ma.end)) return true;
+      if (!(timeToMinutes(ma.start) < timeToMinutes(mb.end) && timeToMinutes(mb.start) < timeToMinutes(ma.end))) continue;
+      const start = new Date(Math.max(parseIsoDate(ma.startDate || a.startDate || TERM.instructionStart), parseIsoDate(mb.startDate || b.startDate || TERM.instructionStart)));
+      const end = new Date(Math.min(parseIsoDate(ma.endDate || a.endDate || TERM.instructionEnd), parseIsoDate(mb.endDate || b.endDate || TERM.instructionEnd)));
+      for (let day = start; day <= end; day = addDays(day, 1)) {
+        if (getMeetingsForDate({ ...a, meetings:[ma] }, day).length && getMeetingsForDate({ ...b, meetings:[mb] }, day).length) return true;
+      }
     }
     return false;
   }
 
   function selectedCourses() { return Object.keys(state.selected).map(id => courses.find(c => c.id === id)).filter(Boolean); }
   function sectionSelectionGroups(course) {
-    const sections = course?.sections || [];
+    const allSections = course?.sections || [];
+    const sections = allSections.some(section => section.componentStatus === "current-official-roster")
+      ? allSections.filter(section => section.catalogListingStatus !== "source-conflict")
+      : allSections;
     const explicit = sections.some(section => section.selectionGroup);
     if (explicit) {
       return [...new Map(sections.map(section => [section.selectionGroup || "main", { id:section.selectionGroup || "main", label:section.selectionGroupLabel || section.selectionGroup || "Section", required:section.selectionRequired !== false, max:Number(section.selectionMax || 1), sections:sections.filter(item => (item.selectionGroup || "main") === (section.selectionGroup || "main")) }])).values()];
@@ -2231,11 +2262,24 @@
     const term = course ? termProfileForCourse(course) : (termProfileForDate(date) || TERM);
     const scheduleDay = term?.specialScheduleDays?.[iso] || SPECIAL_SCHEDULE_DAYS[iso] || DAY_KEYS[date.getDay()-1];
     if (!scheduleDay) return [];
-    return (section.meetings || []).filter(m => {
-      if (!parsePattern(m.pattern).includes(scheduleDay)) return false;
+    const meetings = (section.meetings || []).filter(m => {
+      // Explicit one-date Roster meetings use their actual weekday, even on a
+      // special academic-calendar day that otherwise follows Monday's pattern.
+      const actualDay = DAY_KEYS[date.getDay()-1];
+      const datedMeeting = m.startDate && m.startDate === m.endDate;
+      if (!parsePattern(m.pattern).includes(datedMeeting ? actualDay : scheduleDay)) return false;
       const start = parseIsoDate(m.startDate || section.startDate || term.instructionStart);
       const end = parseIsoDate(m.endDate || section.endDate || term.instructionEnd);
       return date >= start && date <= end;
+    });
+    // Cornell may list an explicit makeup meeting as well as a recurring
+    // meeting that also covers the special schedule day. Render it once.
+    const seen = new Set();
+    return meetings.sort((a, b) => Number(b.startDate === b.endDate) - Number(a.startDate === a.endDate)).filter(meeting => {
+      const key = `${meeting.start}|${meeting.end}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
     });
   }
 
@@ -2303,6 +2347,7 @@
       </div>
       ${catalogNoticeHtml(c, getSection(c, selectedDetailSectionId))}
       ${detailDescriptionHtml(c, en, detailTopic)}
+      ${detailUniversityRosterHtml(c, getSection(c, selectedDetailSectionId), en)}
       ${detailAdditionalInformationHtml(c, en)}
       ${detailOfficialAttributesHtml(c, en)}
       <section class="detail-section"><h3>${en ? "Assessment and scheduled load" : "课程负担与考核"}</h3>
@@ -2392,10 +2437,6 @@
   function loadCornellImportedDataset() {
     try {
       const parsed = JSON.parse(localStorage.getItem("llm-course-planner-cornell-import") || "null");
-      if (parsed?.bundledDatabaseVersion !== CURRENT_CORNELL_DATASET_VERSION) {
-        localStorage.removeItem("llm-course-planner-cornell-import");
-        return null;
-      }
       return parsed && parsed.sourceBuild === "user-import" && Array.isArray(parsed.courses) ? parsed : null;
     } catch { return null; }
   }
@@ -3108,9 +3149,11 @@
     if (c.code === "LAW 7230" && courseTermCode(c) === "SP27" && selectedCourses().filter(course => course.code === "LAW 7230" && courseTermCode(course) === "SP27").length > 1) return { status:"review", code:"repeat-credit-unconfirmed", reasonEn:"Concurrent enrollment and separate credit for multiple LAW 7230 topics require Cornell Law confirmation.", reasonZh:"同时修读多个 LAW 7230 专题及分别计学分须经 Cornell Law 确认。" };
     const sectionId = selectedSectionId === undefined ? (state.selected[c.id] || sectionSelectionId(defaultSectionSelection(c))) : selectedSectionId;
     const combinedSection = getSection(c, sectionId);
-    if (c.catalogListingStatus === "not-listed" || combinedSection?.catalogListingStatus === "not-listed") return { status:"review", code:"listing-unconfirmed", reasonEn:"the saved course or section is absent from the current listing", reasonZh:"原选课程或班次当前未列出，须确认" };
+    if (["not-listed","source-conflict"].includes(c.catalogListingStatus) || [combinedSection, ...(combinedSection?.sourceSections || [])].some(part => ["not-listed","source-conflict"].includes(part?.catalogListingStatus)) || c.officialRosterListingStatus === "not-listed") return { status:"review", code:"listing-unconfirmed", reasonEn:"the course or section has conflicting official listings and requires confirmation", reasonZh:"课程或班次的官方来源存在差异，须确认" };
     const sections = combinedSection?.sourceSections || (combinedSection ? [combinedSection] : []);
-    return NY_BAR_ELIGIBILITY.classifyCourse({ course:c, sections, schoolId:currentSchoolId });
+    const classification = NY_BAR_ELIGIBILITY.classifyCourse({ course:c, sections, schoolId:currentSchoolId });
+    if (c.nyBarConfirmationRequired && classification.status !== "ineligible") return { status:"review", code:"credit-confirmation", reasonEn:"the course or variable credits require Cornell Law confirmation", reasonZh:"课程或可变学分须向 Cornell Law 确认" };
+    return classification;
   }
 
   function barStatus(c, selectedSectionId = undefined) {
@@ -3270,7 +3313,35 @@
     state.courseOverrides ||= {};
     state.customCourses ||= [];
     const overrides = state.courseOverrides;
-    const base = courses.map(course => overrides[course.id] ? { ...course, ...overrides[course.id], locallyEdited:true } : course);
+    const base = courses.map(course => {
+      const override = overrides[course.id];
+      if (!override) return course;
+      const legacyWarningZh = "本课程有本地编辑，保存的班次可能沿用旧数据；请对照大学课表核实。";
+      const legacyWarningEn = "This course has local edits; its saved section may use older data. Check it against the university roster.";
+      if (!course.independentlyPlannableTopic) return { ...course, ...override, id:course.id, locallyEdited:true, catalogWarningZh:[override.catalogWarningZh || course.catalogWarningZh, legacyWarningZh].filter(Boolean).join(" "), catalogWarningEn:[override.catalogWarningEn || course.catalogWarningEn, legacyWarningEn].filter(Boolean).join(" ") };
+      // The editor stores a complete snapshot, although only these fields are
+      // editable. Do not restore old official metadata or unrelated warnings.
+      const editable = ["code", "catalogNbr", "titleEn", "titleZh", "descriptionZh", "credits", "creditText"];
+      const safeOverride = Object.fromEntries(editable.filter(key => Object.prototype.hasOwnProperty.call(override, key)).map(key => [key, override[key]]));
+      if (override.id && override.id !== course.id) {
+        const source = (cornellImportedDataset?.courses?.length ? cornellImportedDataset.courses : cornellSpringCatalog);
+        const legacy = source.find(item => item.id === "LAW-7230-SP27");
+        const firstTopic = legacy?.sections?.find(item => String(item.section).padStart(3, "0") === "101");
+        // Old full-course snapshots contain the first topic's unedited text.
+        // Do not let those defaults replace a migrated topic's own identity.
+        for (const key of ["titleEn", "titleZh", "officialTitleEn", "descriptionEn", "descriptionZh", "officialDescriptionEn"]) {
+          const firstKey = key === "officialTitleEn" ? "titleEn" : key === "officialDescriptionEn" ? "descriptionEn" : key;
+          if (safeOverride[key] && (safeOverride[key] === legacy?.[key] || safeOverride[key] === firstTopic?.[firstKey])) delete safeOverride[key];
+        }
+      }
+      const originalSection = course.sections?.[0];
+      let sections = (override.sections || []).filter(section => section.id === originalSection?.id || (section.section && String(section.section) === String(originalSection?.section)));
+      const personal = override.sections?.length === 1 && !override.sections[0].section && /-001$/.test(override.sections[0].id || "") ? override.sections[0] : null;
+      if (!sections.length && personal && originalSection) sections = [{ ...personal, id:originalSection.id, section:originalSection.section, component:originalSection.component }];
+      // Old full-course edits stay stored but must never reintroduce the other
+      // topics or replace this topic's identity.
+      return { ...course, ...safeOverride, id:course.id, sections:sections.length ? sections : course.sections, independentlyPlannableTopic:true, locallyEdited:true, catalogWarningZh:[course.catalogWarningZh, legacyWarningZh].filter(Boolean).join(" "), catalogWarningEn:[course.catalogWarningEn, legacyWarningEn].filter(Boolean).join(" ") };
+    });
     const existing = new Set(base.map(course => course.id));
     courses = [...base, ...state.customCourses.filter(course => !existing.has(course.id)).map(course => ({ ...course, schoolId:currentSchoolId, locallyEdited:true }))];
   }
@@ -3533,7 +3604,19 @@
     return s.meetings.map(formatMeetingTime).join(isEnglish() ? "; " : "；");
   }
   function formatMeetingTime(m) {
-    const dates = m.startDate && m.endDate ? ` · ${formatShortDate(m.startDate)}—${formatShortDate(m.endDate)}` : "";
+    let first = m.startDate, last = m.endDate;
+    if (first && last && first !== last && parsePattern(m.pattern).length) {
+      const occurs = date => {
+        const term = termProfileForDate(date);
+        const day = term?.specialScheduleDays?.[toIsoDate(date)] || DAY_KEYS[date.getDay()-1];
+        return !isNoClassDate(date) && parsePattern(m.pattern).includes(day);
+      };
+      let start = parseIsoDate(first), end = parseIsoDate(last);
+      for (let i = 0; i < 14 && start <= end && !occurs(start); i++) start = addDays(start, 1);
+      for (let i = 0; i < 14 && end >= start && !occurs(end); i++) end = addDays(end, -1);
+      if (start <= end && occurs(start) && occurs(end)) { first = toIsoDate(start); last = toIsoDate(end); }
+    }
+    const dates = first && last ? ` · ${formatShortDate(first)}—${formatShortDate(last)}` : "";
     return `${parsePattern(m.pattern).map(dayLabel).join(isEnglish() ? ", " : "、")} ${m.start}–${m.end}${dates}`;
   }
   function cleanLocation(value) {
@@ -3568,10 +3651,16 @@
     if (override) return localizedLocation(override);
     const synced = syncedLocation(section);
     if (synced) return localizedLocation(synced);
+    const mode = String(section?.instructionMode || "");
+    if (/\bhybrid\b|\bblended\b|mixed[-\s]?mode|partially\s+online/i.test(mode)) return isEnglish() ? "Hybrid instruction; confirm the location" : "混合授课；地点请核实";
+    if (/distance\s+learning|\bonline\b|\bremote\b/i.test(mode)) return isEnglish() ? (/\basynchronous\b/i.test(mode) ? "Online asynchronous instruction" : /\bsynchronous\b/i.test(mode) ? "Online synchronous instruction" : "Online instruction") : (/\basynchronous\b/i.test(mode) ? "在线异步授课" : /\bsynchronous\b/i.test(mode) ? "在线同步授课" : "在线授课");
     const direct = languagePreferredLocation(meeting?.location, meeting?.locationZh, meeting?.facilityDescrLong, meeting?.facilityDescr, meeting?.buildingDescr, meeting?.facilityName, meeting?.room);
     if (direct) return localizedLocation(direct);
     const sectionDirect = languagePreferredLocation(section?.location, section?.locationZh);
     if (sectionDirect && !/主校区|具体教室待公布|校园/.test(sectionDirect)) return localizedLocation(sectionDirect);
+    // A course-level room can describe a different class or campus. Do not
+    // copy it onto a separately identified roster section with no room.
+    if (section?.officialRosterClassNumber) return isEnglish() ? "Teaching location not published" : "教室尚未公布";
     const courseDirect = languagePreferredLocation(course?.location, course?.locationZh);
     if (courseDirect && !/主校区|具体教室待公布|校园/.test(courseDirect)) return localizedLocation(courseDirect);
     if (/在线|remote|zoom/i.test(`${section?.instructionMode || ""} ${courseDirect} ${sectionDirect}`)) return isEnglish() ? "Online" : "在线授课";
@@ -3601,6 +3690,8 @@
     return meetingLocation(null, section, course);
   }
   function courseLocationSummary(course) {
+    const modes = new Set((course.sections || []).map(section => /distance\s+learning|\bonline\b|\bremote\b/i.test(section.instructionMode || "") ? "online" : "other"));
+    if (modes.size > 1) return isEnglish() ? "Location varies by section; see section details" : "班次地点不同，请查看具体班次";
     const locations = [...new Set((course.sections || []).map(section => sectionLocationSummary(section, course)).filter(v => !isPendingLocation(v)))];
     if (!locations.length) return isEnglish() ? "Teaching location not published" : "教室尚未公布";
     return locations.length > 2 ? `${locations.slice(0,2).join(isEnglish() ? "; " : "；")}${isEnglish() ? " and more" : " 等"}` : locations.join(isEnglish() ? "; " : "；");
@@ -3634,7 +3725,7 @@
   function locationLinkHtml(location) {
     const text = String(location || (isEnglish() ? "Teaching location not published" : "教室尚未公布"));
     if (isPendingLocation(text)) return `<span class="location-pending">${esc(text)}</span>`;
-    if (/在线授课|在线同步授课|online/i.test(text)) return `<span class="location-online">${esc(text)}</span>`;
+    if (/在线(?:同步|异步)?授课|online/i.test(text)) return `<span class="location-online">${esc(text)}</span>`;
     if (/协商/.test(text)) return `<span class="location-arranged">${esc(text)}</span>`;
     return `<a class="location-link" href="${locationMapUrl(text)}" target="_blank" rel="noreferrer" title="${isEnglish() ? "Open in map: " : "在地图中查看 "}${esc(text)}">${esc(text)} ↗</a>`;
   }
