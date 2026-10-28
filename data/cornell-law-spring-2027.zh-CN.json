@@ -3529,8 +3529,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6001"
+      }
     },
     {
       "id": "LAW-6011-SP27",
@@ -3849,8 +3855,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6011"
+      }
     },
     {
       "id": "LAW-6025-SP27",
@@ -4140,8 +4152,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6025"
+      }
     },
     {
       "id": "LAW-6027-SP27",
@@ -4997,7 +5015,7 @@
       "catalogOnly": false,
       "dataScope": "Current Spring 2027 Cornell Law Course Offerings; historical official roster/catalog data is used only where explicitly identified by provenance.",
       "restrictionZh": "当前官方课程目录未单列本课程的选课限制。",
-      "prerequisitesZh": "大学 Spring 2027 Class Roster 的检索快照列有先修 LAW 5081；法学院目录未列先修要求，请确认适用条件。",
+      "prerequisitesZh": "大学课表列明先修 LAW 5081。",
       "translationCompleteness": "pending",
       "translationMethod": "Chinese translation checked against the official current English catalog, 2026-10-26.",
       "restrictionTranslationComplete": true,
@@ -5081,14 +5099,12 @@
         "checkedAt": "2026-10-26T19:13:22.143Z",
         "note": "Older enrollment text is not promoted to a Spring 2027 restriction. Current sources do not publish one."
       },
-      "prerequisitesEn": "The cached Spring 2027 Class Roster states prerequisite LAW 5081. The Law School catalog does not list a prerequisite; confirm the applicable requirement.",
-      "prerequisites": "当前官方课程目录未单列本课程的先修要求。",
+      "prerequisitesEn": "University Class Roster prerequisite: LAW 5081.",
+      "prerequisites": "大学课表列明先修 LAW 5081。",
       "prerequisitesProvenance": {
-        "kind": "official-no-separate-prerequisite-status",
-        "sourceUrl": "https://support.law.cornell.edu/CourseOfferings/",
-        "latestCatalogSourceUrl": null,
-        "checkedAt": "2026-10-26T19:13:22.143Z",
-        "note": "Older prerequisite text is not promoted to a Spring 2027 requirement. Current sources do not publish one."
+        "kind": "university-roster",
+        "sourceUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6051",
+        "checkedAt": "2026-10-28"
       },
       "courseFormat": "lecture",
       "courseFormats": [
@@ -5134,22 +5150,7 @@
         },
         "secondaryDiscussion": null
       },
-      "sourceConflicts": [
-        {
-          "field": "prerequisite-and-assessment",
-          "status": "needs-confirmation",
-          "sourceUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6051",
-          "messageEn": "The indexed Spring 2027 Class Roster says LAW 5081 is a prerequisite, and lists three assignments, a due diligence report and no final exam. The current Law School catalog has a different description; confirm the current syllabus and prerequisites.",
-          "messageZh": "大学春季课表检索快照列有先修 LAW 5081、三项作业、一份尽调报告及无期末考试；法学院当前目录的课程说明不同，请以最新教学大纲及先修要求确认。"
-        },
-        {
-          "field": "grading-options",
-          "status": "needs-confirmation",
-          "sourceUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6051",
-          "messageEn": "The Law School catalog and current university roster list different grading bases. The selected section displays the university record; confirm in Student Center.",
-          "messageZh": "法学院目录与大学课表列出的评分方式不同；所选班次显示当前大学课表记录，请在 Student Center 核实。"
-        }
-      ],
+      "sourceConflicts": [],
       "restrictionRawEn": "",
       "officialDescriptionRawEn": "Designed for students pursuing corporate, transactional, or regulatory careers, this course focuses on the research skills attorneys use in modern practice. Students will learn how to investigate companies, analyze securities filings, and navigate regulations and transaction precedents using both traditional sources and cutting-edge tools, including AI-assisted research platforms and deal analytics resources. Through realistic, practice-oriented problems, students will build the ability to deliver precise, efficient, and strategically informed research in business law settings.",
       "descriptionNormalization": null,
@@ -5170,8 +5171,39 @@
       "officialRosterPrerequisitesZh": "LAW 5081。",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6051"
+      },
+      "historicalSourceAudit": {
+        "restrictionZh": "当前官方课程目录未单列本课程的选课限制。",
+        "restrictionEn": "Cornell's current Course Offerings page and the latest available 2026-27 official Catalog record do not publish a separate enrollment restriction for this course.",
+        "prerequisitesZh": "大学 Spring 2027 Class Roster 的检索快照列有先修 LAW 5081；法学院目录未列先修要求，请确认适用条件。",
+        "prerequisitesEn": "The cached Spring 2027 Class Roster states prerequisite LAW 5081. The Law School catalog does not list a prerequisite; confirm the applicable requirement.",
+        "officialRosterPrerequisites": "LAW 5081.",
+        "officialRosterPrerequisitesZh": "LAW 5081。",
+        "sourceConflicts": [
+          {
+            "field": "prerequisite-and-assessment",
+            "status": "needs-confirmation",
+            "sourceUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6051",
+            "messageEn": "The indexed Spring 2027 Class Roster says LAW 5081 is a prerequisite, and lists three assignments, a due diligence report and no final exam. The current Law School catalog has a different description; confirm the current syllabus and prerequisites.",
+            "messageZh": "大学春季课表检索快照列有先修 LAW 5081、三项作业、一份尽调报告及无期末考试；法学院当前目录的课程说明不同，请以最新教学大纲及先修要求确认。"
+          },
+          {
+            "field": "grading-options",
+            "status": "needs-confirmation",
+            "sourceUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6051",
+            "messageEn": "The Law School catalog and current university roster list different grading bases. The selected section displays the university record; confirm in Student Center.",
+            "messageZh": "法学院目录与大学课表列出的评分方式不同；所选班次显示当前大学课表记录，请在 Student Center 核实。"
+          }
+        ],
+        "officialRosterDescriptionEn": "Business issues, particularly those relating to corporations, are a given in most areas of practice. This course will introduce students to online resources providing company information and will enable them to evaluate the information in order to determine whether the resource is the most appropriate for their research. Students will learn how to find what the company says about itself (required filings, annual statements, web pages, press releases), what third parties have to say (analysts, ratings services, directories, news and journal articles), insider information, and the regulatory background of company information. Classes are lectures in concert with outside assignments. There are assigned readings in lieu of a required textbook. Students complete three assignments, and a due diligence report on a company of the student's choice. There is no final exam."
+      }
     },
     {
       "id": "LAW-6067-SP27",
@@ -5454,8 +5486,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6067"
+      }
     },
     {
       "id": "LAW-6101-SP27",
@@ -6068,8 +6106,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6131"
+      }
     },
     {
       "id": "LAW-6147-SP27",
@@ -6355,8 +6399,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6147"
+      }
     },
     {
       "id": "LAW-6158-SP27",
@@ -6949,8 +6999,14 @@
       "officialRosterPrerequisitesZh": "LAW 5021。",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6203"
+      }
     },
     {
       "id": "LAW-6209-SP27",
@@ -7227,8 +7283,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6209"
+      }
     },
     {
       "id": "LAW-6213-SP27",
@@ -7511,8 +7573,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6213"
+      }
     },
     {
       "id": "LAW-6230-SP27",
@@ -7795,8 +7863,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6230"
+      }
     },
     {
       "id": "LAW-6264-SP27",
@@ -8096,8 +8170,14 @@
       "officialRosterPrerequisitesZh": "LAW 5021。",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6264"
+      }
     },
     {
       "id": "LAW-6273-SP27",
@@ -8749,8 +8829,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6299"
+      }
     },
     {
       "id": "LAW-6306-SP27",
@@ -9724,8 +9810,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6331"
+      }
     },
     {
       "id": "LAW-6344-SP27",
@@ -10147,8 +10239,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6365"
+      }
     },
     {
       "id": "LAW-6392-SP27",
@@ -10561,8 +10659,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6401"
+      }
     },
     {
       "id": "LAW-6421-SP27",
@@ -10860,8 +10964,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6421"
+      }
     },
     {
       "id": "LAW-6431-SP27",
@@ -11158,8 +11268,14 @@
       "officialRosterPrerequisitesZh": "LAW 5001 和 LAW 5021。",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6431"
+      }
     },
     {
       "id": "LAW-6441-SP27",
@@ -11730,8 +11846,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6461"
+      }
     },
     {
       "id": "LAW-6465-SP27",
@@ -11801,7 +11923,9 @@
           "selectionMax": 1,
           "titleEn": "Global M&A Practice",
           "descriptionEn": "Meets March 22-25, 2027 – enrolled students must attend all four days (no exception for absence due to the MPRE exam, etc.).\r\nIt will provide a guidance on M&A practices in various jurisdictions, including the US, Europe and Japan. The course will address global M&A trends, various transaction structures, terms of acquisition agreements and a comparison of different M&A practices (e.g., US-style and UK-style). The course will also introduce various aspects of Japanese corporates, including corporate governance, business culture and commercial trends. Students will work on short Q&A papers during the course.",
-          "additionalInformationEn": "Law 6465, Global M&A Practice, will meet on an accelerated format March 22-25, 2026. Student attendance is mandatory for all 4 meetings of this class, no exceptions.",
+          "additionalInformationEn": [
+            "The course meets March 22–25, 2027, 5:30–8:45 p.m. Attendance at all four meetings is mandatory."
+          ],
           "degreeRequirementsEn": "",
           "syllabusUrl": "",
           "preRegistration": true,
@@ -11839,7 +11963,9 @@
           "officialSourceCheckedAt": "2026-10-26T18:50:06.816Z",
           "titleZh": "全球并购实务",
           "descriptionZh": "上课日期为 2027 年 3 月 22 日至 25 日；已选课学生必须出席全部四天，因参加 MPRE 考试等原因缺席亦不例外。本课程将介绍包括美国、欧洲和日本在内的不同法域的并购实务，内容包括全球并购趋势、各类交易结构、收购协议条款，以及不同并购实践（例如美国模式与英国模式）的比较。课程还将介绍日本公司的多个方面，包括公司治理、商业文化和商业趋势。学生将在课程期间完成简短的问答论文。",
-          "additionalInformationZh": "LAW 6465（全球并购实务）采用集中授课形式。Cornell 官方补充文字写明 2026 年 3 月 22 日至 25 日，但本记录为 Spring 2027，实际日期以当前班次日期字段为准。四次课均须出席，不设例外。",
+          "additionalInformationZh": [
+            "本课于2027年3月22日至25日每天17:30–20:45集中授课，四次均须出席。"
+          ],
           "scheduleDateStatus": "current-official-roster",
           "daysTimesStatus": "current-official-roster",
           "meetingStatus": "published",
@@ -11885,7 +12011,7 @@
       "lastTermsOffered": "Spring 2027",
       "catalogOnly": false,
       "dataScope": "Current Spring 2027 Cornell Law Course Offerings; historical official roster/catalog data is used only where explicitly identified by provenance.",
-      "restrictionZh": "LAW 6465（全球并购实务）采用集中授课形式。Cornell 官方补充文字写明 2026 年 3 月 22 日至 25 日，但本记录为 Spring 2027，实际日期以当前班次日期字段为准。四次课均须出席，不设例外。",
+      "restrictionZh": "本课于2027年3月22日至25日每天17:30–20:45集中授课，四次均须出席。",
       "prerequisitesZh": "当前官方课程目录未单列本课程的先修要求。",
       "translationCompleteness": "pending",
       "translationMethod": "Chinese translation checked against the official current English catalog, 2026-10-26.",
@@ -11919,7 +12045,7 @@
       "registrationConsentZh": "",
       "registrationConsentEn": "",
       "additionalInformationEn": [
-        "Law 6465, Global M&A Practice, will meet on an accelerated format March 22-25, 2026. Student attendance is mandatory for all 4 meetings of this class, no exceptions."
+        "The course meets March 22–25, 2027, 5:30–8:45 p.m. Attendance at all four meetings is mandatory."
       ],
       "officialTitleVariantsEn": [
         "Global M&A Practice"
@@ -11953,8 +12079,8 @@
       "barCategories": [],
       "barEvidence": null,
       "titleEn": "Global M&A Practice",
-      "restrictionEn": "Law 6465, Global M&A Practice, will meet on an accelerated format March 22-25, 2026. Student attendance is mandatory for all 4 meetings of this class, no exceptions.",
-      "restriction": "LAW 6465（全球并购实务）采用集中授课形式。Cornell 官方补充文字写明 2026 年 3 月 22 日至 25 日，但本记录为 Spring 2027，实际日期以当前班次日期字段为准。四次课均须出席，不设例外。",
+      "restrictionEn": "The course meets March 22–25, 2027, 5:30–8:45 p.m. Attendance at all four meetings is mandatory.",
+      "restriction": "本课于2027年3月22日至25日每天17:30–20:45集中授课，四次均须出席。",
       "restrictionProvenance": {
         "kind": "current-official-course-offerings",
         "sourceUrl": "https://support.law.cornell.edu/CourseOfferings/",
@@ -11992,7 +12118,7 @@
         "normalization": null
       },
       "additionalInformationZh": [
-        "LAW 6465（全球并购实务）采用集中授课形式。Cornell 官方补充文字写明 2026 年 3 月 22 日至 25 日，但本记录为 Spring 2027，实际日期以当前班次日期字段为准。四次课均须出席，不设例外。"
+        "本课于2027年3月22日至25日每天17:30–20:45集中授课，四次均须出席。"
       ],
       "degreeRequirementsEn": [],
       "degreeRequirementsZh": [
@@ -12016,25 +12142,7 @@
         },
         "secondaryDiscussion": null
       },
-      "sourceConflicts": [
-        {
-          "field": "supplemental-date-text",
-          "status": "current-source-year-conflict",
-          "officialTerm": "SP27",
-          "publishedText": [
-            "Law 6465, Global M&A Practice, will meet on an accelerated format March 22-25, 2026. Student attendance is mandatory for all 4 meetings of this class, no exceptions."
-          ],
-          "resolution": "Spring 2027 section dates use the current term-specific schedule/date fields; the conflicting source text is retained verbatim in additionalInformationEn and is not used as a 2026 schedule."
-        },
-        {
-          "field": "supplemental-date-text",
-          "status": "needs-confirmation",
-          "messageEn": "The supplemental note says March 22–25, 2026, while the offering is Spring 2027. The saved Spring 2027 schedule is retained; confirm the year with the Registrar.",
-          "messageZh": "附注写2026年3月22日至25日，但开课学期为2027春季；保留现有2027春季安排，年份须向注册处确认。",
-          "sourceUrl": "https://support.law.cornell.edu/CourseCatalog/",
-          "checkedAt": "2026-10-26T18:50:06.816Z"
-        }
-      ],
+      "sourceConflicts": [],
       "restrictionRawEn": "Law 6465, Global M&A Practice, will meet on an accelerated format March 22-25, 2026. Student attendance is mandatory for all 4 meetings of this class, no exceptions. Student attendance is mandatory for all 4 meetings of this class, no exceptions.",
       "officialDescriptionRawEn": "Meets March 22-25, 2027 – enrolled students must attend all four days (no exception for absence due to the MPRE exam, etc.).\r\nIt will provide a guidance on M&A practices in various jurisdictions, including the US, Europe and Japan. The course will address global M&A trends, various transaction structures, terms of acquisition agreements and a comparison of different M&A practices (e.g., US-style and UK-style). The course will also introduce various aspects of Japanese corporates, including corporate governance, business culture and commercial trends. Students will work on short Q&A papers during the course.",
       "descriptionNormalization": null,
@@ -12054,7 +12162,39 @@
       "officialRosterPrerequisites": "",
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
-      "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400"
+      "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
+      "historicalSourceAudit": {
+        "restrictionZh": "LAW 6465（全球并购实务）采用集中授课形式。Cornell 官方补充文字写明 2026 年 3 月 22 日至 25 日，但本记录为 Spring 2027，实际日期以当前班次日期字段为准。四次课均须出席，不设例外。",
+        "restrictionEn": "Law 6465, Global M&A Practice, will meet on an accelerated format March 22-25, 2026. Student attendance is mandatory for all 4 meetings of this class, no exceptions.",
+        "prerequisitesZh": "当前官方课程目录未单列本课程的先修要求。",
+        "prerequisitesEn": "Cornell's current Course Offerings page and the latest available 2026-27 official Catalog record do not publish a separate prerequisite for this course.",
+        "additionalInformationZh": [
+          "LAW 6465（全球并购实务）采用集中授课形式。Cornell 官方补充文字写明 2026 年 3 月 22 日至 25 日，但本记录为 Spring 2027，实际日期以当前班次日期字段为准。四次课均须出席，不设例外。"
+        ],
+        "additionalInformationEn": [
+          "Law 6465, Global M&A Practice, will meet on an accelerated format March 22-25, 2026. Student attendance is mandatory for all 4 meetings of this class, no exceptions."
+        ],
+        "sourceConflicts": [
+          {
+            "field": "supplemental-date-text",
+            "status": "current-source-year-conflict",
+            "officialTerm": "SP27",
+            "publishedText": [
+              "Law 6465, Global M&A Practice, will meet on an accelerated format March 22-25, 2026. Student attendance is mandatory for all 4 meetings of this class, no exceptions."
+            ],
+            "resolution": "Spring 2027 section dates use the current term-specific schedule/date fields; the conflicting source text is retained verbatim in additionalInformationEn and is not used as a 2026 schedule."
+          },
+          {
+            "field": "supplemental-date-text",
+            "status": "needs-confirmation",
+            "messageEn": "The supplemental note says March 22–25, 2026, while the offering is Spring 2027. The saved Spring 2027 schedule is retained; confirm the year with the Registrar.",
+            "messageZh": "附注写2026年3月22日至25日，但开课学期为2027春季；保留现有2027春季安排，年份须向注册处确认。",
+            "sourceUrl": "https://support.law.cornell.edu/CourseCatalog/",
+            "checkedAt": "2026-10-26T18:50:06.816Z"
+          }
+        ],
+        "officialRosterDescriptionEn": "It will provide a guidance on M&A practices in various jurisdictions, including the US, Europe, Japan and other emerging countries. The course will address global M&A trends, various transaction structures, terms of acquisition agreements and a comparison of different M&A practices (e.g., US-style and UK-style), as well as other legal issues such as merger filings and anti-corruption. The course will also introduce various aspects of Japanese corporates, including corporate governance, business cultures and commercial trends."
+      }
     },
     {
       "id": "LAW-6471-SP27",
@@ -12339,8 +12479,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6471"
+      }
     },
     {
       "id": "LAW-6511-SP27",
@@ -12626,8 +12772,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6511"
+      }
     },
     {
       "id": "LAW-6560-SP27",
@@ -13328,8 +13480,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only (no audit)",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6592"
+      }
     },
     {
       "id": "LAW-6641-SP27",
@@ -13648,8 +13806,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6641"
+      }
     },
     {
       "id": "LAW-6654-SP27",
@@ -14264,15 +14428,7 @@
         },
         "secondaryDiscussion": null
       },
-      "sourceConflicts": [
-        {
-          "field": "grading-options",
-          "status": "needs-confirmation",
-          "sourceUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6661",
-          "messageEn": "The Law School catalog and current university roster list different grading bases. The selected section displays the university record; confirm in Student Center.",
-          "messageZh": "法学院目录与大学课表列出的评分方式不同；所选班次显示当前大学课表记录，请在 Student Center 核实。"
-        }
-      ],
+      "sourceConflicts": [],
       "restrictionRawEn": "",
       "officialDescriptionRawEn": "This course introduces students to the law and institutions of the European Union. It examines the composition, organization, functions and powers of the Union's governing bodies; analyzes the Union's governing treaties and constitutional law; and studies the Union's decision-making processes. The course also explores broader questions of political, economic and legal integration, such as the proper relation between the Union's law and the domestic law of the Union's Member states, and the desirability and feasibility of using the E.U. as a model on which to pattern other transnational agreements.",
       "descriptionNormalization": null,
@@ -14293,8 +14449,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6661"
+      }
     },
     {
       "id": "LAW-6681-SP27",
@@ -14584,8 +14746,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6681"
+      }
     },
     {
       "id": "LAW-6734-SP27",
@@ -14885,8 +15053,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6734"
+      }
     },
     {
       "id": "LAW-6739-SP27",
@@ -15029,7 +15203,7 @@
       "catalogOnly": false,
       "dataScope": "Current Spring 2027 Cornell Law Course Offerings; historical official roster/catalog data is used only where explicitly identified by provenance.",
       "restrictionZh": "当前官方课程目录未单列本课程的选课限制。",
-      "prerequisitesZh": "J.D. 学生先修 LAW 5081；大学春季课表检索快照注明 LL.M. 学生须先修或同修 LAW 6761，请确认最新要求。",
+      "prerequisitesZh": "J.D. 学生须先修 LAW 5081；LL.M. 学生须先修或同修 LAW 6761。",
       "translationCompleteness": "pending",
       "translationMethod": "Chinese translation checked against the official current English catalog, 2026-10-26.",
       "restrictionTranslationComplete": true,
@@ -15116,8 +15290,8 @@
         "checkedAt": "2026-10-26T19:13:22.143Z",
         "note": "Older enrollment text is not promoted to a Spring 2027 restriction. Current sources do not publish one."
       },
-      "prerequisitesEn": "For JD students: LAW 5081. The indexed Spring 2027 Class Roster lists LAW 6761 as a prerequisite or corequisite for LL.M. students; confirm current requirements.",
-      "prerequisites": "对于 J.D. 学生，先修：Lawyering。",
+      "prerequisitesEn": "J.D. students: prerequisite LAW 5081. LL.M. students: prerequisite or corequisite LAW 6761.",
+      "prerequisites": "J.D. 学生须先修 LAW 5081；LL.M. 学生须先修或同修 LAW 6761。",
       "prerequisitesProvenance": {
         "kind": "current-official-course-offerings",
         "sourceUrl": "https://support.law.cornell.edu/CourseOfferings/",
@@ -15163,22 +15337,7 @@
         },
         "secondaryDiscussion": null
       },
-      "sourceConflicts": [
-        {
-          "field": "llm-prerequisite",
-          "status": "needs-confirmation",
-          "sourceUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6739",
-          "messageEn": "The indexed Spring 2027 Class Roster lists LAW 6761 as an LL.M. prerequisite or corequisite; confirm against the current course information.",
-          "messageZh": "大学春季课表检索快照注明 LL.M. 学生先修或同修 LAW 6761；请核对最新课程信息。"
-        },
-        {
-          "field": "grading-options",
-          "status": "needs-confirmation",
-          "sourceUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6739",
-          "messageEn": "The Law School catalog and current university roster list different grading bases. The selected section displays the university record; confirm in Student Center.",
-          "messageZh": "法学院目录与大学课表列出的评分方式不同；所选班次显示当前大学课表记录，请在 Student Center 核实。"
-        }
-      ],
+      "sourceConflicts": [],
       "restrictionRawEn": "",
       "officialDescriptionRawEn": "Prerequisite: Lawyering required for JD students. LL.M. students who have already taken, or are concurrently enrolled in, Principles of American Legal Writing may take this course. Build upon the research skills honed in Lawyering to explore advanced strategies for conducting legal research. This course provides an overview of the resources, methods, and strategies necessary to conduct efficient and effective online legal research for upper-level courses and employment. Students will learn when and how to use subscription and open access databases for researching legal information. Students can expect to complete a series of research assignments and a final research project.",
       "descriptionNormalization": null,
@@ -15195,12 +15354,44 @@
       "officialRosterDescriptionDifferent": true,
       "officialRosterEnrollmentPriority": "",
       "officialRosterEnrollmentPriorityZh": "",
-      "officialRosterPrerequisites": "for Juris Doctor (JD) students: LAW 5081.; or prerequisites for Master of Laws (LLM): LAW 6761.",
-      "officialRosterPrerequisitesZh": "先修课程：法学博士（JD）学生为 LAW 5081；法学硕士（LLM）学生为 LAW 6761。",
+      "officialRosterPrerequisites": "J.D. students: prerequisite LAW 5081. LL.M. students: prerequisite or corequisite LAW 6761.",
+      "officialRosterPrerequisitesZh": "J.D. 学生须先修 LAW 5081；LL.M. 学生须先修或同修 LAW 6761。",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6739"
+      },
+      "historicalSourceAudit": {
+        "restrictionZh": "当前官方课程目录未单列本课程的选课限制。",
+        "restrictionEn": "Cornell's current Course Offerings page and the latest available 2026-27 official Catalog record do not publish a separate enrollment restriction for this course.",
+        "prerequisitesZh": "J.D. 学生先修 LAW 5081；大学春季课表检索快照注明 LL.M. 学生须先修或同修 LAW 6761，请确认最新要求。",
+        "prerequisitesEn": "For JD students: LAW 5081. The indexed Spring 2027 Class Roster lists LAW 6761 as a prerequisite or corequisite for LL.M. students; confirm current requirements.",
+        "officialRosterPrerequisites": "for Juris Doctor (JD) students: LAW 5081.; or prerequisites for Master of Laws (LLM): LAW 6761.",
+        "officialRosterPrerequisitesZh": "先修课程：法学博士（JD）学生为 LAW 5081；法学硕士（LLM）学生为 LAW 6761。",
+        "sourceConflicts": [
+          {
+            "field": "llm-prerequisite",
+            "status": "needs-confirmation",
+            "sourceUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6739",
+            "messageEn": "The indexed Spring 2027 Class Roster lists LAW 6761 as an LL.M. prerequisite or corequisite; confirm against the current course information.",
+            "messageZh": "大学春季课表检索快照注明 LL.M. 学生先修或同修 LAW 6761；请核对最新课程信息。"
+          },
+          {
+            "field": "grading-options",
+            "status": "needs-confirmation",
+            "sourceUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6739",
+            "messageEn": "The Law School catalog and current university roster list different grading bases. The selected section displays the university record; confirm in Student Center.",
+            "messageZh": "法学院目录与大学课表列出的评分方式不同；所选班次显示当前大学课表记录，请在 Student Center 核实。"
+          }
+        ],
+        "officialRosterDescriptionEn": "Build upon the research skills honed in Lawyering to explore advanced strategies for conducting legal research. This course provides an overview of the resources, methods, and strategies necessary to conduct efficient and effective online legal research for upper-level courses and employment. Students will learn when and how to use subscription and open access databases for researching legal information. Students can expect to complete a series of research assignments and a final research project."
+      },
+      "officialRosterPrerequisitesRaw": "for Juris Doctor (JD) students: LAW 5081.; or prerequisites for Master of Laws (LLM): LAW 6761."
     },
     {
       "id": "LAW-6746-SP27",
@@ -15483,8 +15674,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only (no audit)",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6746"
+      }
     },
     {
       "id": "LAW-6761-SP27",
@@ -15720,7 +15917,7 @@
       "barClassroomEligible": true,
       "degreeRequired": false,
       "llmSpecific": false,
-      "eligibility": "review",
+      "eligibility": "open",
       "categories": [],
       "sourceUrl": "https://support.law.cornell.edu/CourseCatalog/",
       "catalogUrl": "https://support.law.cornell.edu/CourseOfferings/",
@@ -15890,7 +16087,9 @@
       "officialRosterPrerequisites": "",
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
-      "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400"
+      "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
+      "enrollmentLabelZh": "仅限 General LL.M.",
+      "enrollmentLabelEn": "General LL.M. only"
     },
     {
       "id": "LAW-6768-SP27",
@@ -16192,8 +16391,14 @@
       "officialRosterPrerequisitesZh": "对金融学一些基础原则有基本了解——例如会计、企业组织、公司金融或金融机构课程中所教授的内容。",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6768"
+      }
     },
     {
       "id": "LAW-6811-SP27",
@@ -16476,8 +16681,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6811"
+      }
     },
     {
       "id": "LAW-6844-SP27",
@@ -16766,8 +16977,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6844"
+      }
     },
     {
       "id": "LAW-6881-SP27",
@@ -17681,8 +17898,14 @@
       "officialRosterPrerequisitesZh": "LAW 6441。",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6891"
+      }
     },
     {
       "id": "LAW-6985-SP27",
@@ -17996,8 +18219,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6985"
+      }
     },
     {
       "id": "LAW-6991-SP27",
@@ -18972,8 +19201,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only (no audit)",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7026"
+      }
     },
     {
       "id": "LAW-7028-SP27",
@@ -20178,8 +20413,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7077"
+      }
     },
     {
       "id": "LAW-7083-SP27",
@@ -21028,8 +21269,14 @@
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
       "officialRosterPrerequisitesRaw": "or corequisites: LAW 6131 or LAW 6241 or LAW 6067 or LAW 6632 or LAW 5061.",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7152"
+      }
     },
     {
       "id": "LAW-7189-SP27",
@@ -21295,15 +21542,7 @@
         },
         "secondaryDiscussion": null
       },
-      "sourceConflicts": [
-        {
-          "field": "grading-options",
-          "status": "needs-confirmation",
-          "sourceUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7189",
-          "messageEn": "The Law School catalog and current university roster list different grading bases. The selected section displays the university record; confirm in Student Center.",
-          "messageZh": "法学院目录与大学课表列出的评分方式不同；所选班次显示当前大学课表记录，请在 Student Center 核实。"
-        }
-      ],
+      "sourceConflicts": [],
       "restrictionRawEn": "",
       "officialDescriptionRawEn": "[Crosslisted ILR 6189/Law 7189] [Pre-req: Law 6592 Labor Law, Practice and Policy]. \r\nThis advanced level mini-course examines several key contemporary issues in collective bargaining between US private sector employers and unions. Through pre-class readings and podcasts, and during four 3 hour classes with guest speakers , we will examine key developments that have set the table for today's bargaining environment, eg., the deindustrialization of the American economy, the decline of union workforce density; the effects of resultant wage stagnation and troubled health care and defined benefit pension plans; the recent surge in union organizing and strike activity; the intersection of employment law and legislation on collective bargaining and arbitration; and the emerging arena of unionization in higher education.",
       "descriptionNormalization": null,
@@ -21324,8 +21563,14 @@
       "officialRosterPrerequisitesZh": "LAW 6592。",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7189"
+      }
     },
     {
       "id": "LAW-7222-SP27",
@@ -21568,7 +21813,7 @@
           "descriptionEn": "This course is for beginners and veterans to role-playing games alike. In this hands-on course, we will explore how the world of role-playing games, particularly D&D, can develop essential skills for a successful legal career. Through a combination of hypotheticals and actual play, this course will focus on how the problem-solving, critical thinking, negotiation, and adjudication skills developed in role-playing games can directly apply to the practice of law.\r\n\r\nThroughout the course, we will learn how to play D&D, mastering the game’s mechanics, rules, and storytelling elements. We will then participate in a live campaign, where we will take on roles as adventurers and even game masters. We will explore the legal structures and ethical dilemmas found within fantasy realms, analyzing fictional legal systems and cultures. Additionally, we will engage in hypothetical scenarios and work to adjudicate in-game rule disputes, weighing the application of D&D rules to resolve conflicts and make fair judgments. We will also discuss legal issues that arise in the context of D&D, like fan-created content and intellectual property licensing.",
           "descriptionRawEn": "This course is for beginners and veterans to role-playing games alike. In this hands-on course, we will explore how the world of role-playing games, particularly D&D, can develop essential skills for a successful legal career. Through a combination of hypotheticals and actual play, this course will focus on how the problem-solving, critical thinking, negotiation, and adjudication skills developed in role-playing games can directly apply to the practice of law.\r\n\r\nThroughout the course, we will learn how to play D&D, mastering the game’s mechanics, rules, and storytelling elements. We will then participate in a live campaign, where we will take on roles as adventurers and even game masters. We will explore the legal structures and ethical dilemmas found within fantasy realms, analyzing fictional legal systems and cultures. Additionally, we will engage in hypothetical scenarios and work to adjudicate in-game rule disputes, weighing the application of D&D rules to resolve conflicts and make fair judgments. We will also discuss legal issues that arise in the context of D&D, like fan-created content and intellectual property licensing.",
           "descriptionNormalization": null,
-          "additionalInformationEn": "LAW 7230-101 Faculty Specialty Seminar: Dungeons & Dragons and the Law meets January 21, February 4 & 18, March 4 & 18.",
+          "additionalInformationEn": [],
           "degreeRequirementsEn": "",
           "syllabusUrl": "",
           "preRegistration": true,
@@ -21597,7 +21842,7 @@
           "officialSourceCheckedAt": "2026-10-26T18:50:06.816Z",
           "titleZh": "教师专题研讨课：龙与地下城与法律",
           "descriptionZh": "本课程同时适合角色扮演游戏的新手和资深玩家。课程通过亲身实践，探讨角色扮演游戏，尤其是《龙与地下城》，如何培养成功法律职业所需的关键能力。通过假设情境与实际游戏，课程重点讨论游戏中形成的问题解决、批判性思维、谈判和裁断能力如何直接运用于法律实践。学生将学习《龙与地下城》的玩法，掌握游戏机制、规则及叙事要素，随后参加实际战役，扮演冒险者乃至游戏主持人。课程还将探讨幻想世界中的法律结构与伦理困境，分析虚构法律制度与文化，并通过假设情境处理游戏规则争议，权衡如何运用规则解决冲突、作出公平判断。课程也讨论与游戏有关的法律问题，包括粉丝创作内容和知识产权许可。",
-          "additionalInformationZh": "LAW 7230-101教师专题研讨课：龙与地下城与法律，上课日期为2027年1月21日、2月4日及18日、3月4日及18日。",
+          "additionalInformationZh": [],
           "degreeRequirementsZh": "",
           "addConsentDescr": "No Special Consent Required",
           "consentEn": "",
@@ -21615,7 +21860,9 @@
           "selectionMax": 1,
           "officialRosterNotes": [],
           "officialRosterTopic": "Dungeons & Dragons and the Law",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "prerequisitesEn": "The university roster does not list a separate prerequisite for this topic.",
+          "prerequisitesZh": "大学课表未单列本专题的先修要求。"
         },
         {
           "id": "LAW-7230-SP27-102",
@@ -21740,7 +21987,9 @@
           "descriptionEn": "This seminar is an opportunity talk about how current events are putting pressure on lawyers' professional obligations. It is not limited to, but will certainly consider, issues facing lawyers in the DOJ and elsewhere in the administration, law firms facing executive orders, and organizations like the ABA, as well as the viability of state bar disciplinary proceedings against government lawyers (e.g. Jeff Clark, Pam Bondi, Todd Blanche). It will also include issues facing legal education, such as AI in the practice of law and alternatives. Basically, the subject matter of the seminar is whatever I've written about in my Substack, Legal Ethics Stuff. I want to have a critical, balanced discussion, although in some cases outrage is an appropriate reaction. Having taken PR is helpful but not necessary - we'll try not to go to deep in the weeds with the rules of professional conduct, but they may come up from time to time.",
           "descriptionRawEn": "This seminar is an opportunity talk about how current events are putting pressure on lawyers' professional obligations. It is not limited to, but will certainly consider, issues facing lawyers in the DOJ and elsewhere in the administration, law firms facing executive orders, and organizations like the ABA, as well as the viability of state bar disciplinary proceedings against government lawyers (e.g. Jeff Clark, Pam Bondi, Todd Blanche). It will also include issues facing legal education, such as AI in the practice of law and alternatives. Basically, the subject matter of the seminar is whatever I've written about in my Substack, Legal Ethics Stuff. I want to have a critical, balanced discussion, although in some cases outrage is an appropriate reaction. Having taken PR is helpful but not necessary - we'll try not to go to deep in the weeds with the rules of professional conduct, but they may come up from time to time.",
           "descriptionNormalization": null,
-          "additionalInformationEn": "Law 7301-104 Faculty Specialty Seminar: Legal Ethics in Challenging Times will meet Feb. 2 & 22, March 2 & 22, April 5 & 19.",
+          "additionalInformationEn": [
+            "The university roster lists SEM 102 and its six dates. The topic title follows the Law School entry associated by matching instructor and dates."
+          ],
           "degreeRequirementsEn": "",
           "syllabusUrl": "",
           "preRegistration": true,
@@ -21769,7 +22018,9 @@
           "officialSourceCheckedAt": "2026-10-26T18:50:06.816Z",
           "titleZh": "教师专题研讨课：变局中的法律职业伦理",
           "descriptionZh": "本研讨课讨论时事如何给律师的职业义务带来压力。讨论范围不限于以下问题，但将涉及司法部及政府其他部门的律师、面临行政命令的律师事务所、美国律师协会等组织，以及针对政府律师启动州律师纪律程序的可行性，例如Jeff Clark、Pam Bondi和Todd Blanche的相关问题。课程也将讨论法律教育面临的问题，包括人工智能在法律实务中的运用及其他方案。研讨主题主要来自教师在Substack专栏Legal Ethics Stuff发表的内容，目标是开展审慎而平衡的讨论，同时承认某些情形下愤怒也是适当反应。修读过职业责任课会有帮助，但并非必要；课程不会过度深入职业行为规则的细节，但会不时涉及这些规则。",
-          "additionalInformationZh": "官方附注写作LAW 7301-104，上课日期为2月2日及22日、3月2日及22日、4月5日及19日；该课程号、班次号及部分日期与结构化记录不一致，须确认。",
+          "additionalInformationZh": [
+            "大学课表列明 SEM 102 及六次上课日期；专题名称参考法学院目录中教师与日期相符的记录。"
+          ],
           "degreeRequirementsZh": "",
           "addConsentDescr": "No Special Consent Required",
           "consentEn": "",
@@ -21787,7 +22038,9 @@
           "selectionMax": 1,
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "prerequisitesEn": "The university roster does not list a separate prerequisite for this topic.",
+          "prerequisitesZh": "大学课表未单列本专题的先修要求。"
         },
         {
           "id": "LAW-7230-SP27-103",
@@ -21912,7 +22165,7 @@
           "descriptionEn": "This seminar will examine the laws surrounding prison journalism that affect journalists reporting on the criminal justice system and incarcerated journalists reporting from the inside. Each student will be responsible for selecting one topic of discussion during the course of the seminar and selecting appropriate readings in consultation with the professor. In addition to seminal cases, the seminar will draw on journalism about the carceral system and articles by incarcerated writers.",
           "descriptionRawEn": "This seminar will examine the laws surrounding prison journalism that affect journalists reporting on the criminal justice system and incarcerated journalists reporting from the inside. Each student will be responsible for selecting one topic of discussion during the course of the seminar and selecting appropriate readings in consultation with the professor. In addition to seminal cases, the seminar will draw on journalism about the carceral system and articles by incarcerated writers.",
           "descriptionNormalization": null,
-          "additionalInformationEn": "Law 7301-103 Faculty Specialty Seminar: Prison Journalism and the Law will meet Jan. 29, Feb. 12, Feb. 26, Mar. 12, Mar. 26 and April 9.",
+          "additionalInformationEn": [],
           "degreeRequirementsEn": "",
           "syllabusUrl": "",
           "preRegistration": true,
@@ -21941,7 +22194,7 @@
           "officialSourceCheckedAt": "2026-10-26T18:50:06.816Z",
           "titleZh": "教师专题研讨课：监狱新闻报道与法律",
           "descriptionZh": "本研讨课考察与监狱新闻报道有关的法律，既关注报道刑事司法制度的记者，也关注从监狱内部开展报道的在押记者。每名学生须选择一个讨论主题，并与教师协商选定适当读物。除重要判例外，课程还将使用有关监禁制度的新闻报道及在押作者撰写的文章。",
-          "additionalInformationZh": "官方附注写作LAW 7301-103，上课日期为1月29日、2月12日、2月26日、3月12日、3月26日及4月9日；课程号与结构化记录不一致，须确认。",
+          "additionalInformationZh": [],
           "degreeRequirementsZh": "",
           "addConsentDescr": "No Special Consent Required",
           "consentEn": "",
@@ -21959,7 +22212,9 @@
           "selectionMax": 1,
           "officialRosterNotes": [],
           "officialRosterTopic": "Prison Journalism and the Law",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "prerequisitesEn": "The university roster does not list a separate prerequisite for this topic.",
+          "prerequisitesZh": "大学课表未单列本专题的先修要求。"
         },
         {
           "id": "LAW-7230-SP27-104",
@@ -22005,7 +22260,9 @@
           "descriptionEn": "This course will introduce students to the genre of law review scholarship, including the types and structures of law review articles, differences in methodologies used by legal scholars, and analysis of logic and reasoning within individual articles. The course will cover canonical literature in the field of civil procedure and access to justice and will provide students with an opportunity to critique recent scholarship or works in progress. It is intended for students who are working on journals, interested in legal academia, or interested in advanced study of civil procedure. While ungraded, the course involves a significant workload and active class participation.",
           "descriptionRawEn": "This course will introduce students to the genre of law review scholarship, including the types and structures of law review articles, differences in methodologies used by legal scholars, and analysis of logic and reasoning within individual articles. The course will cover canonical literature in the field of civil procedure and access to justice and will provide students with an opportunity to critique recent scholarship or works in progress. It is intended for students who are working on journals, interested in legal academia, or interested in advanced study of civil procedure. While ungraded, the course involves a significant workload and active class participation.",
           "descriptionNormalization": null,
-          "additionalInformationEn": "Prereq: Law 5002 Civil Procedure II",
+          "additionalInformationEn": [
+            "The Law School catalog lists prerequisite LAW 5002, Civil Procedure II."
+          ],
           "degreeRequirementsEn": "",
           "syllabusUrl": "",
           "preRegistration": true,
@@ -22034,7 +22291,9 @@
           "officialSourceCheckedAt": "2026-10-27T15:49:05.110Z",
           "titleZh": "教师专题研讨课：法律学术写作入门——民事诉讼与法院研究",
           "descriptionZh": "本课程介绍法学评论论文的体裁，包括文章类型和结构、法学研究方法的差异，以及对论文逻辑与推理的分析。课程涵盖民事诉讼和司法救济领域的经典文献，并让学生评议近期研究或尚在撰写的作品。课程面向参与期刊工作、对法学学术研究感兴趣或希望深入学习民事诉讼的学生。虽然不采用等级评分，课程仍有较大的工作量，并要求积极参与课堂。",
-          "additionalInformationZh": "先修：LAW 5002 民事诉讼法（二）。",
+          "additionalInformationZh": [
+            "法学院目录列明先修 LAW 5002 民事诉讼法（二）。"
+          ],
           "degreeRequirementsZh": "",
           "selectionGroup": "",
           "selectionGroupLabel": "",
@@ -22048,7 +22307,9 @@
           "scheduleWarningZh": "法学院目录尚未公布本专题的上课时间和授课方式；计入课堂学分前请确认。",
           "catalogListingStatus": "source-conflict",
           "catalogWarningZh": "大学春季课表当前未列出此班次；法学院目录有记录，请向学校核实。",
-          "catalogWarningEn": "This section is absent from the current university roster but remains in the Law School catalog; confirm with Cornell."
+          "catalogWarningEn": "This section is absent from the current university roster but remains in the Law School catalog; confirm with Cornell.",
+          "prerequisitesEn": "Law School catalog: prerequisite LAW 5002, Civil Procedure II.",
+          "prerequisitesZh": "法学院目录列明先修 LAW 5002 民事诉讼法（二）。"
         }
       ],
       "barPrimary": null,
@@ -22066,8 +22327,8 @@
         "checkedAt": "2026-10-26T19:13:22.143Z",
         "note": "Older enrollment text is not promoted to a Spring 2027 restriction. Current sources do not publish one."
       },
-      "prerequisitesEn": "Section 104: LAW 5002 Civil Procedure II. Prerequisites for other topics are not separately stated in the Law School catalog.",
-      "prerequisites": "104 班先修 LAW 5002 民事诉讼法（二）；法学院目录未单列其他专题的先修要求。",
+      "prerequisitesEn": "See individual topics for prerequisites.",
+      "prerequisites": "请查看各专题的先修要求。",
       "prerequisitesProvenance": {
         "kind": "official-no-separate-prerequisite-status",
         "sourceUrl": "https://support.law.cornell.edu/CourseOfferings/",
@@ -22120,18 +22381,8 @@
       "descriptionZh": "本课程同时适合角色扮演游戏的新手和资深玩家。课程通过亲身实践，探讨角色扮演游戏，尤其是《龙与地下城》，如何培养成功法律职业所需的关键能力。通过假设情境与实际游戏，课程重点讨论游戏中形成的问题解决、批判性思维、谈判和裁断能力如何直接运用于法律实践。学生将学习《龙与地下城》的玩法，掌握游戏机制、规则及叙事要素，随后参加实际战役，扮演冒险者乃至游戏主持人。课程还将探讨幻想世界中的法律结构与伦理困境，分析虚构法律制度与文化，并通过假设情境处理游戏规则争议，权衡如何运用规则解决冲突、作出公平判断。课程也讨论与游戏有关的法律问题，包括粉丝创作内容和知识产权许可。",
       "registrationConsentZh": "",
       "registrationConsentEn": "",
-      "additionalInformationEn": [
-        "LAW 7230-101 Faculty Specialty Seminar: Dungeons & Dragons and the Law meets January 21, February 4 & 18, March 4 & 18.",
-        "Law 7301-104 Faculty Specialty Seminar: Legal Ethics in Challenging Times will meet Feb. 2 & 22, March 2 & 22, April 5 & 19.",
-        "Law 7301-103 Faculty Specialty Seminar: Prison Journalism and the Law will meet Jan. 29, Feb. 12, Feb. 26, Mar. 12, Mar. 26 and April 9.",
-        "Prereq: Law 5002 Civil Procedure II"
-      ],
-      "additionalInformationZh": [
-        "LAW 7230-101教师专题研讨课：龙与地下城与法律，上课日期为1月21日、2月4日及18日、3月4日及18日。",
-        "官方附注写作LAW 7301-104：教师专题研讨课——变局中的法律职业伦理，上课日期为2月2日及22日、3月2日及22日、4月5日及19日。课程号和班次号与结构化记录不一致，须确认。",
-        "官方附注写作LAW 7301-103：教师专题研讨课——监狱新闻报道与法律，上课日期为1月29日、2月12日、2月26日、3月12日、3月26日及4月9日。课程号与结构化记录不一致，须确认。",
-        "先修：LAW 5002 民事诉讼法（二）。"
-      ],
+      "additionalInformationEn": [],
+      "additionalInformationZh": [],
       "officialTitleVariantsEn": [
         "Faculty Specialty Seminar: Dungeons & Dragons and the Law",
         "Faculty Specialty Seminar: Legal Ethics in Challenging Times",
@@ -22177,28 +22428,12 @@
         },
         "historicalCatalog": null
       },
-      "sourceConflicts": [
-        {
-          "field": "section-identifiers-and-dates",
-          "status": "needs-confirmation",
-          "messageEn": "Some seminar notes use LAW 7301 rather than LAW 7230. Section 102 also has conflicting dates and identifiers; confirm before scheduling.",
-          "messageZh": "部分研讨课附注写作LAW 7301，结构化课程号为LAW 7230；102班的日期及编号也不一致，须确认。",
-          "sourceUrl": "https://support.law.cornell.edu/CourseCatalog/",
-          "checkedAt": "2026-10-26T18:50:06.816Z"
-        },
-        {
-          "field": "multiple-topic-selection",
-          "status": "needs-confirmation",
-          "sourceUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7230",
-          "messageEn": "This planner currently allows one LAW 7230 topic at a time. Whether two topics may be taken for separate credit requires confirmation from Cornell.",
-          "messageZh": "本网站目前一次只能选择一个 LAW 7230 专题；是否可同时修读两个专题并分别取得学分，请向 Cornell 确认。"
-        }
-      ],
+      "sourceConflicts": [],
       "barCategories": [],
       "barEvidence": null,
       "catalogListingStatus": "current",
       "titleZh": "教师专题研讨课：龙与地下城与法律",
-      "prerequisitesZh": "104 班先修 LAW 5002 民事诉讼法（二）；法学院目录未单列其他专题的先修要求。",
+      "prerequisitesZh": "请查看各专题的先修要求。",
       "restrictionZh": "当前官方课程目录未单列本课程的选课限制。",
       "translationMethod": "Chinese translation checked against the official current English catalog, 2026-10-26.",
       "translationCoverage": {
@@ -22227,7 +22462,42 @@
       "officialRosterPrerequisites": "",
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
-      "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400"
+      "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
+      "historicalSourceAudit": {
+        "restrictionZh": "当前官方课程目录未单列本课程的选课限制。",
+        "restrictionEn": "Cornell's current Course Offerings page and the latest available 2026-27 official Catalog record do not publish a separate enrollment restriction for this course.",
+        "prerequisitesZh": "104 班先修 LAW 5002 民事诉讼法（二）；法学院目录未单列其他专题的先修要求。",
+        "prerequisitesEn": "Section 104: LAW 5002 Civil Procedure II. Prerequisites for other topics are not separately stated in the Law School catalog.",
+        "additionalInformationZh": [
+          "LAW 7230-101教师专题研讨课：龙与地下城与法律，上课日期为1月21日、2月4日及18日、3月4日及18日。",
+          "官方附注写作LAW 7301-104：教师专题研讨课——变局中的法律职业伦理，上课日期为2月2日及22日、3月2日及22日、4月5日及19日。课程号和班次号与结构化记录不一致，须确认。",
+          "官方附注写作LAW 7301-103：教师专题研讨课——监狱新闻报道与法律，上课日期为1月29日、2月12日、2月26日、3月12日、3月26日及4月9日。课程号与结构化记录不一致，须确认。",
+          "先修：LAW 5002 民事诉讼法（二）。"
+        ],
+        "additionalInformationEn": [
+          "LAW 7230-101 Faculty Specialty Seminar: Dungeons & Dragons and the Law meets January 21, February 4 & 18, March 4 & 18.",
+          "Law 7301-104 Faculty Specialty Seminar: Legal Ethics in Challenging Times will meet Feb. 2 & 22, March 2 & 22, April 5 & 19.",
+          "Law 7301-103 Faculty Specialty Seminar: Prison Journalism and the Law will meet Jan. 29, Feb. 12, Feb. 26, Mar. 12, Mar. 26 and April 9.",
+          "Prereq: Law 5002 Civil Procedure II"
+        ],
+        "sourceConflicts": [
+          {
+            "field": "section-identifiers-and-dates",
+            "status": "needs-confirmation",
+            "messageEn": "Some seminar notes use LAW 7301 rather than LAW 7230. Section 102 also has conflicting dates and identifiers; confirm before scheduling.",
+            "messageZh": "部分研讨课附注写作LAW 7301，结构化课程号为LAW 7230；102班的日期及编号也不一致，须确认。",
+            "sourceUrl": "https://support.law.cornell.edu/CourseCatalog/",
+            "checkedAt": "2026-10-26T18:50:06.816Z"
+          },
+          {
+            "field": "multiple-topic-selection",
+            "status": "needs-confirmation",
+            "sourceUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7230",
+            "messageEn": "This planner currently allows one LAW 7230 topic at a time. Whether two topics may be taken for separate credit requires confirmation from Cornell.",
+            "messageZh": "本网站目前一次只能选择一个 LAW 7230 专题；是否可同时修读两个专题并分别取得学分，请向 Cornell 确认。"
+          }
+        ]
+      }
     },
     {
       "id": "LAW-7240-SP27",
@@ -22508,8 +22778,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7240"
+      }
     },
     {
       "id": "LAW-7272-SP27",
@@ -23086,8 +23362,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7295"
+      }
     },
     {
       "id": "LAW-7321-SP27",
@@ -23710,8 +23992,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only (no audit)",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7414"
+      }
     },
     {
       "id": "LAW-7451-SP27",
@@ -24964,10 +25252,16 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "大学课表未列出教师；当前显示的教师来自法学院目录，请核实。 法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "The university roster does not name an instructor; the displayed instructor is from the Law School catalog and should be confirmed. Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment.",
+      "catalogWarningZh": "大学课表未列出教师；当前显示的教师来自法学院目录，请核实。",
+      "catalogWarningEn": "The university roster does not name an instructor; the displayed instructor is from the Law School catalog and should be confirmed.",
       "officialRosterDescriptionIssueZh": "大学课程目录的说明从半句开始，内容不完整；下方仅为已发布部分，须以学校完整资料为准。",
-      "officialRosterDescriptionIssueEn": "The university catalog narrative begins mid-sentence; only the published fragment is shown. Confirm against a complete official description."
+      "officialRosterDescriptionIssueEn": "The university catalog narrative begins mid-sentence; only the published fragment is shown. Confirm against a complete official description.",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7608"
+      }
     },
     {
       "id": "LAW-7613-SP27",
@@ -25290,8 +25584,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7613"
+      }
     },
     {
       "id": "LAW-7652-SP27",
@@ -25599,8 +25899,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7652"
+      }
     },
     {
       "id": "LAW-7654-SP27",
@@ -25900,8 +26206,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7654"
+      }
     },
     {
       "id": "LAW-7678-SP27",
@@ -26470,8 +26782,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7687"
+      }
     },
     {
       "id": "LAW-7713-SP27",
@@ -27376,7 +27694,7 @@
       },
       "officialRosterUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7760",
       "officialRosterTitleEn": "Movement Lawyering Clinic I",
-      "officialRosterDescriptionEn": "This course gives students the opportunity to engage in the movement lawyering. The course hasboth a classroom component and a community component. This course gives students the opportunity to engage in the movement lawyering. The course has both a classroom component and a community component.",
+      "officialRosterDescriptionEn": "This course gives students the opportunity to engage in the movement lawyering. The course has both a classroom component and a community component.",
       "officialRosterDescriptionZh": "本课程为学生提供参与运动法律服务（movement lawyering）的机会。本课程包含课堂部分和社区部分。",
       "officialRosterDescriptionDifferent": true,
       "officialRosterEnrollmentPriority": "",
@@ -27385,10 +27703,24 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "officialRosterDescriptionIssueZh": "大学目录英文原文有重复句；中文显示时去除了重复，英文原文仍保留。",
-      "officialRosterDescriptionIssueEn": "The university catalog repeats sentences; the Chinese display removes the duplication while the official English source is retained.",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7760"
+      },
+      "historicalSourceAudit": {
+        "restrictionZh": "学生须提交兴趣陈述。",
+        "restrictionEn": "Students are requested to submit a statement of interest.",
+        "prerequisitesZh": "当前官方课程目录未单列本课程的先修要求。",
+        "prerequisitesEn": "Cornell's current Course Offerings page and the latest available 2026-27 official Catalog record do not publish a separate prerequisite for this course.",
+        "officialRosterDescriptionEn": "This course gives students the opportunity to engage in the movement lawyering. The course hasboth a classroom component and a community component. This course gives students the opportunity to engage in the movement lawyering. The course has both a classroom component and a community component.",
+        "officialRosterDescriptionIssueEn": "The university catalog repeats sentences; the Chinese display removes the duplication while the official English source is retained.",
+        "officialRosterDescriptionIssueZh": "大学目录英文原文有重复句；中文显示时去除了重复，英文原文仍保留。"
+      },
+      "officialRosterDescriptionEnRaw": "This course gives students the opportunity to engage in the movement lawyering. The course hasboth a classroom component and a community component. This course gives students the opportunity to engage in the movement lawyering. The course has both a classroom component and a community component."
     },
     {
       "id": "LAW-7762-SP27",
@@ -27689,8 +28021,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7762"
+      }
     },
     {
       "id": "LAW-7763-SP27",
@@ -27990,8 +28328,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7763"
+      }
     },
     {
       "id": "LAW-7766-SP27",
@@ -28282,8 +28626,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7766"
+      }
     },
     {
       "id": "LAW-7767-SP27",
@@ -28583,8 +28933,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7767"
+      }
     },
     {
       "id": "LAW-7782-SP27",
@@ -29276,15 +29632,7 @@
         },
         "secondaryDiscussion": null
       },
-      "sourceConflicts": [
-        {
-          "field": "grading-options",
-          "status": "needs-confirmation",
-          "sourceUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7789",
-          "messageEn": "The Law School catalog and current university roster list different grading bases. The selected section displays the university record; confirm in Student Center.",
-          "messageZh": "法学院目录与大学课表列出的评分方式不同；所选班次显示当前大学课表记录，请在 Student Center 核实。"
-        }
-      ],
+      "sourceConflicts": [],
       "restrictionRawEn": "",
       "officialDescriptionRawEn": "Business laws can have substantial positive and negative implications for gender equality. Discriminatory laws or the absence of legislation could threaten women’s economic security or create a business environment that does not adequately support working women. On the contrary, supportive laws could promote women’s career growth, ability to run businesses, and equal employment opportunities, bringing economic advantages to women and society. In addition, trade liberalization policies as a primary source of economic development can affect gender equality. This explains why gender equality lies at the heart of the 2030 Agenda for Sustainable Development, which asserts gender equality as a fundamental human right and a necessary foundation for a sustainable world. This course examines women's rights in business and trade law as a gateway toward economic growth and development. The course introduces the basics of gender and the law. It, also, looks into the relationship between gender equality and business law, including the various legal aspects of governance and board diversity, women and ownership, gender equality and alternative dispute resolution, and the challenges and advantages facing women in business law. An examination of the relevance of integrating gender issues in trade policies and a discussion of the implications of women’s economic empowerment on trade follows. Economic empowerment of women is also highlighted, including promoting women in entrepreneurship, monitoring women into management roles, and empowering women in the workplace. Also, a course on women in business and trade law cannot be completed without elaborating on the role of gender equality in promoting the SDGs. The course concludes with a timely overview of how technology could be used to promote gender equality in general and women's rights in business and trade law in particular.",
       "descriptionNormalization": null,
@@ -29305,8 +29653,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7789"
+      }
     },
     {
       "id": "LAW-7801-SP27",
@@ -29608,9 +29962,15 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。 大学课表的学分与法学院目录不同或为可变学分；当前规划数字须核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment. University roster credits differ or are variable; verify the planning amount.",
-      "nyBarConfirmationRequired": true
+      "catalogWarningZh": "大学课表的学分与法学院目录不同或为可变学分；当前规划数字须核实。",
+      "catalogWarningEn": "University roster credits differ or are variable; verify the planning amount.",
+      "nyBarConfirmationRequired": true,
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7801"
+      }
     },
     {
       "id": "LAW-7805-SP27",
@@ -29914,8 +30274,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7805"
+      }
     },
     {
       "id": "LAW-7810-SP27",
@@ -30206,8 +30572,14 @@
       "officialRosterPrerequisitesZh": "LAW 7801 或 LAW 7841。",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only (no audit)",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7810"
+      }
     },
     {
       "id": "LAW-7817-SP27",
@@ -32035,8 +32407,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7840"
+      }
     },
     {
       "id": "LAW-7842-SP27",
@@ -34672,8 +35050,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7857"
+      }
     },
     {
       "id": "LAW-7858-SP27",
@@ -34969,8 +35353,14 @@
       "officialRosterPrerequisitesZh": "LAW 7857。",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7858"
+      }
     },
     {
       "id": "LAW-7859-SP27",
@@ -35267,8 +35657,14 @@
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
       "officialRosterDescriptionIssueZh": "大学目录正文在本课 III 的说明中写作“Clinic II”，原文如此，请核实。",
       "officialRosterDescriptionIssueEn": "The university catalog narrative for III says Clinic II; this is reproduced from the source and requires confirmation.",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7859"
+      }
     },
     {
       "id": "LAW-7860-SP27",
@@ -36767,8 +37163,14 @@
       "officialRosterPrerequisitesZh": "LAW 6441 或 AEM 4531；AEM 4940 或 AEM 6940。",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7875"
+      }
     },
     {
       "id": "LAW-7876-SP27",
@@ -37055,8 +37457,14 @@
       "officialRosterPrerequisitesZh": "AEM 4531 或 LAW 6441；AEM 4940 或 AEM 6940。",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7876"
+      }
     },
     {
       "id": "LAW-7878-SP27",
@@ -40839,8 +41247,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7945"
+      }
     },
     {
       "id": "LAW-7946-SP27",
@@ -41135,8 +41549,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7946"
+      }
     },
     {
       "id": "LAW-7949-SP27",
@@ -41431,8 +41851,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7949"
+      }
     },
     {
       "id": "LAW-7954-SP27",
@@ -41723,8 +42149,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7954"
+      }
     },
     {
       "id": "LAW-7955-SP27",
@@ -42015,8 +42447,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7955"
+      }
     },
     {
       "id": "LAW-7956-SP27",
@@ -42602,8 +43040,14 @@
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7964"
+      }
     },
     {
       "id": "LAW-7965-SP27",
@@ -42898,8 +43342,14 @@
       "officialRosterPrerequisitesZh": "LAW 7964。",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7965"
+      }
     },
     {
       "id": "LAW-7966-SP27",
@@ -43189,8 +43639,14 @@
       "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
       "officialRosterDescriptionIssueZh": "大学课表将本课命名为退伍军人法实践（三），但目录正文描述的是另一门女性减监禁实践课；该正文不作为本课介绍，须向学校核实。",
       "officialRosterDescriptionIssueEn": "The university roster titles this Veterans Law Practicum III but describes a different Women’s Decarceration Practicum. That narrative is not presented as this course description; confirm with Cornell.",
-      "catalogWarningZh": "法学院目录和大学课表的评分方式有差异；当前班次以大学课表标示，选课时请核实。",
-      "catalogWarningEn": "Law School and university roster grading differ; the section displays the roster basis. Verify during enrollment."
+      "catalogWarningZh": "",
+      "catalogWarningEn": "",
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseCatalog/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7966"
+      }
     }
   ]
 }

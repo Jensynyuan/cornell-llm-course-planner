@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="data:,">
   <meta name="description" content="A bilingual Cornell LL.M. course, NY Bar credit, schedule and calendar planner." />
-  <title>LL.M. Course Planner v5.40</title>
+  <title>LL.M. Course Planner v5.41</title>
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
@@ -15,7 +15,7 @@
         <div class="brand-mark">L</div>
         <div>
           <div class="brand-title">LL.M. Planner</div>
-          <div id="brandSubtitle" class="brand-subtitle">Cornell Law · Fall 2026 + Spring 2027 · v5.40</div>
+          <div id="brandSubtitle" class="brand-subtitle">Cornell Law · Fall 2026 + Spring 2027 · v5.41</div>
         </div>
       </div>
 
@@ -83,7 +83,7 @@
               <option value="all">全部状态</option><option value="eligible">NY Bar 课堂学分</option><option value="review">需院系确认</option><option value="ineligible">不计入 NY Bar</option><option value="core">NYLE / Bar 考试科目</option>
             </select></label>
             <label class="filter-field"><span>评分方式</span><select id="gradingFilter" class="select-control multi-filter-source" multiple aria-label="评分方式筛选">
-              <option value="all">全部方式</option><option value="su">仅 S/U</option><option value="graded">仅字母等级</option>
+              <option value="all">全部方式</option><option value="su">仅 S/U</option><option value="su-option">目录提供 S/U 选项</option><option value="graded">仅字母等级</option>
             </select></label>
             <label class="filter-field"><span>学分</span><select id="creditsFilter" class="select-control multi-filter-source" multiple aria-label="学分筛选">
               <option value="all">全部学分</option><option value="0-1">1 学分及以下</option><option value="2">2 学分</option><option value="3">3 学分</option><option value="4">4 学分</option><option value="5+">5 学分及以上</option>
@@ -163,6 +163,7 @@
           <div class="profile-control-group"><strong>职业方向（可多选）</strong><div id="careerDirectionChips" class="career-chip-grid"></div></div>
           <div class="profile-control-group"><strong>课程偏好</strong><div id="coursePreferenceChips" class="career-chip-grid compact"></div></div>
           <div class="profile-summary"><span>当前组合</span><strong id="careerProfileSummary">尚未选择</strong><button id="generateRecommendedPlanBtn" class="primary-button">生成推荐方案</button><button id="clearCareerProfileBtn" class="text-button">清空</button></div>
+          <p>生成方案会保留已选课程；有先修或同修要求的课程会显示在推荐列表中，请核对后自行加入。</p>
         </section>
         <div id="recommendationGroups" class="recommendation-groups"></div>
       </section>
@@ -309,7 +310,7 @@
 
   <div id="calendarExportOverlay" class="overlay" hidden data-i18n-exempt><section class="choice-dialog calendar-export-dialog" role="dialog" aria-modal="true" aria-labelledby="calendarExportTitle"><button id="closeCalendarExportBtn" class="drawer-close" aria-label="Close">×</button><span class="calendar-dialog-icon" aria-hidden="true">▦</span><h2 id="calendarExportTitle"></h2><p id="calendarExportIntro"></p><div id="calendarExportSummary" class="calendar-export-summary"></div><div class="calendar-export-options"><button id="googleCalendarExportBtn" class="calendar-provider-button calendar-provider-google" type="button"><strong id="googleCalendarExportTitle"></strong><span id="googleCalendarExportCopy"></span></button><button id="icsCalendarExportBtn" class="calendar-provider-button" type="button"><strong id="icsCalendarExportTitle"></strong><span id="icsCalendarExportCopy"></span></button></div><p id="calendarExportPrivacy" class="calendar-privacy-note"></p></section></div>
 
-  <div id="authorAnnouncementOverlay" class="overlay" hidden data-i18n-exempt><section class="choice-dialog author-announcement-dialog" role="dialog" aria-modal="true" aria-labelledby="authorAnnouncementTitle"><button id="closeAuthorAnnouncementBtn" class="drawer-close" aria-label="Close">×</button><header class="author-announcement-hero"><span id="authorAnnouncementEyebrow" class="announcement-eyebrow"></span><h2 id="authorAnnouncementTitle"></h2><a class="support-contact-link" href="mailto:jy2279@cornell.edu">jy2279@cornell.edu</a><p id="authorAnnouncementInvite"></p><a id="authorAnnouncementMailBtn" class="primary-button announcement-mail-button" href="mailto:jy2279@cornell.edu"></a></header><div class="announcement-heading-row"><h3 id="authorAnnouncementHistoryTitle"></h3><span>v5.40</span></div><div id="authorAnnouncementList" class="author-announcement-list"></div></section></div>
+  <div id="authorAnnouncementOverlay" class="overlay" hidden data-i18n-exempt><section class="choice-dialog author-announcement-dialog" role="dialog" aria-modal="true" aria-labelledby="authorAnnouncementTitle"><button id="closeAuthorAnnouncementBtn" class="drawer-close" aria-label="Close">×</button><header class="author-announcement-hero"><span id="authorAnnouncementEyebrow" class="announcement-eyebrow"></span><h2 id="authorAnnouncementTitle"></h2><a class="support-contact-link" href="mailto:jy2279@cornell.edu">jy2279@cornell.edu</a><p id="authorAnnouncementInvite"></p><a id="authorAnnouncementMailBtn" class="primary-button announcement-mail-button" href="mailto:jy2279@cornell.edu"></a></header><div class="announcement-heading-row"><h3 id="authorAnnouncementHistoryTitle"></h3><span>v5.41</span></div><div id="authorAnnouncementList" class="author-announcement-list"></div></section></div>
 
   <div id="toast" class="toast" hidden></div>
 
