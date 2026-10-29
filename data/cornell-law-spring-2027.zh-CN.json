@@ -50,7 +50,7 @@
     "exclusionPolicy": "Excluded only courses explicitly limited to undergraduates, JD students, or Cornell Tech LL.M. students.",
     "includedSourceRecordCount": 138,
     "courseCount": 140,
-    "sectionCount": 173,
+    "sectionCount": 174,
     "mergedDuplicateCourseCodes": [
       "LAW 6761",
       "LAW 7230",
@@ -235,9 +235,9 @@
     "academicCalendarCheckedAt": "2026-08-26",
     "universityRosterAudit": {
       "apiUrl": "https://classes.cornell.edu/api/2.0/search/classes.json?roster=SP27&subject=LAW",
-      "checkedAt": "2026-10-28T08:30:51Z",
-      "rosterUpdatedAt": "2026-10-27T17:07:12-0400",
-      "apiCourseCount": 145,
+      "checkedAt": "2026-10-29T13:23:32Z",
+      "rosterUpdatedAt": "2026-10-28T19:07:11-0400",
+      "apiCourseCount": 146,
       "noteEn": "University roster and Law School catalog are separate sources; discrepancies are retained and flagged.",
       "noteZh": "大学课表与法学院目录为不同来源；存在差异时保留并提示。",
       "excludedCourseCodes": [
@@ -1292,9 +1292,9 @@
         "Michelle Fongyee Whelan",
         "Lara G. Freed",
         "Rachel Tillie Goldberg",
-        "Katrina Lauren Robinson",
         "Aliza Milner",
-        "Cameron Wayne Fogle"
+        "Cameron Wayne Fogle",
+        "Amanda M. Whorton"
       ],
       "session": "Spring 2027",
       "term": "SP27",
@@ -1645,30 +1645,30 @@
           "endDate": "2027-05-14",
           "meetings": [
             {
-              "pattern": "WF",
-              "start": "09:45",
+              "pattern": "RF",
+              "start": "10:10",
               "end": "11:05",
               "startDate": "2027-01-19",
               "endDate": "2027-04-27",
               "scheduleDateStatus": "current-official-roster",
-              "location": "Myron Taylor Hall 182",
-              "locationZh": "迈伦·泰勒楼 182 室",
-              "locationStatus": "published",
-              "locationSource": "Cornell Law Course Offerings",
+              "location": "",
+              "locationZh": "",
+              "locationStatus": "unpublished",
+              "locationSource": "",
               "campusZh": "康奈尔大学伊萨卡主校区或课程指定地点"
             }
           ],
           "daysTimesRaw": "WF 9:45 AM - 11:05 AM",
           "instructors": [
-            "Katrina Lauren Robinson"
+            "Aliza Milner"
           ],
           "instructionMode": "In Person",
           "campusZh": "康奈尔大学伊萨卡主校区或课程指定地点",
-          "location": "Myron Taylor Hall 182",
-          "locationZh": "迈伦·泰勒楼 182 室",
-          "locationStatus": "published",
-          "locationSource": "Cornell Law Course Offerings",
-          "roomRaw": "182",
+          "location": "",
+          "locationZh": "",
+          "locationStatus": "unpublished",
+          "locationSource": "",
+          "roomRaw": "",
           "notes": [],
           "grading": "Letter grades only",
           "gradingZh": "仅字母等级评分",
@@ -1735,7 +1735,7 @@
           "creditMaximum": 2.0,
           "officialRosterSectionNumber": "004",
           "officialRosterClassNumber": "17026",
-          "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
+          "officialRosterCheckedAt": "2026-10-29T13:23:32Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
           "officialRosterNotesZh": []
@@ -1953,6 +1953,61 @@
           "officialRosterNotes": [],
           "officialRosterTopic": "",
           "officialRosterNotesZh": []
+        },
+        {
+          "id": "LAW-5082-SP27-LEC-007-17766",
+          "section": "007",
+          "classNumber": "17766",
+          "component": "LEC",
+          "componentLabel": "Lecture",
+          "courseFormat": "lecture",
+          "label": "Lecture 007",
+          "labelZh": "讲授课 007",
+          "componentStatus": "current-official-roster",
+          "instructionMode": "In Person",
+          "addConsent": "D",
+          "addConsentDescr": "Department Consent Required",
+          "grading": "Letter grades only",
+          "gradingZh": "仅字母等级评分",
+          "credits": 2.0,
+          "creditMinimum": 2.0,
+          "creditMaximum": 2.0,
+          "officialRosterSectionNumber": "007",
+          "officialRosterClassNumber": "17766",
+          "officialRosterCheckedAt": "2026-10-29T13:23:32Z",
+          "consentEn": "Department Consent Required",
+          "consentZh": "需院系同意",
+          "startDate": "2027-01-19",
+          "endDate": "2027-05-14",
+          "instructors": [
+            "Amanda M. Whorton"
+          ],
+          "meetings": [
+            {
+              "pattern": "TR",
+              "start": "09:05",
+              "end": "10:00",
+              "startDate": "2027-01-19",
+              "endDate": "2027-05-14",
+              "scheduleDateStatus": "current-official-roster",
+              "location": "",
+              "locationZh": "",
+              "locationStatus": "unpublished",
+              "locationSource": "",
+              "campusZh": ""
+            }
+          ],
+          "meetingStatus": "published",
+          "daysTimesStatus": "current-official-roster",
+          "scheduleDateStatus": "current-official-roster",
+          "selectionGroup": "",
+          "selectionGroupLabel": "",
+          "selectionRequired": true,
+          "selectionMax": 1,
+          "officialRosterNotes": [],
+          "notes": [],
+          "officialRosterTopic": "",
+          "officialRosterNotesZh": []
         }
       ],
       "barPrimary": null,
@@ -1984,7 +2039,7 @@
       "officialDataStatus": "current-law-school-catalog",
       "grading": "Letter grades only",
       "officialRosterCrseId": "375575",
-      "officialRosterLastChecked": "2026-10-28T08:30:51Z",
+      "officialRosterLastChecked": "2026-10-29T13:23:32Z",
       "assessmentEvidence": {
         "source": "Cornell Law current Spring 2027 Course Catalog description",
         "sourceUrl": "https://support.law.cornell.edu/CourseCatalog/",
@@ -2113,7 +2168,7 @@
       "officialRosterPrerequisites": "LAW 5081.",
       "officialRosterPrerequisitesZh": "LAW 5081。",
       "officialRosterCatalogComments": "",
-      "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400"
+      "officialRosterUpdatedAt": "2026-10-28T19:07:11-0400"
     },
     {
       "id": "LAW-5102-SP27",
@@ -11281,26 +11336,26 @@
       "id": "LAW-6441-SP27",
       "code": "LAW 6441",
       "catalogNbr": "6441",
-      "classNumber": "",
+      "classNumber": "16844",
       "titleZh": "联邦所得税法",
       "credits": 3,
       "creditText": "3 Credits",
       "instructors": [
-        "Green, R"
+        "Robert Green"
       ],
       "session": "Spring 2027",
       "term": "SP27",
       "sections": [
         {
           "id": "LAW-6441-SP27-1",
-          "label": "Lecture 1",
-          "section": "1",
-          "classNumber": "",
+          "label": "Lecture 001",
+          "section": "001",
+          "classNumber": "16844",
           "component": "LEC",
           "componentLabel": "Lecture",
-          "componentStatus": "historical-official-roster",
+          "componentStatus": "current-official-roster",
           "startDate": "2027-01-19",
-          "endDate": "2027-04-28",
+          "endDate": "2027-05-14",
           "meetings": [
             {
               "pattern": "TWR",
@@ -11308,7 +11363,7 @@
               "end": "11:05",
               "startDate": "2027-01-19",
               "endDate": "2027-04-28",
-              "scheduleDateStatus": "regular-spring-term",
+              "scheduleDateStatus": "current-official-roster",
               "location": "Myron Taylor Hall 290",
               "locationZh": "迈伦·泰勒楼 290 室",
               "locationStatus": "published",
@@ -11318,9 +11373,9 @@
           ],
           "daysTimesRaw": "TWR 10:10 AM - 11:05 AM",
           "instructors": [
-            "Green, R"
+            "Robert Green"
           ],
-          "instructionMode": "Not published",
+          "instructionMode": "In Person",
           "campusZh": "康奈尔大学伊萨卡主校区或课程指定地点",
           "location": "Myron Taylor Hall 290",
           "locationZh": "迈伦·泰勒楼 290 室",
@@ -11328,12 +11383,12 @@
           "locationSource": "Cornell Law Course Offerings",
           "roomRaw": "290",
           "notes": [],
-          "grading": "Letter or S/U grades",
-          "gradingZh": "可采用字母等级或 S/U（合格／不合格）评分",
-          "addConsent": "",
-          "addConsentDescr": "Class Roster consent code not verified during the 2026-10-26 service outage.",
-          "consentZh": "2026年10月26日大学课程服务维护期间，尚未核实本班次的选课许可代码。",
-          "consentEn": "Class Roster consent code not verified during the 2026-10-26 service outage.",
+          "grading": "Letter grades only",
+          "gradingZh": "仅字母等级评分",
+          "addConsent": "N",
+          "addConsentDescr": "No Special Consent Required",
+          "consentZh": "",
+          "consentEn": "",
           "selectionGroup": "",
           "selectionGroupLabel": "",
           "selectionRequired": true,
@@ -11379,15 +11434,24 @@
           "titleZh": "联邦所得税法",
           "descriptionZh": "本课程介绍联邦所得税的基本原则，包括所得、所得排除、扣除与抵免、计税基础、收益、损失、税率、纳税单位、时间问题及其背后的政策。学生将细读并分析成文法和法规，解决其执业中可能遇到的典型税务问题，并讨论所得税不同部分涉及的公平、效率和行政管理问题。课堂还将研究现行联邦所得税法结构背后的政策理由，并考察替代制度的利弊。本课程是若干高阶税法课程的先修课程，例如公司税、国际税和合伙企业税等。",
           "additionalInformationZh": "",
-          "scheduleDateStatus": "regular-spring-term",
-          "daysTimesStatus": "published-as-source-text",
+          "scheduleDateStatus": "current-official-roster",
+          "daysTimesStatus": "current-official-roster",
           "meetingStatus": "published",
-          "credits": 3,
+          "credits": 3.0,
           "creditText": "3 Credits",
           "creditTextZh": "3 学分",
           "descriptionRawEn": "This course will introduce students to the basic principles of federal income taxation, including income, exclusions from income, deductions and credits, basis, gains, losses, rates, the taxable unit, timing issues, and the policies underlying these items. Students will perform close reading and analysis of statutes and regulations, solve typical tax problems they would likely face in their own practice of law, and discuss the equity, efficiency and administrative concerns associated with various segments of the income tax. The class will spend some time studying the policy rationales underlying the structure of the current federal income tax laws and will consider the pros and cons of alternative systems. This course is a prerequisite to a number of higher level tax courses (e.g. Corporate Tax, International Tax, Partnership Tax, etc.)",
           "descriptionNormalization": null,
-          "degreeRequirementsZh": ""
+          "degreeRequirementsZh": "",
+          "labelZh": "讲授课 001",
+          "creditMinimum": 3.0,
+          "creditMaximum": 3.0,
+          "officialRosterSectionNumber": "001",
+          "officialRosterClassNumber": "16844",
+          "officialRosterCheckedAt": "2026-10-29T13:23:32Z",
+          "officialRosterNotes": [],
+          "officialRosterTopic": "",
+          "officialRosterNotesZh": []
         }
       ],
       "barPrimary": null,
@@ -11403,7 +11467,7 @@
       "catalogUrl": "https://support.law.cornell.edu/CourseOfferings/",
       "campusZh": "康奈尔大学伊萨卡主校区或课程指定地点",
       "location": "Myron Taylor Hall 290",
-      "gradingZh": "可采用字母等级或 S/U（合格／不合格）评分",
+      "gradingZh": "仅字母等级评分",
       "translationStatus": "verified",
       "locationStatus": "published",
       "lastTermsOffered": "Spring 2027",
@@ -11420,9 +11484,9 @@
       "officialTitleEn": "Federal Income Taxation",
       "officialDescriptionEn": "This course will introduce students to the basic principles of federal income taxation, including income, exclusions from income, deductions and credits, basis, gains, losses, rates, the taxable unit, timing issues, and the policies underlying these items. Students will perform close reading and analysis of statutes and regulations, solve typical tax problems they would likely face in their own practice of law, and discuss the equity, efficiency and administrative concerns associated with various segments of the income tax. The class will spend some time studying the policy rationales underlying the structure of the current federal income tax laws and will consider the pros and cons of alternative systems. This course is a prerequisite to a number of higher level tax courses (e.g. Corporate Tax, International Tax, Partnership Tax, etc.)",
       "officialDataStatus": "current-law-school-catalog",
-      "grading": "Letter or S/U grades",
-      "officialRosterCrseId": "",
-      "officialRosterLastChecked": "2026-10-26T18:50:06.816Z",
+      "grading": "Letter grades only",
+      "officialRosterCrseId": "351588",
+      "officialRosterLastChecked": "2026-10-29T13:23:32Z",
       "assessmentEvidence": {
         "source": "Cornell Law current Spring 2027 Course Catalog description",
         "sourceUrl": "https://support.law.cornell.edu/CourseCatalog/",
@@ -11436,8 +11500,8 @@
       },
       "generatedChineseOverviewRemoved": false,
       "descriptionZh": "本课程介绍联邦所得税的基本原则，包括所得、所得排除、扣除与抵免、计税基础、收益、损失、税率、纳税单位、时间问题及其背后的政策。学生将细读并分析成文法和法规，解决其执业中可能遇到的典型税务问题，并讨论所得税不同部分涉及的公平、效率和行政管理问题。课堂还将研究现行联邦所得税法结构背后的政策理由，并考察替代制度的利弊。本课程是若干高阶税法课程的先修课程，例如公司税、国际税和合伙企业税等。",
-      "registrationConsentZh": "2026年10月26日大学课程服务维护期间，尚未核实本班次的选课许可代码。",
-      "registrationConsentEn": "Class Roster consent code not verified during the 2026-10-26 service outage.",
+      "registrationConsentZh": "",
+      "registrationConsentEn": "",
       "additionalInformationEn": [],
       "officialTitleVariantsEn": [
         "Federal Income Taxation"
@@ -11541,9 +11605,22 @@
         "descriptionZh": true,
         "sections": true
       },
-      "catalogWarningZh": "大学春季课表当前未列出本课程；法学院目录有记录，请向学校核实。",
-      "catalogWarningEn": "This course is absent from the current university roster but remains in the Law School catalog; confirm with Cornell.",
-      "officialRosterListingStatus": "not-listed"
+      "gradingSourceComparison": {
+        "lawSchool": "Letter or S/U grades",
+        "university": "Letter grades only",
+        "lawSchoolSource": "https://support.law.cornell.edu/CourseOfferings/",
+        "rosterSource": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6441"
+      },
+      "officialRosterUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6441",
+      "officialRosterUpdatedAt": "2026-10-28T19:07:11-0400",
+      "officialRosterTitleEn": "Federal Income Taxation",
+      "officialRosterDescriptionEn": "A basic course designed to develop understanding of tax concepts and ability to work effectively with the Internal Revenue Code, regulations, cases, and other tax materials.",
+      "officialRosterDescriptionZh": "本基础课程旨在帮助学生理解税法概念，并有效运用美国国内税收法典、法规、案例及其他税务资料。",
+      "officialRosterDescriptionDifferent": true,
+      "officialRosterEnrollmentPriority": "",
+      "officialRosterEnrollmentPriorityZh": "",
+      "officialRosterPrerequisites": "",
+      "officialRosterPrerequisitesZh": ""
     },
     {
       "id": "LAW-6461-SP27",
@@ -41889,7 +41966,7 @@
           "instructors": [
             "William A. Jacobson"
           ],
-          "instructionMode": "In Person",
+          "instructionMode": "Distance Learning-Synchronous",
           "campusZh": "康奈尔大学伊萨卡主校区或课程指定地点",
           "location": "",
           "locationZh": "官方未公布具体地点",
@@ -41962,7 +42039,7 @@
           "creditMaximum": 4.0,
           "officialRosterSectionNumber": "301",
           "officialRosterClassNumber": "16894",
-          "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
+          "officialRosterCheckedAt": "2026-10-29T13:23:32Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
           "officialRosterNotesZh": []
@@ -42001,7 +42078,7 @@
       "officialDataStatus": "current-law-school-catalog",
       "grading": "Letter grades only",
       "officialRosterCrseId": "362304",
-      "officialRosterLastChecked": "2026-10-28T08:30:51Z",
+      "officialRosterLastChecked": "2026-10-29T13:23:32Z",
       "assessmentEvidence": {
         "source": "Cornell Law current Spring 2027 Course Catalog description",
         "sourceUrl": "https://support.law.cornell.edu/CourseCatalog/",
@@ -42148,7 +42225,7 @@
       "officialRosterPrerequisites": "",
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
-      "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
+      "officialRosterUpdatedAt": "2026-10-28T19:07:11-0400",
       "catalogWarningZh": "",
       "catalogWarningEn": "",
       "gradingSourceComparison": {
@@ -42187,7 +42264,7 @@
           "instructors": [
             "William A. Jacobson"
           ],
-          "instructionMode": "In Person",
+          "instructionMode": "Distance Learning-Synchronous",
           "campusZh": "康奈尔大学伊萨卡主校区或课程指定地点",
           "location": "",
           "locationZh": "官方未公布具体地点",
@@ -42260,7 +42337,7 @@
           "creditMaximum": 2.0,
           "officialRosterSectionNumber": "301",
           "officialRosterClassNumber": "16906",
-          "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
+          "officialRosterCheckedAt": "2026-10-29T13:23:32Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
           "officialRosterNotesZh": []
@@ -42299,7 +42376,7 @@
       "officialDataStatus": "current-law-school-catalog",
       "grading": "Letter grades only",
       "officialRosterCrseId": "363352",
-      "officialRosterLastChecked": "2026-10-28T08:30:51Z",
+      "officialRosterLastChecked": "2026-10-29T13:23:32Z",
       "assessmentEvidence": {
         "source": "Cornell Law current Spring 2027 Course Catalog description",
         "sourceUrl": "https://support.law.cornell.edu/CourseCatalog/",
@@ -42446,7 +42523,7 @@
       "officialRosterPrerequisites": "",
       "officialRosterPrerequisitesZh": "",
       "officialRosterCatalogComments": "",
-      "officialRosterUpdatedAt": "2026-10-27T17:07:12-0400",
+      "officialRosterUpdatedAt": "2026-10-28T19:07:11-0400",
       "catalogWarningZh": "",
       "catalogWarningEn": "",
       "gradingSourceComparison": {

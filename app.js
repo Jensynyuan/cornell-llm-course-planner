@@ -27,7 +27,7 @@
   const NY_BAR_ALLOCATION = window.NY_BAR_ALLOCATION;
   const NY_BAR_ELIGIBILITY = window.NY_BAR_ELIGIBILITY;
   const CALENDAR = window.LLM_CALENDAR;
-  const APP_VERSION = "v5.41";
+  const APP_VERSION = "v5.42";
   let scheduleContentObserver = null;
   let scheduleFitFrame = 0;
   const CORNELL_LLM_REGISTRATION_POLICY = Object.freeze({
@@ -90,6 +90,7 @@
     { id:"independent", zh:"独立研究", en:"Independent study", patterns:[/\bind\b/i,/independent/i,/directed (?:study|work)/i,/独立研究/u] }
   ];
   const RELEASE_NOTES = [
+    { version:"v5.42", zh:["修正官方来源链接，优先打开对应学期和课程的大学 Class Roster。"], en:["Corrected official source links to open the appropriate university Class Roster course and term."] },
     { version:"v5.41", zh:["核清 LAW 6465、6739、6051 和 7230 的官方信息，移除已解决的旧提示。", "选班时显示各班教师与实际冲突日期；返回课表时保留所查看的周次。"], en:["Updated confirmed details for LAW 6465, 6739, 6051, and 7230 and removed resolved notices.", "Show section instructors and conflict dates, and retain the schedule week when switching views."] },
     { version:"v5.40", zh:["按恢复后的 Cornell 大学课表核对春季课程与班次，保留法学院目录并标出来源差异。", "保留已有选课和班次；课程专题与不确定的学分、时间和选课资格分别提示核实。"], en:["Reconciled spring courses and sections with the restored Cornell Class Roster while retaining the Law School catalog and flagging source differences.", "Existing selections and sections are preserved; uncertain topic listings, credits, times and eligibility are flagged."] },
     { version:"v5.39", zh:["LAW 7230 的不同专题可分别加入课表；旧专题选择会保留。", "多个专题的同时注册及分别计学分须向 Cornell Law 确认。"], en:["Plan different LAW 7230 topics independently while retaining existing topic selections.", "Confirm concurrent enrollment and separate credit with Cornell Law."] },
@@ -122,7 +123,7 @@
   const customSchoolStore = loadCustomSchoolStore();
   // Imports are tied to a data build so a prior browser snapshot cannot silently
   // replace the current verified Cornell dataset.
-  const CURRENT_CORNELL_DATASET_VERSION = "v5.41";
+  const CURRENT_CORNELL_DATASET_VERSION = "v5.42";
   const BUNDLED_CORNELL_DATABASE_VERSION = CURRENT_CORNELL_DATASET_VERSION;
   let cornellImportedDataset = loadCornellImportedDataset();
   let currentSchoolId = safeLocalStorageGet("llm-course-planner-current-school") || "cornell";
@@ -518,7 +519,38 @@
     if (!concentrations.length && !requirements.length) return "";
     return `<section class="detail-section official-course-attributes"><h3>${en ? "Official course attributes" : "官方课程属性"}</h3>${concentrations.length ? `<p><strong>${en ? "Concentrations:" : "课程方向："}</strong> ${esc(concentrations.join(en ? ", " : "、"))}</p>` : ""}${requirements.length ? `<p><strong>${en ? "Degree requirements:" : "学位要求标签："}</strong> ${esc(requirements.join(en ? ", " : "、"))}</p>` : ""}</section>`;
   }
+  function cornellCourseRosterUrl(c) {
+    if (currentSchoolId !== "cornell" || c.officialRosterListingStatus === "not-listed") return "";
+    const code = String(c.catalogNbr || "").trim();
+    const term = c.term === "SP27" ? "SP27" : "FA26";
+    if (!/^\d+$/.test(code)) return "";
+    return [c.officialRosterUrl, c.sourceUrl].find(value => {
+      try {
+        const url = new URL(value);
+        return url.protocol === "https:" && url.hostname === "classes.cornell.edu" &&
+          url.pathname.replace(/\/$/, "") === `/browse/roster/${term}/class/LAW/${code}`;
+      } catch (_) { return false; }
+    }) || "";
+  }
   function detailOfficialLinksHtml(c, en = isEnglish()) {
+    if (currentSchoolId === "cornell" && /^LAW\s+\d+$/i.test(String(c.code || ""))) {
+      const rosterUrl = cornellCourseRosterUrl(c);
+      const catalogUrl = [c.catalogUrl, c.currentOfferingUrl, c.sourceUrl].find(value => {
+        try {
+          const url = new URL(value);
+          return url.protocol === "https:" && (
+            (url.hostname === "support.law.cornell.edu" && /^\/(CourseOfferings|CourseCatalog)\/?$/i.test(url.pathname)) ||
+            (url.hostname === "catalog.cornell.edu" && url.pathname === "/courses/law/law.pdf")
+          );
+        } catch (_) { return false; }
+      }) || "";
+      const links = [
+        rosterUrl ? `<p><a href="${esc(rosterUrl)}" target="_blank" rel="noreferrer">${en ? "Open this course in the current university Class Roster" : "打开本学期大学 Class Roster 课程页面"} ↗</a></p>` : "",
+        c.officialRosterListingStatus === "not-listed" ? `<p>${en ? "This course is not listed in the university roster for this term." : "大学课表目前未列出这门课。"}</p>` : "",
+        catalogUrl ? `<p><a href="${esc(catalogUrl)}" target="_blank" rel="noreferrer">${catalogUrl.includes("/law.pdf") ? (en ? "Open the university Law course catalog (PDF)" : "打开大学法学课程目录（PDF）") : (en ? "Open Cornell Law course offerings" : "打开 Cornell 法学院课程目录")} ↗</a></p>` : ""
+      ].filter(Boolean);
+      return links.length ? `<section class="detail-section official-source-links"><h3>${en ? "Official sources" : "官方来源"}</h3>${links.join("")}</section>` : "";
+    }
     const currentUrl = c.currentOfferingUrl || c.sourceUrl || currentSchoolProfile.catalogUrl || "";
     const catalogUrl = c.catalogUrl && c.catalogUrl !== currentUrl ? c.catalogUrl : "";
     const links = [
@@ -3823,7 +3855,7 @@
   }
   function courseLocationSourceHtml(course, section) {
     const location = sectionLocationSummary(section, course);
-    const sourceUrl = course.sourceUrl || currentSchoolProfile.catalogUrl || "#";
+    const sourceUrl = cornellCourseRosterUrl(course) || course.sourceUrl || currentSchoolProfile.catalogUrl || "#";
     const label = isPendingLocation(location) ? (isEnglish() ? "Open official course page to add the teaching location" : "打开官方课程页面后补充具体地点") : location;
     return `<a class="location-link" href="${esc(sourceUrl)}" target="_blank" rel="noreferrer" title="${isEnglish() ? "Open the official course page" : "打开本课程官方页面"}">${esc(label)} ↗</a>`;
   }
