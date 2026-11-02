@@ -27,7 +27,7 @@
   const NY_BAR_ALLOCATION = window.NY_BAR_ALLOCATION;
   const NY_BAR_ELIGIBILITY = window.NY_BAR_ELIGIBILITY;
   const CALENDAR = window.LLM_CALENDAR;
-  const APP_VERSION = "v5.42";
+  const APP_VERSION = "v5.43";
   let scheduleContentObserver = null;
   let scheduleFitFrame = 0;
   const CORNELL_LLM_REGISTRATION_POLICY = Object.freeze({
@@ -90,7 +90,7 @@
     { id:"independent", zh:"独立研究", en:"Independent study", patterns:[/\bind\b/i,/independent/i,/directed (?:study|work)/i,/独立研究/u] }
   ];
   const RELEASE_NOTES = [
-    { version:"v5.42", zh:["修正官方来源链接，优先打开对应学期和课程的大学 Class Roster。"], en:["Corrected official source links to open the appropriate university Class Roster course and term."] },
+    { version:"v5.43", zh:["修正官方来源链接，优先打开对应学期和课程的大学 Class Roster。"], en:["Corrected official source links to open the appropriate university Class Roster course and term."] },
     { version:"v5.41", zh:["核清 LAW 6465、6739、6051 和 7230 的官方信息，移除已解决的旧提示。", "选班时显示各班教师与实际冲突日期；返回课表时保留所查看的周次。"], en:["Updated confirmed details for LAW 6465, 6739, 6051, and 7230 and removed resolved notices.", "Show section instructors and conflict dates, and retain the schedule week when switching views."] },
     { version:"v5.40", zh:["按恢复后的 Cornell 大学课表核对春季课程与班次，保留法学院目录并标出来源差异。", "保留已有选课和班次；课程专题与不确定的学分、时间和选课资格分别提示核实。"], en:["Reconciled spring courses and sections with the restored Cornell Class Roster while retaining the Law School catalog and flagging source differences.", "Existing selections and sections are preserved; uncertain topic listings, credits, times and eligibility are flagged."] },
     { version:"v5.39", zh:["LAW 7230 的不同专题可分别加入课表；旧专题选择会保留。", "多个专题的同时注册及分别计学分须向 Cornell Law 确认。"], en:["Plan different LAW 7230 topics independently while retaining existing topic selections.", "Confirm concurrent enrollment and separate credit with Cornell Law."] },
@@ -123,7 +123,7 @@
   const customSchoolStore = loadCustomSchoolStore();
   // Imports are tied to a data build so a prior browser snapshot cannot silently
   // replace the current verified Cornell dataset.
-  const CURRENT_CORNELL_DATASET_VERSION = "v5.42";
+  const CURRENT_CORNELL_DATASET_VERSION = "v5.43";
   const BUNDLED_CORNELL_DATABASE_VERSION = CURRENT_CORNELL_DATASET_VERSION;
   let cornellImportedDataset = loadCornellImportedDataset();
   let currentSchoolId = safeLocalStorageGet("llm-course-planner-current-school") || "cornell";
@@ -3342,7 +3342,8 @@
     const label = (!isEnglish() && section?.labelZh) || section?.label || (officialSection ? `Section ${officialSection}` : section?.id);
     const sectionLabel = esc(formatSectionLabel(label));
     const classNumber = String(section?.classNumber || "").trim();
-    return `${sectionLabel}${classNumber ? ` · ${isEnglish() ? "Class number" : "课程班号"} ${esc(classNumber)}` : ""}`;
+    const status = section?.officialRosterOpenStatus === "C" ? (isEnglish() ? " · Roster status C (Nov 1); check Student Center for current availability" : " · 大学课表状态 C（11月1日）；实时选课情况请查 Student Center") : "";
+    return `${sectionLabel}${classNumber ? ` · ${isEnglish() ? "Class number" : "课程班号"} ${esc(classNumber)}` : ""}${status}`;
   }
 
   function formatSectionGroupLabel(label) {

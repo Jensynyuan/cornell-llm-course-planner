@@ -49,8 +49,8 @@
     ],
     "exclusionPolicy": "Excluded only courses explicitly limited to undergraduates, JD students, or Cornell Tech LL.M. students.",
     "includedSourceRecordCount": 138,
-    "courseCount": 140,
-    "sectionCount": 174,
+    "courseCount": 141,
+    "sectionCount": 175,
     "mergedDuplicateCourseCodes": [
       "LAW 6761",
       "LAW 7230",
@@ -235,9 +235,9 @@
     "academicCalendarCheckedAt": "2026-08-26",
     "universityRosterAudit": {
       "apiUrl": "https://classes.cornell.edu/api/2.0/search/classes.json?roster=SP27&subject=LAW",
-      "checkedAt": "2026-10-29T13:23:32Z",
-      "rosterUpdatedAt": "2026-10-28T19:07:11-0400",
-      "apiCourseCount": 146,
+      "checkedAt": "2026-11-02T18:38:55.556030+00:00",
+      "rosterUpdatedAt": "2026-11-01T19:07:13-0500",
+      "apiCourseCount": 147,
       "noteEn": "University roster and Law School catalog are separate sources; discrepancies are retained and flagged.",
       "noteZh": "大学课表与法学院目录为不同来源；存在差异时保留并提示。",
       "excludedCourseCodes": [
@@ -377,7 +377,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "C",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-5002-SP27-2",
@@ -484,7 +486,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "C",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-5002-SP27-3",
@@ -591,7 +595,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "C",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-5002-SP27-4",
@@ -711,7 +717,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "C",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -996,7 +1004,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "C",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-5061-SP27-2",
@@ -1103,7 +1113,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "C",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": "core",
@@ -1417,7 +1429,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-5082-SP27-2",
@@ -1524,7 +1538,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-5082-SP27-3",
@@ -1631,7 +1647,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-5082-SP27-4",
@@ -1738,7 +1756,9 @@
           "officialRosterCheckedAt": "2026-10-29T13:23:32Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-5082-SP27-5",
@@ -1845,7 +1865,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-5082-SP27-6",
@@ -1952,7 +1974,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-5082-SP27-LEC-007-17766",
@@ -2007,7 +2031,9 @@
           "officialRosterNotes": [],
           "notes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -2295,7 +2321,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-5102-SP27-2",
@@ -2405,7 +2433,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -2701,7 +2731,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "C",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-5121-SP27-2",
@@ -2821,7 +2853,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-5121-SP27-3",
@@ -2928,7 +2962,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "C",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-5121-SP27-4",
@@ -3035,7 +3071,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "C",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": "core",
@@ -3260,7 +3298,9 @@
           "officialRosterNotes": [],
           "notes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "instructors": [],
@@ -3429,7 +3469,9 @@
           "selectionMax": 1,
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -3725,7 +3767,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": "core",
@@ -4038,7 +4082,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -4288,7 +4334,9 @@
           "officialRosterNotes": [],
           "notes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-6027-SP27-PRA-401-14197",
@@ -4328,7 +4376,9 @@
           "officialRosterNotes": [],
           "notes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-6027-SP27-unpublished",
@@ -4648,7 +4698,9 @@
           "officialRosterNotes": [],
           "notes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-6029-SP27-PRA-401-14208",
@@ -4688,7 +4740,9 @@
           "officialRosterNotes": [],
           "notes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-6029-SP27-unpublished",
@@ -5047,7 +5101,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -5379,7 +5435,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -5682,7 +5740,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -5988,7 +6048,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": "core",
@@ -6289,7 +6351,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -6594,7 +6658,9 @@
           "officialRosterTopic": "",
           "officialRosterNotesZh": [
             "必须出席第一节课。"
-          ]
+          ],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -6883,7 +6949,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": "core",
@@ -7168,7 +7236,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -7466,7 +7536,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -7756,7 +7828,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -8046,7 +8120,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": "core",
@@ -8355,7 +8431,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-6273-SP27-LEC-030-16938",
@@ -8423,7 +8501,9 @@
           "officialRosterTopic": "",
           "officialRosterNotesZh": [
             "仅限Cornell Tech（康奈尔科技校区）学生注册。"
-          ]
+          ],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -8713,7 +8793,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -9012,7 +9094,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-6306-SP27-LEC-030-16992",
@@ -9079,7 +9163,9 @@
           "officialRosterTopic": "",
           "officialRosterNotesZh": [
             "仅限康奈尔科技校区学生注册。"
-          ]
+          ],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -9362,7 +9448,9 @@
           "selectionMax": 1,
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-6324-SP27-LEC-030-17015",
@@ -9429,7 +9517,9 @@
           "officialRosterTopic": "",
           "officialRosterNotesZh": [
             "仅限康奈尔科技校区学生注册。"
-          ]
+          ],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -9701,7 +9791,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -9939,7 +10031,9 @@
           "officialRosterNotes": [],
           "notes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "instructors": [],
@@ -10117,7 +10211,9 @@
           "officialRosterTopic": "",
           "officialRosterNotesZh": [
             "请将您的申请（包括对该课程的兴趣陈述以及任何先前在法律或气候政策方面的相关经验）提交给 Leehi Yona（ly448@cornell.edu）。"
-          ]
+          ],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -10371,7 +10467,9 @@
           "officialRosterNotes": [],
           "notes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "instructors": [
@@ -10539,7 +10637,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": "core",
@@ -10855,7 +10955,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -11147,7 +11249,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": "core",
@@ -11451,7 +11555,9 @@
           "officialRosterCheckedAt": "2026-10-29T13:23:32Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -11754,7 +11860,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -12067,7 +12175,9 @@
           "officialRosterTopic": "",
           "officialRosterNotesZh": [
             "本课程全部四次会面均须出席。"
-          ]
+          ],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -12392,7 +12502,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -12566,6 +12678,84 @@
       }
     },
     {
+      "id": "LAW-6492-SP27",
+      "code": "LAW 6492",
+      "catalogNbr": "6492",
+      "titleEn": "Initial Public Offerings for Technology Companies: Regulation and Practice",
+      "officialTitleEn": "Initial Public Offerings for Technology Companies: Regulation and Practice",
+      "titleZh": "科技公司首次公开募股：监管与实践",
+      "descriptionEn": "This course will provide students with an understanding of the fundamentals of the IPO process from a legal and regulatory perspective. The class will cover the practical dynamics of an IPO legal practice and focus on the particular issues technology companies face when they enter the public markets.",
+      "officialDescriptionEn": "This course will provide students with an understanding of the fundamentals of the IPO process from a legal and regulatory perspective. The class will cover the practical dynamics of an IPO legal practice and focus on the particular issues technology companies face when they enter the public markets.",
+      "descriptionZh": "本课程从法律与监管角度介绍首次公开募股流程的基本内容，讨论 IPO 法律业务的实务运作，并重点分析科技公司进入公开市场时面临的特殊问题。",
+      "officialRosterDescriptionEn": "This course will provide students with an understanding of the fundamentals of the IPO process from a legal and regulatory perspective. The class will cover the practical dynamics of an IPO legal practice and focus on the particular issues technology companies face when they enter the public markets.",
+      "credits": 1,
+      "creditText": "1 Credit",
+      "term": "SP27",
+      "session": "Spring 2027",
+      "sections": [
+        {
+          "id": "LAW-6492-SP27-LEC-030-17771",
+          "label": "Lecture 030",
+          "labelZh": "讲授课 030",
+          "section": "030",
+          "classNumber": "17771",
+          "officialRosterClassNumber": "17771",
+          "component": "LEC",
+          "componentLabel": "Lecture",
+          "instructionMode": "In Person",
+          "credits": 1,
+          "grading": "Satisfactory/Unsatisfactory (no audit)",
+          "gradingZh": "合格／不合格（不可旁听）",
+          "instructors": [],
+          "meetings": [
+            {
+              "pattern": "W",
+              "start": "15:15",
+              "end": "17:15",
+              "startDate": "2027-01-25",
+              "endDate": "2027-05-11",
+              "location": "",
+              "locationZh": "",
+              "locationStatus": "unpublished"
+            }
+          ],
+          "officialRosterNotes": [
+            {
+              "descrlong": "Enrollment limited to: Cornell Tech students and Visiting JD students."
+            }
+          ],
+          "officialRosterNotesZh": [
+            "仅限 Cornell Tech 学生及访问 J.D. 学生选修。"
+          ],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500",
+          "selectionRequired": true,
+          "selectionMax": 1
+        }
+      ],
+      "instructors": [],
+      "grading": "Satisfactory/Unsatisfactory (no audit)",
+      "gradingZh": "合格／不合格（不可旁听）",
+      "eligibility": "restricted",
+      "restrictionEn": "Enrollment limited to Cornell Tech students and Visiting JD students.",
+      "restrictionZh": "仅限 Cornell Tech 学生及访问 J.D. 学生选修。",
+      "restriction": "仅限 Cornell Tech 学生及访问 J.D. 学生选修。",
+      "sourceUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6492",
+      "officialRosterUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/6492",
+      "officialRosterCrseId": "375921",
+      "categories": [],
+      "nyBarConfirmationRequired": true,
+      "courseFormat": "lecture",
+      "assessmentEvidence": {
+        "assignments": [],
+        "assignmentsZh": [],
+        "finalAssessment": [],
+        "finalAssessmentZh": [],
+        "finalMethods": [],
+        "status": "not-stated-in-official-description"
+      }
+    },
+    {
       "id": "LAW-6511-SP27",
       "code": "LAW 6511",
       "catalogNbr": "6511",
@@ -12684,7 +12874,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -12926,7 +13118,9 @@
           "officialRosterNotes": [],
           "notes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "C",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "instructors": [
@@ -13094,7 +13288,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -13382,7 +13578,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -13698,7 +13896,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": "professional",
@@ -14013,7 +14213,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-6654-SP27-LEC-030-16974",
@@ -14081,7 +14283,9 @@
           "officialRosterTopic": "",
           "officialRosterNotesZh": [
             "注册仅限于：康奈尔科技法学硕士（LLM）和法学博士（JD）学生。"
-          ]
+          ],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -14249,7 +14453,7 @@
       "code": "LAW 6661",
       "catalogNbr": "6661",
       "classNumber": "",
-      "titleZh": "欧盟宪法",
+      "titleZh": "欧盟宪政法",
       "credits": 3,
       "creditText": "3 Credits",
       "instructors": [
@@ -14363,7 +14567,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -14654,7 +14860,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -14963,7 +15171,9 @@
           "officialRosterTopic": "",
           "officialRosterNotesZh": [
             "必须出席第一节课。"
-          ]
+          ],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -15258,7 +15468,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -15589,7 +15801,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -15880,7 +16094,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-6761-SP27-2",
@@ -15987,7 +16203,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": "writing",
@@ -16300,7 +16518,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -16596,7 +16816,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -16886,7 +17108,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -17173,7 +17397,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-6881-SP27-602",
@@ -17266,7 +17492,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-6881-SP27-603",
@@ -17359,7 +17587,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-6881-SP27-605",
@@ -17452,7 +17682,9 @@
           "selectionMax": 1,
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-6881-SP27-IND-604-16881",
@@ -17491,7 +17723,9 @@
           "officialRosterNotes": [],
           "notes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-6881-SP27-IND-606-16883",
@@ -17530,7 +17764,9 @@
           "officialRosterNotes": [],
           "notes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -17815,7 +18051,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -18103,7 +18341,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -18354,7 +18594,9 @@
           "officialRosterNotes": [],
           "notes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "instructors": [],
@@ -18533,7 +18775,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -18820,7 +19064,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -19114,7 +19360,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -19421,7 +19669,9 @@
           "officialRosterTopic": "",
           "officialRosterNotesZh": [
             "仅限：3L学生和LLM学生报名。"
-          ]
+          ],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -19722,7 +19972,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -20030,7 +20282,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -20319,7 +20573,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -20618,7 +20874,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -21168,7 +21426,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -21474,7 +21734,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -21714,7 +21976,9 @@
           "officialRosterNotes": [],
           "notes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "instructors": [],
@@ -21939,7 +22203,9 @@
           "officialRosterTopic": "Dungeons & Dragons and the Law",
           "officialRosterNotesZh": [],
           "prerequisitesEn": "The university roster does not list a separate prerequisite for this topic.",
-          "prerequisitesZh": "大学课表未单列本专题的先修要求。"
+          "prerequisitesZh": "大学课表未单列本专题的先修要求。",
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-7230-SP27-102",
@@ -22117,7 +22383,9 @@
           "officialRosterTopic": "",
           "officialRosterNotesZh": [],
           "prerequisitesEn": "The university roster does not list a separate prerequisite for this topic.",
-          "prerequisitesZh": "大学课表未单列本专题的先修要求。"
+          "prerequisitesZh": "大学课表未单列本专题的先修要求。",
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-7230-SP27-103",
@@ -22291,7 +22559,9 @@
           "officialRosterTopic": "Prison Journalism and the Law",
           "officialRosterNotesZh": [],
           "prerequisitesEn": "The university roster does not list a separate prerequisite for this topic.",
-          "prerequisitesZh": "大学课表未单列本专题的先修要求。"
+          "prerequisitesZh": "大学课表未单列本专题的先修要求。",
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-7230-SP27-104",
@@ -22695,7 +22965,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -23246,7 +23518,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -23567,7 +23841,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -23884,7 +24160,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -24197,7 +24475,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -24500,7 +24780,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-7591-SP27-LEC-030-16892",
@@ -24567,7 +24849,9 @@
           "officialRosterTopic": "",
           "officialRosterNotesZh": [
             "仅限康奈尔科技校区学生注册。"
-          ]
+          ],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -24851,7 +25135,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -25152,7 +25438,9 @@
           "officialRosterInstructorUnpublished": true,
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -25474,7 +25762,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -25789,7 +26079,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -26104,7 +26396,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -26411,7 +26705,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -26697,7 +26993,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -26987,7 +27285,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -27289,7 +27589,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -27603,7 +27905,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -27931,7 +28235,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -28239,7 +28545,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -28533,7 +28841,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -28844,7 +29154,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -29087,7 +29399,9 @@
           "officialRosterNotes": [],
           "notes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "instructors": [
@@ -29268,7 +29582,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -29558,7 +29874,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -29871,7 +30189,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -30154,7 +30474,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -30479,7 +30801,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -30777,7 +31101,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -31057,7 +31383,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -31597,7 +31925,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -31889,7 +32219,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-7839-SP27-331",
@@ -31996,7 +32328,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -32184,8 +32518,7 @@
       "creditText": "3 Credits",
       "instructors": [
         "Mariette Geldenhuys",
-        "Amanda Leigh Giannone",
-        "Kathryn Grant Madigan"
+        "Amanda Leigh Giannone"
       ],
       "session": "Spring 2027",
       "term": "SP27",
@@ -32231,8 +32564,7 @@
           "daysTimesRaw": "M 10:10 AM - 12:05 PM",
           "instructors": [
             "Mariette Geldenhuys",
-            "Amanda Leigh Giannone",
-            "Kathryn Grant Madigan"
+            "Amanda Leigh Giannone"
           ],
           "instructionMode": "In Person",
           "campusZh": "康奈尔大学伊萨卡主校区或课程指定地点",
@@ -32310,7 +32642,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -32600,7 +32934,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -32890,7 +33226,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -33182,7 +33520,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -33492,7 +33832,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -33767,7 +34109,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -34054,7 +34398,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -34344,7 +34690,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -34643,7 +34991,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -34944,7 +35294,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -35255,7 +35607,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -35558,7 +35912,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -35862,7 +36218,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -36150,7 +36508,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -36454,7 +36814,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -36762,7 +37124,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -36988,7 +37352,9 @@
           "officialRosterNotes": [],
           "notes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         },
         {
           "id": "LAW-7875-SP27-401",
@@ -37360,7 +37726,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -37662,7 +38030,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -37964,7 +38334,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -38262,7 +38634,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -38561,7 +38935,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -38860,7 +39236,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "C",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -39145,7 +39523,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -39430,7 +39810,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -39699,7 +40081,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -39973,7 +40357,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -40261,7 +40647,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -40548,7 +40936,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -40851,7 +41241,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -41152,7 +41544,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -41454,7 +41848,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -41756,7 +42152,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -42042,7 +42440,9 @@
           "officialRosterCheckedAt": "2026-10-29T13:23:32Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -42340,7 +42740,9 @@
           "officialRosterCheckedAt": "2026-10-29T13:23:32Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -42938,7 +43340,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -43245,7 +43649,9 @@
           "officialRosterCheckedAt": "2026-10-28T08:30:51Z",
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
@@ -43550,7 +43956,9 @@
           "selectionMax": 1,
           "officialRosterNotes": [],
           "officialRosterTopic": "",
-          "officialRosterNotesZh": []
+          "officialRosterNotesZh": [],
+          "officialRosterOpenStatus": "O",
+          "officialRosterStatusAt": "2026-11-01T19:07:13-0500"
         }
       ],
       "barPrimary": null,
