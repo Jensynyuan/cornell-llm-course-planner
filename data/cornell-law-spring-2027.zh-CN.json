@@ -31420,7 +31420,7 @@
       "catalogOnly": false,
       "dataScope": "Current Spring 2027 Cornell Law Course Offerings; historical official roster/catalog data is used only where explicitly identified by provenance.",
       "restrictionZh": "有意选课的学生须在申请注册前联系任课教师。",
-      "prerequisitesZh": "先修：LAW 7801 或 LAW 7841（二选一）。",
+      "prerequisitesZh": "先修：LAW 7801。",
       "translationCompleteness": "partial",
       "translationMethod": "Chinese translation checked against the official current English catalog, 2026-10-26.",
       "restrictionTranslationComplete": true,
@@ -31491,14 +31491,13 @@
         "checkedAt": "2026-10-26T19:13:22.143Z",
         "normalization": "none"
       },
-      "prerequisitesEn": "LAW 7801 or LAW 7841.",
-      "prerequisites": "先修：LAW 7801 或 LAW 7841（二选一）。",
+      "prerequisitesEn": "LAW 7801.",
+      "prerequisites": "先修：LAW 7801。",
       "prerequisitesProvenance": {
-        "kind": "current-academic-year-official-catalog",
-        "sourceTerm": "FA26",
-        "sourceUrl": "https://classes.cornell.edu/browse/roster/FA26/class/LAW/7810",
-        "checkedAt": "2026-08-26T20:52:48.821Z",
-        "note": "The current Course Offerings page does not expose a separate prerequisite field; the latest available 2026-27 official Catalog field is used."
+        "kind": "current-official-roster",
+        "sourceTerm": "SP27",
+        "sourceUrl": "https://classes.cornell.edu/browse/roster/SP27/class/LAW/7810",
+        "checkedAt": "2026-11-10T17:26:00Z"
       },
       "courseFormat": "clinic",
       "courseFormats": [
@@ -31564,7 +31563,7 @@
       "officialRosterEnrollmentPriority": "",
       "officialRosterEnrollmentPriorityZh": "",
       "officialRosterPrerequisites": "LAW 7801.",
-      "officialRosterPrerequisitesZh": "LAW 7801 或 LAW 7841。",
+      "officialRosterPrerequisitesZh": "LAW 7801。",
       "officialRosterCatalogComments": "",
       "officialRosterUpdatedAt": "2026-11-09T19:06:51-0500",
       "catalogWarningZh": "",
