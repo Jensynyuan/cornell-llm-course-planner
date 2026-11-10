@@ -430,7 +430,7 @@
     const iso = toIsoDate(date);
     const profile = termProfileForDate(date);
     const label = profile?.specialScheduleLabels?.[iso];
-    return label ? (isEnglish() ? label.labelEn : label.labelZh) : "";
+    return label ? (iso === "2027-04-28" ? (isEnglish() ? "Law School: Monday schedule; other courses verify" : "法学院按周一；其他课程请核实") : (isEnglish() ? label.labelEn : label.labelZh)) : "";
   }
   function termLabel(code, short = false) {
     const term = CORNELL_TERM_PROFILES[code];
@@ -486,8 +486,10 @@
     return `<section class="detail-section official-additional-information"><h3>${en ? "Additional official information" : "官方补充信息"}</h3><ul>${values.map(value => `<li>${esc(value)}</li>`).join("")}</ul></section>`;
   }
 
+  function undergraduateOnlyCourse(c) { return c?.term === "SP27" && ["4013", "4051", "4081", "4131", "4330"].includes(String(c.catalogNbr)); }
+
   function detailGradingPolicyHtml(c, section, en = isEnglish()) {
-    if (currentSchoolId !== "cornell") return "";
+    if (currentSchoolId !== "cornell" || undergraduateOnlyCourse(c)) return "";
     const comparison = c.gradingSourceComparison;
     const current = section?.sourceSections?.map(item => item.grading).filter(Boolean) || [];
     if (!current.length) current.push(section?.grading || c.grading || "");
@@ -1105,7 +1107,7 @@
           ${matchingTopics.length ? `<div class="course-location-line"><strong>${selected && !matchingTopics.some(section => section.id === selectedSection?.id) ? (isEnglish() ? "Matching topic (not selected)" : "匹配专题（非已选班次）") : (isEnglish() ? "Matching topic" : "匹配专题")}</strong> · ${[...new Set(matchingTopics.map(section => isEnglish() ? (section.titleEn || section.titleZh) : (section.titleZh || section.titleEn)))].map(esc).join("；")}</div>` : ""}
           ${catalogNoticeHtml(c, displaySection)}
           <div class="course-meta">
-            <span>◷ ${esc(meetings)}</span><span>◫ ${creditCount(c.credits)}</span>
+            <span>◷ ${esc(meetings)}</span><span>◫ ${creditRangeText(c)}</span>
             <span>◎ ${instructorsHtml(instructors)}</span><span>▱ ${esc(sectionGradingText(displaySection, c))}</span>${c.registrationConsentZh || c.registrationConsentEn ? `<span>▣ ${esc(isEnglish() ? (c.registrationConsentEn || c.registrationConsentZh) : c.registrationConsentZh)}</span>` : ""}
           </div>
           <div class="course-location-line"><strong>${isEnglish() ? "Teaching location" : "授课地点"}</strong> · ${locationLinkHtml(location)}</div>
@@ -1502,7 +1504,7 @@
     if (!a || !b) return [];
     function range(section, course, useManual) {
       const term = course ? termProfileForCourse(course) : TERM;
-      if (useManual && course && state.manualPlacements?.[course.id]) return [parseIsoDate(term.instructionStart), parseIsoDate(term.instructionEnd)];
+      if (useManual && course && state.manualPlacements?.[course.id]) { const [start, end] = manualSectionDateRange(section, term); return [parseIsoDate(start), parseIsoDate(end)]; }
       const meetings = section.meetings || [];
       if (!meetings.length) return [new Date(NaN), new Date(NaN)];
       const starts = meetings.map(m => +parseIsoDate(m.startDate || section.startDate || term.instructionStart));
@@ -1565,44 +1567,76 @@
     return c.sections?.find(s => s.id === selectedIds[0]) || c.sections?.[0] || null;
   }
 
+  function currentSelectionCountsForCredit(course) {
+    if (currentSchoolId !== "cornell") return true;
+    if (course?.catalogListingStatus === "not-listed" || course?.officialRosterListingStatus === "not-listed") return false;
+    const ids = String(state.selected[course.id] || "").split("|").filter(Boolean);
+    if (!ids.length) return false;
+    return ids.every(id => {
+      const section = (course.sections || []).find(item => item.id === id);
+      return section && section.catalogListingStatus !== "not-listed";
+    });
+  }
+
+  function selectedCreditRange(course) {
+    const ids = String(state.selected[course.id] || "").split("|").filter(Boolean);
+    const parts = ids.map(id => (course.sections || []).find(item => item.id === id)).filter(Boolean);
+    const source = parts[0] || course;
+    const low = Number(source.creditMinimum ?? source.credits ?? course.creditMinimum ?? course.credits ?? 0);
+    const high = Number(source.creditMaximum ?? source.credits ?? course.creditMaximum ?? course.credits ?? 0);
+    return { low, high };
+  }
+  function selectedCreditValue(course) {
+    const range = selectedCreditRange(course);
+    return range.low === range.high ? range.low : 0;
+  }
+  function creditRangeText(course) {
+    const range = selectedCreditRange(course);
+    const value = range.low === range.high ? String(range.low) : `${range.low}–${range.high}`;
+    return isEnglish() ? `${value} ${range.low === 1 && range.high === 1 ? "credit" : "credits"}` : `${value} 学分`;
+  }
+
   function calculateCornellAcademicYearProgress(selected) {
     const registrationCredits = { FA26:0, SP27:0 };
     selected.forEach(course => {
       const term = courseTermCode(course);
-      if (term in registrationCredits) registrationCredits[term] += Number(course.credits || 0);
+      if (term in registrationCredits && currentSelectionCountsForCredit(course)) registrationCredits[term] += selectedCreditValue(course);
     });
-    const eligibleCourses = selected.filter(course => barStatus(course, state.selected[course.id]) === "eligible");
+    const eligibleCourses = selected.filter(course => currentSelectionCountsForCredit(course) && barStatus(course, state.selected[course.id]) === "eligible");
     const categoryTotals = Object.fromEntries(NY_BAR_ALLOCATION.VALID_CATEGORIES.map(category => [category, 0]));
     eligibleCourses.forEach(course => {
       const category = assignedBarCategory(course);
-      if (category) categoryTotals[category] += Number(course.credits || 0);
+      if (category) categoryTotals[category] += selectedCreditValue(course);
     });
     return {
       registrationCredits,
-      eligibleCredits:eligibleCourses.reduce((sum, course) => sum + Number(course.credits || 0), 0),
+      eligibleCredits:eligibleCourses.reduce((sum, course) => sum + selectedCreditValue(course), 0),
       categoryTotals
     };
   }
 
   function nyBarCreditBreakdownHtml(selected) {
-    const rows = selected.map(course => ({ course, eligibility:barEligibility(course, state.selected[course.id]) }));
-    const totalCredits = rows.reduce((sum, row) => sum + Number(row.course.credits || 0), 0);
-    const countedCredits = rows.filter(row => row.eligibility.status === "eligible").reduce((sum, row) => sum + Number(row.course.credits || 0), 0);
-    const pendingCredits = rows.filter(row => row.eligibility.status === "review").reduce((sum, row) => sum + Number(row.course.credits || 0), 0);
-    const excludedCredits = rows.filter(row => row.eligibility.status === "ineligible").reduce((sum, row) => sum + Number(row.course.credits || 0), 0);
-    const hasDifference = rows.some(row => row.eligibility.status !== "eligible");
-    const statusLabel = status => status === "eligible" ? (isEnglish() ? "Counts" : "计入") : status === "review" ? (isEnglish() ? "Confirm" : "待确认") : (isEnglish() ? "Excluded" : "不计入");
+    const rows = selected.map(course => ({ course, available:currentSelectionCountsForCredit(course), eligibility:barEligibility(course, state.selected[course.id]) }));
+    const currentRows = rows.filter(row => row.available);
+    const totalCredits = currentRows.reduce((sum, row) => sum + selectedCreditValue(row.course), 0);
+    const countedCredits = currentRows.filter(row => row.eligibility.status === "eligible").reduce((sum, row) => sum + selectedCreditValue(row.course), 0);
+    const pendingCredits = currentRows.filter(row => row.eligibility.status === "review").reduce((sum, row) => sum + selectedCreditValue(row.course), 0);
+    const excludedCredits = currentRows.filter(row => row.eligibility.status === "ineligible").reduce((sum, row) => sum + selectedCreditValue(row.course), 0);
+    const hasDifference = rows.some(row => row.eligibility.status !== "eligible" || selectedCreditRange(row.course).low !== selectedCreditRange(row.course).high);
+    const statusLabel = status => status === "unavailable" ? (isEnglish() ? "Not currently offered" : "当前未列出") : status === "eligible" ? (isEnglish() ? "Counts" : "计入") : status === "review" ? (isEnglish() ? "Confirm" : "待确认") : (isEnglish() ? "Excluded" : "不计入");
     const reason = row => {
+      if (row.available && selectedCreditRange(row.course).low !== selectedCreditRange(row.course).high) return isEnglish() ? "Variable credit: the actual amount is not set, so this course is excluded from credit totals." : "可变学分：实际学分尚未确定，暂不计入学分总数。";
+      if (!row.available) return isEnglish() ? "The course or selected section is no longer listed. It is retained in your plan but excluded from credit totals." : "课程或所选班次当前未列出；保留原选课记录，但不计入学分总数。";
       if (row.eligibility.status !== "eligible") return isEnglish() ? row.eligibility.reasonEn : row.eligibility.reasonZh;
       const assigned = assignedBarCategory(row.course);
       return assigned ? (isEnglish() ? `Counts once in ${barPrimaryLabel(assigned)}` : `计入一次：${barPrimaryLabel(assigned)}`) : (isEnglish() ? row.eligibility.reasonEn : row.eligibility.reasonZh);
     };
-    return `<details class="bar-credit-breakdown" ${hasDifference ? "open" : ""}><summary><strong>${isEnglish() ? "Course-by-course NY Bar calculation" : "NY Bar 逐门学分计算"}</strong><span>${isEnglish() ? `${countedCredits} of ${totalCredits} registered credits currently count` : `${totalCredits} 个注册学分中，当前计入 ${countedCredits} 学分`}</span></summary><div class="bar-credit-breakdown-totals"><span>${isEnglish() ? `Counted ${countedCredits}` : `计入 ${countedCredits}`}</span><span>${isEnglish() ? `Pending ${pendingCredits}` : `待确认 ${pendingCredits}`}</span><span>${isEnglish() ? `Excluded ${excludedCredits}` : `不计入 ${excludedCredits}`}</span></div><div class="bar-credit-breakdown-list">${rows.map(row => `<div class="bar-credit-breakdown-row is-${esc(row.eligibility.status)}"><span><b>${esc(row.course.code)}</b><small>${esc(courseTitle(row.course))}</small></span><strong>${creditCount(row.course.credits)}</strong><em>${esc(statusLabel(row.eligibility.status))}</em><small>${esc(reason(row))}</small></div>`).join("")}</div></details>`;
+    return `<details class="bar-credit-breakdown" ${hasDifference ? "open" : ""}><summary><strong>${isEnglish() ? "Course-by-course NY Bar calculation" : "NY Bar 逐门学分计算"}</strong><span>${isEnglish() ? `${countedCredits} of ${totalCredits} registered credits currently count` : `${totalCredits} 个注册学分中，当前计入 ${countedCredits} 学分`}</span></summary><div class="bar-credit-breakdown-totals"><span>${isEnglish() ? `Counted ${countedCredits}` : `计入 ${countedCredits}`}</span><span>${isEnglish() ? `Pending ${pendingCredits}` : `待确认 ${pendingCredits}`}</span><span>${isEnglish() ? `Excluded ${excludedCredits}` : `不计入 ${excludedCredits}`}</span></div><div class="bar-credit-breakdown-list">${rows.map(row => `<div class="bar-credit-breakdown-row is-${esc(row.eligibility.status)}"><span><b>${esc(row.course.code)}</b><small>${esc(courseTitle(row.course))}</small></span><strong>${creditRangeText(row.course)}</strong><em>${esc(statusLabel(row.available ? (selectedCreditRange(row.course).low !== selectedCreditRange(row.course).high ? "review" : row.eligibility.status) : "unavailable"))}</em><small>${esc(reason(row))}</small></div>`).join("")}</div></details>`;
   }
 
   function renderProgress() {
     const selected = selectedCourses();
-    const selectedCredits = selected.reduce((sum, course) => sum + Number(course.credits || 0), 0);
+    const selectedCredits = selected.filter(currentSelectionCountsForCredit).reduce((sum, course) => sum + selectedCreditValue(course), 0);
     if (currentSchoolId === "cornell") {
       const annual = calculateCornellAcademicYearProgress(selected);
       const registrationMinimum = CORNELL_LLM_REGISTRATION_POLICY.minimum;
@@ -1618,10 +1652,11 @@
       if (selected.filter(course => course.code === "LAW 7230" && courseTermCode(course) === "SP27").length > 1) {
         els.creditProgress.insertAdjacentHTML("afterbegin", `<p class="catalog-update-notice">${isEnglish() ? "Planned registration credits include each selected LAW 7230 topic. Concurrent enrollment and separate credit are unconfirmed; these topics are pending in the NY Bar calculation." : "规划注册学分包含每个已选 LAW 7230 专题；同时注册和分别计分尚未确认，这些专题在 NY Bar 统计中列为待确认。"}</p>`);
       }
+      if (selected.some(course => currentSelectionCountsForCredit(course) && selectedCreditRange(course).low !== selectedCreditRange(course).high)) els.creditProgress.insertAdjacentHTML("afterbegin", `<p class="catalog-update-notice">${isEnglish() ? "Variable-credit courses are retained in your plan; their actual credits are not set and are excluded from the totals." : "可变学分课程已保留在规划中；实际学分尚未确定，暂不计入学分总数。"}</p>`);
       bindBarAllocationControls();
       return;
     }
-    const importedBarCredits = selected.filter(c => barStatus(c, state.selected[c.id]) === "eligible").reduce((sum, course) => sum + Number(course.credits || 0), 0);
+    const importedBarCredits = selected.filter(c => currentSelectionCountsForCredit(c) && barStatus(c, state.selected[c.id]) === "eligible").reduce((sum, course) => sum + selectedCreditValue(course), 0);
     els.creditProgress.innerHTML = `<div class="progress-item"><div class="progress-label-row"><span class="progress-label">${isEnglish() ? "Selected-course credits" : "已选课程学分"}</span><span class="progress-value">${selectedCredits}</span></div><div class="progress-remaining">${isEnglish() ? "Degree and bar rules vary by school; verify them with your school's official LL.M. guidance." : "学位与 Bar 要求因学校而异，请以本校 LLM 官方指引为准。"}</div></div>${importedBarCredits ? progressHtml(isEnglish() ? "Imported NY Bar classroom credits" : "导入标注的 NY Bar 课堂学分", importedBarCredits, 24) : ""}`;
   }
 
@@ -1747,8 +1782,8 @@
     els.miniSchedule.querySelectorAll(".mini-course-item").forEach(x => x.addEventListener("click", () => openCourseDetail(x.dataset.courseId)));
     const fallSelected = selected.filter(course => courseTermCode(course) === "FA26");
     const springSelected = selected.filter(course => courseTermCode(course) === "SP27");
-    const creditsFor = list => list.reduce((sum, course) => sum + Number(course.credits || 0), 0);
-    const eligible = selected.filter(c => barStatus(c, state.selected[c.id]) === "eligible").reduce((s,c) => s + Number(c.credits || 0), 0);
+    const creditsFor = list => list.filter(currentSelectionCountsForCredit).reduce((sum, course) => sum + selectedCreditValue(course), 0);
+    const eligible = selected.filter(c => currentSelectionCountsForCredit(c) && barStatus(c, state.selected[c.id]) === "eligible").reduce((s,c) => s + selectedCreditValue(c), 0);
     els.selectedSummary.innerHTML = `<div class="summary-row"><span>${isEnglish() ? "Selected offerings" : "已选课程"}</span><strong>${courseCount(selected.length)}</strong></div>${currentSchoolId === "cornell" ? `<div class="summary-row"><span>${isEnglish() ? "Fall 2026 credits" : "2026 秋季学分"}</span><strong>${creditsFor(fallSelected)}</strong></div><div class="summary-row"><span>${isEnglish() ? "Spring 2027 credits" : "2027 春季学分"}</span><strong>${creditsFor(springSelected)}</strong></div>` : `<div class="summary-row"><span>${isEnglish() ? "Total credits" : "总学分"}</span><strong>${creditsFor(selected)}</strong></div>`}<div class="summary-row"><span>${currentSchoolId === "cornell" ? (isEnglish() ? "2026–27 NY Bar credits" : "2026–27 学年 NY Bar 学分") : (isEnglish() ? "NY Bar credits" : "NY Bar 学分")}</span><strong>${eligible}</strong></div>`;
   }
 
@@ -1883,7 +1918,7 @@
     const selected = Boolean(state.selected[c.id]);
     const topics = courseTopics(c).slice(0, 2).map(id => COURSE_TOPICS.find(topic => topic.id === id)).filter(Boolean);
     const prerequisite = recommendationPrerequisite(c);
-    return `<article class="recommendation-card ${selected ? "is-selected" : ""}" draggable="true" data-course-id="${esc(c.id)}"><div class="course-code">${esc(c.code)} · ${creditCount(c.credits)}</div><h4>${esc(courseTitle(c))}</h4><div>${badgesHtml(c)}</div>${topics.length ? `<div class="topic-chip-row">${topics.map(topic => `<span class="topic-chip">${esc(localizedLabel(topic))}</span>`).join("")}</div>` : ""}<p>${esc(recommendReason(c))}</p>${prerequisite ? `<p><strong>${isEnglish() ? "Prerequisite / corequisite:" : "先修／同修："}</strong> ${esc(prerequisite)}</p>` : ""}<div class="recommendation-card-actions"><span class="drag-course-handle" aria-hidden="true">⋮⋮ ${isEnglish() ? "Drag to schedule" : "拖入课表"}</span><button class="add-course-btn ${selected ? "remove" : ""}" data-course-id="${esc(c.id)}">${selected ? (isEnglish() ? "Remove" : "移除") : (isEnglish() ? "Add to schedule" : "加入课表")}</button></div></article>`;
+    return `<article class="recommendation-card ${selected ? "is-selected" : ""}" draggable="true" data-course-id="${esc(c.id)}"><div class="course-code">${esc(c.code)} · ${creditRangeText(c)}</div><h4>${esc(courseTitle(c))}</h4><div>${badgesHtml(c)}</div>${topics.length ? `<div class="topic-chip-row">${topics.map(topic => `<span class="topic-chip">${esc(localizedLabel(topic))}</span>`).join("")}</div>` : ""}<p>${esc(recommendReason(c))}</p>${prerequisite ? `<p><strong>${isEnglish() ? "Prerequisite / corequisite:" : "先修／同修："}</strong> ${esc(prerequisite)}</p>` : ""}<div class="recommendation-card-actions"><span class="drag-course-handle" aria-hidden="true">⋮⋮ ${isEnglish() ? "Drag to schedule" : "拖入课表"}</span><button class="add-course-btn ${selected ? "remove" : ""}" data-course-id="${esc(c.id)}">${selected ? (isEnglish() ? "Remove" : "移除") : (isEnglish() ? "Add to schedule" : "加入课表")}</button></div></article>`;
   }
 
   function recommendationPrerequisite(course) {
@@ -2316,7 +2351,7 @@
     els.scheduleWeekNumber.textContent = semesterWeekLabel(weekStart);
     els.scheduleDateInput.value = toIsoDate(weekStart);
     const calendarNotice = noClassLabels.length ? (isEnglish() ? `This week: ${noClassLabels.join(" / ")}. ` : `本周校历：${noClassLabels.join("／")}。`) : "";
-    els.scheduleWeekCaption.textContent = isEnglish() ? `${semesterWeekLabel(weekStart)} · ${calendarNotice}Only meetings that occur this week are shown; Law School no-class days stay empty.` : `${semesterWeekLabel(weekStart)} · ${calendarNotice}仅显示本周实际发生的课程；法学院无课日会自动留空。`;
+    els.scheduleWeekCaption.textContent = isEnglish() ? `${semesterWeekLabel(weekStart)} · ${calendarNotice}Meetings are projected from published dates. Law School and university calendars may differ; confirm special-day and cross-school meetings with the instructor.` : `${semesterWeekLabel(weekStart)} · ${calendarNotice}课表根据公布日期推算；法学院与大学校历可能不同，特殊日期及跨学院课程请以授课通知为准。`;
   }
 
   function semesterWeekLabel(weekStart) {
@@ -2332,8 +2367,9 @@
       const n = Math.floor((weekStart - startOfWeek(orientation)) / 604800000) + 1;
       return isEnglish() ? `${profile.label} · Orientation · Week ${Math.max(1,n)}` : `${profile.labelZh} · Orientation 第${Math.max(1,n)}周`;
     }
+    if (weekStart > parseIsoDate(profile.instructionEnd)) return isEnglish() ? `${profile.label} · Calendar week` : `${profile.labelZh} · 日历周`;
     const n = Math.floor((weekStart - instruction) / 604800000) + 1;
-    return isEnglish() ? `${profile.label} · Instruction · Week ${Math.max(1,n)}` : `${profile.labelZh} · 正式课程第${Math.max(1,n)}周`;
+    return isEnglish() ? `${profile.label} · Law School instruction · Week ${Math.max(1,n)}` : `${profile.labelZh} · 法学院课程第${Math.max(1,n)}周`;
   }
 
   function moveScheduleWeek(days) {
@@ -2357,11 +2393,13 @@
     const scheduleDay = term?.specialScheduleDays?.[iso] || SPECIAL_SCHEDULE_DAYS[iso] || DAY_KEYS[date.getDay()-1];
     if (!scheduleDay) return [];
     const meetings = (section.meetings || []).filter(m => {
+      // An official date without a published start and end cannot be placed in a timed grid.
+      if (!m.start || !m.end || !Number.isFinite(timeToMinutes(m.start)) || !Number.isFinite(timeToMinutes(m.end)) || timeToMinutes(m.end) <= timeToMinutes(m.start)) return false;
       // Explicit one-date Roster meetings use their actual weekday, even on a
       // special academic-calendar day that otherwise follows Monday's pattern.
       const actualDay = DAY_KEYS[date.getDay()-1];
       const datedMeeting = m.startDate && m.startDate === m.endDate;
-      if (!parsePattern(m.pattern).includes(datedMeeting ? actualDay : scheduleDay)) return false;
+      if (!parsePattern(m.pattern).includes(datedMeeting || m.calendarScope === "university" ? actualDay : scheduleDay)) return false;
       const start = parseIsoDate(m.startDate || section.startDate || term.instructionStart);
       const end = parseIsoDate(m.endDate || section.endDate || term.instructionEnd);
       return date >= start && date <= end;
@@ -2377,6 +2415,13 @@
     });
   }
 
+  function manualSectionDateRange(section, term) {
+    const meetings = section?.meetings || [];
+    const starts = meetings.map(m => m.startDate).filter(Boolean).sort();
+    const ends = meetings.map(m => m.endDate).filter(Boolean).sort();
+    return [starts[0] || section?.startDate || term.instructionStart, ends.at(-1) || section?.endDate || term.instructionEnd];
+  }
+
   function getScheduleMeetingsForDate(course, section, date) {
     if (course?.catalogListingStatus === "not-listed" || section?.catalogListingStatus === "not-listed" || section?.meetingStatus === "source-conflict") return [];
     const manual = state.manualPlacements?.[course?.id];
@@ -2384,11 +2429,12 @@
     if (isNoClassDate(date)) return [];
     const iso = toIsoDate(date);
     const term = termProfileForCourse(course);
-    const scheduleDay = term?.specialScheduleDays?.[iso] || SPECIAL_SCHEDULE_DAYS[iso] || DAY_KEYS[date.getDay()-1];
+    const universityScope = (section?.meetings || []).some(m => m.calendarScope === "university");
+    const scheduleDay = universityScope ? DAY_KEYS[date.getDay()-1] : (term?.specialScheduleDays?.[iso] || SPECIAL_SCHEDULE_DAYS[iso] || DAY_KEYS[date.getDay()-1]);
     if (scheduleDay !== manual.day) return [];
-    const isoDate = toIsoDate(date);
-    if (isoDate < term.instructionStart || isoDate > term.instructionEnd) return [];
-    return [{ pattern:manual.day, start:manual.start, end:manual.end, startDate:term.instructionStart, endDate:term.instructionEnd, location:meetingLocation(section?.meetings?.[0], section, course), manualPlacement:true }];
+    const [rangeStart, rangeEnd] = manualSectionDateRange(section, term);
+    if (iso < rangeStart || iso > rangeEnd) return [];
+    return [{ pattern:manual.day, start:manual.start, end:manual.end, startDate:rangeStart, endDate:rangeEnd, location:meetingLocation(section?.meetings?.[0], section, course), manualPlacement:true }];
   }
 
   function detectWeekConflicts(selected, weekDates) {
@@ -2435,7 +2481,7 @@
     const detailTitle = detailTopic?.titleEn ? (en ? detailTopic.titleEn : (detailTopic.titleZh || detailTopic.titleEn)) : courseTitle(c);
     els.detailContent.innerHTML = `<div class="detail-code">${esc(c.code)}</div><h2 class="detail-title">${esc(detailTitle)}</h2><div class="detail-badges">${badgesHtml(c, selectedDetailSectionId)}</div>
       <div class="detail-grid">
-        <div class="detail-stat"><label>${en ? "Credits" : "学分"}</label><strong>${c.credits}</strong></div>
+        <div class="detail-stat"><label>${en ? "Credits" : "学分"}</label><strong>${esc(creditRangeText(c))}</strong></div>
         <div class="detail-stat"><label>${en ? "Grading" : "评分方式"}</label><strong>${esc(sectionGradingText(selectedDetailSection, c))}</strong></div>
         <div class="detail-stat"><label>${en ? "Instructor" : "教师"}</label><strong>${instructorsHtml(selectedInstructors?.length ? selectedInstructors : c.instructors)}</strong></div>
         <div class="detail-stat detail-stat-location"><label>${en ? "Teaching location" : "授课地点"}</label><strong>${courseLocationSourceHtml(c, getSection(c, selectedDetailSectionId))}</strong><button type="button" class="manual-location-button" id="manualLocationBtn">${en ? "Paste or edit location" : "粘贴／修改具体地点"}</button></div>
@@ -2501,7 +2547,7 @@
   function sectionOptionHtml(c,s,group,selectedIds = new Set()) {
     const checked = selectedIds.has(s.id);
     const meetingRows = (s.meetings || []).length ? (s.meetings || []).map(m => `<div class="meeting-detail-row"><span>◷ ${esc(formatMeetingTime(m))}</span><span>⌖ ${locationLinkHtml(meetingLocation(m, s, c))}</span></div>`).join("") : `<div class="meeting-detail-row"><span>${isEnglish() ? "Time pending" : "时间待公布"}</span><span>⌖ ${locationLinkHtml(sectionLocationSummary(s, c))}</span></div>`;
-    return `<label class="section-option"><input type="radio" name="detail-${esc(group.id)}" data-detail-section-group="${esc(group.id)}" value="${esc(s.id)}" ${checked ? "checked" : ""}><span class="section-option-content"><strong>${sectionIdentityHtml(s)}</strong>${s.instructors?.length ? `<small class="section-enrollment-note">◎ ${instructorsHtml(s.instructors)}</small>` : ""}${s.titleEn && c.officialTitleVariantsEn?.length > 1 ? `<p>${esc(isEnglish() ? s.titleEn : s.titleZh)}</p><p>${esc(isEnglish() ? s.descriptionEn : s.descriptionZh)}</p>` : ""}${catalogNoticeHtml(null,s)}${meetingRows}<small class="location-source-note">${sectionHasPublishedLocation(s) ? `${isEnglish() ? "Location from official school data" : `教室来自${esc(currentSchoolProfile.shortZh || currentSchoolProfile.nameZh)}官方课程数据`}` : `${isEnglish() ? "Specific room not published in official school data" : `${esc(currentSchoolProfile.shortZh || currentSchoolProfile.nameZh)}官方课程数据尚未发布具体教室`}`}</small>${s.grading || s.gradingZh ? `<small class="section-enrollment-note">▱ ${esc(formatGrading(s.grading || s.gradingZh))}</small>` : ""}${s.consentZh || s.consentEn ? `<small class="section-enrollment-note">▣ ${esc(isEnglish() ? (s.consentEn || s.consentZh) : s.consentZh)}</small>` : ""}</span></label>`;
+    return `<label class="section-option"><input type="radio" name="detail-${esc(group.id)}" data-detail-section-group="${esc(group.id)}" value="${esc(s.id)}" ${checked ? "checked" : ""}><span class="section-option-content"><strong>${sectionIdentityHtml(s)}</strong>${s.instructors?.length ? `<small class="section-enrollment-note">◎ ${instructorsHtml(s.instructors)}</small>` : ""}${s.titleEn && c.officialTitleVariantsEn?.length > 1 ? `<p>${esc(isEnglish() ? s.titleEn : s.titleZh)}</p><p>${esc(isEnglish() ? s.descriptionEn : s.descriptionZh)}</p>` : ""}${catalogNoticeHtml(null,s)}${meetingRows}<small class="location-source-note">${sectionHasPublishedLocation(s) ? `${isEnglish() ? "Location from official school data" : `教室来自${esc(currentSchoolProfile.shortZh || currentSchoolProfile.nameZh)}官方课程数据`}` : `${isEnglish() ? "Specific room not published in official school data" : `${esc(currentSchoolProfile.shortZh || currentSchoolProfile.nameZh)}官方课程数据尚未发布具体教室`}`}</small>${s.grading || s.gradingZh ? `<small class="section-enrollment-note">▱ ${esc(formatGrading(s.grading || s.gradingZh, c))}</small>` : ""}${s.consentZh || s.consentEn ? `<small class="section-enrollment-note">▣ ${esc(isEnglish() ? (s.consentEn || s.consentZh) : s.consentZh)}</small>` : ""}</span></label>`;
   }
 
   function workloadProfile(c, section) {
@@ -3244,9 +3290,11 @@
   }
 
   function barEligibility(c, selectedSectionId = undefined) {
+    if (selectedSectionId !== undefined && state.selected[c.id] && !currentSelectionCountsForCredit(c)) return { status:"review", code:"listing-unconfirmed", reasonEn:"The selected course or section is not currently listed and is excluded from credit totals.", reasonZh:"所选课程或班次当前未列出，不计入学分总数。" };
     if (c.code === "LAW 7230" && courseTermCode(c) === "SP27" && selectedCourses().filter(course => course.code === "LAW 7230" && courseTermCode(course) === "SP27").length > 1) return { status:"review", code:"repeat-credit-unconfirmed", reasonEn:"Concurrent enrollment and separate credit for multiple LAW 7230 topics require Cornell Law confirmation.", reasonZh:"同时修读多个 LAW 7230 专题及分别计学分须经 Cornell Law 确认。" };
     const sectionId = selectedSectionId === undefined ? (state.selected[c.id] || sectionSelectionId(defaultSectionSelection(c))) : selectedSectionId;
     const combinedSection = getSection(c, sectionId);
+    if (state.selected[c.id] && currentSelectionCountsForCredit(c) && selectedCreditRange(c).low !== selectedCreditRange(c).high) return { status:"review", code:"variable-credits", reasonEn:"Variable credit amount is not set; excluded from credit totals", reasonZh:"实际可变学分尚未确定，暂不计入学分总数" };
     if (["not-listed","source-conflict"].includes(c.catalogListingStatus) || [combinedSection, ...(combinedSection?.sourceSections || [])].some(part => ["not-listed","source-conflict"].includes(part?.catalogListingStatus)) || c.officialRosterListingStatus === "not-listed") return { status:"review", code:"listing-unconfirmed", reasonEn:"the course or section has conflicting official listings and requires confirmation", reasonZh:"课程或班次的官方来源存在差异，须确认" };
     const sections = combinedSection?.sourceSections || (combinedSection ? [combinedSection] : []);
     const classification = NY_BAR_ELIGIBILITY.classifyCourse({ course:c, sections, schoolId:currentSchoolId });
@@ -3270,19 +3318,19 @@
   function sectionGradingText(section, course) {
     const values = section?.sourceSections?.map(item => item.grading || item.gradingZh).filter(Boolean) || [];
     const raw = values.length ? [...new Set(values)] : [section?.grading || course.grading || course.gradingZh];
-    return raw.map(formatGrading).join(isEnglish() ? "; " : "；");
+    return raw.map(value => formatGrading(value, course)).join(isEnglish() ? "; " : "；");
   }
 
-  function formatGrading(value) {
+  function formatGrading(value, course = null) {
     const text = String(value || "").trim();
     const low = text.toLowerCase();
     if (!text || low === "unknown") return isEnglish() ? "Not published" : "未公布";
     if (/different by section|multiple grading options/.test(low)) return isEnglish() ? "Grading varies by section" : "评分方式因班次而异";
     if (low.includes("letter grades only") || low === "graded" || low.includes("letter graded")) {
-      if (currentSchoolId === "cornell") return isEnglish() ? "Letter-graded; LL.M. grading policy applies" : "字母等级；LL.M.适用项目评分政策";
+      if (currentSchoolId === "cornell" && !undergraduateOnlyCourse(course)) return isEnglish() ? "Letter-graded; LL.M. grading policy applies" : "字母等级；LL.M.适用项目评分政策";
       return isEnglish() ? text : "字母等级评分";
     }
-    if (gradingKind(text) === "option" && currentSchoolId === "cornell") return isEnglish() ? "Letter or S/U; LL.M. grading policy applies" : "字母等级或 S/U；LL.M.适用项目评分政策";
+    if (gradingKind(text) === "option" && currentSchoolId === "cornell" && !undergraduateOnlyCourse(course)) return isEnglish() ? "Letter or S/U; LL.M. grading policy applies" : "字母等级或 S/U；LL.M.适用项目评分政策";
     if (isEnglish()) return text;
     if (low.includes("satisfactory/unsatisfactory") || low === "s/u" || low.includes("sat/unsat")) return "合格／不合格（S/U）";
     if (low.includes("student option") || low.includes("letter or satisfactory") || low.includes("letter or s/u")) return "学生可选字母等级或 S/U";
@@ -3342,7 +3390,9 @@
     const label = (!isEnglish() && section?.labelZh) || section?.label || (officialSection ? `Section ${officialSection}` : section?.id);
     const sectionLabel = esc(formatSectionLabel(label));
     const classNumber = String(section?.classNumber || "").trim();
-    const status = section?.officialRosterOpenStatus === "C" ? (isEnglish() ? " · Roster status C (Nov 1); check Student Center for current availability" : " · 大学课表状态 C（11月1日）；实时选课情况请查 Student Center") : "";
+    const rosterStatusDate = String(section?.officialRosterStatusAt || "").slice(0, 10);
+    const rosterStatus = section?.officialRosterOpenStatus;
+    const status = ["C", "W"].includes(rosterStatus) ? (isEnglish() ? ` · Roster snapshot ${rosterStatus}${rosterStatus === "W" ? " (waitlist)" : " (closed)"}${rosterStatusDate ? ` (${rosterStatusDate})` : ""}; check Student Center for current availability` : ` · 大学课表快照 ${rosterStatus}${rosterStatus === "W" ? "（候补）" : "（关闭）"}${rosterStatusDate ? `（${rosterStatusDate}）` : ""}；实时选课情况请查 Student Center`) : "";
     return `${sectionLabel}${classNumber ? ` · ${isEnglish() ? "Class number" : "课程班号"} ${esc(classNumber)}` : ""}${status}`;
   }
 
@@ -3427,6 +3477,26 @@
     window.print();
   }
 
+  function enforceOfficialListing(course, merged) {
+    if (currentSchoolId !== "cornell") return merged;
+    const absent = course.catalogListingStatus === "not-listed" || course.officialRosterListingStatus === "not-listed";
+    const originalSections = new Map((course.sections || []).map(section => [section.id, section]));
+    const sections = (merged.sections || []).map(section => {
+      const official = originalSections.get(section.id);
+      if (official && official.catalogListingStatus !== "not-listed") return section;
+      return { ...section, catalogListingStatus:"not-listed", catalogWarningZh:official?.catalogWarningZh || "该班次当前未列出；保留原选课记录，不计入学分。", catalogWarningEn:official?.catalogWarningEn || "This section is not currently listed; the original selection is retained and excluded from credit totals." };
+    });
+    // A full local edit snapshot may predate a selected section. Preserve that
+    // exact selected ID from the current catalog or retained archive, without
+    // replacing any of the user's existing edits or changing saved selections.
+    const presentIds = new Set(sections.map(section => section.id));
+    for (const id of String(state.selected[course.id] || "").split("|").filter(Boolean)) {
+      const official = originalSections.get(id);
+      if (official && !presentIds.has(id)) { sections.push({ ...official }); presentIds.add(id); }
+    }
+    return absent ? { ...merged, sections, catalogListingStatus:"not-listed", officialRosterListingStatus:"not-listed", catalogWarningZh:course.catalogWarningZh, catalogWarningEn:course.catalogWarningEn } : { ...merged, sections };
+  }
+
   function applyLocalCourseEdits() {
     if (currentSchoolId === "cornell" && window.CATALOG_COMPATIBILITY) courses = window.CATALOG_COMPATIBILITY.retainSelections(courses, state.selected, window.CORNELL_SPRING_RETAINED || {});
     state.courseOverrides ||= {};
@@ -3437,7 +3507,7 @@
       if (!override) return course;
       const legacyWarningZh = "本课程有本地编辑，保存的班次可能沿用旧数据；请对照大学课表核实。";
       const legacyWarningEn = "This course has local edits; its saved section may use older data. Check it against the university roster.";
-      if (!course.independentlyPlannableTopic) return { ...course, ...override, id:course.id, locallyEdited:true, catalogWarningZh:[override.catalogWarningZh || course.catalogWarningZh, legacyWarningZh].filter(Boolean).join(" "), catalogWarningEn:[override.catalogWarningEn || course.catalogWarningEn, legacyWarningEn].filter(Boolean).join(" ") };
+      if (!course.independentlyPlannableTopic) return enforceOfficialListing(course, { ...course, ...override, id:course.id, locallyEdited:true, catalogWarningZh:[override.catalogWarningZh || course.catalogWarningZh, legacyWarningZh].filter(Boolean).join(" "), catalogWarningEn:[override.catalogWarningEn || course.catalogWarningEn, legacyWarningEn].filter(Boolean).join(" ") });
       // The editor stores a complete snapshot, although only these fields are
       // editable. Do not restore old official metadata or unrelated warnings.
       const editable = ["code", "catalogNbr", "titleEn", "titleZh", "descriptionZh", "credits", "creditText"];
@@ -3459,7 +3529,7 @@
       if (!sections.length && personal && originalSection) sections = [{ ...personal, id:originalSection.id, section:originalSection.section, component:originalSection.component }];
       // Old full-course edits stay stored but must never reintroduce the other
       // topics or replace this topic's identity.
-      return { ...course, ...safeOverride, id:course.id, sections:sections.length ? sections : course.sections, independentlyPlannableTopic:true, locallyEdited:true, catalogWarningZh:[course.catalogWarningZh, legacyWarningZh].filter(Boolean).join(" "), catalogWarningEn:[course.catalogWarningEn, legacyWarningEn].filter(Boolean).join(" ") };
+      return enforceOfficialListing(course, { ...course, ...safeOverride, id:course.id, sections:sections.length ? sections : course.sections, independentlyPlannableTopic:true, locallyEdited:true, catalogWarningZh:[course.catalogWarningZh, legacyWarningZh].filter(Boolean).join(" "), catalogWarningEn:[course.catalogWarningEn, legacyWarningEn].filter(Boolean).join(" ") });
     });
     const existing = new Set(base.map(course => course.id));
     courses = [...base, ...state.customCourses.filter(course => !existing.has(course.id)).map(course => ({ ...course, schoolId:currentSchoolId, locallyEdited:true }))];
@@ -3572,7 +3642,7 @@
     }
     const termCourses = planningTermCourses(courses);
     const candidates = [...termCourses]
-      .filter(course => !["restricted", "application", "permission", "department"].includes(course.eligibility) && course.officialRosterListingStatus !== "not-listed" && !course.nyBarConfirmationRequired && !recommendationPrerequisite(course) && (course.sections || []).some(section => (section.meetings || []).some(meeting => meeting.pattern && meeting.start && meeting.end)))
+      .filter(course => !["restricted", "application", "permission", "department"].includes(course.eligibility) && course.officialRosterListingStatus !== "not-listed" && !course.nyBarConfirmationRequired && Number(course.creditMinimum ?? course.credits) === Number(course.creditMaximum ?? course.credits) && !recommendationPrerequisite(course) && (course.sections || []).some(section => (section.meetings || []).some(meeting => meeting.pattern && meeting.start && meeting.end)))
       .sort((a,b) => careerMatchScore(b) - careerMatchScore(a));
     // Recommendations add to the existing plan; they must never silently
     // replace a student's selected courses or chosen sections.
@@ -3582,7 +3652,7 @@
     for (const courseId of Object.keys(picked)) {
       const course = termCourses.find(item => item.id === courseId);
       if (!course) continue;
-      credits += Number(course.credits || 0);
+      credits += currentSelectionCountsForCredit(course) ? selectedCreditValue(course) : 0;
       const titleKey = normalizedCourseTitle(course);
       if (titleKey) pickedTitles.add(titleKey);
     }
@@ -3746,7 +3816,7 @@
     if (first && last && first !== last && parsePattern(m.pattern).length) {
       const occurs = date => {
         const term = termProfileForDate(date);
-        const day = term?.specialScheduleDays?.[toIsoDate(date)] || DAY_KEYS[date.getDay()-1];
+        const day = m.calendarScope === "university" ? DAY_KEYS[date.getDay()-1] : (term?.specialScheduleDays?.[toIsoDate(date)] || DAY_KEYS[date.getDay()-1]);
         return !isNoClassDate(date) && parsePattern(m.pattern).includes(day);
       };
       let start = parseIsoDate(first), end = parseIsoDate(last);
@@ -3755,7 +3825,9 @@
       if (start <= end && occurs(start) && occurs(end)) { first = toIsoDate(start); last = toIsoDate(end); }
     }
     const dates = first && last ? ` · ${formatShortDate(first)}—${formatShortDate(last)}` : "";
-    return `${parsePattern(m.pattern).map(dayLabel).join(isEnglish() ? ", " : "、")} ${m.start}–${m.end}${dates}`;
+    const days = parsePattern(m.pattern).map(dayLabel).join(isEnglish() ? ", " : "、");
+    const time = m.start && m.end ? `${m.start}–${m.end}` : (isEnglish() ? "Time not published" : "时间未公布");
+    return `${days ? `${days} ` : ""}${time}${dates}`;
   }
   function cleanLocation(value) {
     const text = String(value || "").replace(/\s+/g, " ").trim();
